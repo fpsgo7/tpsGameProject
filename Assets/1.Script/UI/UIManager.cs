@@ -19,16 +19,19 @@ public class UIManager : MonoBehaviour
     //각 오브젝트들을 유니티 인스팩터 상에서 연결하기위하여 SerializeField 사용
     [SerializeField] private GameObject gameoverUI;
     [SerializeField] private Crosshair crosshair;
+    [SerializeField] private Slider healthSlider;
 
     [SerializeField] private Text healthText;
     [SerializeField] private Text lifeText;
     [SerializeField] private Text scoreText;
     [SerializeField] private Text ammoText;
+    [SerializeField] private Text fullAmmoText;
     [SerializeField] private Text waveText;
     //탄약 업데읻트
     public void UpdateAmmoText(int magAmmo, int remainAmmo)
     {
-        ammoText.text = magAmmo + "/" + remainAmmo;
+        ammoText.text = magAmmo+"" ;
+        fullAmmoText.text = remainAmmo+"";
     }
     //점수 업데이트
     public void UpdateScoreText(int newScore)
@@ -54,6 +57,7 @@ public class UIManager : MonoBehaviour
     public void UpdateHealthText(float health)
     {
         healthText.text = Mathf.Floor(health).ToString();
+        healthSlider.value = health;
     }
     //크로스헤어 보여주기 관련 
     public void SetActiveCrosshair(bool active)
