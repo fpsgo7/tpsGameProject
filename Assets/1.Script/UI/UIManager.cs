@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     }
     //각 오브젝트들을 유니티 인스팩터 상에서 연결하기위하여 SerializeField 사용
     [SerializeField] private GameObject gameoverUI;
+    [SerializeField] private GameObject restoreHealthSlider;
     [SerializeField] private Crosshair crosshair;
     [SerializeField] private Slider healthSlider;
 
@@ -58,6 +59,26 @@ public class UIManager : MonoBehaviour
     {
         healthText.text = Mathf.Floor(health).ToString();
         healthSlider.value = health;
+    }
+    //체력 충전 값 공유
+    public void RestoreHealthMax(int max)
+    {
+        restoreHealthSlider.GetComponent<Slider>().maxValue = max;
+    }
+    //체력 충전 시작
+    public void UpdateRestoreHealthStart()
+    {
+        restoreHealthSlider.SetActive(true);
+    }
+    //체력 충전 업데이트
+    public void UpdateRestoreHealth(int restore)
+    {
+        restoreHealthSlider.GetComponent<Slider>().value = restore;
+    }
+    //체력 충전 종료
+    public void UpdateRestoreHealthEnd()
+    {
+        restoreHealthSlider.SetActive(false);
     }
     //크로스헤어 보여주기 관련 
     public void SetActiveCrosshair(bool active)

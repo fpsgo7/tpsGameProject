@@ -8,6 +8,7 @@ public class PlayerInput : MonoBehaviour
     public string moveHorizontalAxisName = "Horizontal";
     public string moveVerticalAxisName = "Vertical";
     public string reloadButtonName = "Reload";
+    public string restoreHealthButtonName = "RestoreHealth";
 
     //실제로 입력된 값들을 저장할 프로퍼티
     //값을 읽을때는 public 형이라 밬에서 읽기 쉽지만
@@ -16,6 +17,7 @@ public class PlayerInput : MonoBehaviour
     public bool fire { get; private set; }
     public bool reload { get; private set; }
     public bool jump { get; private set; }
+    public bool restoreHealth { get; private set; }
     
     private void Update()
     {
@@ -37,5 +39,6 @@ public class PlayerInput : MonoBehaviour
         jump = Input.GetButtonDown(jumpButtonName);
         fire = Input.GetButton(fireButtonName);
         reload = Input.GetButtonDown(reloadButtonName);
+        restoreHealth = Input.GetButton(restoreHealthButtonName);
     }
 }

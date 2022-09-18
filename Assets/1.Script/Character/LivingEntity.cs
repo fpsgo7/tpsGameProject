@@ -48,13 +48,13 @@ public class LivingEntity : MonoBehaviour, IDamageable
         return true;
     }
     //체력 회복
-    public virtual void RestoreHealth(float newHealth)
+    public virtual void RestoreHealth()
     {
         //사망상태인 경우 체력 회복을 못한다.
         if (dead)
             return;
         //체력 회복
-        health += newHealth;
+        health = startingHealth;
     }
     //죽는경우
     public virtual void Die()

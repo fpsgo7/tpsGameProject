@@ -32,8 +32,8 @@ public class Enemy : LivingEntity
     private Renderer skinRenderer; // 렌더러 컴포넌트
 
     public float runSpeed = 10f;
-    [Range(0.01f, 2f)] public float turnSmoothTime = 0.1f;
-    private float turnSmoothVelocity;
+    [Range(0.01f, 2f)] public float turnSmoothTime = 0.1f;//회전 지연속도
+    private float turnSmoothVelocity;//좀비회전에 실시간 변화량
 
     public float damage = 30f;
     public float attackRadius = 2f;
@@ -43,13 +43,14 @@ public class Enemy : LivingEntity
     public float viewDistance = 10f;
     public float patrolSpeed = 3f;
 
-    [HideInInspector] public LivingEntity targetEntity; // 추적할 대상
+    public LivingEntity targetEntity; // 추적할 대상
     public LayerMask whatIsTarget; // 추적 대상 레이어
 
-
+    //적의 공격을 범위 기반이라서 여러 개의 충돌포인트가 생긴다.
     private RaycastHit[] hits = new RaycastHit[10];
     private List<LivingEntity> lastAttackedTargets = new List<LivingEntity>();
-
+    // 람다식을 활용한다.
+    //targetEntity 가 널이아니고 추적할 대상이 죽지 않았다면  true 가 된다.
     private bool hasTarget => targetEntity != null && !targetEntity.dead;
 
 
@@ -57,6 +58,7 @@ public class Enemy : LivingEntity
 
     private void OnDrawGizmosSelected()
     {
+        //좀비의 시야와 공격범위를 그려준다.
         if (attackRoot != null)
         {
             Gizmos.color = new Color(1f, 0f, 0f, 0.5f);
@@ -116,10 +118,15 @@ public class Enemy : LivingEntity
     {
         if (dead) return;
 
-        if (state == State.Tracking &&
-            Vector3.Distance(targetEntity.transform.position, transform.position) <= attackDistance)
+        if (state == State.Tracking && targetEntity != null)
         {
-            BeginAttack();
+            var distance = Vector3.Distance(targetEntity.transform.position, transform.position);
+            //플레이어와 적과의 거리가 공격거리보다 작다면
+            if (distance <= attackDistance)
+            {
+                //공격시작
+                BeginAttack();
+            }
         }
 
 
