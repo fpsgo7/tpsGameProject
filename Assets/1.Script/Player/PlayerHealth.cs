@@ -10,10 +10,10 @@ public class PlayerHealth : LivingEntity
     public AudioClip deathClip;
     public AudioClip hitClip;
     //변수 들
-    public int restoreHealth;
+    public int restoreHealth;//체력회복 게이지
     public int restoreHealthMax;
-
-    private bool restoreHealthStart = true;
+    //bool 형
+    public bool restoreHealthProceeding = false;
 
     //컴포넌트 연결
     private void Awake()
@@ -21,36 +21,36 @@ public class PlayerHealth : LivingEntity
         playerInput = GetComponent<PlayerInput>();
         playerAudioPlayer = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
-        restoreHealthMax = 500;
+        restoreHealthMax = 100;
         UIManager.Instance.RestoreHealthMax(restoreHealthMax);
 
         restoreHealth = 0;
     }
-    private void Update()
+    private void FixedUpdate()
     {
         if (playerInput.restoreHealth && health < 100)
-        { 
-            StartCoroutine(RestoreHealthSlider());
+        {
+            Debug.Log("치료중");
+            RestoreHealthSlider();
         }
         else if(restoreHealth >=1)
         {
             restoreHealth = 0;
             UIManager.Instance.UpdateRestoreHealth(restoreHealth);
             UIManager.Instance.UpdateRestoreHealthEnd();
-            restoreHealthStart = true;
+            restoreHealthProceeding = false;
         }
-        if(restoreHealth >= 1 && restoreHealthStart == true)
+        if(restoreHealth >= 1 && restoreHealthProceeding == false)
         {
             UIManager.Instance.UpdateRestoreHealthStart();
-            restoreHealthStart = false;
+            restoreHealthProceeding = true;
         }
         if (restoreHealth >= restoreHealthMax)
         {
-            StopCoroutine(RestoreHealthSlider());
             UIManager.Instance.UpdateRestoreHealthEnd();
             RestoreHealth();
             restoreHealth = 0;
-            restoreHealthStart = true;
+            restoreHealthProceeding = false;
         }
     }
 
@@ -62,11 +62,10 @@ public class PlayerHealth : LivingEntity
     }
 
     //헬스슬라이더 체우기
-    private IEnumerator RestoreHealthSlider()
+    private void RestoreHealthSlider()
     {
         restoreHealth += 1;
         UIManager.Instance.UpdateRestoreHealth(restoreHealth);
-        yield return true;
     }
 
     public override void RestoreHealth()

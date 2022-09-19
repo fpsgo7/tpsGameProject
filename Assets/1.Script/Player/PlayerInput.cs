@@ -2,13 +2,15 @@
 
 public class PlayerInput : MonoBehaviour
 {
+    //다른 스크립트와 연결하기
+    private PlayerHealth playerHealth;
     //입력감지를 위해 사용하는 변수
     public string fireButtonName = "Fire1";
     public string jumpButtonName = "Jump";
     public string moveHorizontalAxisName = "Horizontal";
     public string moveVerticalAxisName = "Vertical";
     public string reloadButtonName = "Reload";
-    public string restoreHealthButtonName = "RestoreHealth";
+    public string restoreHealthButtonName = "RestoreHealth";//v 키
 
     //실제로 입력된 값들을 저장할 프로퍼티
     //값을 읽을때는 public 형이라 밬에서 읽기 쉽지만
@@ -18,12 +20,22 @@ public class PlayerInput : MonoBehaviour
     public bool reload { get; private set; }
     public bool jump { get; private set; }
     public bool restoreHealth { get; private set; }
-    
+
+    private void Awake()
+    {
+        playerHealth = GetComponent<PlayerHealth>();
+    }
+
     private void Update()
     {
+        if (Input.GetButtonUp(restoreHealthButtonName))
+        {
+            restoreHealth = false;
+            Debug.Log("치료 중단");
+        }
         //게임 오버가 되면 유저의 입력을 무시하는 코드를 실행한다.
         if (GameManager.Instance != null
-            && GameManager.Instance.isGameover)
+            && GameManager.Instance.isGameover || playerHealth.restoreHealthProceeding == true)
         {
             moveInput = Vector2.zero;
             fire = false;
@@ -39,6 +51,13 @@ public class PlayerInput : MonoBehaviour
         jump = Input.GetButtonDown(jumpButtonName);
         fire = Input.GetButton(fireButtonName);
         reload = Input.GetButtonDown(reloadButtonName);
-        restoreHealth = Input.GetButton(restoreHealthButtonName);
+        if (Input.GetButtonDown(restoreHealthButtonName))
+        {
+            restoreHealth = true;
+            Debug.Log("치료 시작");
+        }
+      
+        
+      
     }
 }

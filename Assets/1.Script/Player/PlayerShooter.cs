@@ -159,7 +159,7 @@ public class PlayerShooter : MonoBehaviour
     //총을 쥐는 것을 다룸
     private void OnAnimatorIK(int layerIndex)
     {
-        if (gun == null || gun.state == Gun.State.Reloading)
+        if (gun == null || gun.state == Gun.State.Reloading )
             return;
 
         playerAnimator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1.0f);
