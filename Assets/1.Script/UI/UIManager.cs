@@ -26,8 +26,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text lifeText;
     [SerializeField] private Text scoreText;
     [SerializeField] private Text ammoText;
+    [SerializeField] private Text healthKitText;
     [SerializeField] private Text fullAmmoText;
     [SerializeField] private Text waveText;
+    
     //탄약 업데읻트
     public void UpdateAmmoText(int magAmmo, int remainAmmo)
     {
@@ -59,6 +61,11 @@ public class UIManager : MonoBehaviour
     {
         healthText.text = Mathf.Floor(health).ToString();
         healthSlider.value = health;
+    }
+    //체력 회복 킷트
+    public void UpdateHealthKitText(int healthKit)
+    {
+        healthKitText.text = healthKit+"";
     }
     //체력 충전 값 공유
     public void RestoreHealthMax(int max)

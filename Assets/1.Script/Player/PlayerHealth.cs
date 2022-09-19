@@ -12,6 +12,7 @@ public class PlayerHealth : LivingEntity
     //변수 들
     public int restoreHealth;//체력회복 게이지
     public int restoreHealthMax;
+    public int healthKit;// 체력회복 킷
     //bool 형
     public bool restoreHealthProceeding = false;
 
@@ -23,12 +24,10 @@ public class PlayerHealth : LivingEntity
         animator = GetComponent<Animator>();
         restoreHealthMax = 100;
         UIManager.Instance.RestoreHealthMax(restoreHealthMax);
-
-        restoreHealth = 0;
     }
     private void FixedUpdate()
     {
-        if (playerInput.restoreHealth && health < 100)
+        if (playerInput.restoreHealth && health < 100 && healthKit >=1)
         {
             Debug.Log("치료중");
             RestoreHealthSlider();
@@ -57,6 +56,8 @@ public class PlayerHealth : LivingEntity
     //base로 상속받은 내용 사용후 내용을 추가하여 사용
     protected override void OnEnable()
     {
+        restoreHealth = 0;
+        healthKit = 5;
         base.OnEnable();
         UpdateUI();
     }
@@ -71,6 +72,7 @@ public class PlayerHealth : LivingEntity
     public override void RestoreHealth()
     {
         base.RestoreHealth();
+        healthKit -= 1;
         UpdateUI();
     }
 
@@ -79,6 +81,7 @@ public class PlayerHealth : LivingEntity
         //UIManager에 체력 업데이트를 체력값을 보내어 사용하며
         //죽음 상태인 경우 0값을 보낸다.
         UIManager.Instance.UpdateHealthText(dead ? 0f : health);
+        UIManager.Instance.UpdateHealthKitText(healthKit);
     }
 
     public override bool ApplyDamage(DamageMessage damageMessage)
