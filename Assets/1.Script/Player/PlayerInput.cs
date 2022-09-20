@@ -6,6 +6,7 @@ public class PlayerInput : MonoBehaviour
     private PlayerHealth playerHealth;
     //입력감지를 위해 사용하는 변수
     public string fireButtonName = "Fire1";
+    public string zoomInButtonName = "ZoomIn";// 우클릭
     public string jumpButtonName = "Jump";
     public string moveHorizontalAxisName = "Horizontal";
     public string moveVerticalAxisName = "Vertical";
@@ -17,6 +18,7 @@ public class PlayerInput : MonoBehaviour
     //값설정은 private 로 막아뒀다.
     public Vector2 moveInput { get; private set; }//방향을 위해 사용
     public bool fire { get; private set; }
+    public bool zoomIn { get; private set; }
     public bool reload { get; private set; }
     public bool jump { get; private set; }
     public bool restoreHealth { get; private set; }
@@ -39,6 +41,7 @@ public class PlayerInput : MonoBehaviour
         {
             moveInput = Vector2.zero;
             fire = false;
+            zoomIn = false;
             reload = false;
             jump = false;
             return;
@@ -50,6 +53,7 @@ public class PlayerInput : MonoBehaviour
         // 해당 파라미터에 입력을 받아 true 와 false 로 바꿔 조종하는데 쓴다.
         jump = Input.GetButtonDown(jumpButtonName);
         fire = Input.GetButton(fireButtonName);
+        zoomIn = Input.GetButton(zoomInButtonName);
         reload = Input.GetButtonDown(reloadButtonName);
         if (Input.GetButtonDown(restoreHealthButtonName))
         {

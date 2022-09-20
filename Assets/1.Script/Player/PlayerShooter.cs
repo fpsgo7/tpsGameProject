@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using Cinemachine;
 
 public class PlayerShooter : MonoBehaviour
 {
@@ -18,6 +18,7 @@ public class PlayerShooter : MonoBehaviour
     private PlayerInput playerInput;//플레이어 입력 스크립트와 연결
     private Animator playerAnimator;//플레이어 에니메이션
     private Camera playerCamera;//플레이어 카메러
+    public CinemachineFreeLook forrowCam;// 줌인 카메라
 
     private float waitingTimeForReleasingAim = 2.5f;//총 조준후 다시 풀어지는 시간
     private float lastFireInputTime; //마지막 발사 시간
@@ -42,6 +43,7 @@ public class PlayerShooter : MonoBehaviour
         playerCamera = Camera.main;
         playerInput = GetComponent<PlayerInput>();
         playerAnimator = GetComponent<Animator>();
+     
     }
 
     private void OnEnable()
@@ -68,6 +70,29 @@ public class PlayerShooter : MonoBehaviour
         {
             Reload();
         }
+        
+        if (playerInput.zoomIn)
+        {
+            Debug.Log("조준중");
+            forrowCam.m_Lens.FieldOfView = 30;
+            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = 0.35f;
+            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = 0.75f;
+            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = 0.8f;
+            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.15f;
+            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.15f;
+            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.15f;
+        }
+        else
+        {
+            forrowCam.m_Lens.FieldOfView = 60;
+            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = 0.6f;
+            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = 0.65f;
+            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = 0.7f;
+            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;
+            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;
+            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;
+        }
+        
     }
 
     private void Update()
