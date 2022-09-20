@@ -6,12 +6,12 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController characterController;
     private PlayerInput playerInput;
     private PlayerShooter playerShooter;
+    private PlayerHealth playerHealth;
     private Animator animator;
     //카메라를 기준으로 움직이기에 필요한 카메라 변수
     private Camera followCam;
     //플레이어 값
-    public float speed = 6f;//속도
-    public float jumpVelocity = 8f;//점프 속도
+    public float speed = 5f;//속도
     [Range(0.01f, 1f)] public float airControlPercent = 0.1f;//공중 속도
     //스무스의 지연 값
     public float speedSmoothTime = 0.1f;
@@ -21,6 +21,10 @@ public class PlayerMovement : MonoBehaviour
     private float turnSmoothVelocity;
     //플레이어의 y 축 방향 속도
     private float currentVelocityY;
+    //점프 딜레이 
+    private float waitingForJump = 4f;//점프 딜레이
+    private float lastJumpTime; //마지막 점프시간
+
     //지면상의 현제 속도를 표현한다. 람다식 활용
     public float currentSpeed =>
         new Vector2(characterController.velocity.x, characterController.velocity.z).magnitude;//x축 과 z 축의 값을 백터 형식으로 구한다.
@@ -29,10 +33,12 @@ public class PlayerMovement : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
         playerShooter = GetComponent<PlayerShooter>();
+        playerHealth = GetComponent<PlayerHealth>();
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
 
         followCam = Camera.main;
+        speed = 5f;
     }
 
     private void FixedUpdate()
@@ -43,7 +49,8 @@ public class PlayerMovement : MonoBehaviour
         //움직임 함수를 실행하게함
         Move(playerInput.moveInput);
         //점프함수를 실행하게함
-        if (playerInput.jump) Jump();
+        if (playerInput.jump && Time.time >= lastJumpTime + waitingForJump)
+            Jump();
     }
 
     private void Update()
@@ -86,13 +93,26 @@ public class PlayerMovement : MonoBehaviour
         transform.eulerAngles = Vector3.up * targetRotation;// y 축에대해서만 값을 설정함
 
     }
-
+    //점프하기
     public void Jump()
     {
         if (!characterController.isGrounded)//공중에 있을 경우
             return;
-        currentVelocityY = jumpVelocity;
+        lastJumpTime = Time.time;
+        animator.SetTrigger("Jump");
     }
+    public void JumpStart()
+    {
+        //Debug.Log("점프시작");
+        playerHealth.invincibility = true;
+    }
+
+    public void JumpEnd()
+    {
+        //Debug.Log("점프끝");
+        playerHealth.invincibility = false;
+    }
+
     //사용자 의 입력을 받아 에니메이션을 업데이트함
     private void UpdateAnimation(Vector2 moveInput)
     {

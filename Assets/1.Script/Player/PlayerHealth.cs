@@ -15,6 +15,7 @@ public class PlayerHealth : LivingEntity
     public int healthKit;// 체력회복 킷
     //bool 형
     public bool restoreHealthProceeding = false;
+    public bool invincibility = false;
 
     //컴포넌트 연결
     private void Awake()
@@ -86,6 +87,8 @@ public class PlayerHealth : LivingEntity
 
     public override bool ApplyDamage(DamageMessage damageMessage)
     {
+        if (invincibility == true)// 데미지 적용을 무적상태 동안은 막음
+            return false;
         //데미지 적용이 실패한경우 return false를 시킨다.
         if (!base.ApplyDamage(damageMessage))
             return false;
