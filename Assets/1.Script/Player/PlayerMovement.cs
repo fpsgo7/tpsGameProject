@@ -11,7 +11,10 @@ public class PlayerMovement : MonoBehaviour
     //카메라를 기준으로 움직이기에 필요한 카메라 변수
     private Camera followCam;
     //플레이어 값
-    public float speed = 5f;//속도
+    public float speed;//속도
+    public float runSpeed;// 일반속도
+    public float walkSpeed;// 걷기 속도
+    public float jumpSpeed;// 점프 속도
     [Range(0.01f, 1f)] public float airControlPercent = 0.1f;//공중 속도
     //스무스의 지연 값
     public float speedSmoothTime = 0.1f;
@@ -24,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     //점프 딜레이 
     private float waitingForJump = 4f;//점프 딜레이
     private float lastJumpTime; //마지막 점프시간
+    public bool jumpState = false;// 점프 상태
 
     //지면상의 현제 속도를 표현한다. 람다식 활용
     public float currentSpeed =>
@@ -39,6 +43,9 @@ public class PlayerMovement : MonoBehaviour
 
         followCam = Camera.main;
         speed = 5f;
+        runSpeed = 5f;
+        walkSpeed = 2.5f;
+        jumpSpeed = 8f;
     }
 
     private void FixedUpdate()
@@ -105,12 +112,15 @@ public class PlayerMovement : MonoBehaviour
     {
         //Debug.Log("점프시작");
         playerHealth.invincibility = true;
+        jumpState = true;
+        //characterController.Move();
     }
 
     public void JumpEnd()
     {
         //Debug.Log("점프끝");
         playerHealth.invincibility = false;
+        jumpState = false;
     }
 
     //사용자 의 입력을 받아 에니메이션을 업데이트함

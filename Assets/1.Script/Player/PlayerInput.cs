@@ -4,6 +4,7 @@ public class PlayerInput : MonoBehaviour
 {
     //다른 스크립트와 연결하기
     private PlayerHealth playerHealth;
+    private PlayerMovement playerMovement;
     //입력감지를 위해 사용하는 변수
     public string fireButtonName = "Fire1";
     public string zoomInButtonName = "ZoomIn";// 우클릭
@@ -26,6 +27,7 @@ public class PlayerInput : MonoBehaviour
     private void Awake()
     {
         playerHealth = GetComponent<PlayerHealth>();
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     private void Update()
@@ -35,7 +37,8 @@ public class PlayerInput : MonoBehaviour
 
         //게임 오버가 되면 유저의 입력을 무시하는 코드를 실행한다.
         if (GameManager.Instance != null
-            && GameManager.Instance.isGameover || playerHealth.restoreHealthProceeding == true)
+            && GameManager.Instance.isGameover || playerHealth.restoreHealthProceeding == true
+            || playerMovement.jumpState == true)
         {
             moveInput = Vector2.zero;
             fire = false;

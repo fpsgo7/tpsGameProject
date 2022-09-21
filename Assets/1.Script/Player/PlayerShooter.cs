@@ -14,17 +14,19 @@ public class PlayerShooter : MonoBehaviour
     //사용할 오브젝트
     public Gun gun;// 총 스크립트와 연결
     public LayerMask excludeTarget;//조준에서 제외할 대상
-    
+
     private PlayerInput playerInput;//플레이어 입력 스크립트와 연결
+    private PlayerMovement playerMovement;//플레이어 움직임 스크립트와 연결
     private Animator playerAnimator;//플레이어 에니메이션
     private Camera playerCamera;//플레이어 카메러
     public CinemachineFreeLook forrowCam;// 줌인 카메라
+    public GameObject playerDgree;// 플레이어 각도 수정
 
     private float waitingTimeForReleasingAim = 2.5f;//총 조준후 다시 풀어지는 시간
     private float lastFireInputTime; //마지막 발사 시간
     //줌인 줌아웃 float 변수
     public float zoomOutFieldOfView = 60f;
-    public float zoomOutScreenX = 0.3f;
+    public float zoomOutScreenX = 0.4f;
     public float zoomOutTopScreenY = 0.6f;
     public float zoomOutMidScreenY = 0.65f;
     public float zoomOutBotScreenY = 0.7f;
@@ -33,19 +35,18 @@ public class PlayerShooter : MonoBehaviour
     public float zoomInTopScreenY = 0.35f;
     public float zoomInMidScreenY = 0.75f;
     public float zoomInBotScreenY = 0.8f;
-    public float zoomFieldOfView=0;
-    public float zoomScreenX=0;
-    public float zoomTopScreenY=0;
-    public float zoomMidScreenY=0;
-    public float zoomBotScreenY=0;
-    private float waitingTimeForZoom= 0.000001f;//줌인 속도
+    public float zoomFieldOfView = 0;
+    public float zoomScreenX = 0;
+    public float zoomTopScreenY = 0;
+    public float zoomMidScreenY = 0;
+    public float zoomBotScreenY = 0;
+    private float waitingTimeForZoom = 0.000001f;//줌인 속도
     private float lastZoomTime; //줌 동작 한틱 기준
 
     private Vector3 aimPoint;//실제 조준대상 tps 기에 사용한다. 실제 조준점이 무조건 정중앙이 아니라서이다.
-    private bool linedUp => !(Mathf.Abs( playerCamera.transform.eulerAngles.y - transform.eulerAngles.y) > 1f);//플레이어가 바라보는 각도와 실제 조준 각도를 너무큰치 체크해준다.
+    private bool linedUp => !(Mathf.Abs(playerCamera.transform.eulerAngles.y - transform.eulerAngles.y) > 1f);//플레이어가 바라보는 각도와 실제 조준 각도를 너무큰치 체크해준다.
     //정면에 사격할수 있는지 적정거리가 되는지 체크하는 변수 (플레이어 케릭터 위치 + Vector3.up *  총의 발사 위치의 y축, 발사 포지션, 사격제외대상 레이어)
-    private bool hasEnoughDistance => !Physics.Linecast(transform.position + Vector3.up * gun.fireTransform.position.y,gun.fireTransform.position, ~excludeTarget);
-    private bool zoomStatus=false;
+    private bool hasEnoughDistance => !Physics.Linecast(transform.position + Vector3.up * gun.fireTransform.position.y, gun.fireTransform.position, ~excludeTarget);
     void Awake()
     {
         //플레이어가 자기자신을 쏘는 상황을 방지하기위하여 자기자신의 레이어를 추가한다.
@@ -65,7 +66,7 @@ public class PlayerShooter : MonoBehaviour
         playerCamera = Camera.main;
         playerInput = GetComponent<PlayerInput>();
         playerAnimator = GetComponent<Animator>();
-     
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     private void OnEnable()
@@ -92,28 +93,28 @@ public class PlayerShooter : MonoBehaviour
         {
             Reload();
         }
-        
-        if (playerInput.zoomIn == true )
+
+        if (playerInput.zoomIn == true)
         {
             ZoomIn();
         }
-        else if(playerInput.zoomIn == false)
+        else if (playerInput.zoomIn == false)
         {
             ZoomOut();
         }
-        
+
     }
 
     private void Update()
     {
         UpdateAimTarget();// 총의 조준지점은 계혹 업데이트해준다.
-        
+
         var angle = playerCamera.transform.eulerAngles.x;//카메라가 보는 위아래 각도를 구함
         if (angle > 270f) angle -= 360f;
         angle = angle / -180f + 0.5f;
         playerAnimator.SetFloat("Angle", angle);// 에니메이터에 각도값을 보내어 총을 위아레로 움직이게함
         //발사버튼을 안누른시간이 지정된시간보다 오래걸리면 실행됨
-        if(!playerInput.fire && Time.time >= lastFireInputTime + waitingTimeForReleasingAim)
+        if (!playerInput.fire && Time.time >= lastFireInputTime + waitingTimeForReleasingAim)
         {
             aimState = AimState.Idle;
         }
@@ -125,14 +126,14 @@ public class PlayerShooter : MonoBehaviour
     {
         //플레이어가 총쏘지 않는 동안에는 카메라와 플레이어가 보는 방향이 달라도되지만 
         //총을쏠때는 플레이어와 카메라방향이 일치해야한 다 이부분을 ㅊ크하기위하여 사용한다.
-        if(aimState == AimState.Idle)
+        if (aimState == AimState.Idle)
         {
 
             if (linedUp)
             { //조준점과 캐릭터가 정렬될 경우 
                 aimState = AimState.HipFire;//사격 상태로 바꾼다.
             }
-           
+
         }
         else if (aimState == AimState.HipFire)//발사중인 상태인경우
         {
@@ -164,13 +165,13 @@ public class PlayerShooter : MonoBehaviour
     {
         RaycastHit hit;
         //ViewPortToRay 지정한 지점에서 레이저를 발사한다.
-        var ray = playerCamera.ViewportPointToRay(new Vector3(0.5f,0.5f,0f));
+        var ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
-        if(Physics.Raycast(ray, out hit, gun.fireDistance, ~excludeTarget))
+        if (Physics.Raycast(ray, out hit, gun.fireDistance, ~excludeTarget))
         {
             aimPoint = hit.point;//레이저가 충돌한 부분을 조준지점으로 설정한다.
             //총발사와 벽사이에 끼어드는 충돌대상이 있으면
-            if(Physics.Linecast(gun.fireTransform.position,hit.point,out hit, ~excludeTarget))
+            if (Physics.Linecast(gun.fireTransform.position, hit.point, out hit, ~excludeTarget))
             {
                 aimPoint = hit.point;
             }
@@ -184,16 +185,16 @@ public class PlayerShooter : MonoBehaviour
     private void UpdateUI()
     {
         if (gun == null || UIManager.Instance == null) return;
-        
+
         UIManager.Instance.UpdateAmmoText(gun.magAmmo, gun.ammoRemain);//남은 탄약수 갱신
-        
+
         UIManager.Instance.SetActiveCrosshair(hasEnoughDistance);//크로스 해어 활성화
         UIManager.Instance.UpdateCrossHairPosition(aimPoint);//총알이 맞게되는 지점을 보내줘 조준점 이동하게함
     }
     //총을 쥐는 것을 다룸
     private void OnAnimatorIK(int layerIndex)
     {
-        if (gun == null || gun.state == Gun.State.Reloading )
+        if (gun == null || gun.state == Gun.State.Reloading)
             return;
 
         playerAnimator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1.0f);
@@ -203,24 +204,24 @@ public class PlayerShooter : MonoBehaviour
         playerAnimator.SetIKRotation(AvatarIKGoal.LeftHand, gun.leftHandMount.rotation);
     }
     //조준 시작
-    int i = 0;
+    //int i = 0;
     private void ZoomIn()
     {
-        if (zoomFieldOfView >= zoomInFieldOfView && Time.time >= lastZoomTime + waitingTimeForZoom)
+        if (zoomFieldOfView > zoomInFieldOfView && Time.time >= lastZoomTime + waitingTimeForZoom)
         {
             //부드럽게 하기
-            forrowCam.m_Lens.FieldOfView = (zoomFieldOfView -= 3f);
-            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomTopScreenY -=0.005f);
-            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomMidScreenY +=0.005f);
-            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomBotScreenY +=0.01f);
-            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX -= 0.005f);
-            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX -= 0.005f);
-            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX -= 0.005f);
+            forrowCam.m_Lens.FieldOfView = (zoomFieldOfView -= 2f);
+            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomTopScreenY += 0.02f);
+            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomMidScreenY += 0.02f);
+            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomBotScreenY += 0.02f);
+            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX -= 0.015f);
+            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX);
+            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX);
             lastZoomTime = Time.time;
-            i++;
-            Debug.Log(i);
+            // i++;
+            // Debug.Log(i);
         }
-        if(zoomFieldOfView <= zoomInFieldOfView +1)
+        if (zoomFieldOfView <= zoomInFieldOfView + 1)
             ZoomInEnd();
     }
     private void ZoomInEnd()
@@ -238,19 +239,21 @@ public class PlayerShooter : MonoBehaviour
         zoomMidScreenY = zoomInMidScreenY;
         zoomBotScreenY = zoomInBotScreenY;
         zoomScreenX = zoomInScreenX;
+        playerMovement.speed = playerMovement.walkSpeed;// 움직임 속도 조절
+
     }
     //조준 끝
     private void ZoomOut()
     {
-        if(zoomFieldOfView <= zoomOutFieldOfView && Time.time >= lastZoomTime + waitingTimeForZoom)
+        if (zoomFieldOfView <= zoomOutFieldOfView && Time.time >= lastZoomTime + waitingTimeForZoom)
         {
-            forrowCam.m_Lens.FieldOfView = (zoomFieldOfView += 3f);
-            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomTopScreenY += 0.005f);
-            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomMidScreenY -= 0.005f);
-            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomBotScreenY -= 0.01f);
-            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX += 0.005f);
-            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX += 0.005f);
-            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX += 0.005f);
+            forrowCam.m_Lens.FieldOfView = (zoomFieldOfView += 2f);
+            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomTopScreenY -= 0.02f);
+            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomMidScreenY -= 0.02f);
+            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomBotScreenY -= 0.02f);
+            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX += 0.015f);
+            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX);
+            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX);
             lastZoomTime = Time.time;
         }
         if (zoomFieldOfView >= zoomOutFieldOfView - 1)
@@ -271,5 +274,6 @@ public class PlayerShooter : MonoBehaviour
         zoomMidScreenY = zoomOutMidScreenY;
         zoomBotScreenY = zoomOutBotScreenY;
         zoomScreenX = zoomOutScreenX;
+        playerMovement.speed = playerMovement.runSpeed;
     }
 }
