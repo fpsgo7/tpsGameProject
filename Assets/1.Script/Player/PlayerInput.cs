@@ -31,10 +31,8 @@ public class PlayerInput : MonoBehaviour
     private void Update()
     {
         if (Input.GetButtonUp(restoreHealthButtonName))
-        {
             restoreHealth = false;
-            Debug.Log("치료 중단");
-        }
+
         //게임 오버가 되면 유저의 입력을 무시하는 코드를 실행한다.
         if (GameManager.Instance != null
             && GameManager.Instance.isGameover || playerHealth.restoreHealthProceeding == true)
@@ -56,12 +54,7 @@ public class PlayerInput : MonoBehaviour
         zoomIn = Input.GetButton(zoomInButtonName);
         reload = Input.GetButtonDown(reloadButtonName);
         if (Input.GetButtonDown(restoreHealthButtonName))
-        {
             restoreHealth = true;
-            Debug.Log("치료 시작");
-        }
-      
-        
-      
+
     }
 }

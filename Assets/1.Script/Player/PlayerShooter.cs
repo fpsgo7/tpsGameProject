@@ -22,12 +22,30 @@ public class PlayerShooter : MonoBehaviour
 
     private float waitingTimeForReleasingAim = 2.5f;//총 조준후 다시 풀어지는 시간
     private float lastFireInputTime; //마지막 발사 시간
-    
+    //줌인 줌아웃 float 변수
+    public float zoomOutFieldOfView = 60f;
+    public float zoomOutScreenX = 0.3f;
+    public float zoomOutTopScreenY = 0.6f;
+    public float zoomOutMidScreenY = 0.65f;
+    public float zoomOutBotScreenY = 0.7f;
+    public float zoomInFieldOfView = 30f;
+    public float zoomInScreenX = 0.15f;
+    public float zoomInTopScreenY = 0.35f;
+    public float zoomInMidScreenY = 0.75f;
+    public float zoomInBotScreenY = 0.8f;
+    public float zoomFieldOfView=0;
+    public float zoomScreenX=0;
+    public float zoomTopScreenY=0;
+    public float zoomMidScreenY=0;
+    public float zoomBotScreenY=0;
+    private float waitingTimeForZoom= 0.000001f;//줌인 속도
+    private float lastZoomTime; //줌 동작 한틱 기준
+
     private Vector3 aimPoint;//실제 조준대상 tps 기에 사용한다. 실제 조준점이 무조건 정중앙이 아니라서이다.
     private bool linedUp => !(Mathf.Abs( playerCamera.transform.eulerAngles.y - transform.eulerAngles.y) > 1f);//플레이어가 바라보는 각도와 실제 조준 각도를 너무큰치 체크해준다.
     //정면에 사격할수 있는지 적정거리가 되는지 체크하는 변수 (플레이어 케릭터 위치 + Vector3.up *  총의 발사 위치의 y축, 발사 포지션, 사격제외대상 레이어)
     private bool hasEnoughDistance => !Physics.Linecast(transform.position + Vector3.up * gun.fireTransform.position.y,gun.fireTransform.position, ~excludeTarget);
-    
+    private bool zoomStatus=false;
     void Awake()
     {
         //플레이어가 자기자신을 쏘는 상황을 방지하기위하여 자기자신의 레이어를 추가한다.
@@ -35,7 +53,11 @@ public class PlayerShooter : MonoBehaviour
         {
             excludeTarget |= 1 << gameObject.layer;
         }
-
+        zoomFieldOfView = zoomOutFieldOfView;
+        zoomScreenX = zoomOutScreenX;
+        zoomTopScreenY = zoomOutTopScreenY;
+        zoomMidScreenY = zoomOutMidScreenY;
+        zoomBotScreenY = zoomOutBotScreenY;
     }
 
     private void Start()
@@ -71,26 +93,13 @@ public class PlayerShooter : MonoBehaviour
             Reload();
         }
         
-        if (playerInput.zoomIn)
+        if (playerInput.zoomIn == true )
         {
-            Debug.Log("조준중");
-            forrowCam.m_Lens.FieldOfView = 30;
-            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = 0.35f;
-            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = 0.75f;
-            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = 0.8f;
-            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.15f;
-            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.15f;
-            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.15f;
+            ZoomIn();
         }
-        else
+        else if(playerInput.zoomIn == false)
         {
-            forrowCam.m_Lens.FieldOfView = 60;
-            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = 0.6f;
-            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = 0.65f;
-            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = 0.7f;
-            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;
-            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;
-            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;
+            ZoomOut();
         }
         
     }
@@ -192,5 +201,75 @@ public class PlayerShooter : MonoBehaviour
 
         playerAnimator.SetIKPosition(AvatarIKGoal.LeftHand, gun.leftHandMount.position);
         playerAnimator.SetIKRotation(AvatarIKGoal.LeftHand, gun.leftHandMount.rotation);
+    }
+    //조준 시작
+    int i = 0;
+    private void ZoomIn()
+    {
+        if (zoomFieldOfView >= zoomInFieldOfView && Time.time >= lastZoomTime + waitingTimeForZoom)
+        {
+            //부드럽게 하기
+            forrowCam.m_Lens.FieldOfView = (zoomFieldOfView -= 3f);
+            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomTopScreenY -=0.005f);
+            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomMidScreenY +=0.005f);
+            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomBotScreenY +=0.01f);
+            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX -= 0.005f);
+            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX -= 0.005f);
+            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX -= 0.005f);
+            lastZoomTime = Time.time;
+            i++;
+            Debug.Log(i);
+        }
+        if(zoomFieldOfView <= zoomInFieldOfView +1)
+            ZoomInEnd();
+    }
+    private void ZoomInEnd()
+    {
+        Debug.Log("줌인");
+        forrowCam.m_Lens.FieldOfView = zoomInFieldOfView;
+        forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = zoomInTopScreenY;
+        forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = zoomInMidScreenY;
+        forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = zoomInBotScreenY;
+        forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = zoomInScreenX;
+        forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = zoomInScreenX;
+        forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = zoomInScreenX;
+        zoomFieldOfView = zoomInFieldOfView;
+        zoomTopScreenY = zoomInTopScreenY;
+        zoomMidScreenY = zoomInMidScreenY;
+        zoomBotScreenY = zoomInBotScreenY;
+        zoomScreenX = zoomInScreenX;
+    }
+    //조준 끝
+    private void ZoomOut()
+    {
+        if(zoomFieldOfView <= zoomOutFieldOfView && Time.time >= lastZoomTime + waitingTimeForZoom)
+        {
+            forrowCam.m_Lens.FieldOfView = (zoomFieldOfView += 3f);
+            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomTopScreenY += 0.005f);
+            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomMidScreenY -= 0.005f);
+            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomBotScreenY -= 0.01f);
+            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX += 0.005f);
+            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX += 0.005f);
+            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX += 0.005f);
+            lastZoomTime = Time.time;
+        }
+        if (zoomFieldOfView >= zoomOutFieldOfView - 1)
+            ZoomOutEnd();
+    }
+    private void ZoomOutEnd()
+    {
+        Debug.Log("줌아웃");
+        forrowCam.m_Lens.FieldOfView = zoomOutFieldOfView;
+        forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = zoomOutTopScreenY;
+        forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = zoomOutMidScreenY;
+        forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = zoomOutBotScreenY;
+        forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = zoomOutScreenX;
+        forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = zoomOutScreenX;
+        forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = zoomOutScreenX;
+        zoomFieldOfView = zoomOutFieldOfView;
+        zoomTopScreenY = zoomOutTopScreenY;
+        zoomMidScreenY = zoomOutMidScreenY;
+        zoomBotScreenY = zoomOutBotScreenY;
+        zoomScreenX = zoomOutScreenX;
     }
 }
