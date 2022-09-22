@@ -113,7 +113,6 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log("점프시작");
         playerHealth.invincibility = true;
         jumpState = true;
-        //characterController.Move();
     }
 
     public void JumpEnd()

@@ -37,10 +37,17 @@ public class PlayerInput : MonoBehaviour
 
         //게임 오버가 되면 유저의 입력을 무시하는 코드를 실행한다.
         if (GameManager.Instance != null
-            && GameManager.Instance.isGameover || playerHealth.restoreHealthProceeding == true
-            || playerMovement.jumpState == true)
+            && GameManager.Instance.isGameover || playerHealth.restoreHealthProceeding == true)
         {
             moveInput = Vector2.zero;
+            fire = false;
+            zoomIn = false;
+            reload = false;
+            jump = false;
+            return;
+        }
+        if(playerMovement.jumpState == true)
+        {
             fire = false;
             zoomIn = false;
             reload = false;
