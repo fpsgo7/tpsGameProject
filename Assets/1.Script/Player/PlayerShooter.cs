@@ -13,6 +13,7 @@ public class PlayerShooter : MonoBehaviour
     public AimState aimState { get; private set; }
     //사용할 오브젝트
     public Gun gun;// 총 스크립트와 연결
+    public LateUpdateFollow lateUpdateFollow;//총잡는 부분 수적
     public LayerMask excludeTarget;//조준에서 제외할 대상
 
     private PlayerInput playerInput;//플레이어 입력 스크립트와 연결
@@ -47,6 +48,7 @@ public class PlayerShooter : MonoBehaviour
     private bool linedUp => !(Mathf.Abs(playerCamera.transform.eulerAngles.y - transform.eulerAngles.y) > 1f);//플레이어가 바라보는 각도와 실제 조준 각도를 너무큰치 체크해준다.
     //정면에 사격할수 있는지 적정거리가 되는지 체크하는 변수 (플레이어 케릭터 위치 + Vector3.up *  총의 발사 위치의 y축, 발사 포지션, 사격제외대상 레이어)
     private bool hasEnoughDistance => !Physics.Linecast(transform.position + Vector3.up * gun.fireTransform.position.y, gun.fireTransform.position, ~excludeTarget);
+    public bool zoomIn=false;
     void Awake()
     {
         //플레이어가 자기자신을 쏘는 상황을 방지하기위하여 자기자신의 레이어를 추가한다.
@@ -202,6 +204,7 @@ public class PlayerShooter : MonoBehaviour
 
         playerAnimator.SetIKPosition(AvatarIKGoal.LeftHand, gun.leftHandMount.position);
         playerAnimator.SetIKRotation(AvatarIKGoal.LeftHand, gun.leftHandMount.rotation);
+       
     }
     //조준 시작
     //int i = 0;
@@ -240,7 +243,9 @@ public class PlayerShooter : MonoBehaviour
         zoomBotScreenY = zoomInBotScreenY;
         zoomScreenX = zoomInScreenX;
         playerMovement.speed = playerMovement.walkSpeed;// 움직임 속도 조절
-
+        lateUpdateFollow.ZoomInFollow();
+        gun.ZoomInFollow();
+        zoomIn = true;
     }
     //조준 끝
     private void ZoomOut()
@@ -275,5 +280,8 @@ public class PlayerShooter : MonoBehaviour
         zoomBotScreenY = zoomOutBotScreenY;
         zoomScreenX = zoomOutScreenX;
         playerMovement.speed = playerMovement.runSpeed;
+        lateUpdateFollow.ZoomOutFollow();
+        gun.ZoomOutFollow();
+        zoomIn = false;
     }
 }

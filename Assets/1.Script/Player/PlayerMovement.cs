@@ -127,7 +127,16 @@ public class PlayerMovement : MonoBehaviour
     {
         //부드럽게 값이 변화 하기위해 사용
         var animationSpeedPercent = currentSpeed / speed;
-        animator.SetFloat("Vertical Move", moveInput.y * animationSpeedPercent,0.05f,Time.deltaTime);
-        animator.SetFloat("Horizontal Move", moveInput.x * animationSpeedPercent, 0.05f, Time.deltaTime);
+        if(playerInput.zoomIn == true)
+        {
+            animator.SetFloat("Vertical Move", moveInput.y * animationSpeedPercent/2, 0.05f, Time.deltaTime);
+            animator.SetFloat("Horizontal Move", moveInput.x * animationSpeedPercent/2, 0.05f, Time.deltaTime);
+        }
+        else
+        {
+            animator.SetFloat("Vertical Move", moveInput.y * animationSpeedPercent, 0.05f, Time.deltaTime);
+            animator.SetFloat("Horizontal Move", moveInput.x * animationSpeedPercent, 0.05f, Time.deltaTime);
+        }
+        
     }
 }

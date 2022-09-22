@@ -25,6 +25,9 @@ public class Gun : MonoBehaviour
     //위치 관련
     public Transform fireTransform;
     public Transform leftHandMount;
+    public Transform leftHandZoomIn;
+    public Transform leftHandZoomOut;
+    public Transform RightHandMount;
     //설정값
     public float damage = 25;
     public float fireDistance = 100f;
@@ -177,6 +180,16 @@ public class Gun : MonoBehaviour
 
         state = State.Ready;
 
+    }
+
+    //중인 줌 아웃
+    public void ZoomInFollow()
+    {
+        leftHandMount = leftHandZoomIn;
+    }
+    public void ZoomOutFollow()
+    {
+        leftHandMount = leftHandZoomOut;
     }
 
     private void Update()
