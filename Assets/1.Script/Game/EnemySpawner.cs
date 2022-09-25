@@ -64,7 +64,7 @@ public class EnemySpawner : MonoBehaviour
 
         var enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
 
-        enemy.Setup(health, damage, speed, speed * 0.3f, skinColor);
+        //enemy.Setup(health, damage, speed, speed * 0.3f, skinColor);
 
         enemies.Add(enemy);
 
