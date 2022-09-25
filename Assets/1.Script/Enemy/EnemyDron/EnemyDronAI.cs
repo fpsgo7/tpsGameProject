@@ -16,10 +16,6 @@ public class EnemyDronAI : MonoBehaviour
     private State state;
 
     public NavMeshAgent agent; // 경로계산 AI 에이전트
-    public Animator animator; // 애니메이터 컴포넌트
-
-    public Transform attackRoot;
-    public Transform eyeTransform;
 
     public AudioSource audioPlayer; // 오디오 소스 컴포넌트
 
@@ -36,7 +32,7 @@ public class EnemyDronAI : MonoBehaviour
 
     public LivingEntity targetEntity; // 추적할 대상
     public LayerMask whatIsTarget; // 추적 대상 레이어
-    private EnemyHealth enemyHealth;
+    private EnemyDronHealth enemyHealth;
 
     //적의 공격을 범위 기반이라서 여러 개의 충돌포인트가 생긴다.
     private RaycastHit[] hits = new RaycastHit[10];
@@ -49,12 +45,12 @@ public class EnemyDronAI : MonoBehaviour
     {
         //컴포넌트 연결
         agent = GetComponent<NavMeshAgent>();//네비게이션 연결
-        animator = GetComponent<Animator>();//에니메이터 연결
         audioPlayer = GetComponent<AudioSource>();//오디오 연결
-        enemyHealth = GetComponent<EnemyHealth>();
+        enemyHealth = GetComponent<EnemyDronHealth>();
         //skinRenderer = GetComponentInChildren<Renderer>();//렌더러 연결
 
         //네비게이션 에이전트의 값 초기화
+        attackDistance = 2;
         agent.stoppingDistance = attackDistance;
         agent.speed = patrolSpeed;
     }
@@ -76,10 +72,12 @@ public class EnemyDronAI : MonoBehaviour
             if (distance <= attackDistance)
             {
                 //폭발 명령
+                Debug.Log("폭빨");
             }
         }
     }
-
+    //필요없을듯함
+    /*
     private void FixedUpdate()
     {
         if (enemyHealth.dead) return;//죽으면 실행을 막음
@@ -101,7 +99,7 @@ public class EnemyDronAI : MonoBehaviour
 
         }
     }
-
+    */
     // 주기적으로 추적할 대상의 위치를 찾아 경로를 갱신
     private IEnumerator UpdatePath()
     {
@@ -137,12 +135,13 @@ public class EnemyDronAI : MonoBehaviour
 
                 // 20 유닛의 반지름을 가진 가상의 구를 그렸을때, 구와 겹치는 모든 콜라이더를 가져옴
                 // 단, whatIsTarget 레이어를 가진 콜라이더만 가져오도록 필터링
-                var colliders = Physics.OverlapSphere(eyeTransform.position, viewDistance, whatIsTarget);
+                var colliders = Physics.OverlapSphere(transform.position, viewDistance, whatIsTarget);
 
                 // 모든 콜라이더들을 순회하면서, 살아있는 LivingEntity 찾기
                 foreach (var collider in colliders)
                 {
-                    if (!IsTargetOnSight(collider.transform)) break;
+                    //시야각 상관없이 일정거리에 오면 값을 가져올수 있음
+                    //if (!IsTargetOnSight(collider.transform)) break;
 
                     var livingEntity = collider.GetComponent<LivingEntity>();
 
@@ -162,7 +161,9 @@ public class EnemyDronAI : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
     }
+    
     //범위 안에 있는 적이 시야안에 있는 지 체크함
+    /*
     private bool IsTargetOnSight(Transform target)
     {
         RaycastHit hit;
@@ -183,4 +184,5 @@ public class EnemyDronAI : MonoBehaviour
 
         return false;
     }
+    */
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyDronHealth : LivingEntity
 {
-    private EnemyAI enemyAI;
+    private EnemyDronAI enemyDronAI;
 
     public AudioClip hitClip; // 피격시 재생할 소리
     public AudioClip deathClip; // 사망시 재생할 소리
@@ -15,7 +15,7 @@ public class EnemyDronHealth : LivingEntity
 
     private void Start()
     {
-        enemyAI = GetComponent<EnemyAI>();
+        enemyDronAI = GetComponent<EnemyDronAI>();
     }
     private void FixedUpdate()
     {
@@ -47,9 +47,9 @@ public class EnemyDronHealth : LivingEntity
     {
         if (!base.ApplyDamage(damageMessage)) return false;
 
-        if (enemyAI.targetEntity == null)
+        if (enemyDronAI.targetEntity == null)
         {
-            enemyAI.targetEntity = damageMessage.damager.GetComponent<LivingEntity>();
+            enemyDronAI.targetEntity = damageMessage.damager.GetComponent<LivingEntity>();
         }
 
         EffectManager.Instance.PlayHitEffect(damageMessage.hitPoint, damageMessage.hitNormal, transform, EffectManager.EffectType.Flesh);
@@ -68,13 +68,11 @@ public class EnemyDronHealth : LivingEntity
         GetComponent<Collider>().enabled = false;
 
         // AI 추적을 중지하고 내비메쉬 컴포넌트를 비활성화
-        enemyAI.agent.enabled = false;
+        enemyDronAI.agent.enabled = false;
 
-        // 사망 애니메이션 재생
-        enemyAI.animator.applyRootMotion = true;
         //enemyAI.animator.SetTrigger("Die");
 
         // 사망 효과음 재생
-        if (deathClip != null) enemyAI.audioPlayer.PlayOneShot(deathClip);
+        //if (deathClip != null) enemyAI.audioPlayer.PlayOneShot(deathClip);
     }
 }
