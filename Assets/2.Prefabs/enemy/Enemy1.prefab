@@ -165,7 +165,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 294194901485591557}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.6, z: 0.12}
+  m_LocalPosition: {x: 0, y: 1, z: 0.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7600356970628859850}
@@ -1768,8 +1768,9 @@ GameObject:
   - component: {fileID: 7075776006250765684}
   - component: {fileID: 7075776006250765683}
   - component: {fileID: 7075776006250765682}
-  - component: {fileID: 7075776006250765681}
-  m_Layer: 0
+  - component: {fileID: 891821821}
+  - component: {fileID: 1068198861807580999}
+  m_Layer: 9
   m_Name: Enemy1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1807,7 +1808,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 3cf02b12f8e95694f86d8fe121470dec, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -1945,7 +1946,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &7075776006250765681
+--- !u!114 &891821821
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1954,25 +1955,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 7075776006250765680}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d975d9d61554c46ecbe2127e3067fd78, type: 3}
+  m_Script: {fileID: 11500000, guid: d15659a3afb895c4da0b616d5e3ca84f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
+  agent: {fileID: 0}
+  animator: {fileID: 0}
   attackRoot: {fileID: 294194901590704781}
   eyeTransform: {fileID: 294194901485591558}
-  hitClip: {fileID: 8300000, guid: 2027806ff2dfad74580b0822dc0c159d, type: 3}
-  deathClip: {fileID: 8300000, guid: 2027806ff2dfad74580b0822dc0c159d, type: 3}
-  runSpeed: 1
+  audioPlayer: {fileID: 0}
+  runSpeed: 8
   turnSmoothTime: 0.1
   damage: 30
   attackRadius: 0.5
-  fieldOfView: 50
+  fieldOfView: 100
   viewDistance: 10
-  patrolSpeed: 3
+  patrolSpeed: 0
   targetEntity: {fileID: 0}
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &1068198861807580999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7075776006250765680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7192c1e7e2e2e8458e0561d325d853f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  hitClip: {fileID: 0}
+  deathClip: {fileID: 0}
+  enemyHealth: 0
 --- !u!1 &7080931406387280190
 GameObject:
   m_ObjectHideFlags: 0

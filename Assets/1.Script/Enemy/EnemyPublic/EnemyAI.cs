@@ -32,7 +32,6 @@ public class EnemyAI : MonoBehaviour
     private float turnSmoothVelocity;//좀비회전에 실시간 변화량
 
     public float damage = 30f;
-    public float attackRadius = 2f;
     private float attackDistance;
 
     public float fieldOfView = 50f;
@@ -59,7 +58,6 @@ public class EnemyAI : MonoBehaviour
         if (attackRoot != null)
         {
             Gizmos.color = new Color(1f, 0f, 0f, 0.5f);
-            Gizmos.DrawSphere(attackRoot.position, attackRadius);
         }
 
         var leftRayRotation = Quaternion.AngleAxis(-fieldOfView * 0.5f, Vector3.up);
@@ -79,12 +77,6 @@ public class EnemyAI : MonoBehaviour
         enemyHealth = GetComponent<EnemyHealth>();
         //skinRenderer = GetComponentInChildren<Renderer>();//렌더러 연결
 
-        //공격 거리
-        attackDistance = Vector3.Distance(transform.position,
-                             new Vector3(attackRoot.position.x, transform.position.y, attackRoot.position.z)) +
-                         attackRadius;
-
-        attackDistance += agent.radius;
         //네비게이션 에이전트의 값 초기화
         agent.stoppingDistance = attackDistance;
         agent.speed = patrolSpeed;
@@ -106,12 +98,9 @@ public class EnemyAI : MonoBehaviour
             //플레이어와 적과의 거리가 공격거리보다 작다면
             if (distance <= attackDistance)
             {
-                //공격시작
-                BeginAttack();
+               //공격시작
             }
         }
-        // 추적 대상의 존재 여부에 따라 다른 애니메이션을 재생
-        animator.SetFloat("Speed", agent.desiredVelocity.magnitude);
     }
 
     private void FixedUpdate()
@@ -134,27 +123,7 @@ public class EnemyAI : MonoBehaviour
             var direction = transform.forward;//적의 앞방향값을 가짐
             var deltaDistance = agent.velocity.magnitude * Time.deltaTime;
 
-            var size = Physics.SphereCastNonAlloc(attackRoot.position, attackRadius, direction, hits, deltaDistance,
-                whatIsTarget);
-
-            for (var i = 0; i < size; i++)
-            {
-                var attackTargetEntity = hits[i].collider.GetComponent<LivingEntity>();
-
-                if (attackTargetEntity != null && !lastAttackedTargets.Contains(attackTargetEntity))
-                {
-                    var message = new DamageMessage();
-                    message.amount = damage;
-                    message.damager = gameObject;
-                    message.hitPoint = attackRoot.TransformPoint(hits[i].point);
-                    message.hitNormal = attackRoot.TransformDirection(hits[i].normal);
-
-                    attackTargetEntity.ApplyDamage(message);
-
-                    lastAttackedTargets.Add(attackTargetEntity);
-                    break;
-                }
-            }
+           
         }
     }
 
@@ -218,29 +187,7 @@ public class EnemyAI : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
     }
-    //공격시작
-    public void BeginAttack()
-    {
-        state = State.AttackBegin;
-
-        agent.isStopped = true;
-        animator.SetTrigger("Attack");
-    }
-    //공격 가능
-    public void EnableAttack()
-    {
-        state = State.Attacking;
-
-        lastAttackedTargets.Clear();
-    }
-    //공격 중지
-    public void DisableAttack()
-    {
-        state = State.Tracking;
-
-        agent.isStopped = false;
-    }
-
+    //범위 안에 있는 적이 시야안에 있는 지 체크함
     private bool IsTargetOnSight(Transform target)
     {
         RaycastHit hit;
