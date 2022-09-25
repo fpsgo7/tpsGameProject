@@ -35,6 +35,7 @@ public class Enemy : LivingEntity
     [Range(0.01f, 2f)] public float turnSmoothTime = 0.1f;//회전 지연속도
     private float turnSmoothVelocity;//좀비회전에 실시간 변화량
 
+    public float enemyHealth;// 체력 확인용
     public float damage = 30f;
     public float attackRadius = 2f;
     private float attackDistance;
@@ -75,38 +76,40 @@ public class Enemy : LivingEntity
 
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-        audioPlayer = GetComponent<AudioSource>();
-        skinRenderer = GetComponentInChildren<Renderer>();
+        //컴포넌트 연결
+        agent = GetComponent<NavMeshAgent>();//네비게이션 연결
+        animator = GetComponent<Animator>();//에니메이터 연결
+        audioPlayer = GetComponent<AudioSource>();//오디오 연결
+        skinRenderer = GetComponentInChildren<Renderer>();//렌더러 연결
 
+        //공격 거리
         attackDistance = Vector3.Distance(transform.position,
                              new Vector3(attackRoot.position.x, transform.position.y, attackRoot.position.z)) +
                          attackRadius;
 
         attackDistance += agent.radius;
-
+        //네비게이션 에이전트의 값 초기화
         agent.stoppingDistance = attackDistance;
         agent.speed = patrolSpeed;
     }
-
+    //봉인하기
     // 적 AI의 초기 스펙을 결정하는 셋업 메서드
-    public void Setup(float health, float damage,
-        float runSpeed, float patrolSpeed, Color skinColor)
-    {
-        // 체력 설정
-        this.startingHealth = health;
-        this.health = health;
+    //public void Setup(float health, float damage,
+    //    float runSpeed, float patrolSpeed, Color skinColor)
+    //{
+    //    // 체력 설정
+    //    this.startingHealth = health;
+    //    this.health = health;
 
-        // 내비메쉬 에이전트의 이동 속도 설정
-        this.runSpeed = runSpeed;
-        this.patrolSpeed = patrolSpeed;
+    //    // 내비메쉬 에이전트의 이동 속도 설정
+    //    this.runSpeed = runSpeed;
+    //    this.patrolSpeed = patrolSpeed;
 
-        this.damage = damage;
+    //    this.damage = damage;
 
-        // 렌더러가 사용중인 머테리얼의 컬러를 변경, 외형 색이 변함
-        skinRenderer.material.color = skinColor;
-    }
+    //    // 렌더러가 사용중인 머테리얼의 컬러를 변경, 외형 색이 변함
+    //    skinRenderer.material.color = skinColor;
+    //}
 
     private void Start()
     {
@@ -116,10 +119,11 @@ public class Enemy : LivingEntity
 
     private void Update()
     {
-        if (dead) return;
-
+        if (dead) return;//죽으면 반복문을 멈춤
+        //상태값이 추적이고 추적상대가 존재한다면 참이됨
         if (state == State.Tracking && targetEntity != null)
         {
+            //적과 플레이어간 거리를 구함
             var distance = Vector3.Distance(targetEntity.transform.position, transform.position);
             //플레이어와 적과의 거리가 공격거리보다 작다면
             if (distance <= attackDistance)
@@ -129,6 +133,8 @@ public class Enemy : LivingEntity
             }
         }
 
+        enemyHealth = health;//체력을 유니티 에디터에서 보기위해 임시로 사용
+
 
         // 추적 대상의 존재 여부에 따라 다른 애니메이션을 재생
         animator.SetFloat("Speed", agent.desiredVelocity.magnitude);
@@ -136,9 +142,9 @@ public class Enemy : LivingEntity
 
     private void FixedUpdate()
     {
-        if (dead) return;
+        if (dead) return;//죽으면 실행을 막음
 
-
+        //공격하는 동안 자연스럽게 플레이어를 보게한다.
         if (state == State.AttackBegin || state == State.Attacking)
         {
             var lookRotation =
@@ -148,10 +154,10 @@ public class Enemy : LivingEntity
             transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngleY,
                                         ref turnSmoothVelocity, turnSmoothTime);
         }
-
+        //공격 상태일 경우
         if (state == State.Attacking)
         {
-            var direction = transform.forward;
+            var direction = transform.forward;//적의 앞방향값을 가짐
             var deltaDistance = agent.velocity.magnitude * Time.deltaTime;
 
             var size = Physics.SphereCastNonAlloc(attackRoot.position, attackRadius, direction, hits, deltaDistance,
@@ -239,7 +245,7 @@ public class Enemy : LivingEntity
         }
     }
 
-    // 데미지를 입었을때 실행할 처리
+    // 데미지를 입었을때 실행할 처리 체력부분
     public override bool ApplyDamage(DamageMessage damageMessage)
     {
         if (!base.ApplyDamage(damageMessage)) return false;
@@ -254,7 +260,7 @@ public class Enemy : LivingEntity
 
         return true;
     }
-
+    //공격시작
     public void BeginAttack()
     {
         state = State.AttackBegin;
@@ -262,14 +268,14 @@ public class Enemy : LivingEntity
         agent.isStopped = true;
         animator.SetTrigger("Attack");
     }
-
+    //공격 가능
     public void EnableAttack()
     {
         state = State.Attacking;
 
         lastAttackedTargets.Clear();
     }
-
+    //공격 중지
     public void DisableAttack()
     {
         state = State.Tracking;

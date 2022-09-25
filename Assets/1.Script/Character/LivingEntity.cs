@@ -47,6 +47,18 @@ public class LivingEntity : MonoBehaviour, IDamageable
         //이후 공격이 성공했다는 신호를 보냄
         return true;
     }
+    //폭파 데미지
+    public virtual bool ApplyDamage(int damage)//매계변수로 DamageMessage 스크립트의 내용을 받는다.
+    {
+        //대미지를 입었으므로 시간을 넣어 업데이터한다.
+        lastDamagedTime = Time.time;
+        health -= damage;
+        //만약 체력이 0보다 작거나 같으면 죽는 함수 실행
+        if (health <= 0)
+            Die();
+        //이후 공격이 성공했다는 신호를 보냄
+        return true;
+    }
     //체력 회복
     public virtual void RestoreHealth()
     {

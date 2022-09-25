@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text scoreText;
     [SerializeField] private Text ammoText;
     [SerializeField] private Text healthKitText;
+    [SerializeField] private Text grenadeText;
     [SerializeField] private Text fullAmmoText;
     [SerializeField] private Text waveText;
     
@@ -86,6 +87,11 @@ public class UIManager : MonoBehaviour
     public void UpdateRestoreHealthEnd()
     {
         restoreHealthSlider.SetActive(false);
+    }
+    //수류탄 개수
+    public void UpdateGrenadeText(int grenade)
+    {
+        grenadeText.text = grenade + "";
     }
     //크로스헤어 보여주기 관련 
     public void SetActiveCrosshair(bool active)

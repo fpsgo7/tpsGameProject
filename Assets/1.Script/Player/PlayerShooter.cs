@@ -18,6 +18,7 @@ public class PlayerShooter : MonoBehaviour
 
     private PlayerInput playerInput;//플레이어 입력 스크립트와 연결
     private PlayerMovement playerMovement;//플레이어 움직임 스크립트와 연결
+    private FireGrenade fireGrenade;
     private Animator playerAnimator;//플레이어 에니메이션
     private Camera playerCamera;//플레이어 카메러
     public CinemachineFreeLook forrowCam;// 줌인 카메라
@@ -69,6 +70,7 @@ public class PlayerShooter : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         playerAnimator = GetComponent<Animator>();
         playerMovement = GetComponent<PlayerMovement>();
+        fireGrenade = GetComponent<FireGrenade>();
     }
 
     private void OnEnable()
@@ -95,6 +97,11 @@ public class PlayerShooter : MonoBehaviour
         {
             Reload();
         }
+        else if (playerInput.Grenade)
+        {
+            fireGrenade.Fire();
+        }
+        
 
         if (playerInput.zoomIn == true)
         {
