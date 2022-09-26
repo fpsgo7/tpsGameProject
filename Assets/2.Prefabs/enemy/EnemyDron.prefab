@@ -296,8 +296,6 @@ GameObject:
   - component: {fileID: 4681093745515126784}
   - component: {fileID: 7231887363889274269}
   - component: {fileID: 7231887363889274267}
-  - component: {fileID: 7231887363889274268}
-  - component: {fileID: 7231887363889274270}
   m_Layer: 9
   m_Name: EnemyDron
   m_TagString: Untagged
@@ -497,52 +495,6 @@ MonoBehaviour:
   hitClip: {fileID: 0}
   deathClip: {fileID: 0}
   enemyHealth: 0
---- !u!114 &7231887363889274268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3017766069375984416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67fca034f39998348a4e521991ef5d63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  audioPlayer: {fileID: 0}
-  runSpeed: 10
-  turnSmoothTime: 0.1
-  damage: 30
-  fieldOfView: 50
-  viewDistance: 10
-  patrolSpeed: 3
-  targetEntity: {fileID: 0}
-  whatIsTarget:
-    serializedVersion: 2
-    m_Bits: 256
---- !u!195 &7231887363889274270
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3017766069375984416}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 1.1955079
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 0.4896694
-  m_BaseOffset: 0.2448347
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!1 &4037589305341169764
 GameObject:
   m_ObjectHideFlags: 0
