@@ -28,6 +28,7 @@ public class PlayerHealth : LivingEntity
     }
     private void FixedUpdate()
     {
+        //회복 문장
         if (playerInput.restoreHealth && health < 100 && healthKit >=1)
         {
             Debug.Log("치료중");
@@ -52,6 +53,8 @@ public class PlayerHealth : LivingEntity
             restoreHealth = 0;
             restoreHealthProceeding = false;
         }
+
+
     }
 
     //base로 상속받은 내용 사용후 내용을 추가하여 사용
@@ -94,6 +97,21 @@ public class PlayerHealth : LivingEntity
             return false;
         //피격효과 (피격지점, 피격각도, 플레이어 위치, 사용할 이펙트)
         EffectManager.Instance.PlayHitEffect(damageMessage.hitPoint, damageMessage.hitNormal, transform, EffectManager.EffectType.Flesh);
+        //피격사운드 재생
+        playerAudioPlayer.PlayOneShot(hitClip);
+
+        UpdateUI();
+
+        return true;//공격이 성공한 것을 알림
+    }
+    //폭파 대미지용
+    public override bool ApplyDamage(int damage)
+    {
+        if (invincibility == true)// 데미지 적용을 무적상태 동안은 막음
+            return false;
+        //데미지 적용이 실패한경우 return false를 시킨다.
+        if (!base.ApplyDamage(damage))
+            return false;
         //피격사운드 재생
         playerAudioPlayer.PlayOneShot(hitClip);
 

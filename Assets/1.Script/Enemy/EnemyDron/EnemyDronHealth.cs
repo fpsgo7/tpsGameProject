@@ -51,8 +51,9 @@ public class EnemyDronHealth : LivingEntity
         {
             enemyDronAI.targetEntity = damageMessage.damager.GetComponent<LivingEntity>();
         }
+        //이펙트 추가?
 
-        EffectManager.Instance.PlayHitEffect(damageMessage.hitPoint, damageMessage.hitNormal, transform, EffectManager.EffectType.Flesh);
+        //사운드
         //enemyAI.audioPlayer.PlayOneShot(hitClip);
 
         return true;
@@ -67,9 +68,6 @@ public class EnemyDronHealth : LivingEntity
         // 다른 AI들을 방해하지 않도록 자신의 모든 콜라이더들을 비활성화
         GetComponent<Collider>().enabled = false;
 
-        //enemyAI.animator.SetTrigger("Die");
-
-        // 사망 효과음 재생
-        //if (deathClip != null) enemyAI.audioPlayer.PlayOneShot(deathClip);
+        enemyDronAI.Explosion();
     }
 }

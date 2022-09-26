@@ -8,19 +8,20 @@ public class EnemyDronAI : MonoBehaviour
 
     public AudioSource audioPlayer; // 오디오 소스 컴포넌트
 
-    public float runSpeed = 3f;
-    public float damage = 30f;
+    private float runSpeed = 3f;
+    private int damage = 30;
     private float attackDistance;
-    public float viewDistance = 10f;
+    private float viewDistance = 10f;
 
     public LivingEntity targetEntity; // 추적할 대상
     public LayerMask whatIsTarget; // 추적 대상 레이어
     private EnemyDronHealth enemyHealth;
     public Vector3 t_dir;//미사일 추격 각도 변수
+    private RaycastHit[] rayHits; //충돌대상
+    public GameObject explosion;//폭발
     // 람다식을 활용한다.
     //targetEntity 가 널이아니고 추적할 대상이 죽지 않았다면  true 가 된다.
     private bool hasTarget => targetEntity != null && !targetEntity.dead;
-    private bool stop= false;// 테스트용
 
     private void Awake()
     {
@@ -29,7 +30,7 @@ public class EnemyDronAI : MonoBehaviour
         //skinRenderer = GetComponentInChildren<Renderer>();//렌더러 연결
 
         //네비게이션 에이전트의 값 초기화
-        attackDistance = 5;
+        attackDistance = 4;
     }
     private void Start()
     {
@@ -46,16 +47,14 @@ public class EnemyDronAI : MonoBehaviour
             //적과 플레이어간 거리를 구함
             var distance = Vector3.Distance(targetEntity.transform.position, transform.position);
             //플레이어와 적과의 거리가 공격거리보다 작다면
-            if (distance <= attackDistance)
+            if (distance <= attackDistance && enemyHealth.dead == false)
             {
                 //폭발 명령
-                Debug.Log("폭빨");
-                Debug.Log(distance);
-                stop = true;
+                enemyHealth.Die();
             }
         }
 
-        if (hasTarget || stop == false)
+        if (hasTarget && enemyHealth.dead == false)
         {
             transform.position += transform.forward * runSpeed * Time.deltaTime;//표적이 있다면 미사일을 위로 가속
 
@@ -104,6 +103,35 @@ public class EnemyDronAI : MonoBehaviour
             }
             // 0.2 초 주기로 처리 반복
             yield return new WaitForSeconds(0.2f);
+        }
+    }
+    //폭파 작동
+    public void Explosion()
+    {
+
+        //폭발범위에 들어간 적들을 찾아냄
+        rayHits = Physics.SphereCastAll(transform.position,
+            5,
+            Vector3.up, 0f,
+            LayerMask.GetMask("Player"));
+        ExplosionAttack();
+        GameObject obj = (GameObject)Instantiate(explosion, transform.position, Quaternion.identity);
+        Destroy(obj, 0.5f);
+        Destroy(this.gameObject, 0.1f);
+    }
+
+    public void ExplosionAttack()
+    {
+
+        //폭파 범위안의 있는 적들을 반복문으로 접근함
+        foreach (RaycastHit hitobj in rayHits)
+        {
+            if (hitobj.transform.GetComponent<LivingEntity>())
+            {
+                Debug.Log("공격 성공");
+                hitobj.transform.GetComponent<LivingEntity>().ApplyDamage(damage);
+            }
+               
         }
     }
 }
