@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 //LivingEntity 는 체력을 데미지를 받는 기능을 사용하여 IDamageable을 상속받는다.
 //ApplyDamage 함수를 사용하기위하여 상속받는다.
 public class LivingEntity : MonoBehaviour, IDamageable
@@ -14,6 +15,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     //공격 중복 방지
     private const float minTimeBetDamaged = 0.1f;//공격과 공격사이의 대기시간
     private float lastDamagedTime;//마지막 데미지 시간
+    public Slider enemyHealthSlider;
     //공격을 당하는 상태를 관리
     protected bool IsInvulnerabe
     {
@@ -30,6 +32,11 @@ public class LivingEntity : MonoBehaviour, IDamageable
     {
         dead = false;
         health = startingHealth;
+        if(enemyHealthSlider != null)
+        {
+            enemyHealthSlider.maxValue = health;
+            enemyHealthSlider.value = health;
+        }
     }
     //데미지 관련
     public virtual bool ApplyDamage(DamageMessage damageMessage)//매계변수로 DamageMessage 스크립트의 내용을 받는다.
@@ -41,6 +48,10 @@ public class LivingEntity : MonoBehaviour, IDamageable
         //대미지를 입었으므로 시간을 넣어 업데이터한다.
         lastDamagedTime = Time.time;
         health -= damageMessage.amount;//체력을 감소 시킴
+        if(enemyHealthSlider != null)
+        {
+            enemyHealthSlider.value = health;
+        }
         //만약 체력이 0보다 작거나 같으면 죽는 함수 실행
         if (health <= 0)
             Die();
@@ -53,6 +64,10 @@ public class LivingEntity : MonoBehaviour, IDamageable
         //대미지를 입었으므로 시간을 넣어 업데이터한다.
         lastDamagedTime = Time.time;
         health -= damage;
+        if (enemyHealthSlider != null)
+        {
+            enemyHealthSlider.value = health;
+        }
         //만약 체력이 0보다 작거나 같으면 죽는 함수 실행
         if (health <= 0)
             Die();
