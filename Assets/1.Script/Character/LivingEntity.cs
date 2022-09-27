@@ -62,7 +62,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public virtual bool ApplyDamage(int damage)//매계변수로 DamageMessage 스크립트의 내용을 받는다.
     {
         //대미지를 입었으므로 시간을 넣어 업데이터한다.
-        lastDamagedTime = Time.time;
+        //lastDamagedTime = Time.time;
         health -= damage;
         if (enemyHealthSlider != null)
         {
