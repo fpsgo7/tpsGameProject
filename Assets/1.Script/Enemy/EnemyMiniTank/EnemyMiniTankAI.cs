@@ -73,8 +73,6 @@ public class EnemyMiniTankAI : MonoBehaviour
             //플레이어와 적과의 거리가 공격거리보다 작다면
             if (distance <= attackDistance)
             {
-                //공격 명령
-                Debug.Log("공격");
                 agent.speed = 0;
             }
             else
@@ -130,7 +128,7 @@ public class EnemyMiniTankAI : MonoBehaviour
                     {
                         // 추적 대상을 해당 LivingEntity로 설정
                         targetEntity = livingEntity;
-                        enemyMiniTankGun.SameTarget(targetEntity.transform);
+                        //enemyMiniTankGun.SameTarget(targetEntity.transform);
                         // for문 루프 즉시 정지
                         break;
                     }
@@ -175,6 +173,6 @@ public class EnemyMiniTankAI : MonoBehaviour
     public void TargetUpdate(LivingEntity livingEntity)
     {
         targetEntity = livingEntity;
-        enemyMiniTankGun.SameTarget(targetEntity.transform);
+        //enemyMiniTankGun.SameTarget(targetEntity.transform);
     }
 }

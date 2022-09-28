@@ -188,8 +188,54 @@ PrefabInstance:
       propertyPath: m_Name
       value: MiniTank
       objectReference: {fileID: 0}
+    - target: {fileID: 7091972232417463015, guid: 8a7b963fdf00016448ab0f953284fdba,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a7b963fdf00016448ab0f953284fdba, type: 3}
+--- !u!1 &268522652 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6242784719292739901, guid: 8a7b963fdf00016448ab0f953284fdba,
+    type: 3}
+  m_PrefabInstance: {fileID: 3413027}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &268522653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 268522652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a63d7f498dba12049aa7d373f308f4ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_tfGunBody: {fileID: 891805691}
+  m_spinSpeed: 100
+  m_fireRate: 1
+  target: {fileID: 1840098897}
+--- !u!114 &268522658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 268522652}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6366f09c56ac5e74fa7ecbbf55982bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_tfGunBody: {fileID: 891805691}
+  m_range: 10
+  m_layerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  m_spinSpeed: 100
+  m_fireRate: 10
 --- !u!1 &484755206
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,6 +319,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 17.337, y: 0, z: 0}
+--- !u!4 &891805691 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1016552206, guid: 8a7b963fdf00016448ab0f953284fdba,
+    type: 3}
+  m_PrefabInstance: {fileID: 3413027}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1840098893
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +337,7 @@ GameObject:
   - component: {fileID: 1840098896}
   - component: {fileID: 1840098895}
   - component: {fileID: 1840098894}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}

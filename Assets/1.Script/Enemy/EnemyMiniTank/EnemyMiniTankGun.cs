@@ -36,6 +36,7 @@ public class EnemyMiniTankGun : MonoBehaviour
                 if (m_currentFireRate <= 0)
                 {
                     m_currentFireRate = m_fireRate;
+                    Debug.Log(target.transform.position.x+"");
                     Debug.Log("발싸");
                 }
             }

@@ -103,7 +103,7 @@ public class PlayerShooter : MonoBehaviour
         }
         
 
-        if (playerInput.zoomIn == true)
+        if (playerInput.zoomIn == true )
         {
             ZoomIn();
             if (playerMovement.currentSpeed > 0)
@@ -117,7 +117,7 @@ public class PlayerShooter : MonoBehaviour
                 gun.ZoomOutFollow();
             }
         }
-        else if (playerInput.zoomIn == false)
+        else if (playerInput.zoomIn == false && zoomIn == true)
         {
             ZoomOut();
         }
