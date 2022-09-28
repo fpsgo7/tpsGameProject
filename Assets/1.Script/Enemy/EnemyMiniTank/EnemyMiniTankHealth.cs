@@ -52,7 +52,8 @@ public class EnemyMiniTankHealth : LivingEntity
         }
         if (enemyAI.targetEntity == null)
         {
-            enemyAI.targetEntity = damageMessage.damager.GetComponent<LivingEntity>();
+            //enemyAI.targetEntity = damageMessage.damager.GetComponent<LivingEntity>();
+            enemyAI.TargetUpdate(damageMessage.damager.GetComponent<LivingEntity>());
         }
         //이펙트 추가?
 

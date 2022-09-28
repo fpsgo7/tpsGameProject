@@ -33,6 +33,7 @@ public class EnemyMiniTankAI : MonoBehaviour
     public LivingEntity targetEntity; // 추적할 대상
     public LayerMask whatIsTarget; // 추적 대상 레이어
     private EnemyMiniTankHealth enemyHealth;
+    private EnemyMiniTankGun enemyMiniTankGun;
 
     //적의 공격을 범위 기반이라서 여러 개의 충돌포인트가 생긴다.
     private RaycastHit[] rayHits; //충돌대상
@@ -47,6 +48,7 @@ public class EnemyMiniTankAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();//네비게이션 연결
         audioPlayer = GetComponent<AudioSource>();//오디오 연결
         enemyHealth = GetComponent<EnemyMiniTankHealth>();
+        enemyMiniTankGun = GetComponent<EnemyMiniTankGun>();//스크립트 연결
         //skinRenderer = GetComponentInChildren<Renderer>();//렌더러 연결
 
         //네비게이션 에이전트의 값 초기화
@@ -128,7 +130,7 @@ public class EnemyMiniTankAI : MonoBehaviour
                     {
                         // 추적 대상을 해당 LivingEntity로 설정
                         targetEntity = livingEntity;
-
+                        enemyMiniTankGun.SameTarget(targetEntity.transform);
                         // for문 루프 즉시 정지
                         break;
                     }
@@ -168,5 +170,11 @@ public class EnemyMiniTankAI : MonoBehaviour
             }
 
         }
+    }
+
+    public void TargetUpdate(LivingEntity livingEntity)
+    {
+        targetEntity = livingEntity;
+        enemyMiniTankGun.SameTarget(targetEntity.transform);
     }
 }
