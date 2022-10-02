@@ -25,12 +25,12 @@ public class EnemyTurretGun : MonoBehaviour
     //위치 관련
     public Transform fireTransform;
     //설정값
-    public float damage = 25;
+    public float damage = 2;
     public float fireDistance = 100f;
 
     public int ammoRemain = 10000;
     public int magAmmo;
-    public int magCapacity = 50;
+    public int magCapacity = 100;
 
     public float timeBetFire = 0.12f;//총알 발사 사이 간격
     public float reloadTime = 1.8f;//장전 시간
@@ -78,7 +78,10 @@ public class EnemyTurretGun : MonoBehaviour
 
             return true;
         }
-
+        if(state == State.Empty)
+        {
+            Reload();
+        }
         return false;
     }
     //실제 발사처리
@@ -87,7 +90,7 @@ public class EnemyTurretGun : MonoBehaviour
         RaycastHit hit;// 충돌대상 
         Vector3 hitPosition;//충돌 위치
 
-        if (Physics.Raycast(startPoint, out hit, fireDistance, ~excludeTarget))//~을 사용하여 조건문에서 ~을 가진 조건의 반대부분을 조건으로 사용한다.
+        if (Physics.Raycast(startPoint, fireTransform.forward, out hit, fireDistance, ~excludeTarget))//~을 사용하여 조건문에서 ~을 가진 조건의 반대부분을 조건으로 사용한다.
         {
             var target = hit.collider.GetComponent<IDamageable>();// 충돌대상이 데미지를 받을수 있는 타입인지 검사
 
@@ -111,7 +114,7 @@ public class EnemyTurretGun : MonoBehaviour
         }
         else
         {
-            hitPosition = startPoint + direction * fireDistance;
+            hitPosition = startPoint + fireTransform.forward * fireDistance;
         }
 
         StartCoroutine(ShotEffect(hitPosition));
@@ -156,7 +159,7 @@ public class EnemyTurretGun : MonoBehaviour
 
         var ammoToFill = Mathf.Clamp(magCapacity - magAmmo, 0, ammoRemain);
         magAmmo += ammoToFill;
-        ammoRemain -= ammoToFill;
+        //ammoRemain -= ammoToFill;
 
         state = State.Ready;
 

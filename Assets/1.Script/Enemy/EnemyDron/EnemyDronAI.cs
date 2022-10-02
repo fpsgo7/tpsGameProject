@@ -50,7 +50,7 @@ public class EnemyDronAI : MonoBehaviour
             if (distance <= attackDistance && enemyHealth.dead == false)
             {
                 //폭발 명령
-                enemyHealth.Die();
+                enemyHealth.Die(0);
             }
         }
 

@@ -23,7 +23,7 @@ public class EnemyMiniTankAI : MonoBehaviour
     [Range(0.01f, 2f)] public float turnSmoothTime = 0.1f;//회전 지연속도
     private float turnSmoothVelocity;//좀비회전에 실시간 변화량
 
-    public int damage = 30;
+    public int damage = 30;//자폭 대미지
     private float attackDistance;
 
     public float fieldOfView = 50f;

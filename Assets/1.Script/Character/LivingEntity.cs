@@ -54,7 +54,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
         }
         //만약 체력이 0보다 작거나 같으면 죽는 함수 실행
         if (health <= 0)
-            Die();
+            Die(0);
         //이후 공격이 성공했다는 신호를 보냄
         return true;
     }
@@ -70,7 +70,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
         }
         //만약 체력이 0보다 작거나 같으면 죽는 함수 실행
         if (health <= 0)
-            Die();
+            Die(1);
         //이후 공격이 성공했다는 신호를 보냄
         return true;
     }
@@ -84,7 +84,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
         health = startingHealth;
     }
     //죽는경우
-    public virtual void Die()
+    public virtual void Die(int die)
     {
         //OnDeath 이벤트를 실행
         //외부에 스크립트의 event가 실행된다.

@@ -120,9 +120,9 @@ public class PlayerHealth : LivingEntity
         return true;//공격이 성공한 것을 알림
     }
 
-    public override void Die()
+    public override void Die(int die)
     {
-        base.Die();
+        base.Die(die);
 
         playerAudioPlayer.PlayOneShot(deathClip);
         animator.SetTrigger("Die");
