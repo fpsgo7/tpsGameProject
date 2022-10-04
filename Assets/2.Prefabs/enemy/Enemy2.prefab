@@ -778,6 +778,7 @@ GameObject:
   - component: {fileID: 2320961210934898395}
   - component: {fileID: 2320961210934898393}
   - component: {fileID: 2320961210934898398}
+  - component: {fileID: -1935852500796353253}
   m_Layer: 9
   m_Name: Enemy2
   m_TagString: Untagged
@@ -1115,6 +1116,22 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &-1935852500796353253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2320961210934898407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff644fb4b0a24cbfaacc4f51cd366ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - {fileID: 1045172808418600, guid: c90bf41c504e541b98989b07b736097c, type: 3}
+  - {fileID: 1838412652947266, guid: b4e7df10a580e4a1a88a79995b741816, type: 3}
+  - {fileID: 1520669973596254487, guid: 2b0f2dfc1a268f449adaa940b4ddb75d, type: 3}
 --- !u!1 &2493501902567324355
 GameObject:
   m_ObjectHideFlags: 0

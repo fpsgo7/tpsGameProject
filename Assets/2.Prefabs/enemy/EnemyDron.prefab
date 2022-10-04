@@ -298,6 +298,7 @@ GameObject:
   - component: {fileID: 7231887363889274267}
   - component: {fileID: 1343747734}
   - component: {fileID: 1343747733}
+  - component: {fileID: -6056801059790880686}
   m_Layer: 9
   m_Name: EnemyDron
   m_TagString: Untagged
@@ -534,6 +535,22 @@ MonoBehaviour:
     m_Bits: 256
   t_dir: {x: 0, y: 0, z: 0}
   explosion: {fileID: 100010, guid: 031d08f52af1daa4f929b85221519426, type: 3}
+--- !u!114 &-6056801059790880686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3017766069375984416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff644fb4b0a24cbfaacc4f51cd366ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - {fileID: 1045172808418600, guid: c90bf41c504e541b98989b07b736097c, type: 3}
+  - {fileID: 1838412652947266, guid: b4e7df10a580e4a1a88a79995b741816, type: 3}
+  - {fileID: 1520669973596254487, guid: 2b0f2dfc1a268f449adaa940b4ddb75d, type: 3}
 --- !u!1 &4037589305341169764
 GameObject:
   m_ObjectHideFlags: 0

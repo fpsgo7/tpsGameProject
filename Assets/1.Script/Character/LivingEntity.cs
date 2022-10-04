@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 //LivingEntity 는 체력을 데미지를 받는 기능을 사용하여 IDamageable을 상속받는다.
 //ApplyDamage 함수를 사용하기위하여 상속받는다.
-public class LivingEntity : MonoBehaviour, IDamageable
+public class LivingEntity : MonoBehaviour, IDamageable 
 {
 
     public float startingHealth;//초기체력
@@ -32,11 +32,6 @@ public class LivingEntity : MonoBehaviour, IDamageable
     {
         dead = false;
         health = startingHealth;
-        if(enemyHealthSlider != null)
-        {
-            enemyHealthSlider.maxValue = health;
-            enemyHealthSlider.value = health;
-        }
     }
     //데미지 관련
     public virtual bool ApplyDamage(DamageMessage damageMessage)//매계변수로 DamageMessage 스크립트의 내용을 받는다.
@@ -116,9 +111,14 @@ public class LivingEntity : MonoBehaviour, IDamageable
             enemyHealthSlider.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = Color.yellow;
             newStartHealth = startingHealth * 3;
         }
-
         // 체력 설정
         this.startingHealth = newStartHealth;
         this.health = startingHealth;
+        //체력바에 값 적용
+        if (enemyHealthSlider != null)
+        {
+            enemyHealthSlider.maxValue = health;
+            enemyHealthSlider.value = health;
+        }
     }
 }

@@ -80,6 +80,12 @@ public class PlayerHealth : LivingEntity
         UpdateUI();
     }
 
+    public void GetHealthKit()
+    {
+        healthKit += 1;
+        UpdateUI();
+    }
+
     private void UpdateUI()
     {
         //UIManager에 체력 업데이트를 체력값을 보내어 사용하며

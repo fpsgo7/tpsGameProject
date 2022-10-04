@@ -49,4 +49,10 @@ public class FireGrenade : MonoBehaviour
         lateUpdateFollow.enabled = true;
     }
     
+    //수류탄 충전
+    public void GetGrenade()
+    {
+        grenadeAmmo += 1;
+        UIManager.Instance.UpdateGrenadeText(grenadeAmmo);
+    }
 }

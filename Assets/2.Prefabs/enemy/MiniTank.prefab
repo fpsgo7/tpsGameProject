@@ -1681,6 +1681,7 @@ GameObject:
   - component: {fileID: 7091972232417463014}
   - component: {fileID: 932244594}
   - component: {fileID: 932244596}
+  - component: {fileID: -6559986674523863319}
   m_Layer: 9
   m_Name: MiniTank
   m_TagString: Untagged
@@ -1896,6 +1897,22 @@ MonoBehaviour:
   hitClip: {fileID: 0}
   deathClip: {fileID: 0}
   enemyHealth: 0
+--- !u!114 &-6559986674523863319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6242784719292739901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff644fb4b0a24cbfaacc4f51cd366ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - {fileID: 1045172808418600, guid: c90bf41c504e541b98989b07b736097c, type: 3}
+  - {fileID: 1838412652947266, guid: b4e7df10a580e4a1a88a79995b741816, type: 3}
+  - {fileID: 1520669973596254487, guid: 2b0f2dfc1a268f449adaa940b4ddb75d, type: 3}
 --- !u!1 &7091972231839769835
 GameObject:
   m_ObjectHideFlags: 0

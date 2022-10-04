@@ -1770,6 +1770,7 @@ GameObject:
   - component: {fileID: 7075776006250765682}
   - component: {fileID: 891821821}
   - component: {fileID: 1068198861807580999}
+  - component: {fileID: 7541537501660748281}
   m_Layer: 9
   m_Name: Enemy1
   m_TagString: Untagged
@@ -1992,6 +1993,22 @@ MonoBehaviour:
   hitClip: {fileID: 8300000, guid: 2027806ff2dfad74580b0822dc0c159d, type: 3}
   deathClip: {fileID: 8300000, guid: e5ca5f52a7276974c9f6616492e6204e, type: 3}
   enemyHealth: 0
+--- !u!114 &7541537501660748281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7075776006250765680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff644fb4b0a24cbfaacc4f51cd366ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - {fileID: 1045172808418600, guid: c90bf41c504e541b98989b07b736097c, type: 3}
+  - {fileID: 1838412652947266, guid: b4e7df10a580e4a1a88a79995b741816, type: 3}
+  - {fileID: 1520669973596254487, guid: 2b0f2dfc1a268f449adaa940b4ddb75d, type: 3}
 --- !u!1 &7080931406387280190
 GameObject:
   m_ObjectHideFlags: 0
