@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class LivingEntity : MonoBehaviour, IDamageable
 {
 
-    public float startingHealth = 100f;//초기체력
+    public float startingHealth;//초기체력
     public float health { get; protected set; }//현제 체력
     public bool dead { get; protected set; }//죽음 상태값
     //OnDeath 라는 이름으로 Action 타입의 이벤트가 있다.
@@ -92,5 +92,33 @@ public class LivingEntity : MonoBehaviour, IDamageable
             OnDeath();
         //죽음은 true
         dead = true;
+    }
+
+    //적 AI의 초기 스펙을 결정하는 셋업 메서드
+    public void EnemySetup(int intensity)
+    {
+        var newStartHealth=0f;
+        //체력 설정 후 체력바 색깔 설정
+        if(intensity == 0)
+        {
+            enemyHealthSlider.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = Color.red;
+            newStartHealth = startingHealth;
+        }
+           
+        if(intensity == 1)
+        {
+            enemyHealthSlider.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = Color.blue;
+            newStartHealth = startingHealth * 2;
+        }
+            
+        if(intensity == 2)
+        {
+            enemyHealthSlider.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = Color.yellow;
+            newStartHealth = startingHealth * 3;
+        }
+
+        // 체력 설정
+        this.startingHealth = newStartHealth;
+        this.health = startingHealth;
     }
 }

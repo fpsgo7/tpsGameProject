@@ -14,6 +14,7 @@ public class Enemy1Health : LivingEntity
     private void Start()
     {
         enemy1AI = GetComponent<Enemy1AI>();
+        startingHealth = 100;
     }
     private void FixedUpdate()
     {
@@ -21,24 +22,7 @@ public class Enemy1Health : LivingEntity
 
     }
 
-    //봉인하기
-    // 적 AI의 초기 스펙을 결정하는 셋업 메서드
-    //public void Setup(float health, float damage,
-    //    float runSpeed, float patrolSpeed, Color skinColor)
-    //{
-    //    // 체력 설정
-    //    this.startingHealth = health;
-    //    this.health = health;
 
-    //    // 내비메쉬 에이전트의 이동 속도 설정
-    //    this.runSpeed = runSpeed;
-    //    this.patrolSpeed = patrolSpeed;
-
-    //    this.damage = damage;
-
-    //    // 렌더러가 사용중인 머테리얼의 컬러를 변경, 외형 색이 변함
-    //    skinRenderer.material.color = skinColor;
-    //}
 
     // 데미지를 입었을때 실행할 처리 체력부분
     public override bool ApplyDamage(DamageMessage damageMessage)
