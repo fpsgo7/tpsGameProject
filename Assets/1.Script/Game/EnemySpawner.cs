@@ -32,22 +32,16 @@ public class EnemySpawner : MonoBehaviour
         if (GameManager.Instance != null && GameManager.Instance.isGameover) return;
         //적이 다죽으면 적 스폰을 실행해준다.
         //if (enemies.Count <= 0) Spawn();
-        //유아이 업데이트
-        UpdateUI();
     }
 
-    private void UpdateUI()
-    {
-        //유아이 메니져에 현제 웨이브와 적 수를 보여준다.
-        UIManager.Instance.UpdateWaveText(wave, enemies.Count);
-    }
+   
     //적 스폰에서 웨이브와 적 새
     private void Spawn()
     {
         for (var i = 0; i < Count; i++)
         {
             var enemyIntensity = Random.Range(0, 3);
-
+            GameManager.Instance.enemyCount += 1;
             CreateEnemy(enemyIntensity);
         }
     }
@@ -65,6 +59,7 @@ public class EnemySpawner : MonoBehaviour
         enemies.Add(enemy);
 
         enemy.GetComponent<LivingEntity>().OnDeath += () => enemies.Remove(enemy);// 사망한 대상은 리스트에서 제외한다.
+        enemy.GetComponent<LivingEntity>().OnDeath += () => GameManager.Instance.enemyCount -= 1;
         enemy.GetComponent<LivingEntity>().OnDeath += () => Destroy(enemy.gameObject, 2f);
         enemy.GetComponent<LivingEntity>().OnDeath += () => enemy.GetComponent<ItemSpawn>().Spawn();
         enemy.GetComponent<LivingEntity>().OnDeath += () => GameManager.Instance.AddScore(100);

@@ -43,9 +43,9 @@ public class UIManager : MonoBehaviour
         scoreText.text = "Score : " + newScore;
     }
     //웨이브 업데이트
-    public void UpdateWaveText(int waves, int count)
+    public void UpdateEnemyText(int count)
     {
-        waveText.text = "Wave : " + waves + "\nEnemy Left : " + count;
+        waveText.text = "Enemy Left : " + count;
     }
     //체력 업데이트
     public void UpdateLifeText(int count)
