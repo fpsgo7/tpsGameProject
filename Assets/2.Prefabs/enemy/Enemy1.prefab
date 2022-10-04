@@ -1971,7 +1971,7 @@ MonoBehaviour:
   attackRadius: 0.5
   fieldOfView: 100
   viewDistance: 10
-  patrolSpeed: 0
+  patrolSpeed: 2
   targetEntity: {fileID: 0}
   whatIsTarget:
     serializedVersion: 2
