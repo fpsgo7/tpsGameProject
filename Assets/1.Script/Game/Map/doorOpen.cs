@@ -5,7 +5,7 @@ using UnityEngine;
 public class doorOpen : MonoBehaviour
 {
     public bool doorRock = true;
-    private float moveSpeed = 1f;
+    private float moveSpeed = 0.01f;
     private Vector3 doorV3;
 
     void Start()
@@ -18,18 +18,21 @@ public class doorOpen : MonoBehaviour
         if(other.tag == "Player" && doorRock == false)
         {
             Debug.Log(" 문열기 시작");
+            StartCoroutine(DoorOpening());
+            GameManager.Instance.NextMap();
         }
-    }
-
-    public void DoorOpen()
-    {
-        StartCoroutine(DoorOpening());
     }
 
     public IEnumerator DoorOpening()
     {
-        Debug.Log("문이 열립니다.");
-        doorV3.x += moveSpeed;
-        yield return new WaitForSeconds(0.1f);
+        var i = 0;
+        while (i<750)
+        {
+            i++;
+            doorV3.x += moveSpeed;
+            transform.position = doorV3;
+            yield return new WaitForSeconds(0.01f);
+        }
+
     }
 }

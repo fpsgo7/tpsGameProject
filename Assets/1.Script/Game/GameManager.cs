@@ -55,9 +55,13 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.UpdateEnemyText(enemyCount);
         if(enemyCount == 0 && firstMap.activeSelf== true)
         {
-            firstMap.SetActive(false);
-            //SecondMap.SetActive(true);
             firstDoor.GetComponent<doorOpen>().doorRock = false;
         }
+    }
+
+    public void NextMap()
+    {
+        if (firstMap.activeSelf == true)
+            SecondMap.SetActive(true);
     }
 }
