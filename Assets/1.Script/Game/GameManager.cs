@@ -14,20 +14,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public GameObject firstMap;
+    public GameObject firstDoor;
+    public GameObject SecondMap;
+
     private int score;
-    public int enemyCount;
+    private int enemyCount;
 
     public bool isGameover { get; private set; }
 
     private void Awake()
     {
         if (Instance != this) Destroy(gameObject);
-    }
-
-    private void Update()
-    {
-        //유아이 메니져에 현제 적 수를 보여준다.
-        UIManager.Instance.UpdateEnemyText(enemyCount);
     }
 
     public void AddScore(int newScore)
@@ -43,5 +41,23 @@ public class GameManager : MonoBehaviour
     {
         isGameover = true;
         UIManager.Instance.SetActiveGameoverUI(true);
+    }
+    //애너미 생성과 죽음 수 관리 
+    public void EnemyMake()
+    {
+        enemyCount += 1;
+        UIManager.Instance.UpdateEnemyText(enemyCount);
+    }
+
+    public void EnemyDie()
+    {
+        enemyCount -= 1;
+        UIManager.Instance.UpdateEnemyText(enemyCount);
+        if(enemyCount == 0 && firstMap.activeSelf== true)
+        {
+            firstMap.SetActive(false);
+            //SecondMap.SetActive(true);
+            firstDoor.GetComponent<doorOpen>().doorRock = false;
+        }
     }
 }
