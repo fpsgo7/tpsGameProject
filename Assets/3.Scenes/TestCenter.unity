@@ -2080,7 +2080,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 740268186}
-  m_LocalRotation: {x: -0.007606905, y: 0.10105791, z: 0.00077271654, w: 0.9948512}
+  m_LocalRotation: {x: -0.007606904, y: 0.10105791, z: 0.0007727164, w: 0.9948512}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3224,7 +3224,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0.007606905, y: 0.10105791, z: 0.00077271654, w: 0.9948512}
+  m_LocalRotation: {x: -0.007606904, y: 0.10105791, z: 0.0007727164, w: 0.9948512}
   m_LocalPosition: {x: -2, y: 1.5, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -4685,7 +4685,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1416139611}
-  m_LocalRotation: {x: -0.007606905, y: 0.10105791, z: 0.00077271654, w: 0.9948512}
+  m_LocalRotation: {x: -0.007606904, y: 0.10105791, z: 0.0007727164, w: 0.9948512}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5253,7 +5253,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1694055793}
-  m_LocalRotation: {x: -0.007606905, y: 0.10105791, z: 0.00077271654, w: 0.9948512}
+  m_LocalRotation: {x: -0.007606904, y: 0.10105791, z: 0.0007727164, w: 0.9948512}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -28257,21 +28257,6 @@ MonoBehaviour:
     m_Bits: 256
   forrowCam: {fileID: 513577150}
   playerDgree: {fileID: 595758277}
-  zoomOutFieldOfView: 60
-  zoomOutScreenX: 0.4
-  zoomOutTopScreenY: 0.6
-  zoomOutMidScreenY: 0.6
-  zoomOutBotScreenY: 0.6
-  zoomInFieldOfView: 40
-  zoomInScreenX: 0.25
-  zoomInTopScreenY: 0.8
-  zoomInMidScreenY: 0.8
-  zoomInBotScreenY: 0.8
-  zoomFieldOfView: 0
-  zoomScreenX: 0
-  zoomTopScreenY: 0
-  zoomMidScreenY: 0
-  zoomBotScreenY: 0
   zoomIn: 0
 --- !u!114 &8676247794830196606
 MonoBehaviour:
