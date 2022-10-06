@@ -27,21 +27,21 @@ public class PlayerShooter : MonoBehaviour
     private float waitingTimeForReleasingAim = 2.5f;//총 조준후 다시 풀어지는 시간
     private float lastFireInputTime; //마지막 발사 시간
     //줌인 줌아웃 float 변수
-    public float zoomOutFieldOfView = 60f;
-    public float zoomOutScreenX = 0.4f;
-    public float zoomOutTopScreenY = 0.6f;
-    public float zoomOutMidScreenY = 0.65f;
-    public float zoomOutBotScreenY = 0.7f;
-    public float zoomInFieldOfView = 30f;
-    public float zoomInScreenX = 0.15f;
-    public float zoomInTopScreenY = 0.35f;
-    public float zoomInMidScreenY = 0.75f;
-    public float zoomInBotScreenY = 0.8f;
-    public float zoomFieldOfView = 0;
-    public float zoomScreenX = 0;
-    public float zoomTopScreenY = 0;
-    public float zoomMidScreenY = 0;
-    public float zoomBotScreenY = 0;
+    private float zoomOutFieldOfView = 60f;
+    private float zoomOutScreenX = 0.4f;
+    private float zoomOutTopScreenY = 0.6f;
+    private float zoomOutMidScreenY = 0.6f;
+    private float zoomOutBotScreenY = 0.6f;
+    private float zoomInFieldOfView = 40f;
+    private float zoomInScreenX = 0.25f;
+    private float zoomInTopScreenY = 0.8f;
+    private float zoomInMidScreenY = 0.8f;
+    private float zoomInBotScreenY = 0.8f;
+    private float zoomFieldOfView = 0;
+    private float zoomScreenX = 0;
+    private float zoomTopScreenY = 0;
+    private float zoomMidScreenY = 0;
+    private float zoomBotScreenY = 0;
     private float waitingTimeForZoom = 0.000001f;//줌인 속도
     private float lastZoomTime; //줌 동작 한틱 기준
 
@@ -241,7 +241,7 @@ public class PlayerShooter : MonoBehaviour
             // i++;
             // Debug.Log(i);
         }
-        if (zoomFieldOfView <= zoomInFieldOfView + 1)
+        if (zoomFieldOfView <= zoomInFieldOfView + 0.1f)
             ZoomInEnd();
     }
     private void ZoomInEnd()
@@ -276,7 +276,7 @@ public class PlayerShooter : MonoBehaviour
             forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX);
             lastZoomTime = Time.time;
         }
-        if (zoomFieldOfView >= zoomOutFieldOfView - 1)
+        if (zoomFieldOfView >= zoomOutFieldOfView - 0.1f)
             ZoomOutEnd();
     }
     private void ZoomOutEnd()

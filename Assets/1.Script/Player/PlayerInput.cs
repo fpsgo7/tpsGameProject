@@ -37,7 +37,7 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetButtonUp(restoreHealthButtonName))
             restoreHealth = false;
 
-        //게임 오버가 되면 유저의 입력을 무시하는 코드를 실행한다.
+        //게임 오버가 되거나 체력 회복 중인 경우 키입력을 비활성화 한다.
         if (GameManager.Instance != null
             && GameManager.Instance.isGameover || playerHealth.restoreHealthProceeding == true)
         {
@@ -49,6 +49,7 @@ public class PlayerInput : MonoBehaviour
             Grenade = false;
             return;
         }
+        // 점프중인 경우
         if(playerMovement.jumpState == true)
         {
             fire = false;
