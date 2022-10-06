@@ -103,11 +103,9 @@ public class PlayerShooter : MonoBehaviour
         }
         
 
-        if (playerInput.zoomIn == true )
+        if (playerInput.zoomIn == true && zoomIn == false)
         {
             ZoomIn();
-            lateUpdateFollow.ZoomInFollow();
-            gun.ZoomInFollow();
         }
         else if (playerInput.zoomIn == false && zoomIn == true)
         {
@@ -252,6 +250,8 @@ public class PlayerShooter : MonoBehaviour
         zoomBotScreenY = zoomInBotScreenY;
         zoomScreenX = zoomInScreenX;
         playerMovement.speed = playerMovement.walkSpeed;// 움직임 속도 조절
+        lateUpdateFollow.ZoomInFollow();
+        gun.ZoomInFollow();
         zoomIn = true;
         playerAnimator.SetBool("ZoomIn", zoomIn);
     }
