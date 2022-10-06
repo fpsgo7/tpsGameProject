@@ -31,30 +31,12 @@ public class PlayerHealth : LivingEntity
         //회복 문장
         if (playerInput.restoreHealth && health < 100 && healthKit >=1)
         {
-            Debug.Log("치료중");
             RestoreHealthSlider();
         }
         else if(restoreHealth >=1)
         {
-            restoreHealth = 0;
-            UIManager.Instance.UpdateRestoreHealth(restoreHealth);
-            UIManager.Instance.UpdateRestoreHealthEnd();
-            restoreHealthProceeding = false;
+            RestoreHealthStop();
         }
-        if(restoreHealth >= 1 && restoreHealthProceeding == false)
-        {
-            UIManager.Instance.UpdateRestoreHealthStart();
-            restoreHealthProceeding = true;
-        }
-        if (restoreHealth >= restoreHealthMax)
-        {
-            UIManager.Instance.UpdateRestoreHealthEnd();
-            RestoreHealth();
-            restoreHealth = 0;
-            restoreHealthProceeding = false;
-        }
-
-
     }
 
     //base로 상속받은 내용 사용후 내용을 추가하여 사용
@@ -71,7 +53,30 @@ public class PlayerHealth : LivingEntity
     {
         restoreHealth += 1;
         UIManager.Instance.UpdateRestoreHealth(restoreHealth);
+        // 체력 회복 UI 활성화
+        if (restoreHealth >= 1 && restoreHealthProceeding == false)
+        {
+            UIManager.Instance.UpdateRestoreHealthStart();
+            restoreHealthProceeding = true;
+        }
+        // 체력 회복 완료
+        if (restoreHealth >= restoreHealthMax)
+        {
+            UIManager.Instance.UpdateRestoreHealthEnd();
+            RestoreHealth();
+            restoreHealth = 0;
+            restoreHealthProceeding = false;
+        }
     }
+    //체력 회복 중단
+    private void RestoreHealthStop()
+    {
+        restoreHealth = 0;
+        UIManager.Instance.UpdateRestoreHealth(restoreHealth);
+        UIManager.Instance.UpdateRestoreHealthEnd();
+        restoreHealthProceeding = false;
+    }
+
 
     public override void RestoreHealth()
     {

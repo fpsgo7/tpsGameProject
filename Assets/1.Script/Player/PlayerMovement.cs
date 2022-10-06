@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         jumpSpeed = 8f;
     }
 
-    private void FixedUpdate()
+    private void FixedUpdate()//업데이트 문 필요
     {
         //회전 관련 함수를 실행하게함
         if (currentSpeed > 0.2f || playerInput.fire || playerShooter.aimState == PlayerShooter.AimState.HipFire) 

@@ -192,7 +192,7 @@ public class Gun : MonoBehaviour
         leftHandMount = leftHandZoomOut;
     }
 
-    private void Update()
+    private void Update()//업데이트 문 사용 필요**
     {
         currentSpread = Mathf.Clamp(currentSpread, 0f, maxSpread);//최대 탄퍼짐 이상으로 퍼지는 것을 막음
         currentSpread = Mathf.SmoothDamp(currentSpread, 0f, ref currentSpreadVelocity, 1f / restoreFromRecoilSpeed);//총을안쏘는 동안 반동을 감소 시킴
