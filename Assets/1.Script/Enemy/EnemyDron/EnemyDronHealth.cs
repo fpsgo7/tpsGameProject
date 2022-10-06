@@ -40,6 +40,19 @@ public class EnemyDronHealth : LivingEntity
 
         return true;
     }
+    //폭파 데미지를 입을 경우 실행할 처리 부분
+    public override bool ApplyDamage(int damage, GameObject damager)
+    {
+        if (!base.ApplyDamage(damage, damager)) return false;
+
+        if (enemyDronAI.targetEntity == null)
+        {
+            enemyDronAI.targetEntity = damager.GetComponent<LivingEntity>();
+        }
+        enemyDronAI.audioPlayer.PlayOneShot(hitClip);
+
+        return true;
+    }
 
     // 사망 처리
     public override void Die(int die)

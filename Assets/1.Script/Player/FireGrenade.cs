@@ -41,6 +41,7 @@ public class FireGrenade : MonoBehaviour
     }
     public void FireGrenadeProcess()//애니메이션 동작 이벤트에서 작동
     {
+        grenadeBullet.GetComponent<Grenade>().FireMan = gameObject;
             grenade = Instantiate(grenadeBullet, 
                 firePos.transform.position, firePos.transform.rotation);
     }

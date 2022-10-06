@@ -129,7 +129,7 @@ public class EnemyDronAI : MonoBehaviour
             if (hitobj.transform.GetComponent<LivingEntity>())
             {
                 Debug.Log("공격 성공");
-                hitobj.transform.GetComponent<LivingEntity>().ApplyDamage(damage);
+                hitobj.transform.GetComponent<LivingEntity>().ApplyDamage(damage,gameObject);
             }
                
         }

@@ -111,12 +111,12 @@ public class PlayerHealth : LivingEntity
         return true;//공격이 성공한 것을 알림
     }
     //폭파 대미지용
-    public override bool ApplyDamage(int damage)
+    public override bool ApplyDamage(int damage, GameObject damager)
     {
         if (invincibility == true)// 데미지 적용을 무적상태 동안은 막음
             return false;
         //데미지 적용이 실패한경우 return false를 시킨다.
-        if (!base.ApplyDamage(damage))
+        if (!base.ApplyDamage(damage, damager))
             return false;
         //피격사운드 재생
         playerAudioPlayer.PlayOneShot(hitClip);

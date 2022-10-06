@@ -7,6 +7,7 @@ public class Grenade : MonoBehaviour
 {
     public float speed = 500.0f;//수류탄 속도
     public GameObject explosion;
+    public GameObject FireMan;
     private int damage = 50;
     private RaycastHit[] rayHits;
     private void Start()
@@ -35,7 +36,7 @@ public class Grenade : MonoBehaviour
         foreach(RaycastHit hitobj in rayHits)
         {
             if (hitobj.transform.GetComponent<LivingEntity>())
-                hitobj.transform.GetComponent<LivingEntity>().ApplyDamage(damage);
+                hitobj.transform.GetComponent<LivingEntity>().ApplyDamage(damage,FireMan);
         }
     }
 }
