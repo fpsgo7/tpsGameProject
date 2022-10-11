@@ -13,6 +13,7 @@ public class PlayerShooter : MonoBehaviour
     public AimState aimState { get; private set; }
     //사용할 오브젝트
     public Gun gun;// 총 스크립트와 연결
+    public Gun[] allGuns;//총기들 종합
     public LateUpdateFollow lateUpdateFollow;//총잡는 부분 수적
     public LayerMask excludeTarget;//조준에서 제외할 대상
 
@@ -23,6 +24,7 @@ public class PlayerShooter : MonoBehaviour
     private Camera playerCamera;//플레이어 카메러
     public CinemachineFreeLook forrowCam;// 줌인 카메라
     public GameObject playerDgree;// 플레이어 각도 수정
+    public Transform GunPivot;//총 위치를 위한 오브젝트
 
     private float waitingTimeForReleasingAim = 2.5f;//총 조준후 다시 풀어지는 시간
     private float lastFireInputTime; //마지막 발사 시간
@@ -71,11 +73,13 @@ public class PlayerShooter : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
         playerMovement = GetComponent<PlayerMovement>();
         fireGrenade = GetComponent<FireGrenade>();
+       
     }
-
+    
     private void OnEnable()
     {
         aimState = AimState.Idle;
+        ChooseGun(0);//테스트용
         gun.gameObject.SetActive(true);
         gun.Setup(this);
     }
@@ -131,6 +135,19 @@ public class PlayerShooter : MonoBehaviour
         UpdateUI();
     }
 
+    public void ChooseGun(int weaponIndex)
+    {
+        EquipGun(allGuns[weaponIndex]);
+    }
+    public void EquipGun(Gun gunToEquip)
+    {
+        if (gun != null)
+        {
+            Destroy(gun.gameObject);
+        }
+        gun = Instantiate(gunToEquip, GunPivot.position, GunPivot.rotation) as Gun;
+        gun.transform.parent = GunPivot;
+    }
     public void Shoot()
     {
         //플레이어가 총쏘지 않는 동안에는 카메라와 플레이어가 보는 방향이 달라도되지만 
