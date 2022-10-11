@@ -78,6 +78,7 @@ public class EnemyMiniTankAI : MonoBehaviour
             else
             {
                 agent.speed = runSpeed;
+               
             }
         }
     }

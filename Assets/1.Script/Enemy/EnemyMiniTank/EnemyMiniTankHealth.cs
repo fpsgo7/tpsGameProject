@@ -18,11 +18,11 @@ public class EnemyMiniTankHealth : LivingEntity
         enemyAI = GetComponent<EnemyMiniTankAI>();
         startingHealth = 200;
     }
-    private void FixedUpdate()
-    {
-        enemyHealth = health;//체력을 유니티 에디터에서 보기위해 임시로 사용
+    //private void FixedUpdate()
+    //{
+    //    enemyHealth = health;//체력을 유니티 에디터에서 보기위해 임시로 사용
 
-    }
+    //}
 
     // 데미지를 입었을때 실행할 처리 체력부분
     public override bool ApplyDamage(DamageMessage damageMessage)

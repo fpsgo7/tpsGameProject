@@ -16,11 +16,11 @@ public class Enemy1Health : LivingEntity
         enemy1AI = GetComponent<Enemy1AI>();
         startingHealth = 100;
     }
-    private void FixedUpdate()
-    {
-        enemyHealth = health;//체력을 유니티 에디터에서 보기위해 임시로 사용
+    //private void FixedUpdate()
+    //{
+    //    enemyHealth = health;//체력을 유니티 에디터에서 보기위해 임시로 사용
 
-    }
+    //}
 
 
 

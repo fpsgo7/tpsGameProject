@@ -26,13 +26,13 @@ public class EnemySpawner : MonoBehaviour
     {
         Spawn();
     }
-    private void Update()
-    {
-        //게임오버가 되면 진행을 막느낟.
-        if (GameManager.Instance != null && GameManager.Instance.isGameover) return;
-        //적이 다죽으면 적 스폰을 실행해준다.
-        //if (enemies.Count <= 0) Spawn();
-    }
+    //private void Update()
+    //{
+    //    //게임오버가 되면 진행을 막느낟.
+    //    if (GameManager.Instance != null && GameManager.Instance.isGameover) return;
+    //    //적이 다죽으면 적 스폰을 실행해준다.
+    //    //if (enemies.Count <= 0) Spawn();
+    //}
 
    
     //적 스폰에서 웨이브와 적 새
