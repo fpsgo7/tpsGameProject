@@ -373,9 +373,16 @@ MonoBehaviour:
   leftHandZoomIn: {fileID: 3842818305822074236}
   leftHandZoomOut: {fileID: 6651108444748318809}
   RightHandMount: {fileID: 6651108444015577317}
-  fireDistance: 100
+  damage: 30
+  fireDistance: 200
   ammoRemain: 100
   magAmmo: 0
+  magCapacity: 10
+  timeBetFire: 0.5
+  reloadTime: 1.8
+  maxSpread: 2
+  stability: 1
+  restoreFromRecoilSpeed: 2
 --- !u!114 &6651108445288730166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,7 +398,6 @@ MonoBehaviour:
   targetToFollow: {fileID: 0}
   targetToFollowZoom: {fileID: 0}
   target: {fileID: 0}
-  playerShooter: {fileID: 0}
 --- !u!1001 &3842818306191349234
 PrefabInstance:
   m_ObjectHideFlags: 0

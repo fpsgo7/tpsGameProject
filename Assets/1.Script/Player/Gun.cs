@@ -29,19 +29,18 @@ public class Gun : MonoBehaviour
     public Transform leftHandZoomOut;
     public Transform RightHandMount;
     //설정값
-    private float damage;
-    public float fireDistance;
+    public float damage = 10;
+    public float fireDistance = 100f;
 
-    public int ammoRemain;
+    public int ammoRemain = 100;
     public int magAmmo;
-    private int magCapacity;
+    public int magCapacity = 30;
 
-    private float timeBetFire ;//총알 발사 사이 간격
-    private float reloadTime ;//장전 시간
-    
-    [Range(0f, 10f)] private float maxSpread;//탄착군 최대 범위
-    [Range(1f, 10f)] private float stability;//반동 증가 속도 해당 값을 증가하면 증가할 수 록 탄퍼짐 정도 감소
-    [Range(0.01f, 3f)] private float restoreFromRecoilSpeed;//
+    public float timeBetFire = 0.12f;//총알 발사 사이 간격
+    public float reloadTime = 1.8f;//장전 시간
+    [Range(0f, 10f)] public float maxSpread = 3f;//탄착군 최대 범위
+    [Range(1f, 10f)] public float stability = 1f;//반동 증가 속도 해당 값을 증가하면 증가할 수 록 탄퍼짐 정도 감소
+    [Range(0.01f, 3f)] public float restoreFromRecoilSpeed = 2f;//반동 감소 속도
     private float currentSpread;//현제 탄퍼짐값
     private float currentSpreadVelocity;//탄퍼짐값 변화량
 
@@ -56,22 +55,6 @@ public class Gun : MonoBehaviour
 
         bulletLineRenderer.positionCount = 2;//총구의 위치 와 총알 이 닿는 위치 총 2곳
         bulletLineRenderer.enabled = false;//실수로 총알 렌더럴을 false 안해뒀을 경우 스크립트에서도 실행시켜준다.
-    }
-
-    private void Start()
-    {
-            damage = 25;
-            fireDistance = 100f;
-
-            ammoRemain = 100;
-            magCapacity = 30;
-
-            timeBetFire = 0.12f;//총알 발사 사이 간격
-            reloadTime = 1.8f;//장전 시간
-            maxSpread = 3f;//탄착군 최대 범위
-            stability = 1f;//반동 증가 속도 해당 값을 증가하면 증가할 수 록 탄퍼짐 정도 감소
-            restoreFromRecoilSpeed = 2f;//반동 감소 속도
-
     }
 
     //총의 초기화를 실행함

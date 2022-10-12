@@ -79,7 +79,7 @@ public class PlayerShooter : MonoBehaviour
     private void OnEnable()
     {
         aimState = AimState.Idle;
-        ChooseGun(0);//테스트용
+        ChooseGun(2);//테스트용
         gun.gameObject.SetActive(true);
         gun.Setup(this);
     }
@@ -113,7 +113,7 @@ public class PlayerShooter : MonoBehaviour
         }
         else if (playerInput.zoomIn == false && zoomIn == true)
         {
-            ZoomOut();
+            ZoomIn();//테스트
         }
 
     }
