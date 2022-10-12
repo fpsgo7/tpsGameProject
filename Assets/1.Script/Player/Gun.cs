@@ -82,19 +82,58 @@ public class Gun : MonoBehaviour
         //Time.time >= lastFireTime + timeBetFire 현제시각이 발사 간격보다 큰경우
         if (state == State.Ready && Time.time >= lastFireTime + timeBetFire)
         {
-            var fireDirection = aimTarget - fireTransform.position;
+            var fireDirection1 = aimTarget - fireTransform.position;
+            var fireDirection2 = aimTarget - fireTransform.position;
+            var fireDirection3 = aimTarget - fireTransform.position;
+            var fireDirection4 = aimTarget - fireTransform.position;
+            var fireDirection5 = aimTarget - fireTransform.position;
             //탄퍼지기 정도 만들기
-            var xError = Utility.GedRandomNormalDistribution(0f, currentSpread);//currentSpread 값이 클수록 xError의 값이 커질 확률이 높다.
-            var yError = Utility.GedRandomNormalDistribution(0f, currentSpread);
+            var xError1 = Utility.GedRandomNormalDistribution(0f, currentSpread);//currentSpread 값이 클수록 xError의 값이 커질 확률이 높다.
+            var yError1 = Utility.GedRandomNormalDistribution(0f, currentSpread);
 
-            fireDirection = Quaternion.AngleAxis(yError, Vector3.up)*fireDirection;//y 축을 기준으로 y Error만큼 회전시킨다.
-            fireDirection = Quaternion.AngleAxis(xError, Vector3.right) * fireDirection;//x 축일경우
+            fireDirection1 = Quaternion.AngleAxis(yError1, Vector3.up)*fireDirection1;//y 축을 기준으로 y Error만큼 회전시킨다.
+            fireDirection1 = Quaternion.AngleAxis(xError1, Vector3.right) * fireDirection1;//x 축일경우
 
             currentSpread += 1f / stability;//탄퍼짐 정도를 갈수록 늘려준다.
-
             lastFireTime = Time.time;
-            Shot(fireTransform.position, fireDirection);
+            //샷건 발사 추가
+            if (this.gameObject.name == "ShotGun(Clone)")
+            {
+               
+                //탄퍼지기 정도 만들기
+                var xError2 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);//currentSpread 값이 클수록 xError의 값이 커질 확률이 높다.
+                var yError2 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);
 
+                fireDirection2 = Quaternion.AngleAxis(yError2, Vector3.up) * fireDirection2;//y 축을 기준으로 y Error만큼 회전시킨다.
+                fireDirection2 = Quaternion.AngleAxis(xError2, Vector3.right) * fireDirection2;//x 축일경우
+                                                                                               //탄퍼지기 정도 만들기
+                var xError3 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);//currentSpread 값이 클수록 xError의 값이 커질 확률이 높다.
+                var yError3 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);
+
+                fireDirection3 = Quaternion.AngleAxis(yError3, Vector3.up) * fireDirection3;//y 축을 기준으로 y Error만큼 회전시킨다.
+                fireDirection3 = Quaternion.AngleAxis(xError3, Vector3.right) * fireDirection3;//x 축일경우
+                                                                                               //탄퍼지기 정도 만들기
+                var xError4 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);//currentSpread 값이 클수록 xError의 값이 커질 확률이 높다.
+                var yError4 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);
+
+                fireDirection4 = Quaternion.AngleAxis(yError4, Vector3.up) * fireDirection4;//y 축을 기준으로 y Error만큼 회전시킨다.
+                fireDirection4 = Quaternion.AngleAxis(xError4, Vector3.right) * fireDirection4;//x 축일경우
+                                                                                               //탄퍼지기 정도 만들기
+                var xError5 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);//currentSpread 값이 클수록 xError의 값이 커질 확률이 높다.
+                var yError5 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);
+
+                fireDirection2 = Quaternion.AngleAxis(yError5, Vector3.up) * fireDirection5;//y 축을 기준으로 y Error만큼 회전시킨다.
+                fireDirection2 = Quaternion.AngleAxis(xError5, Vector3.right) * fireDirection5;//x 축일경우
+                Shot(fireTransform.position, fireDirection2);
+                Shot(fireTransform.position, fireDirection3);
+                Shot(fireTransform.position, fireDirection4);
+                Shot(fireTransform.position, fireDirection5);
+            }
+            Shot(fireTransform.position, fireDirection1);
+
+            magAmmo--;
+            if (magAmmo <= 0)
+                state = State.Empty;
             return true;
         }
 
@@ -135,9 +174,6 @@ public class Gun : MonoBehaviour
 
         StartCoroutine(ShotEffect(hitPosition));
 
-        magAmmo--;
-        if (magAmmo <=0)
-            state = State.Empty;
     }
     //총구 섬광과 탄알 궤적 사용
     private IEnumerator ShotEffect(Vector3 hitPosition)

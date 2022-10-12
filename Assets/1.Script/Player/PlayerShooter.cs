@@ -113,7 +113,7 @@ public class PlayerShooter : MonoBehaviour
         }
         else if (playerInput.zoomIn == false && zoomIn == true)
         {
-            ZoomIn();//테스트
+            ZoomOut();
         }
 
     }
