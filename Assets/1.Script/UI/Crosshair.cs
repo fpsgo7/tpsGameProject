@@ -3,8 +3,9 @@ using UnityEngine.UI;
 
 public class Crosshair : MonoBehaviour
 {
-    public Image aimPointReticle;//조준위치
+    //public Image aimPointReticle;//조준위치
     public Image hitPointReticle;//실제 맞는 위치
+    public GameObject hitPoint;
 
     public float smoothTime = 0.2f;//조준점의 스무딩 지연시간
     
@@ -23,12 +24,17 @@ public class Crosshair : MonoBehaviour
     public void SetActiveCrosshair(bool active)
     {
         hitPointReticle.enabled = active;
-        aimPointReticle.enabled = active;
+        //aimPointReticle.enabled = active;
     }
 
     public void UpdatePosition(Vector3 worldPoint)
     {
         targetPoint = screenCamera.WorldToScreenPoint(worldPoint);
+    }
+
+    public void ScopeUse(bool active)
+    {
+        hitPoint.SetActive(active);
     }
 
     private void Update()

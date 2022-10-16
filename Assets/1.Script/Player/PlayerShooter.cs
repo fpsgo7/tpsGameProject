@@ -22,7 +22,10 @@ public class PlayerShooter : MonoBehaviour
     private FireGrenade fireGrenade;
     private Animator playerAnimator;//플레이어 에니메이션
     private Camera playerCamera;//플레이어 카메러
+    public GameObject scopeCamera;
+    public GameObject scopeImage;
     public CinemachineFreeLook forrowCam;// 줌인 카메라
+    public Crosshair crosshair;
     public GameObject playerDgree;// 플레이어 각도 수정
     public Transform GunPivot;//총 위치를 위한 오브젝트
 
@@ -80,7 +83,7 @@ public class PlayerShooter : MonoBehaviour
     {
         aimState = AimState.Idle;
         Debug.Log(LobbyScript.chooseWeapon);
-        ChooseGun(LobbyScript.chooseWeapon);//테스트용
+        ChooseGun(LobbyScript.chooseWeapon);
         gun.gameObject.SetActive(true);
         gun.Setup(this);
     }
@@ -117,6 +120,14 @@ public class PlayerShooter : MonoBehaviour
             ZoomOut();
         }
 
+        if (playerInput.scopeZoomIn == true && scopeCamera.activeSelf == false && zoomIn == true)
+        {
+            ScopeZoomIn();
+        }
+        else if (playerInput.scopeZoomIn == false && scopeCamera.activeSelf == true)
+        {
+            ScopeZoomOut();
+        }
     }
 
     private void Update()
@@ -310,5 +321,19 @@ public class PlayerShooter : MonoBehaviour
         gun.ZoomOutFollow();
         zoomIn = false;
         playerAnimator.SetBool("ZoomIn", zoomIn);
+    }
+
+    private void ScopeZoomIn()
+    {
+        scopeCamera.SetActive(true);
+        scopeImage.SetActive(true);
+        crosshair.ScopeUse(false);
+    }
+
+    private void ScopeZoomOut()
+    {
+        scopeCamera.SetActive(false);
+        scopeImage.SetActive(false);
+        crosshair.ScopeUse(true);
     }
 }

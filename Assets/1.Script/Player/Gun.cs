@@ -12,6 +12,13 @@ public class Gun : MonoBehaviour
         Reloading
     }
     public State state { get; private set; }//파라미터로 사용하여 내부에서만 상태를 바꿀수 있다.
+    public enum Guns
+    {
+        SHOTGUN,
+        RIFLEGUN,
+        DMRGUN
+    }
+    public Guns guns { get; private set; }//파라미터로 사용하여 내부에서만 상태를 바꿀수 있다.
     //컴포넌트 형변수
     private PlayerShooter gunHolder;
     private LineRenderer bulletLineRenderer;
@@ -70,6 +77,19 @@ public class Gun : MonoBehaviour
         currentSpread = 0f;
         lastFireTime = 0f;
         state = State.Ready;
+        if(this.tag == "SHOTGUN")
+        {
+            guns = Guns.SHOTGUN;
+        }
+        if (this.tag == "RIFLEGUN")
+        {
+            guns = Guns.RIFLEGUN;
+        }
+        if (this.tag == "DMRGUN")
+        {
+            guns = Guns.DMRGUN;
+            Debug.Log("dmr");
+        }
     }
     //비활 성화 되면 gun의 코루틴 비활성화
     private void OnDisable()
@@ -97,7 +117,7 @@ public class Gun : MonoBehaviour
             currentSpread += 1f / stability;//탄퍼짐 정도를 갈수록 늘려준다.
             lastFireTime = Time.time;
             //샷건 발사 추가
-            if (this.gameObject.name == "ShotGun(Clone)")
+            if (this.gameObject.tag == "SHOTGUN")
             {
                
                 //탄퍼지기 정도 만들기

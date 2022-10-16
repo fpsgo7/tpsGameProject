@@ -14,6 +14,7 @@ public class PlayerInput : MonoBehaviour
     public string moveVerticalAxisName = "Vertical";
     public string reloadButtonName = "Reload";
     public string restoreHealthButtonName = "RestoreHealth";//v 키
+    public string scopeZoomInButtonName = "ScopeZoomIn";//tab 키
 
     //실제로 입력된 값들을 저장할 프로퍼티
     //값을 읽을때는 public 형이라 밬에서 읽기 쉽지만
@@ -25,6 +26,7 @@ public class PlayerInput : MonoBehaviour
     public bool reload { get; private set; }
     public bool jump { get; private set; }
     public bool restoreHealth { get; private set; }
+    public bool scopeZoomIn { get; private set; }
 
     private void Awake()
     {
@@ -70,6 +72,7 @@ public class PlayerInput : MonoBehaviour
         reload = Input.GetButtonDown(reloadButtonName);
         if (Input.GetButtonDown(restoreHealthButtonName))
             restoreHealth = true;
-
+        scopeZoomIn = Input.GetButton(scopeZoomInButtonName);
+        
     }
 }
