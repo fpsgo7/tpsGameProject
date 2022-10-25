@@ -52,7 +52,9 @@ public class PlayerShooter : MonoBehaviour
 
     private Vector3 aimPoint;//실제 조준대상 tps 기에 사용한다. 실제 조준점이 무조건 정중앙이 아니라서이다.
     private bool linedUp => !(Mathf.Abs(playerCamera.transform.eulerAngles.y - transform.eulerAngles.y) > 1f);//플레이어가 바라보는 각도와 실제 조준 각도를 너무큰치 체크해준다.
-    //정면에 사격할수 있는지 적정거리가 되는지 체크하는 변수 (플레이어 케릭터 위치 + Vector3.up *  총의 발사 위치의 y축, 발사 포지션, 사격제외대상 레이어)
+    //정면에 사격할수 있는지 적정거리가 되는지 체크하는 변수 (플레이어 케릭터 위치 + Vector3.up *
+    //총의 발사 위치의 y축, 발사 포지션, 사격제외대상 레이어)
+    //값에 따라 사격할수 없는 거리가되면 크로스 헤어를 비활성화 하고 스코프를 비활성화 시키기위한 조건값을 구해준다.
     private bool hasEnoughDistance => !Physics.Linecast(transform.position + Vector3.up * gun.fireTransform.position.y, gun.fireTransform.position, ~excludeTarget);
     public bool zoomIn=false;
     void Awake()
@@ -120,12 +122,12 @@ public class PlayerShooter : MonoBehaviour
             ZoomOut();
         }
 
-        if (playerInput.scopeZoomIn == true && scopeCamera.activeSelf == false && zoomIn == true)
+        if (playerInput.scopeZoomIn == true && scopeCamera.activeSelf == false && zoomIn == true && hasEnoughDistance == true && gun.guns == Gun.Guns.DMRGUN)
         {
             ScopeZoomIn();
         }
-        else if (playerInput.scopeZoomIn == false && scopeCamera.activeSelf == true)
-        {
+        else if (playerInput.scopeZoomIn == false && scopeCamera.activeSelf == true || hasEnoughDistance==false && gun.guns == Gun.Guns.DMRGUN)
+        {   //스코프 줌인 입력 상태가 false 이고 스코프 카메라가 트루이거나 , 사격거리가 짧아 사격이 불가능할경우 실행
             ScopeZoomOut();
         }
     }
@@ -176,6 +178,7 @@ public class PlayerShooter : MonoBehaviour
         else if (aimState == AimState.HipFire)//발사중인 상태인경우
         {
             //정면에 충분한 공간을 확보하는지 체크함
+           
             if (hasEnoughDistance)
             {
                 if (gun.Fire(aimPoint))//발사를 실행함과 동시에 발사가 성공하는 것을 2가지동작을한다.

@@ -124,7 +124,7 @@ public class PlayerHealth : LivingEntity
         if (!base.ApplyDamage(damage, damager))
             return false;
         //피격사운드 재생
-        playerAudioPlayer.PlayOneShot(hitClip);
+        //playerAudioPlayer.PlayOneShot(hitClip);
 
         UpdateUI();
 
@@ -135,7 +135,7 @@ public class PlayerHealth : LivingEntity
     {
         base.Die(die);
 
-        playerAudioPlayer.PlayOneShot(deathClip);
+        //playerAudioPlayer.PlayOneShot(deathClip);
         animator.SetTrigger("Die");
 
         UpdateUI();

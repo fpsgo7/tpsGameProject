@@ -11,7 +11,7 @@ public class EnemyDronAI : MonoBehaviour
     private float runSpeed = 3f;
     private int damage = 30;
     private float attackDistance;
-    private float viewDistance = 10f;
+    private float viewDistance = 100f;
 
     public LivingEntity targetEntity; // 추적할 대상
     public LayerMask whatIsTarget; // 추적 대상 레이어

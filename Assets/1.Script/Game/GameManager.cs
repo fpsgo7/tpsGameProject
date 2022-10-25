@@ -58,10 +58,12 @@ public class GameManager : MonoBehaviour
             firstDoor.GetComponent<doorOpen>().doorRock = false;
         }
     }
-
+    //다음맵 이동
     public void NextMap()
     {
         if (firstMap.activeSelf == true)
             SecondMap.SetActive(true);
     }
+
+    
 }
