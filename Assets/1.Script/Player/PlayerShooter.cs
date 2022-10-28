@@ -83,11 +83,12 @@ public class PlayerShooter : MonoBehaviour
     
     private void OnEnable()
     {
+        Debug.Log("총장착");
         aimState = AimState.Idle;
         Debug.Log(LobbyScript.chooseWeapon);
-        ChooseGun(LobbyScript.chooseWeapon);
+        ChooseGun(LobbyScript.chooseWeapon,0.0f);
         gun.gameObject.SetActive(true);
-        gun.Setup(this);
+        gun.Setup(this,0.0f);
     }
 
     private void OnDisable()
@@ -149,11 +150,11 @@ public class PlayerShooter : MonoBehaviour
         UpdateUI();
     }
 
-    public void ChooseGun(int weaponIndex)
+    public void ChooseGun(int weaponIndex,float damage)
     {
-        EquipGun(allGuns[weaponIndex]);
+        EquipGun(allGuns[weaponIndex],damage);
     }
-    public void EquipGun(Gun gunToEquip)
+    public void EquipGun(Gun gunToEquip,float damage)
     {
         if (gun != null)
         {
@@ -161,6 +162,11 @@ public class PlayerShooter : MonoBehaviour
         }
         gun = Instantiate(gunToEquip, GunPivot.position, GunPivot.rotation) as Gun;
         gun.transform.parent = GunPivot;
+        if(damage != 0.0f)
+        {
+            gun.Setup(this,damage);
+        }
+        
     }
     public void Shoot()
     {

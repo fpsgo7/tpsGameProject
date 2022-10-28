@@ -7,6 +7,7 @@ TagManager:
   - DMRGUN
   - RIFLEGUN
   - SHOTGUN
+  - Slot
   layers:
   - Default
   - TransparentFX

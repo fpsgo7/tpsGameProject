@@ -78,5 +78,12 @@ public class PlayerController : MonoBehaviour
             item.Use(gameObject);
             playerAudioPlayer.PlayOneShot(itemPickupClip);
         }
+
+        var equipmentItem = other.GetComponent<EquipmentItem>();
+        if (equipmentItem != null)
+        {
+            equipmentItem.Use();
+            playerAudioPlayer.PlayOneShot(itemPickupClip);
+        }
     }
 }

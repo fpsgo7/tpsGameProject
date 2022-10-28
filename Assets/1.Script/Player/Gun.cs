@@ -64,11 +64,14 @@ public class Gun : MonoBehaviour
         bulletLineRenderer.enabled = false;//실수로 총알 렌더럴을 false 안해뒀을 경우 스크립트에서도 실행시켜준다.
     }
 
-    //총의 초기화를 실행함
-    public void Setup(PlayerShooter gunHolder)
+    //총의 초기화와 총을 교체할때 사용
+    public void Setup(PlayerShooter gunHolder, float damage)
     {
+        //총을 교체하면 그곳에맞는 gunHolder을 다시 맞춰줘야해서 총을 교체할때도 사용한다.
         this.gunHolder = gunHolder;
         excludeTarget = gunHolder.excludeTarget;//쏘지않을 대상의 값을 가져와 레이어에 저장
+        if (damage != 0.0f)
+            this.damage = damage;
     }
     //총이 활성화 되면 총을 초기화
     private void OnEnable()

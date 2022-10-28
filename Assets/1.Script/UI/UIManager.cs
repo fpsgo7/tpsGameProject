@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     //각 오브젝트들을 유니티 인스팩터 상에서 연결하기위하여 SerializeField 사용
     [SerializeField] private GameObject gameoverUI;
     [SerializeField] private GameObject MenuUI;
+    [SerializeField] private GameObject InventoryUI;
     [SerializeField] private GameObject restoreHealthSlider;
     [SerializeField] private Crosshair crosshair;
     [SerializeField] private Slider healthSlider;
@@ -32,11 +33,18 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text fullAmmoText;
     [SerializeField] private Text waveText;
 
+    private string ESCButtonName = "Cancel";//esc 키
+    private string InventoryButtonName = "Inventory";//m 키
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetButtonDown(ESCButtonName))
         {
             MenuOnOff();
+        }
+        if (Input.GetButtonDown(InventoryButtonName))
+        {
+            InventoryOnOff();
         }
     }
 
@@ -132,6 +140,21 @@ public class UIManager : MonoBehaviour
         }
             
     }
+    //인벤토리 오픈
+    public void InventoryOnOff()
+    {
+        if (InventoryUI.activeSelf == false)
+        {
+            InventoryUI.SetActive(true);
+            Cursor.visible = true;
+        }
+        else
+        {
+            InventoryUI.SetActive(false);
+            Cursor.visible = false;
+        }
+    }
+
     //로비로 돌아가기
     public void OnExitClick()
     {
