@@ -16,7 +16,7 @@ public class EnemyDronHealth : LivingEntity
     private void Start()
     {
         enemyDronAI = GetComponent<EnemyDronAI>();
-        startingHealth = 50;
+        MaxHealth = 50;
     }
     //private void FixedUpdate()
     //{

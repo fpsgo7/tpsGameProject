@@ -21,6 +21,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     public WeaponType weaponType;
     public EquipmentItem equipmentItem;// 획득한 총기 아이템
     public PlayerShooter playerShooter;
+    public PlayerHealth playerHealth;
     public Inventory inventory;
     public Image itemImage;// 아이탬의 이미지
     public Text itemNameText;
@@ -76,14 +77,27 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         {
             if (itemName != null)
             {
-                if (weaponType == WeaponType.RifleGun)
-                    playerShooter.ChooseGun(0,damage);
-                if (weaponType == WeaponType.DMRGun)
-                    playerShooter.ChooseGun(1,damage);
-                if (weaponType == WeaponType.ShotGun)
-                    playerShooter.ChooseGun(2,damage);
                 // 색깔을 설정하여 장착이 된것을 표시
-                inventory.ClearColor();//전체색깔 초기화
+                if (itemType == ItemType.Weapon)
+                    inventory.ClearWeaponSlotColor();//전체색깔 초기화
+                if (itemType == ItemType.Equipment)
+                    inventory.ClearEquipmentSlotColor();//전체색깔 초기화
+                if(itemType == ItemType.Weapon)
+                {
+                    //무기 교체및 대미지 변환
+                    if (weaponType == WeaponType.RifleGun)
+                        playerShooter.ChooseGun(0, damage);
+                    if (weaponType == WeaponType.DMRGun)
+                        playerShooter.ChooseGun(1, damage);
+                    if (weaponType == WeaponType.ShotGun)
+                        playerShooter.ChooseGun(2, damage);
+                }
+                else
+                {
+                    //장비에 따른 체력 변화
+                    playerHealth.EqipmentWear(shield);
+                }
+                
                 Color color=this.GetComponent<Image>().color;
                 color.a = 0.5f;
                 this.GetComponent<Image>().color = color;

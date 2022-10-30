@@ -14,7 +14,7 @@ public class Enemy2Health : LivingEntity
     private void Start()
     {
         enemy2AI = GetComponent<Enemy2AI>();
-        startingHealth = 100;
+        MaxHealth = 100;
     }
     //private void FixedUpdate()
     //{

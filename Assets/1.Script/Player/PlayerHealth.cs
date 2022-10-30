@@ -11,7 +11,7 @@ public class PlayerHealth : LivingEntity
     public AudioClip hitClip;
     //변수 들
     public int restoreHealth;//체력회복 게이지
-    public int restoreHealthMax;
+    private int restoreHealthMax;//체력회복 게이지 최댁값
     public int healthKit;// 체력회복 킷
     //bool 형
     public bool restoreHealthProceeding = false;
@@ -24,12 +24,12 @@ public class PlayerHealth : LivingEntity
         playerAudioPlayer = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         restoreHealthMax = 100;
-        UIManager.Instance.RestoreHealthMax(restoreHealthMax);
+        UIManager.Instance.HealthMax(restoreHealthMax);//체력 회복 
     }
     private void FixedUpdate()
     {
         //회복 문장
-        if (playerInput.restoreHealth && health < 100 && healthKit >=1)
+        if (playerInput.restoreHealth && health < MaxHealth && healthKit >=1)
         {
             RestoreHealthSlider();
         }
@@ -138,6 +138,14 @@ public class PlayerHealth : LivingEntity
         //playerAudioPlayer.PlayOneShot(deathClip);
         animator.SetTrigger("Die");
 
+        UpdateUI();
+    }
+
+    public void EqipmentWear(float shield)
+    {
+        MaxHealth = startingHealth;//체력 초기화
+        MaxHealth += shield;//방어구만큼 최대체력 증가.
+        UIManager.Instance.UpdateHealthMaxSlider(MaxHealth);
         UpdateUI();
     }
 }

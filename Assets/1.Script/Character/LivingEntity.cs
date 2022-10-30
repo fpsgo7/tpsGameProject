@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class LivingEntity : MonoBehaviour, IDamageable 
 {
 
+    public float MaxHealth;//최대체력
     public float startingHealth;//초기체력
     public float health { get; protected set; }//현제 체력
     public bool dead { get; protected set; }//죽음 상태값
@@ -31,7 +32,8 @@ public class LivingEntity : MonoBehaviour, IDamageable
     protected virtual void OnEnable()
     {
         dead = false;
-        health = startingHealth;
+        startingHealth = MaxHealth;
+        health = MaxHealth;
     }
     //데미지 관련
     public virtual bool ApplyDamage(DamageMessage damageMessage)//매계변수로 DamageMessage 스크립트의 내용을 받는다.
@@ -76,7 +78,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
         if (dead)
             return;
         //체력 회복
-        health = startingHealth;
+        health = MaxHealth;
     }
     //죽는경우
     public virtual void Die(int die)
@@ -97,23 +99,23 @@ public class LivingEntity : MonoBehaviour, IDamageable
         if(intensity == 0)
         {
             enemyHealthSlider.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = Color.red;
-            newStartHealth = startingHealth;
+            newStartHealth = MaxHealth;
         }
            
         if(intensity == 1)
         {
             enemyHealthSlider.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = Color.blue;
-            newStartHealth = startingHealth * 2;
+            newStartHealth = MaxHealth * 2;
         }
             
         if(intensity == 2)
         {
             enemyHealthSlider.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = Color.yellow;
-            newStartHealth = startingHealth * 3;
+            newStartHealth = MaxHealth * 3;
         }
         // 체력 설정
-        this.startingHealth = newStartHealth;
-        this.health = startingHealth;
+        this.MaxHealth = newStartHealth;
+        this.health = MaxHealth;
         //체력바에 값 적용
         if (enemyHealthSlider != null)
         {

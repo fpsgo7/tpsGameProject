@@ -21,6 +21,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject MenuUI;
     [SerializeField] private GameObject InventoryUI;
     [SerializeField] private GameObject restoreHealthSlider;
+    [SerializeField] private GameObject WeaponPanel;
+    [SerializeField] private GameObject EquipmentPanel;
+    [SerializeField] private GameObject EquipmentChangeButton;
     [SerializeField] private Crosshair crosshair;
     [SerializeField] private Slider healthSlider;
 
@@ -74,6 +77,11 @@ public class UIManager : MonoBehaviour
     {
         crosshair.UpdatePosition(worldPosition);
     }
+    //최대 체력 슬라이더에 적용
+    public void UpdateHealthMaxSlider(float maxHealth)
+    {
+        healthSlider.maxValue = maxHealth;
+    }
     //체력을 보여줌
     public void UpdateHealthText(float health)
     {
@@ -86,7 +94,7 @@ public class UIManager : MonoBehaviour
         healthKitText.text = healthKit+"";
     }
     //체력 충전 값 공유
-    public void RestoreHealthMax(int max)
+    public void HealthMax(int max)
     {
         restoreHealthSlider.GetComponent<Slider>().maxValue = max;
     }
@@ -154,7 +162,22 @@ public class UIManager : MonoBehaviour
             Cursor.visible = false;
         }
     }
-
+    //장비창 변경
+    public void ChangeEquipmentPanel()
+    {
+        if(WeaponPanel.activeSelf == false)
+        {
+            EquipmentPanel.SetActive(false);
+            WeaponPanel.SetActive(true);
+            EquipmentChangeButton.GetComponentInChildren<Text>().text = "장비창으로";
+        }
+        else
+        {
+            WeaponPanel.SetActive(false);
+            EquipmentPanel.SetActive(true);
+            EquipmentChangeButton.GetComponentInChildren<Text>().text = "무기창으로";
+        }
+    }
     //로비로 돌아가기
     public void OnExitClick()
     {
