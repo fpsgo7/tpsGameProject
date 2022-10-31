@@ -143,8 +143,17 @@ public class PlayerHealth : LivingEntity
 
     public void EqipmentWear(float shield)
     {
-        MaxHealth = startingHealth;//체력 초기화
-        MaxHealth += shield;//방어구만큼 최대체력 증가.
+        if (health >= MaxHealth)
+        {
+            MaxHealth = startingHealth;//체력 초기화
+            MaxHealth += shield;//방어구만큼 최대체력 증가.
+            health = MaxHealth;
+        }
+        else
+        {
+            MaxHealth = startingHealth;//체력 초기화
+            MaxHealth += shield;//방어구만큼 최대체력 증가.
+        }
         UIManager.Instance.UpdateHealthMaxSlider(MaxHealth);
         UpdateUI();
     }
