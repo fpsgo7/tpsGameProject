@@ -51,6 +51,8 @@ public class Enemy2Shooter : MonoBehaviour
         currBullet = 30;
         damage = 0;
         wsReload = new WaitForSeconds(reloadTime);
+        nextFire = 0;
+        fireRate = 0.1f;
         //총 회전을 위한 변수값
         damping = 10.0f;
     }
@@ -214,7 +216,7 @@ public class Enemy2Shooter : MonoBehaviour
             return;
 
         enemyAnimator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1.0f);
-        enemyAnimator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1.0f);
+        //enemyAnimator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1.0f);
 
         enemyAnimator.SetIKPosition(AvatarIKGoal.LeftHand, leftHandMount.position);
         //enemyAnimator.SetIKRotation(AvatarIKGoal.LeftHand, leftHandMount.rotation);
