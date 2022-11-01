@@ -7,6 +7,7 @@ public class Enemy2Shooter : MonoBehaviour
     private Enemy2Health enemy2Health;
     protected Transform target;
     public Transform firePos;// 총알 발사위치를 위한변수
+    public Transform gunPivot;//총의 위치
     public Transform leftHandMount;// 왼쪽손
     public Transform RightHandMount;//오른쪽손
     private Animator enemyAnimator;
@@ -48,7 +49,7 @@ public class Enemy2Shooter : MonoBehaviour
         reloadTime = 2.0f;
         maxBullet = 30;
         currBullet = 30;
-        damage = 1;
+        damage = 0;
         wsReload = new WaitForSeconds(reloadTime);
         //총 회전을 위한 변수값
         damping = 10.0f;
@@ -201,6 +202,8 @@ public class Enemy2Shooter : MonoBehaviour
     //총을 쥐는 것을 다룸
     private void OnAnimatorIK(int layerIndex)
     {
+        gunPivot.position = enemyAnimator.GetIKHintPosition(AvatarIKHint.RightElbow);
+
         enemyAnimator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1.0f);
         enemyAnimator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1.0f);
 
@@ -214,6 +217,6 @@ public class Enemy2Shooter : MonoBehaviour
         enemyAnimator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1.0f);
 
         enemyAnimator.SetIKPosition(AvatarIKGoal.LeftHand, leftHandMount.position);
-        enemyAnimator.SetIKRotation(AvatarIKGoal.LeftHand, leftHandMount.rotation);
+        //enemyAnimator.SetIKRotation(AvatarIKGoal.LeftHand, leftHandMount.rotation);
     }
 }

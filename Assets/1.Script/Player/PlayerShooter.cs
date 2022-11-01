@@ -49,6 +49,9 @@ public class PlayerShooter : MonoBehaviour
     private float zoomBotScreenY = 0;
     private float waitingTimeForZoom = 0.000001f;//줌인 속도
     private float lastZoomTime; //줌 동작 한틱 기준
+    //마우스 감도용 변수
+    private float currentXAxis;
+    private float currentYAxis;
 
     private Vector3 aimPoint;//실제 조준대상 tps 기에 사용한다. 실제 조준점이 무조건 정중앙이 아니라서이다.
     private bool linedUp => !(Mathf.Abs(playerCamera.transform.eulerAngles.y - transform.eulerAngles.y) > 1f);//플레이어가 바라보는 각도와 실제 조준 각도를 너무큰치 체크해준다.
@@ -64,6 +67,7 @@ public class PlayerShooter : MonoBehaviour
         {
             excludeTarget |= 1 << gameObject.layer;
         }
+        //줌관련 값을 초기화
         zoomFieldOfView = zoomOutFieldOfView;
         zoomScreenX = zoomOutScreenX;
         zoomTopScreenY = zoomOutTopScreenY;
@@ -344,5 +348,23 @@ public class PlayerShooter : MonoBehaviour
         scopeCamera.SetActive(false);
         scopeImage.SetActive(false);
         crosshair.ScopeUse(true);
+    }
+    //마우스 감도 조절하기 
+    public void AxisChange(float x ,float y)//설정 마우스 감도 조절용
+    {
+        forrowCam.m_YAxis.m_MaxSpeed = x;
+        forrowCam.m_XAxis.m_MaxSpeed = y;
+    }
+    public void AxisMenuOnChange()//메뉴 관련 마우스 감도
+    {
+        currentXAxis = forrowCam.m_XAxis.m_MaxSpeed;
+        currentYAxis = forrowCam.m_YAxis.m_MaxSpeed;
+        forrowCam.m_XAxis.m_MaxSpeed = 0;
+        forrowCam.m_YAxis.m_MaxSpeed = 0;
+    }
+    public void AxisMenuOffChange()
+    {
+        forrowCam.m_XAxis.m_MaxSpeed = currentXAxis;
+        forrowCam.m_YAxis.m_MaxSpeed = currentYAxis;
     }
 }

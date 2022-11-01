@@ -36,20 +36,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text fullAmmoText;
     [SerializeField] private Text waveText;
 
-    private string ESCButtonName = "Cancel";//esc 키
-    private string InventoryButtonName = "Inventory";//m 키
-
-    private void Update()
-    {
-        if (Input.GetButtonDown(ESCButtonName))
-        {
-            MenuOnOff();
-        }
-        if (Input.GetButtonDown(InventoryButtonName))
-        {
-            InventoryOnOff();
-        }
-    }
+    public bool menuUIOpen = false;
+    public PlayerShooter playerShooter;
 
     //탄약 업데읻트
     public void UpdateAmmoText(int magAmmo, int remainAmmo)
@@ -136,30 +124,41 @@ public class UIManager : MonoBehaviour
     //메뉴 오픈
     public void MenuOnOff()
     {
-        if (MenuUI.activeSelf == false)
+        if (menuUIOpen == false && MenuUI.activeSelf == false)
         {
+
+            menuUIOpen = true;
             MenuUI.SetActive(true);
             Cursor.visible = true;
+            playerShooter.AxisMenuOnChange();
+            Debug.Log("메뉴 오픈");
         }
-        else
+        else if(menuUIOpen == true && MenuUI.activeSelf == true)
         {
+            menuUIOpen = false;
             MenuUI.SetActive(false);
             Cursor.visible = false;
+            playerShooter.AxisMenuOffChange();
         }
             
     }
     //인벤토리 오픈
     public void InventoryOnOff()
     {
-        if (InventoryUI.activeSelf == false)
+        if (menuUIOpen == false && InventoryUI.activeSelf == false)
         {
+            menuUIOpen = true;
             InventoryUI.SetActive(true);
             Cursor.visible = true;
+            playerShooter.AxisMenuOnChange();
+            Debug.Log("인벤토리 오픈 오픈");
         }
-        else
+        else if(menuUIOpen == true && InventoryUI.activeSelf == true)
         {
+            menuUIOpen = false;
             InventoryUI.SetActive(false);
             Cursor.visible = false;
+            playerShooter.AxisMenuOffChange();
         }
     }
     //장비창 변경
