@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+//UI 와 마우스 커서를 관리한다.
 public class UIManager : MonoBehaviour
 {
     //싱글톤 방식 사용
@@ -38,6 +39,11 @@ public class UIManager : MonoBehaviour
 
     public bool menuUIOpen = false;
     public PlayerShooter playerShooter;
+
+    public void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
 
     //탄약 업데읻트
     public void UpdateAmmoText(int magAmmo, int remainAmmo)
@@ -126,7 +132,7 @@ public class UIManager : MonoBehaviour
     {
         if (menuUIOpen == false && MenuUI.activeSelf == false)
         {
-
+            Cursor.lockState = CursorLockMode.Confined;
             menuUIOpen = true;
             MenuUI.SetActive(true);
             Cursor.visible = true;
@@ -139,6 +145,7 @@ public class UIManager : MonoBehaviour
             MenuUI.SetActive(false);
             Cursor.visible = false;
             playerShooter.AxisMenuOffChange();
+            Cursor.lockState = CursorLockMode.Locked;
         }
             
     }
@@ -147,6 +154,7 @@ public class UIManager : MonoBehaviour
     {
         if (menuUIOpen == false && InventoryUI.activeSelf == false)
         {
+            Cursor.lockState = CursorLockMode.Confined;
             menuUIOpen = true;
             InventoryUI.SetActive(true);
             Cursor.visible = true;
@@ -159,6 +167,7 @@ public class UIManager : MonoBehaviour
             InventoryUI.SetActive(false);
             Cursor.visible = false;
             playerShooter.AxisMenuOffChange();
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
     //장비창 변경
