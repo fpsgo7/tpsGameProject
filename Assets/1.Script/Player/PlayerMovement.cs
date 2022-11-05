@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public float runSpeed;// 일반속도
     public float walkSpeed;// 일반속도
     public float jumpStopSpeed;// 점프 속도
+    public float jumpStartSpeed;// 점프동작 시작 속도
     [Range(0.01f, 1f)] public float airControlPercent = 0.1f;//공중 속도
     //스무스의 지연 값
     public float speedSmoothTime = 0.1f;
@@ -46,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
         walkSpeed = 2.5f;
         runSpeed = 5f;
         jumpStopSpeed = 0.0001f;
+        jumpStartSpeed = 0.1f;
     }
 
     private void FixedUpdate()//업데이트 문 필요
@@ -111,6 +113,11 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log("점프시작");
         playerHealth.invincibility = true;
         jumpState = true;
+        speed = jumpStartSpeed;
+    }
+    public void JumpMoveStart()
+    {
+        speed = runSpeed;
     }
     public void JumpMoveStop()
     {
