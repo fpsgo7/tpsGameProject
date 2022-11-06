@@ -10,12 +10,11 @@ public class Grenade : MonoBehaviour
     public GameObject FireMan;
     private int damage = 50;
     private RaycastHit[] rayHits;
-    private void Start()
+    public void Shoot()
     {
         GetComponent<Rigidbody>().AddForce(transform.forward * speed);
-        Invoke("ExplosionGrenade",1.0f);
+        Invoke("ExplosionGrenade", 1.0f);
     }
-
     private void ExplosionGrenade()
     {
         
@@ -25,9 +24,11 @@ public class Grenade : MonoBehaviour
             Vector3.up, 0f,
             LayerMask.GetMask("Enemy"));
         ExplosionAttack();
-        GameObject obj = (GameObject)Instantiate(explosion, transform.position, Quaternion.identity);
-        Destroy(obj, 1f);
-        Destroy(this.gameObject,1f);
+        // GameObject obj = (GameObject)Instantiate(explosion, transform.position, Quaternion.identity);
+        var Explosion = GrenadeExplosionObjectPooling.GetObjet(transform);
+        Invoke(nameof(DestroyGrenade), 1f);
+        //Destroy(obj,1f);
+        Explosion.grenadeExplosion();
     }
     private void ExplosionAttack()
     {
@@ -38,5 +39,10 @@ public class Grenade : MonoBehaviour
             if (hitobj.transform.GetComponent<LivingEntity>())
                 hitobj.transform.GetComponent<LivingEntity>().ApplyDamage(damage,FireMan);
         }
+    }
+    //오브젝트 풀링방식으로 없에기
+    private void DestroyGrenade()
+    {
+        GrenadeObjectPooling.ReturnObject(this);
     }
 }

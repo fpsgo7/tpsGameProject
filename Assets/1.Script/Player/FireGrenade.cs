@@ -10,8 +10,6 @@ public class FireGrenade : MonoBehaviour
     private float lastFireTime; // 수류탄 마지막으로 발사한 시점
     private Animator playerAnimator; // 플레이어의 애니메이터                                
     private readonly int hashGrenade = Animator.StringToHash("Grenade");//Animator의 Grenade 트리거를 가져온다. 애니메이터 최적화
-    private GameObject grenade;
-    public GameObject grenadeBullet;
     public LateUpdateFollow lateUpdateFollow;//총잡는 부분 수적
 
     private void Start()
@@ -41,9 +39,11 @@ public class FireGrenade : MonoBehaviour
     }
     public void FireGrenadeProcess()//애니메이션 동작 이벤트에서 작동
     {
-        grenadeBullet.GetComponent<Grenade>().FireMan = gameObject;
-            grenade = Instantiate(grenadeBullet, 
-                firePos.transform.position, firePos.transform.rotation);
+        var grenade = GrenadeObjectPooling.GetObjet();
+        grenade.FireMan = gameObject;
+        grenade.transform.position = firePos.transform.position;
+        grenade.transform.rotation = firePos.transform.rotation;
+        grenade.Shoot();
     }
     public void FireGrenadeEnd()//애니메이션 동작 이벤트에서 작동
     {
