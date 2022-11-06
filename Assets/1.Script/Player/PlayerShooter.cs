@@ -32,16 +32,16 @@ public class PlayerShooter : MonoBehaviour
     private float waitingTimeForReleasingAim = 2.5f;//총 조준후 다시 풀어지는 시간
     private float lastFireInputTime; //마지막 발사 시간
     //줌인 줌아웃 float 변수
-    private float zoomOutFieldOfView = 60f;
-    private float zoomOutScreenX = 0.4f;
-    private float zoomOutTopScreenY = 0.6f;
-    private float zoomOutMidScreenY = 0.6f;
-    private float zoomOutBotScreenY = 0.6f;
-    private float zoomInFieldOfView = 40f;
-    private float zoomInScreenX = 0.25f;
-    private float zoomInTopScreenY = 0.8f;
-    private float zoomInMidScreenY = 0.8f;
-    private float zoomInBotScreenY = 0.8f;
+    private const float zoomOutFieldOfView = 60f;
+    private const float zoomOutScreenX = 0.4f;
+    private const float zoomOutTopScreenY = 0.6f;
+    private const float zoomOutMidScreenY = 0.6f;
+    private const float zoomOutBotScreenY = 0.6f;
+    private const float zoomInFieldOfView = 40f;
+    private const float zoomInScreenX = 0.25f;
+    private const float zoomInTopScreenY = 0.8f;
+    private const float zoomInMidScreenY = 0.8f;
+    private const float zoomInBotScreenY = 0.8f;
     private float zoomFieldOfView = 0;
     private float zoomScreenX = 0;
     private float zoomTopScreenY = 0;
@@ -52,6 +52,11 @@ public class PlayerShooter : MonoBehaviour
     //마우스 감도용 변수
     private float currentXAxis;
     private float currentYAxis;
+    //애니메이터 해쉬값 변수
+    public readonly int hashAngle = Animator.StringToHash("Angle");
+    public readonly int hashShoot = Animator.StringToHash("Shoot");
+    public readonly int hashReload = Animator.StringToHash("Reload");
+    public readonly int hashZoomIn = Animator.StringToHash("ZoomIn");
 
     private Vector3 aimPoint;//실제 조준대상 tps 기에 사용한다. 실제 조준점이 무조건 정중앙이 아니라서이다.
     private bool linedUp => !(Mathf.Abs(playerCamera.transform.eulerAngles.y - transform.eulerAngles.y) > 1f);//플레이어가 바라보는 각도와 실제 조준 각도를 너무큰치 체크해준다.
@@ -87,7 +92,6 @@ public class PlayerShooter : MonoBehaviour
     
     private void OnEnable()
     {
-        Debug.Log("총장착");
         aimState = AimState.Idle;
         Debug.Log(LobbyScript.chooseWeapon);
         ChooseGun(LobbyScript.chooseWeapon,0.0f);
@@ -144,7 +148,7 @@ public class PlayerShooter : MonoBehaviour
         var angle = playerCamera.transform.eulerAngles.x;//카메라가 보는 위아래 각도를 구함
         if (angle > 270f) angle -= 360f;
         angle = angle / -180f + 0.5f;
-        playerAnimator.SetFloat("Angle", angle);// 에니메이터에 각도값을 보내어 총을 위아레로 움직이게함
+        playerAnimator.SetFloat(hashAngle, angle);// 에니메이터에 각도값을 보내어 총을 위아레로 움직이게함
         //발사버튼을 안누른시간이 지정된시간보다 오래걸리면 실행됨
         if (!playerInput.fire && Time.time >= lastFireInputTime + waitingTimeForReleasingAim)
         {
@@ -193,7 +197,7 @@ public class PlayerShooter : MonoBehaviour
             {
                 if (gun.Fire(aimPoint))//발사를 실행함과 동시에 발사가 성공하는 것을 2가지동작을한다.
                 {
-                    playerAnimator.SetTrigger("Shoot");
+                    playerAnimator.SetTrigger(hashShoot);
                 }
             }
             else
@@ -207,7 +211,7 @@ public class PlayerShooter : MonoBehaviour
     {
         if (gun.Reload())
         {
-            playerAnimator.SetTrigger("Reload");
+            playerAnimator.SetTrigger(hashReload);
         }
     }
     //카메라 정중앙을 기준으로 광선을 쏜다음 이후 광선을 쏜지점을 에임 타깃으로 지정
@@ -278,7 +282,6 @@ public class PlayerShooter : MonoBehaviour
     }
     private void ZoomInEnd()
     {
-        Debug.Log("줌인");
         forrowCam.m_Lens.FieldOfView = zoomInFieldOfView;
         forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = zoomInTopScreenY;
         forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = zoomInMidScreenY;
@@ -295,7 +298,7 @@ public class PlayerShooter : MonoBehaviour
         //lateUpdateFollow.ZoomInFollow();
         //gun.ZoomInFollow();
         zoomIn = true;
-        playerAnimator.SetBool("ZoomIn", zoomIn);
+        playerAnimator.SetBool(hashZoomIn, zoomIn);
     }
     //조준 끝
     private void ZoomOut()
@@ -333,7 +336,7 @@ public class PlayerShooter : MonoBehaviour
         //lateUpdateFollow.ZoomOutFollow();
         //gun.ZoomOutFollow();
         zoomIn = false;
-        playerAnimator.SetBool("ZoomIn", zoomIn);
+        playerAnimator.SetBool(hashZoomIn, zoomIn);
     }
 
     private void ScopeZoomIn()

@@ -11,6 +11,9 @@ public class Enemy2Health : LivingEntity
 
     public float enemyHealth;// 체력 확인용
 
+    public readonly int hashDie = Animator.StringToHash("Die");
+    public readonly int hashDieJump = Animator.StringToHash("DieJump");
+
     private void Start()
     {
         enemy2AI = GetComponent<Enemy2AI>();
@@ -66,9 +69,9 @@ public class Enemy2Health : LivingEntity
         // 사망 애니메이션 재생
         enemy2AI.animator.applyRootMotion = true;
         if(die == 0)
-            enemy2AI.animator.SetTrigger("Die");
+            enemy2AI.animator.SetTrigger(hashDie);
         if(die == 1)
-            enemy2AI.animator.SetTrigger("DieJump");
+            enemy2AI.animator.SetTrigger(hashDieJump);
 
         // 사망 효과음 재생
         if (deathClip != null) enemy2AI.audioPlayer.PlayOneShot(deathClip);

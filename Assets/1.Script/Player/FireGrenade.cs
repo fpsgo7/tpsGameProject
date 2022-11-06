@@ -9,7 +9,7 @@ public class FireGrenade : MonoBehaviour
     public float timeBetFire = 3f; // 수류탄 발사 간격
     private float lastFireTime; // 수류탄 마지막으로 발사한 시점
     private Animator playerAnimator; // 플레이어의 애니메이터                                
-    private readonly int hashGrenade = Animator.StringToHash("Grenade");//Animator의 Grenade 트리거를 가져온다. 
+    private readonly int hashGrenade = Animator.StringToHash("Grenade");//Animator의 Grenade 트리거를 가져온다. 애니메이터 최적화
     private GameObject grenade;
     public GameObject grenadeBullet;
     public LateUpdateFollow lateUpdateFollow;//총잡는 부분 수적

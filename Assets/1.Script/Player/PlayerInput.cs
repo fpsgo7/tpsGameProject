@@ -5,18 +5,18 @@ public class PlayerInput : MonoBehaviour
     //다른 스크립트와 연결하기
     private PlayerHealth playerHealth;
     private PlayerMovement playerMovement;
-    //입력감지를 위해 사용하는 변수
-    public string fireButtonName = "Fire1";
-    public string FireGrenadeButtonName = "Grenade";//g 키
-    public string zoomInButtonName = "ZoomIn";// 우클릭
-    public string jumpButtonName = "Jump";
-    public string moveHorizontalAxisName = "Horizontal";
-    public string moveVerticalAxisName = "Vertical";
-    public string reloadButtonName = "Reload";
-    public string restoreHealthButtonName = "RestoreHealth";//v 키
-    public string scopeZoomInButtonName = "ScopeZoomIn";//tab 키
-    private string ESCButtonName = "Cancel";//esc 키
-    private string InventoryButtonName = "Inventory";//m 키
+    //입력감지를 위해 사용하는 변수 const 사용으로 상수화 시켜 최적화
+    public const string fireButtonName = "Fire1";
+    public const string FireGrenadeButtonName = "Grenade";//g 키
+    public const string zoomInButtonName = "ZoomIn";// 우클릭
+    public const string jumpButtonName = "Jump";
+    public const string moveHorizontalAxisName = "Horizontal";
+    public const string moveVerticalAxisName = "Vertical";
+    public const string reloadButtonName = "Reload";
+    public const string restoreHealthButtonName = "RestoreHealth";//v 키
+    public const string scopeZoomInButtonName = "ScopeZoomIn";//tab 키
+    private const string ESCButtonName = "Cancel";//esc 키
+    private const string InventoryButtonName = "Inventory";//m 키
 
     //실제로 입력된 값들을 저장할 프로퍼티
     //값을 읽을때는 public 형이라 밬에서 읽기 쉽지만

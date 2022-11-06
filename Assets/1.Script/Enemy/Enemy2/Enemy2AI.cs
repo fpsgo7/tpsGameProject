@@ -31,6 +31,8 @@ public class Enemy2AI : MonoBehaviour
     public float viewDistance = 10f;
     public float patrolSpeed = 3f;
 
+    public readonly int hashSpeed = Animator.StringToHash("Speed");
+
     public LivingEntity targetEntity; // 추적할 대상
     public LayerMask whatIsTarget; // 추적 대상 레이어
     private Enemy2Health enemy2Health;
@@ -98,7 +100,7 @@ public class Enemy2AI : MonoBehaviour
                 
         }
         // 추적 대상의 존재 여부에 따라 다른 애니메이션을 재생
-        animator.SetFloat("Speed", agent.desiredVelocity.magnitude);
+        animator.SetFloat(hashSpeed , agent.desiredVelocity.magnitude);
     }
 
     private void FixedUpdate()

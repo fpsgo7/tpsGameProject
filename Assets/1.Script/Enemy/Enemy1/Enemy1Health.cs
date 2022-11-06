@@ -10,6 +10,7 @@ public class Enemy1Health : LivingEntity
     public AudioClip deathClip; // 사망시 재생할 소리
 
     public float enemyHealth;// 체력 확인용
+    public readonly int hashDie = Animator.StringToHash("Die");
 
     private void Start()
     {
@@ -67,7 +68,7 @@ public class Enemy1Health : LivingEntity
 
         // 사망 애니메이션 재생
         enemy1AI.animator.applyRootMotion = true;
-        enemy1AI.animator.SetTrigger("Die");
+        enemy1AI.animator.SetTrigger(hashDie);
 
         // 사망 효과음 재생
         if (deathClip != null) enemy1AI.audioPlayer.PlayOneShot(deathClip);

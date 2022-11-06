@@ -10,6 +10,10 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     //카메라를 기준으로 움직이기에 필요한 카메라 변수
     private Camera followCam;
+    //애니메이션 최적화를 위한 해쉬값
+    public readonly int hashJump = Animator.StringToHash("Jump");
+    public readonly int hashVerticalMove = Animator.StringToHash("Vertical Move");
+    public readonly int hashHorizontalMove = Animator.StringToHash("Horizontal Move");
     //플레이어 값
     public float speed;//속도
     public float runSpeed;// 일반속도
@@ -106,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
     public void Jump()
     {
         lastJumpTime = Time.time;
-        animator.SetTrigger("Jump");
+        animator.SetTrigger(hashJump);
     }
     public void JumpStart()
     {
@@ -139,13 +143,13 @@ public class PlayerMovement : MonoBehaviour
         var animationSpeedPercent = currentSpeed / speed;
         if(playerInput.zoomIn == true)
         {
-            animator.SetFloat("Vertical Move", moveInput.y * animationSpeedPercent/2, 0.05f, Time.deltaTime);
-            animator.SetFloat("Horizontal Move", moveInput.x * animationSpeedPercent/2, 0.05f, Time.deltaTime);
+            animator.SetFloat(hashVerticalMove, moveInput.y * animationSpeedPercent/2, 0.05f, Time.deltaTime);
+            animator.SetFloat(hashHorizontalMove, moveInput.x * animationSpeedPercent/2, 0.05f, Time.deltaTime);
         }
         else
         {
-            animator.SetFloat("Vertical Move", moveInput.y * animationSpeedPercent, 0.05f, Time.deltaTime);
-            animator.SetFloat("Horizontal Move", moveInput.x * animationSpeedPercent, 0.05f, Time.deltaTime);
+            animator.SetFloat(hashVerticalMove, moveInput.y * animationSpeedPercent, 0.05f, Time.deltaTime);
+            animator.SetFloat(hashHorizontalMove, moveInput.x * animationSpeedPercent, 0.05f, Time.deltaTime);
         }
         
     }

@@ -38,6 +38,9 @@ public class Enemy1AI : MonoBehaviour
     public float fieldOfView = 50f;
     public float viewDistance = 10f;
     public float patrolSpeed = 3f;
+    //애니메이션 해쉬값
+    public readonly int hashAttack = Animator.StringToHash("Attack");
+    public readonly int hashSpeed = Animator.StringToHash("Speed");
 
     public LivingEntity targetEntity; // 추적할 대상
     public LayerMask whatIsTarget; // 추적 대상 레이어
@@ -111,7 +114,7 @@ public class Enemy1AI : MonoBehaviour
             }
         }
         // 추적 대상의 존재 여부에 따라 다른 애니메이션을 재생
-        animator.SetFloat("Speed", agent.desiredVelocity.magnitude);
+        animator.SetFloat(hashSpeed , agent.desiredVelocity.magnitude);
     }
 
     private void FixedUpdate()
@@ -224,7 +227,7 @@ public class Enemy1AI : MonoBehaviour
         state = State.AttackBegin;
 
         agent.isStopped = true;
-        animator.SetTrigger("Attack");
+        animator.SetTrigger(hashAttack);
     }
     //공격 가능
     public void EnableAttack()
