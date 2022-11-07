@@ -6,14 +6,14 @@ using UnityEngine.AI;
 public class TrackAnim : MonoBehaviour
 {
     //텍스처의 회전속도
-    private float scrollSpeed = 1.0f;
-    private Renderer _renderer;//렌더러에 접근하기
-    public NavMeshAgent navMeshAgent;
+    //private float scrollSpeed = 1.0f;
+    //private Renderer _renderer;//렌더러에 접근하기
+    //public NavMeshAgent navMeshAgent;
 
-    void Start()
-    {
-        _renderer = GetComponent<Renderer>();//렌더러변수와 컴포넌트 연결
-    }
+    //void Start()
+    //{
+    //    _renderer = GetComponent<Renderer>();//렌더러변수와 컴포넌트 연결
+    //}
     //void Update()
     //{
 
