@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class EffectManager : MonoBehaviour
 {
@@ -24,18 +25,27 @@ public class EffectManager : MonoBehaviour
     //(이팩트 위치, 방향, 이펙트 부모, 사용할 이펙트 타입)
     public void PlayHitEffect(Vector3 pos, Vector3 normal, Transform parent = null, EffectType effectType = EffectType.Common)
     {
-        var targetPrefab = commonHitEffectPrefab;
+        //var targetPrefab1 = commonHitEffectPrefab;
+        ////만약 생명채가 피격당할 경우이면 사용하는 이펙트를 바꾼다.
+        //if (effectType == EffectType.Flesh)
+        //{
+        //    targetPrefab1 = fleshHitEffectPrefab;
+        //}
+        ////이팩트 생성
+        //var effect = Instantiate(targetPrefab1, pos, Quaternion.LookRotation(normal));
+        ////if (parent != null)
+        //    //effect.transform.SetParent(parent);
+        //effect.Play();
+
+        GameObject targetPrefab = CommonHitEffectPooling.GetObjet(pos, normal);
         //만약 생명채가 피격당할 경우이면 사용하는 이펙트를 바꾼다.
-        if(effectType == EffectType.Flesh)
+        if (effectType == EffectType.Flesh)
         {
-            targetPrefab = fleshHitEffectPrefab;
+            //targetPrefab = fleshHitEffectPrefab;
         }
-        //이팩트 생성
-        var effect = Instantiate(targetPrefab, pos, Quaternion.LookRotation(normal));
+        StartCoroutine(CommonHitEffectPooling.ReturnObject(targetPrefab));
 
-        if (parent != null)
-            effect.transform.SetParent(parent);
 
-        effect.Play();
     }
+
 }
