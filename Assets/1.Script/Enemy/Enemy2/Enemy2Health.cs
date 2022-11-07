@@ -14,7 +14,7 @@ public class Enemy2Health : LivingEntity
     public readonly int hashDie = Animator.StringToHash("Die");
     public readonly int hashDieJump = Animator.StringToHash("DieJump");
 
-    private void Start()
+    private void Awake()
     {
         enemy2AI = GetComponent<Enemy2AI>();
         MaxHealth = 100;

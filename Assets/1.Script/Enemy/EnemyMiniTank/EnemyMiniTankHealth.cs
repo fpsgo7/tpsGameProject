@@ -13,7 +13,7 @@ public class EnemyMiniTankHealth : LivingEntity
 
     public float enemyHealth;// 체력 확인용
 
-    private void Start()
+    private void Awake()
     {
         enemyAI = GetComponent<EnemyMiniTankAI>();
         MaxHealth = 200;

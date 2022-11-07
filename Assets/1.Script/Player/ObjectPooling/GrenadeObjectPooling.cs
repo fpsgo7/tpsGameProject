@@ -13,7 +13,7 @@ public class GrenadeObjectPooling : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        Initalize(5);
+        Initalize(2);
     }
     // 오브젝트 생성
     private Grenade CreateNewObject()

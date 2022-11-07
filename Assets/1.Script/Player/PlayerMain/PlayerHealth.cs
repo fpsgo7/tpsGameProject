@@ -107,7 +107,7 @@ public class PlayerHealth : LivingEntity
         if (!base.ApplyDamage(damageMessage))
             return false;
         //피격효과 (피격지점, 피격각도, 플레이어 위치, 사용할 이펙트)
-        EffectManager.Instance.PlayHitEffect(damageMessage.hitPoint, damageMessage.hitNormal, transform, EffectManager.EffectType.Flesh);
+        // EffectManager.Instance.PlayHitEffect(damageMessage.hitPoint, damageMessage.hitNormal, transform, EffectManager.EffectType.Flesh);
         //피격사운드 재생
         playerAudioPlayer.PlayOneShot(hitClip);
 

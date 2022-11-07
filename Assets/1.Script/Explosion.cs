@@ -6,7 +6,7 @@ public class Explosion : MonoBehaviour
 {
     public void grenadeExplosion()
     {
-        Invoke(nameof(DestroyBullet), 5f);
+        Invoke(nameof(DestroyBullet), 1.5f);
     }
 
     private void DestroyBullet()
