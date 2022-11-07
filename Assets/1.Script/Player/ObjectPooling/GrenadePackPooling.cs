@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrenadeExplosionObjectPooling : MonoBehaviour
+public class GrenadePackPooling : MonoBehaviour
 {
-    public static GrenadeExplosionObjectPooling Instance;
+    public static GrenadePackPooling Instance;
 
     [SerializeField]
-    private GameObject poolingGrenadeExplosionObject;
+    private GameObject poolingObject;
     private Queue<GameObject> poolingQueue = new Queue<GameObject>();
 
     void Awake()
@@ -18,7 +18,7 @@ public class GrenadeExplosionObjectPooling : MonoBehaviour
     // 오브젝트 생성
     private GameObject CreateNewObject()
     {
-        var newObj = Instantiate(poolingGrenadeExplosionObject,transform);
+        var newObj = Instantiate(poolingObject, transform);
         newObj.gameObject.SetActive(false);
         return newObj;
     }
@@ -31,31 +31,29 @@ public class GrenadeExplosionObjectPooling : MonoBehaviour
         }
     }
     //오브젝트를 풀링하기
-    public static GameObject GetObjet(Transform transform)
+    public static GameObject GetObjet(Vector3 point)
     {
         if (Instance.poolingQueue.Count > 0)
         {
             var obj = Instance.poolingQueue.Dequeue();//큐에서 하나 꺼내옴
-            obj.transform.SetParent(null);//
-            obj.transform.position = transform.position;
+            obj.transform.position = point;
             obj.gameObject.SetActive(true);// 활성화하여 보여줌
             return obj;
         }
         else
         {
             var newObj = Instance.CreateNewObject();
-            newObj.transform.SetParent(null);
-            newObj.transform.position = transform.position;
+            newObj.transform.position = point;
             newObj.gameObject.SetActive(true);
             return newObj;
         }
     }
     //다시 오브젝트를 반납하기
-    public static IEnumerator ReturnObject(GameObject explosion)
+    public static IEnumerator ReturnObject(GameObject item)
     {
-        yield return new WaitForSeconds(1.5f);
-        explosion.gameObject.SetActive(false);
-        explosion.transform.SetParent(Instance.transform);
-        Instance.poolingQueue.Enqueue(explosion);//다시 큐에 넣음
+        yield return new WaitForSeconds(0.1f);
+        item.gameObject.SetActive(false);
+        item.transform.SetParent(Instance.transform);
+        Instance.poolingQueue.Enqueue(item);//다시 큐에 넣음
     }
 }

@@ -14,6 +14,6 @@ public class GrenadePack : MonoBehaviour, IItem
             fireGrenade.GetGrenade();
         }
 
-        Destroy(gameObject);
+        StartCoroutine(GrenadePackPooling.ReturnObject(this.gameObject));
     }
 }

@@ -13,7 +13,7 @@ public class FlashHitEffectPooling : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        Initalize(10);
+        Initalize(20);
     }
     // 오브젝트 생성
     private GameObject CreateNewParticle()

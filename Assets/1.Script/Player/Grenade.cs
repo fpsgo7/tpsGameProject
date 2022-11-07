@@ -24,11 +24,9 @@ public class Grenade : MonoBehaviour
             Vector3.up, 0f,
             LayerMask.GetMask("Enemy"));
         ExplosionAttack();
-        // GameObject obj = (GameObject)Instantiate(explosion, transform.position, Quaternion.identity);
-        var Explosion = GrenadeExplosionObjectPooling.GetObjet(transform);
         Invoke(nameof(DestroyGrenade), 1f);
-        //Destroy(obj,1f);
-        Explosion.grenadeExplosion();
+        var Explosion = GrenadeExplosionObjectPooling.GetObjet(transform);
+        StartCoroutine(GrenadeExplosionObjectPooling.ReturnObject(Explosion));
     }
     private void ExplosionAttack()
     {

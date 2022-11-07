@@ -136,7 +136,7 @@ public class UIManager : MonoBehaviour
             menuUIOpen = true;
             MenuUI.SetActive(true);
             Cursor.visible = true;
-            playerShooter.AxisMenuOnChange();
+            //playerShooter.AxisMenuOnChange();
             Debug.Log("메뉴 오픈");
         }
         else if(menuUIOpen == true && MenuUI.activeSelf == true)
@@ -144,7 +144,7 @@ public class UIManager : MonoBehaviour
             menuUIOpen = false;
             MenuUI.SetActive(false);
             Cursor.visible = false;
-            playerShooter.AxisMenuOffChange();
+            //playerShooter.AxisMenuOffChange();
             Cursor.lockState = CursorLockMode.Locked;
         }
             
@@ -158,7 +158,7 @@ public class UIManager : MonoBehaviour
             menuUIOpen = true;
             InventoryUI.SetActive(true);
             Cursor.visible = true;
-            playerShooter.AxisMenuOnChange();
+            //playerShooter.AxisMenuOnChange();
             Debug.Log("인벤토리 오픈 오픈");
         }
         else if(menuUIOpen == true && InventoryUI.activeSelf == true)
@@ -166,7 +166,7 @@ public class UIManager : MonoBehaviour
             menuUIOpen = false;
             InventoryUI.SetActive(false);
             Cursor.visible = false;
-            playerShooter.AxisMenuOffChange();
+            //playerShooter.AxisMenuOffChange();
             Cursor.lockState = CursorLockMode.Locked;
         }
     }

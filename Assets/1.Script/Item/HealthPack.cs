@@ -11,6 +11,6 @@ public class HealthPack : MonoBehaviour, IItem
             playerHealth.GetHealthKit();
         }
 
-        Destroy(gameObject);
+        StartCoroutine(HealthPackPooling.ReturnObject(this.gameObject));
     }
 }

@@ -13,6 +13,6 @@ public class AmmoPack : MonoBehaviour, IItem
             playerShooter.gun.ammoRemain += ammo;
         }
 
-        Destroy(gameObject);
+        StartCoroutine(AmmoPackPooling.ReturnObject(this.gameObject));
     }
 }

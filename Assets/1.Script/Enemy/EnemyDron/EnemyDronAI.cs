@@ -115,11 +115,10 @@ public class EnemyDronAI : MonoBehaviour
             Vector3.up, 0f,
             LayerMask.GetMask("Player"));
         ExplosionAttack();
-        GameObject obj = (GameObject)Instantiate(explosion, transform.position, Quaternion.identity);
-        Destroy(obj, 0.5f);
+        var Explosion = GrenadeExplosionObjectPooling.GetObjet(transform);
+        StartCoroutine(GrenadeExplosionObjectPooling.ReturnObject(Explosion));
         Destroy(this.gameObject, 0.1f);
     }
-
     public void ExplosionAttack()
     {
 

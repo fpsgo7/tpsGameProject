@@ -168,7 +168,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7229090996256320413}
   - component: {fileID: 7229090996256159678}
-  - component: {fileID: 7229090996256159676}
   - component: {fileID: 7229090996256159672}
   m_Layer: 0
   m_Name: RifleGunItem-Dmg50
@@ -207,19 +206,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.4
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7229090996256159676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7229090996256159677}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9ce62f0eddb242589f158762d487d45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: 60
 --- !u!114 &7229090996256159672
 MonoBehaviour:
   m_ObjectHideFlags: 0
