@@ -144,16 +144,14 @@ public class EnemyMiniTankAI : MonoBehaviour
     //폭파 작동
     public void Explosion()
     {
-
         //폭발범위에 들어간 적들을 찾아냄
         rayHits = Physics.SphereCastAll(transform.position,
             5,
             Vector3.up, 0f,
             LayerMask.GetMask("Player"));
         ExplosionAttack();
-        var Explosion = GrenadeExplosionObjectPooling.GetObjet(transform);
-        StartCoroutine(GrenadeExplosionObjectPooling.ReturnObject(Explosion));
-        Destroy(this.gameObject, 0.1f);
+        EffectManager.Instance.ExplosionEffect(this.transform);
+        this.gameObject.SetActive(false);
     }
 
     public void ExplosionAttack()

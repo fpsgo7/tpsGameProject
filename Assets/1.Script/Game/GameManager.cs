@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public GameObject firstDoor;
     public GameObject SecondMap;
 
-    private int score;
+    public int score;
     private int enemyCount;
 
     public bool isGameover { get; private set; }
@@ -27,13 +27,17 @@ public class GameManager : MonoBehaviour
     {
         if (Instance != this) Destroy(gameObject);
     }
-
+    private void OnEnable()
+    {
+        //JsonCoinManager.Instance.LoadPlayerScore();
+    }
     public void AddScore(int newScore)
     {
         if (!isGameover)
         {
             score += newScore;
             UIManager.Instance.UpdateScoreText(score);
+            //JsonCoinManager.Instance.SavePlayerScore(score);
         }
     }
     

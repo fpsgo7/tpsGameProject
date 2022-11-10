@@ -25,8 +25,8 @@ public class Grenade : MonoBehaviour
             LayerMask.GetMask("Enemy"));
         ExplosionAttack();
         Invoke(nameof(DestroyGrenade), 1f);
-        var Explosion = GrenadeExplosionObjectPooling.GetObjet(transform);
-        StartCoroutine(GrenadeExplosionObjectPooling.ReturnObject(Explosion));
+        EffectManager.Instance.ExplosionEffect(this.transform);
+        this.gameObject.SetActive(false);
     }
     private void ExplosionAttack()
     {

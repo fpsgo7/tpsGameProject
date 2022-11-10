@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrenadeExplosionObjectPooling : MonoBehaviour
+public class ExplosionObjectPooling : MonoBehaviour
 {
-    public static GrenadeExplosionObjectPooling Instance;
+    public static ExplosionObjectPooling Instance;
 
     [SerializeField]
     private GameObject poolingGrenadeExplosionObject;
@@ -35,8 +35,8 @@ public class GrenadeExplosionObjectPooling : MonoBehaviour
     {
         if (Instance.poolingQueue.Count > 0)
         {
+            Debug.Log("생성하기");
             var obj = Instance.poolingQueue.Dequeue();//큐에서 하나 꺼내옴
-            obj.transform.SetParent(null);//
             obj.transform.position = transform.position;
             obj.gameObject.SetActive(true);// 활성화하여 보여줌
             return obj;
@@ -44,7 +44,6 @@ public class GrenadeExplosionObjectPooling : MonoBehaviour
         else
         {
             var newObj = Instance.CreateNewObject();
-            newObj.transform.SetParent(null);
             newObj.transform.position = transform.position;
             newObj.gameObject.SetActive(true);
             return newObj;
@@ -53,7 +52,8 @@ public class GrenadeExplosionObjectPooling : MonoBehaviour
     //다시 오브젝트를 반납하기
     public static IEnumerator ReturnObject(GameObject explosion)
     {
-        yield return new WaitForSeconds(1.5f);
+        Debug.Log("되돌리기");
+        yield return new WaitForSeconds(2f);
         explosion.gameObject.SetActive(false);
         explosion.transform.SetParent(Instance.transform);
         Instance.poolingQueue.Enqueue(explosion);//다시 큐에 넣음

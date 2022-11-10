@@ -60,7 +60,7 @@ public class EnemySpawner : MonoBehaviour
 
         enemy.GetComponent<LivingEntity>().OnDeath += () => enemies.Remove(enemy);// 사망한 대상은 리스트에서 제외한다.
         enemy.GetComponent<LivingEntity>().OnDeath += () => GameManager.Instance.EnemyDie();
-        enemy.GetComponent<LivingEntity>().OnDeath += () => Destroy(enemy.gameObject, 2f);
+        enemy.GetComponent<LivingEntity>().OnDeath += () => Destroy(enemy.gameObject, 3f);
         enemy.GetComponent<LivingEntity>().OnDeath += () => enemy.GetComponent<ItemSpawn>().Spawn();
         enemy.GetComponent<LivingEntity>().OnDeath += () => GameManager.Instance.AddScore(100);
 

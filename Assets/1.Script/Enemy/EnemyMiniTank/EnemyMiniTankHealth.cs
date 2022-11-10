@@ -16,7 +16,7 @@ public class EnemyMiniTankHealth : LivingEntity
     private void Awake()
     {
         enemyAI = GetComponent<EnemyMiniTankAI>();
-        MaxHealth = 200;
+        MaxHealth = 50;
     }
     //private void FixedUpdate()
     //{

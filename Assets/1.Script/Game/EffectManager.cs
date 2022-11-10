@@ -36,4 +36,12 @@ public class EffectManager : MonoBehaviour
             StartCoroutine(CommonHitEffectPooling.ReturnObject(targetPrefab));
         }
     }
+    //폭파함
+    public void ExplosionEffect(Transform transform)
+    {
+        GameObject Explosion;
+        Explosion = ExplosionObjectPooling.GetObjet(transform);
+        StartCoroutine(ExplosionObjectPooling.ReturnObject(Explosion));
+    }
+
 }
