@@ -25,13 +25,14 @@ public class doorOpen : MonoBehaviour
 
     public IEnumerator DoorOpening()
     {
+        var wfs = new WaitForSeconds(0.01f);
         var i = 0;
         while (i<750)
         {
             i++;
             doorV3.x += moveSpeed;
             transform.position = doorV3;
-            yield return new WaitForSeconds(0.01f);
+            yield return wfs;
         }
 
     }

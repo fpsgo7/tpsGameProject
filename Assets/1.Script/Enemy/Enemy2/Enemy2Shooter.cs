@@ -18,6 +18,7 @@ public class Enemy2Shooter : MonoBehaviour
     public MeshRenderer muzzleFlash;
     public LayerMask excludeTarget;//총을 맞으면 안되는 대상
     protected WaitForSeconds wsReload;// 코루틴형 장전 시간
+    private WaitForSeconds wsShot = new WaitForSeconds(0.03f);
 
     //hash 값으로 애니메이션을 조절한다.
     protected readonly int hashFire = Animator.StringToHash("Fire");
@@ -153,7 +154,6 @@ public class Enemy2Shooter : MonoBehaviour
     protected virtual IEnumerator ShotEffect(Vector3 hitPosition)
     {
 
-
         StartCoroutine(ShowMuzzleFlash());//Fire 함수에서 코루틴 함수를 실행해줍니다.
         // 선의 시작점은 총구의 위치
         bulletLineRenderer.SetPosition(0, firePos.position);//nullReference 오류해결
@@ -162,7 +162,7 @@ public class Enemy2Shooter : MonoBehaviour
         bulletLineRenderer.enabled = true;
 
         // 0.03초 동안 잠시 처리를 대기
-        yield return new WaitForSeconds(0.03f);
+        yield return wsShot;
 
         // 라인 렌더러를 비활성화하여 총알 궤적을 지운다
         bulletLineRenderer.enabled = false;
@@ -172,6 +172,7 @@ public class Enemy2Shooter : MonoBehaviour
     //총알 발사섬광을 표현한다.
     public virtual IEnumerator ShowMuzzleFlash()
     {
+        var wfs = new WaitForSeconds(Random.Range(0.05f, 0.2f));
         muzzleFlash.enabled = true;//화염이 나타나야 하므로 true로한다.
         //Euler함수를 이용해서 z축으로 랜덤하게 회전하게 한다.
         Quaternion rot = Quaternion.Euler(Vector3.forward * Random.Range(0, 360));
@@ -184,7 +185,7 @@ public class Enemy2Shooter : MonoBehaviour
         muzzleFlash.material.SetTextureOffset("_MainTex", offset);//_MainTex는 미리 지정되어 있는 Property Name으로 Diffuse를 나타낸다.
 
         //0.05초 부터 0.2초 까지 랜덤하게 코루틴 함수를 호출한다. 즉 잠시동안 멈춰준다.
-        yield return new WaitForSeconds(Random.Range(0.05f, 0.2f));
+        yield return wfs;
         muzzleFlash.enabled = false;
 
     }

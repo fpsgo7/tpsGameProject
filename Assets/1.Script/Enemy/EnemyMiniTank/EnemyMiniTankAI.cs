@@ -85,6 +85,7 @@ public class EnemyMiniTankAI : MonoBehaviour
     // 주기적으로 추적할 대상의 위치를 찾아 경로를 갱신
     private IEnumerator UpdatePath()
     {
+        var wfs = new WaitForSeconds(0.2f);
         // 살아있는 동안 무한 루프
         while (!enemyHealth.dead)
         {
@@ -137,7 +138,7 @@ public class EnemyMiniTankAI : MonoBehaviour
             }
 
             // 0.2 초 주기로 처리 반복
-            yield return new WaitForSeconds(0.2f);
+            yield return wfs;
         }
     }
 

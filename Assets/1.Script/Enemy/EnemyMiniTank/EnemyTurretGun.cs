@@ -24,6 +24,8 @@ public class EnemyTurretGun : MonoBehaviour
     public ParticleSystem shellEjectEffect;
     //위치 관련
     public Transform fireTransform;
+    // 기다리기 시간
+    public WaitForSeconds wfs = new WaitForSeconds(0.03f);
     //설정값
     public float damage = 2;
     public float fireDistance = 100f;
@@ -126,6 +128,7 @@ public class EnemyTurretGun : MonoBehaviour
     //총구 섬광과 탄알 궤적 사용
     private IEnumerator ShotEffect(Vector3 hitPosition)
     {
+        
         muzzleFlashEffect.Play();
         shellEjectEffect.Play();
 
@@ -135,7 +138,7 @@ public class EnemyTurretGun : MonoBehaviour
         bulletLineRenderer.SetPosition(0, fireTransform.position);
         bulletLineRenderer.SetPosition(1, hitPosition);
 
-        yield return new WaitForSeconds(0.03f);//대기시간
+        yield return wfs;//대기시간
 
         bulletLineRenderer.enabled = false;
     }
