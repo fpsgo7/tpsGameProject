@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        //JsonCoinManager.Instance.LoadPlayerScore();
+        JsonPlayerInfoManager.Instance.LoadPlayerScore();
     }
     public void AddScore(int newScore)
     {
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
         {
             score += newScore;
             UIManager.Instance.UpdateScoreText(score);
-            //JsonCoinManager.Instance.SavePlayerScore(score);
+            JsonPlayerInfoManager.Instance.SavePlayerScore(score);
         }
     }
     
