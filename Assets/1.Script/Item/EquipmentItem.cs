@@ -15,11 +15,11 @@ public class EquipmentItem : MonoBehaviour
     {// 무기 타입
         ShotGun,
         RifleGun,
-        DMRGun
+        DMRGun,
+        none
     }
     public WeaponType weaponType;
     public string itemName; // 아이템 이름
-    public Sprite itemImage;//아이템 이미지
     public int damage;// 장비 대미지
     public int shield;// 장비 방어력
 

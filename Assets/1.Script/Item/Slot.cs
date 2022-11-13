@@ -16,7 +16,8 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     {// 무기 타입
         ShotGun,
         RifleGun,
-        DMRGun
+        DMRGun,
+        none
     }
     public WeaponType weaponType;
     public EquipmentItem equipmentItem;// 획득한 총기 아이템
@@ -44,7 +45,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     {
         this.equipmentItem = equipmentItem;
         itemName = equipmentItem.itemName;
-        itemImage.sprite = equipmentItem.itemImage;
+        //itemImage.sprite = equipmentItem.itemImage;
         itemType = (ItemType)equipmentItem.itemType;
         if (itemType == ItemType.Equipment)
         {

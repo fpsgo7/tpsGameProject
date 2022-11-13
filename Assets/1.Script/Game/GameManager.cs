@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public GameObject firstMap;
     public GameObject firstDoor;
     public GameObject SecondMap;
+    public Inventory inventory;
 
     public int score;
     private int enemyCount;
@@ -29,7 +30,8 @@ public class GameManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        JsonPlayerInfoManager.Instance.LoadPlayerScore();
+        //JsonPlayerInfoManager.Instance.LoadPlayerScore();
+        inventory.StartAcquireItem();
     }
     public void AddScore(int newScore)
     {
@@ -37,7 +39,7 @@ public class GameManager : MonoBehaviour
         {
             score += newScore;
             UIManager.Instance.UpdateScoreText(score);
-            JsonPlayerInfoManager.Instance.SavePlayerScore(score);
+            //JsonPlayerInfoManager.Instance.SavePlayerScore(score);
         }
     }
     

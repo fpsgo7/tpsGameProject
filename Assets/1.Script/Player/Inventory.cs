@@ -10,6 +10,9 @@ public class Inventory : MonoBehaviour
     [SerializeField] private GameObject equipmentSlotParent;// 장비 킷트의 레이아웃
     private Slot[] weaponSlots;//무기 슬롯들
     private Slot[] equipmentSlots;//장비 슬롯들
+    [SerializeField]
+    public List<Item> MyItemList;// 받아온 정보를 넣을 리스트 
+    public JsonInventoryManager jsonInventoryManager;
 
     void Start()
     {
@@ -26,6 +29,9 @@ public class Inventory : MonoBehaviour
                 if (weaponSlots[i].itemName == string.Empty)
                 {
                     Debug.Log("아이템 획득 성공");
+                    JsonInventoryManager.Instance.Save
+                        (item.itemType.ToString(),item.name,item.weaponType.ToString(),
+                        item.damage.ToString(),item.shield.ToString(),false);
                     weaponSlots[i].AddItem(item);
                     return;
                 }
@@ -38,8 +44,52 @@ public class Inventory : MonoBehaviour
                 if (equipmentSlots[i].itemName == string.Empty)
                 {
                     Debug.Log("아이템 획득 성공");
+                    JsonInventoryManager.Instance.Save(item.itemType.ToString(), item.name, item.weaponType.ToString(),
+                        item.damage.ToString(), item.shield.ToString(), false);
                     equipmentSlots[i].AddItem(item);
                     return;
+                }
+            }
+        }
+    }
+
+    public void StartAcquireItem()
+    {
+        //JsonInventoryManager.Instance.Load();
+        //MyItemList = JsonInventoryManager.Instance.MyItemList;
+        //Debug.Log(JsonInventoryManager.Instance.MyItemList);
+        //Item UsingItem = JsonInventoryManager.Instance.MyItemList[0];
+        //Debug.Log(UsingItem.type);
+        jsonInventoryManager.Load();
+        MyItemList = jsonInventoryManager.MyItemList;
+        Item UsingItem = MyItemList[1];
+        Debug.Log(UsingItem.type);
+        for (int j = 0; j < weaponSlots.Length; j++)
+        {
+            if (MyItemList[j].type.Equals(EquipmentItem.ItemType.Weapon.ToString()))
+            {
+                for (int i = 0; i < weaponSlots.Length; i++)
+                {
+                    if (weaponSlots[i].itemName == string.Empty)
+                    {
+                        Debug.Log("무기 획득 성공");
+
+                        //weaponSlots[i].AddItem(item);
+                        return;
+                    }
+                }
+            }
+            if (MyItemList[j].type.Equals(EquipmentItem.ItemType.Equipment.ToString()))
+            {
+                for (int i = 0; i < equipmentSlots.Length; i++)
+                {
+                    if (equipmentSlots[i].itemName == string.Empty)
+                    {
+                        Debug.Log("장비 획득 성공");
+
+                        //equipmentSlots[i].AddItem(item);
+                        return;
+                    }
                 }
             }
         }
