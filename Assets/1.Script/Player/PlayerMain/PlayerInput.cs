@@ -47,7 +47,7 @@ public class PlayerInput : MonoBehaviour
         //메뉴 온오프 
         if (Input.GetButtonDown(ESCButtonName))
         {
-            Debug.Log("메뉴 키입력");
+            //Debug.Log("메뉴 키입력");
             UIManager.Instance.MenuOnOff();
         }
         if (Input.GetButtonDown(InventoryButtonName))

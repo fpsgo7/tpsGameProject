@@ -42,7 +42,7 @@ public class JsonInventoryManager : MonoBehaviour
         }
     }
     public List<Item> MyItemList;// 아이템 관련 리스트 
-    public string jdata;
+    public string jdata = string.Empty;
 
     private string filePath;
 

@@ -8,13 +8,13 @@ public class Inventory : MonoBehaviour
     //인벤토리 열기 닫기는 유아이 메니져에서 관리
     [SerializeField] private GameObject weaponSlotParent;// 무기 슬롯의 레이아웃
     [SerializeField] private GameObject equipmentSlotParent;// 장비 킷트의 레이아웃
-    private Slot[] weaponSlots;//무기 슬롯들
-    private Slot[] equipmentSlots;//장비 슬롯들
-    [SerializeField]
-    public List<Item> MyItemList;// 받아온 정보를 넣을 리스트 
-    private string getJdata;
+    [SerializeField] private Slot[] weaponSlots;//무기 슬롯들
+    [SerializeField] private Slot[] equipmentSlots;//장비 슬롯들
+    [SerializeField] public List<Item> MyItemList;// 받아온 정보를 넣을 리스트 
+    private string getJdata = string.Empty;
 
-    void Start()
+
+    void Awake()
     {
         weaponSlots = weaponSlotParent.GetComponentsInChildren<Slot>();
         equipmentSlots = equipmentSlotParent.GetComponentsInChildren<Slot>();
@@ -44,7 +44,8 @@ public class Inventory : MonoBehaviour
                 if (equipmentSlots[i].itemName == string.Empty)
                 {
                     Debug.Log("아이템 획득 성공");
-                    JsonInventoryManager.Instance.Save(item.itemType.ToString(), item.name, item.weaponType.ToString(),
+                    JsonInventoryManager.Instance.Save
+                        (item.itemType.ToString(), item.name, item.weaponType.ToString(),
                         item.damage.ToString(), item.shield.ToString(), false);
                     equipmentSlots[i].AddItem(item);
                     return;
@@ -56,7 +57,8 @@ public class Inventory : MonoBehaviour
     public void StartAcquireItem()
     {
         getJdata = JsonInventoryManager.Instance.jdata;
-        Debug.Log(getJdata);
+        if (getJdata == string.Empty)
+            return;
         MyItemList = JsonUtility.FromJson<Serialization<Item>>(getJdata).target;
         for (int j = 0; j < MyItemList.Count; j++)
         {

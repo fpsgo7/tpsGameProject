@@ -137,7 +137,7 @@ public class UIManager : MonoBehaviour
             MenuUI.SetActive(true);
             Cursor.visible = true;
             //playerShooter.AxisMenuOnChange();
-            Debug.Log("메뉴 오픈");
+            //Debug.Log("메뉴 오픈");
         }
         else if(menuUIOpen == true && MenuUI.activeSelf == true)
         {
