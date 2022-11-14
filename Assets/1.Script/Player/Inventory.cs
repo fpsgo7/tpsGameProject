@@ -12,7 +12,7 @@ public class Inventory : MonoBehaviour
     private Slot[] equipmentSlots;//장비 슬롯들
     [SerializeField]
     public List<Item> MyItemList;// 받아온 정보를 넣을 리스트 
-    public JsonInventoryManager jsonInventoryManager;
+    private string getJdata;
 
     void Start()
     {
@@ -55,16 +55,10 @@ public class Inventory : MonoBehaviour
 
     public void StartAcquireItem()
     {
-        //JsonInventoryManager.Instance.Load();
-        //MyItemList = JsonInventoryManager.Instance.MyItemList;
-        //Debug.Log(JsonInventoryManager.Instance.MyItemList);
-        //Item UsingItem = JsonInventoryManager.Instance.MyItemList[0];
-        //Debug.Log(UsingItem.type);
-        jsonInventoryManager.Load();
-        MyItemList = jsonInventoryManager.MyItemList;
-        Item UsingItem = MyItemList[1];
-        Debug.Log(UsingItem.type);
-        for (int j = 0; j < weaponSlots.Length; j++)
+        getJdata = JsonInventoryManager.Instance.jdata;
+        Debug.Log(getJdata);
+        MyItemList = JsonUtility.FromJson<Serialization<Item>>(getJdata).target;
+        for (int j = 0; j < MyItemList.Count; j++)
         {
             if (MyItemList[j].type.Equals(EquipmentItem.ItemType.Weapon.ToString()))
             {

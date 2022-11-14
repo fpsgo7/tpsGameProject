@@ -644,6 +644,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MyItemList: []
+  jdata: 
 --- !u!114 &196623172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28738,7 +28739,7 @@ PrefabInstance:
     - target: {fileID: 8534371504184505780, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0076069064
+      value: -0.0076069054
       objectReference: {fileID: 0}
     - target: {fileID: 8534371504184505780, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
@@ -28763,7 +28764,7 @@ PrefabInstance:
     - target: {fileID: 8534371504999340954, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0076069064
+      value: -0.0076069054
       objectReference: {fileID: 0}
     - target: {fileID: 8534371504999340954, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
@@ -28793,22 +28794,22 @@ PrefabInstance:
     - target: {fileID: 8534371505308520219, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_FollowOffset.y
-      value: 0.9678978
+      value: 0.4801173
       objectReference: {fileID: 0}
     - target: {fileID: 8534371505308520219, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_FollowOffset.z
-      value: -1.884198
+      value: -1.576294
       objectReference: {fileID: 0}
     - target: {fileID: 8534371505383620622, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_FollowOffset.y
-      value: 0.9678978
+      value: 0.4801173
       objectReference: {fileID: 0}
     - target: {fileID: 8534371505383620622, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_FollowOffset.z
-      value: -1.884198
+      value: -1.576294
       objectReference: {fileID: 0}
     - target: {fileID: 8534371505383620623, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
@@ -28888,7 +28889,7 @@ PrefabInstance:
     - target: {fileID: 8534371506013309853, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0076069064
+      value: -0.0076069054
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506013309853, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
@@ -28908,42 +28909,42 @@ PrefabInstance:
     - target: {fileID: 8534371506201116277, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5321045
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506201116277, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.11579895
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506201116277, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.98448116
+      value: 0.9948512
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506201116277, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.14346988
+      value: -0.00760693
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506201116277, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.10000451
+      value: 0.10105792
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506201116277, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.014573804
+      value: 0.0007727189
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506288777924, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_FollowOffset.y
-      value: 0.9678978
+      value: 0.4801173
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506288777924, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_FollowOffset.z
-      value: -1.884198
+      value: -1.576294
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506288777925, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
@@ -29254,7 +29255,6 @@ MonoBehaviour:
   weaponSlotParent: {fileID: 1809586208}
   equipmentSlotParent: {fileID: 1470559494}
   MyItemList: []
-  jsonInventoryManager: {fileID: 196623171}
 --- !u!4 &8714554378031244981
 Transform:
   m_ObjectHideFlags: 0

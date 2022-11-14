@@ -42,9 +42,11 @@ public class JsonInventoryManager : MonoBehaviour
         }
     }
     public List<Item> MyItemList;// 아이템 관련 리스트 
-    string filePath;
+    public string jdata;
 
-    void Start()
+    private string filePath;
+
+    void Awake()
     {
         filePath = Application.persistentDataPath + "/MyItem.txt";// 파일의 경로를 미리 지정함
         Load();
@@ -53,14 +55,8 @@ public class JsonInventoryManager : MonoBehaviour
     public void Load()
     {
         if (!File.Exists(filePath)) { return; }
-        string jdata = File.ReadAllText(filePath);
+        jdata = File.ReadAllText(filePath);
         MyItemList = JsonUtility.FromJson<Serialization<Item>>(jdata).target;
-        for(int j = 0; j<MyItemList.Count; j++)
-        {
-            Item UsingItem = MyItemList[j];
-            Debug.Log(UsingItem.type);
-        }
-       
     }
 
     public void Save(string type, string name, string weaponType, string damage, string shield, bool isUsing)
