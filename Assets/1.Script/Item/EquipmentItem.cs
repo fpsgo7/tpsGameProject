@@ -5,6 +5,7 @@ using UnityEngine;
 public class EquipmentItem : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
+    private bool itemGetSucess;
     public enum ItemType  // 아이템 유형
     {
         Equipment,
@@ -29,7 +30,9 @@ public class EquipmentItem : MonoBehaviour
     }
     public void Use()
     {
-        inventory.AcquireItem(this);
-        Destroy(gameObject);
+        if(itemGetSucess = inventory.AcquireItem(this))
+        {
+            Destroy(gameObject);
+        }
     }
 }

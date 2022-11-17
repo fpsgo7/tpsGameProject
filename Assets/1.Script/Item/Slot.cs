@@ -20,10 +20,13 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         none
     }
     public WeaponType weaponType;
+
     public EquipmentItem equipmentItem;// 획득한 총기 아이템
     public PlayerShooter playerShooter;
     public PlayerHealth playerHealth;
     public Inventory inventory;
+    public GameObject chooseImage;//아이템 선택 이미지
+    public Sprite[] itemImages;// 아이탬의 이미지들
     public Image itemImage;// 아이탬의 이미지
     public Text itemNameText;
     public Text abilityText;
@@ -45,35 +48,53 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     {
         this.equipmentItem = equipmentItem;
         itemName = equipmentItem.itemName;
-        //itemImage.sprite = equipmentItem.itemImage;
         itemType = (ItemType)equipmentItem.itemType;
         if (itemType == ItemType.Equipment)
         {
             shield = equipmentItem.shield;
             abilityText.text = "방어력" + shield.ToString();
+            itemImage.sprite = itemImages[3];
         }  
         if (itemType == ItemType.Weapon)
         {
             damage = equipmentItem.damage;
             abilityText.text ="데미지"+ damage.ToString();
             weaponType = (WeaponType)equipmentItem.weaponType;
+            if(weaponType == WeaponType.RifleGun)
+                itemImage.sprite = itemImages[0];
+            if(weaponType == WeaponType.ShotGun)
+                itemImage.sprite = itemImages[1];
+            if(weaponType == WeaponType.DMRGun)
+                itemImage.sprite = itemImages[2];
         }
         itemNameText.text=itemName;
-        
-
         SetColor(1);// 투명했던 이미지를 다시 보이게함
     }
     //아이템이 사라지면 초기화
     public void ClearSlot()
     {
-        itemName = null;
         equipmentItem = null;
+        itemName = string.Empty;
+        shield = 0;
+        damage = 0;
+        abilityText.text = null;
+        itemNameText.text = null;
         itemImage.sprite = null;
         SetColor(0);
+        this.gameObject.SetActive(false);
     }
     //클릭 이벤트
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            //클릭을 받으면 아이템이 선택이 된것을 표시한다.
+            if(itemName != null && this.GetComponent<Image>().color.a !=0.5f)
+            {
+                inventory.ClearSlotChooseImage();
+                chooseImage.SetActive(true);
+            }
+        }
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             if (itemName != null)

@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     {
         if (Instance != this) Destroy(gameObject);
     }
-    private void OnEnable()
+    private void Start()
     {
         //JsonPlayerInfoManager.Instance.LoadPlayerScore();
         inventory.StartAcquireItem();

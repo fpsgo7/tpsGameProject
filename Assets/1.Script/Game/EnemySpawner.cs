@@ -48,7 +48,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void CreateEnemy(int intensity)
     {
-        Debug.Log(intensity);
+        //Debug.Log(intensity);
 
         var spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
 

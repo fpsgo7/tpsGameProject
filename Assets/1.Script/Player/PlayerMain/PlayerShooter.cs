@@ -93,7 +93,7 @@ public class PlayerShooter : MonoBehaviour
     private void OnEnable()
     {
         aimState = AimState.Idle;
-        Debug.Log(LobbyScript.chooseWeapon);
+        //Debug.Log(LobbyScript.chooseWeapon);
         ChooseGun(LobbyScript.chooseWeapon,0.0f);
         gun.gameObject.SetActive(true);
         gun.Setup(this,0.0f);

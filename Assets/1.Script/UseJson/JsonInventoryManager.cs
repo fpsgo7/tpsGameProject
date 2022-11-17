@@ -59,10 +59,18 @@ public class JsonInventoryManager : MonoBehaviour
         MyItemList = JsonUtility.FromJson<Serialization<Item>>(jdata).target;
     }
 
-    public void Save(string type, string name, string weaponType, string damage, string shield, bool isUsing)
+    public void AddItemSave(string type, string name, string weaponType, string damage, string shield, bool isUsing)
     {
         MyItemList.Add(new Item(type,name,weaponType,damage,shield,isUsing));
         string jdata = JsonUtility.ToJson(new Serialization<Item>(MyItemList));
         File.WriteAllText(filePath, jdata);//해당 파일에 입력된다.
+    }
+
+    public void DeleteItemSave(string jdata)
+    {
+        File.WriteAllText(filePath,jdata);
+        // Inventory 의 MyItemList의 변화된 값을 여기도 적용시켜 똑같이 한다.
+        this.jdata = jdata;
+        MyItemList = JsonUtility.FromJson<Serialization<Item>>(jdata).target;
     }
 }

@@ -12,15 +12,23 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Slot[] equipmentSlots;//장비 슬롯들
     [SerializeField] public List<Item> MyItemList;// 받아온 정보를 넣을 리스트 
     private string getJdata = string.Empty;
-
+    EquipmentItem item = new EquipmentItem();
 
     void Awake()
     {
         weaponSlots = weaponSlotParent.GetComponentsInChildren<Slot>();
         equipmentSlots = equipmentSlotParent.GetComponentsInChildren<Slot>();
+        for (int i = 0; i < weaponSlots.Length; i++)
+        {
+            weaponSlots[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < equipmentSlots.Length; i++)
+        {
+            equipmentSlots[i].gameObject.SetActive(false);
+        }
     }
 
-    public void AcquireItem(EquipmentItem item)
+    public bool AcquireItem(EquipmentItem item)
     {
         if(item.itemType == EquipmentItem.ItemType.Weapon)
         {
@@ -28,12 +36,12 @@ public class Inventory : MonoBehaviour
             {
                 if (weaponSlots[i].itemName == string.Empty)
                 {
-                    Debug.Log("아이템 획득 성공");
-                    JsonInventoryManager.Instance.Save
+                    JsonInventoryManager.Instance.AddItemSave
                         (item.itemType.ToString(),item.name,item.weaponType.ToString(),
                         item.damage.ToString(),item.shield.ToString(),false);
                     weaponSlots[i].AddItem(item);
-                    return;
+                    weaponSlots[i].gameObject.SetActive(true);
+                    return true;
                 }
             }
         }
@@ -43,15 +51,16 @@ public class Inventory : MonoBehaviour
             {
                 if (equipmentSlots[i].itemName == string.Empty)
                 {
-                    Debug.Log("아이템 획득 성공");
-                    JsonInventoryManager.Instance.Save
+                    JsonInventoryManager.Instance.AddItemSave
                         (item.itemType.ToString(), item.name, item.weaponType.ToString(),
                         item.damage.ToString(), item.shield.ToString(), false);
                     equipmentSlots[i].AddItem(item);
-                    return;
+                    equipmentSlots[i].gameObject.SetActive(true);
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     public void StartAcquireItem()
@@ -68,10 +77,19 @@ public class Inventory : MonoBehaviour
                 {
                     if (weaponSlots[i].itemName == string.Empty)
                     {
-                        Debug.Log("무기 획득 성공");
-
-                        //weaponSlots[i].AddItem(item);
-                        return;
+                        item.itemName = MyItemList[j].name;
+                        item.itemType = EquipmentItem.ItemType.Weapon;
+                        if(MyItemList[j].weaponType.Equals(EquipmentItem.WeaponType.DMRGun.ToString()))
+                            item.weaponType = EquipmentItem.WeaponType.DMRGun;
+                        else if (MyItemList[j].weaponType.Equals(EquipmentItem.WeaponType.RifleGun.ToString()))
+                            item.weaponType = EquipmentItem.WeaponType.RifleGun;
+                        else if (MyItemList[j].weaponType.Equals(EquipmentItem.WeaponType.ShotGun.ToString()))
+                            item.weaponType = EquipmentItem.WeaponType.ShotGun;
+                        item.damage = int.Parse(MyItemList[j].damage);
+                        item.shield = int.Parse(MyItemList[j].shield);
+                        weaponSlots[i].AddItem(item);
+                        weaponSlots[i].gameObject.SetActive(true);
+                        break;
                     }
                 }
             }
@@ -81,10 +99,19 @@ public class Inventory : MonoBehaviour
                 {
                     if (equipmentSlots[i].itemName == string.Empty)
                     {
-                        Debug.Log("장비 획득 성공");
-
-                        //equipmentSlots[i].AddItem(item);
-                        return;
+                        item.itemName = MyItemList[j].name;
+                        item.itemType = EquipmentItem.ItemType.Equipment;
+                        item.weaponType = EquipmentItem.WeaponType.none;
+                        item.damage = int.Parse(MyItemList[j].damage);
+                        item.shield = int.Parse(MyItemList[j].shield);
+                        Debug.Log(j + " " + item.itemName);
+                        Debug.Log(j + " " + item.itemType);
+                        Debug.Log(j + " " + item.weaponType);
+                        Debug.Log(j + " " + item.damage);
+                        Debug.Log(j + " " + item.shield);
+                        equipmentSlots[i].AddItem(item);
+                        equipmentSlots[i].gameObject.SetActive(true);
+                        break;
                     }
                 }
             }
@@ -109,5 +136,61 @@ public class Inventory : MonoBehaviour
             color.a = 0;
             equipmentSlots[i].GetComponent<Image>().color = color;
         }
+    }
+    //아이템 선택하면 나머지 아이템 선택 이미지 비활 성화와 
+    //또는 장비창에서 무기창으로 교체할 때도 작동한다.
+    public void ClearSlotChooseImage()
+    {
+        // 선택된 이미지 비활성화
+        for (int i = 0; i < weaponSlots.Length; i++)
+        {
+            weaponSlots[i].chooseImage.SetActive(false);
+        }
+        for (int i = 0; i < equipmentSlots.Length; i++)
+        {
+            equipmentSlots[i].chooseImage.SetActive(false);
+        }
+    }
+    //아이템이 선택된 상테에서 삭제버튼을 누르면 작동한다.
+    public void DeleteSlotChoose()
+    {
+        
+        for (int i = 0; i < weaponSlots.Length; i++)
+        {
+            if (weaponSlots[i].chooseImage.activeSelf == true)
+            {
+                for (int j = 0; j < MyItemList.Count; j++)
+                {
+                    if (MyItemList[j].name == weaponSlots[i].itemName)
+                    {
+                        Item item = MyItemList[j];
+                        MyItemList.Remove(item);
+                        string jdata = JsonUtility.ToJson(new Serialization<Item>(MyItemList));
+                        JsonInventoryManager.Instance.DeleteItemSave(jdata);
+                        break;
+                    }
+                }
+                weaponSlots[i].ClearSlot();
+            }
+        }
+        for (int i = 0; i < equipmentSlots.Length; i++)
+        {
+            if (equipmentSlots[i].chooseImage.activeSelf == true)
+            {
+                for (int j = 0; j < MyItemList.Count; j++)
+                {
+                    if (MyItemList[j].name == equipmentSlots[i].itemName)
+                    {
+                        Item item = MyItemList[j];
+                        MyItemList.Remove(item);
+                        string jdata = JsonUtility.ToJson(new Serialization<Item>(MyItemList));
+                        JsonInventoryManager.Instance.DeleteItemSave(jdata);
+                        break;
+                    }
+                }
+                equipmentSlots[i].ClearSlot();
+            }
+        }
+        
     }
 }

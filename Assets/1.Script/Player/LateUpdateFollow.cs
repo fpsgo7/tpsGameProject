@@ -7,7 +7,7 @@ public class LateUpdateFollow : MonoBehaviour
     public Transform target;
     private void Start()
     {
-        Debug.Log(this.gameObject.name);
+        //Debug.Log(this.gameObject.name);
         GameObject.FindWithTag("Player").GetComponent<PlayerShooter>().lateUpdateFollow = this.GetComponent<LateUpdateFollow>();
         GameObject.FindWithTag("Player").GetComponent<FireGrenade>().lateUpdateFollow = this.GetComponent<LateUpdateFollow>();
         if (this.gameObject.name == "RifleGun(Clone)")
