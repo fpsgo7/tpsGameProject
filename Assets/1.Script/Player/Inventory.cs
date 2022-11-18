@@ -104,11 +104,6 @@ public class Inventory : MonoBehaviour
                         item.weaponType = EquipmentItem.WeaponType.none;
                         item.damage = int.Parse(MyItemList[j].damage);
                         item.shield = int.Parse(MyItemList[j].shield);
-                        Debug.Log(j + " " + item.itemName);
-                        Debug.Log(j + " " + item.itemType);
-                        Debug.Log(j + " " + item.weaponType);
-                        Debug.Log(j + " " + item.damage);
-                        Debug.Log(j + " " + item.shield);
                         equipmentSlots[i].AddItem(item);
                         equipmentSlots[i].gameObject.SetActive(true);
                         break;
@@ -192,5 +187,35 @@ public class Inventory : MonoBehaviour
             }
         }
         
+    }
+    //게임을 시작하면 자동으로 아이템을 장착한다.
+    public void StartEquipItem(string weaponName, string equipmentName)
+    {
+        for (int j = 0; j < MyItemList.Count; j++)
+        {
+            if (MyItemList[j].type.Equals(EquipmentItem.ItemType.Weapon.ToString()))
+            {
+                for (int i = 0; i < weaponSlots.Length; i++)
+                {
+                    if (weaponSlots[i].itemName == weaponName)
+                    {
+                        Debug.Log(weaponSlots[i].itemName + " " + weaponName);
+                        weaponSlots[i].EquipItemSlot();
+                        break;
+                    }
+                }
+            }
+            if (MyItemList[j].type.Equals(EquipmentItem.ItemType.Equipment.ToString()))
+            {
+                for (int i = 0; i < equipmentSlots.Length; i++)
+                {
+                    if (equipmentSlots[i].itemName == equipmentName)
+                    {
+                        equipmentSlots[i].EquipItemSlot();
+                        break;
+                    }
+                }
+            }
+        }
     }
 }

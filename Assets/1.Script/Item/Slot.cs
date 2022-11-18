@@ -97,34 +97,46 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         }
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            if (itemName != null)
+            EquipItemSlot();   
+        }
+    }
+
+    public void EquipItemSlot()
+    {
+        if (itemName != null)
+        {
+            // 색깔을 설정하여 장착이 된것을 표시
+            if (itemType == ItemType.Weapon)
             {
-                // 색깔을 설정하여 장착이 된것을 표시
-                if (itemType == ItemType.Weapon)
-                    inventory.ClearWeaponSlotColor();//전체색깔 초기화
-                if (itemType == ItemType.Equipment)
-                    inventory.ClearEquipmentSlotColor();//전체색깔 초기화
-                if(itemType == ItemType.Weapon)
-                {
-                    //무기 교체및 대미지 변환
-                    if (weaponType == WeaponType.RifleGun)
-                        playerShooter.ChooseGun(0, damage);
-                    if (weaponType == WeaponType.DMRGun)
-                        playerShooter.ChooseGun(1, damage);
-                    if (weaponType == WeaponType.ShotGun)
-                        playerShooter.ChooseGun(2, damage);
-                }
-                else
-                {
-                    //장비에 따른 체력 변화
-                    playerHealth.EqipmentWear(shield);
-                }
-                
-                Color color=this.GetComponent<Image>().color;
-                color.a = 0.5f;
-                this.GetComponent<Image>().color = color;
-                
+                inventory.ClearWeaponSlotColor();//전체색깔 초기화
+                JsonPlayerInfoManager.Instance.ChangePlayerWeapon(itemName);
             }
+            if (itemType == ItemType.Equipment)
+            {
+                inventory.ClearEquipmentSlotColor();//전체색깔 초기화
+                JsonPlayerInfoManager.Instance.ChangePlayerEquipment(itemName);
+            }
+            if (itemType == ItemType.Weapon)
+            {
+                //무기 교체및 대미지 변환
+                if (weaponType == WeaponType.RifleGun)
+                    playerShooter.ChooseGun(0, damage);
+                if (weaponType == WeaponType.DMRGun)
+                    playerShooter.ChooseGun(1, damage);
+                if (weaponType == WeaponType.ShotGun)
+                    playerShooter.ChooseGun(2, damage);
+            }
+            else
+            {
+                //장비에 따른 체력 변화
+                playerHealth.EqipmentWear(shield);
+            }
+
+
+            Color color = this.GetComponent<Image>().color;
+            color.a = 0.5f;
+            this.GetComponent<Image>().color = color;
+
         }
     }
 }

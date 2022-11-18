@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public GameObject firstDoor;
     public GameObject SecondMap;
     public Inventory inventory;
+    public PlayerShooter playerShooter;
 
     public int score;
     private int enemyCount;
@@ -30,16 +31,16 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        //JsonPlayerInfoManager.Instance.LoadPlayerScore();
-        inventory.StartAcquireItem();
+        JsonPlayerInfoManager.Instance.LoadPlayer();
     }
+    
     public void AddScore(int newScore)
     {
         if (!isGameover)
         {
             score += newScore;
             UIManager.Instance.UpdateScoreText(score);
-            //JsonPlayerInfoManager.Instance.SavePlayerScore(score);
+            JsonPlayerInfoManager.Instance.SavePlayerScore(score);
         }
     }
     
@@ -71,5 +72,15 @@ public class GameManager : MonoBehaviour
             SecondMap.SetActive(true);
     }
 
-    
+    //게임 시작하면 아이템 장착 
+    public void PlayerStartItem(string weapon, string equipment)
+    {
+        inventory.StartAcquireItem();//아이템을 불러온후
+        inventory.StartEquipItem(weapon, equipment);// 아이템 장착을한다.
+    }
+
+    public void PlayerAxisStartSet(float x , float y)
+    {
+        playerShooter.AxisStartSet(x, y);
+    }
 }

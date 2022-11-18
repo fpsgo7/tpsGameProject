@@ -27,6 +27,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject EquipmentChangeButton;
     [SerializeField] private Crosshair crosshair;
     [SerializeField] private Slider healthSlider;
+    [SerializeField] private Slider XAxisSlider;
+    [SerializeField] private Slider YAxisSlider;
 
     [SerializeField] private Text healthText;
     [SerializeField] private Text lifeText;
@@ -36,6 +38,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text grenadeText;
     [SerializeField] private Text fullAmmoText;
     [SerializeField] private Text waveText;
+    [SerializeField] private Text XAxisText;
+    [SerializeField] private Text YAxisText;
 
     public bool menuUIOpen = false;
     public PlayerShooter playerShooter;
@@ -136,7 +140,7 @@ public class UIManager : MonoBehaviour
             menuUIOpen = true;
             MenuUI.SetActive(true);
             Cursor.visible = true;
-            //playerShooter.AxisMenuOnChange();
+            playerShooter.AxisMenuOnChange();
             //Debug.Log("메뉴 오픈");
         }
         else if(menuUIOpen == true && MenuUI.activeSelf == true)
@@ -144,7 +148,7 @@ public class UIManager : MonoBehaviour
             menuUIOpen = false;
             MenuUI.SetActive(false);
             Cursor.visible = false;
-            //playerShooter.AxisMenuOffChange();
+            playerShooter.AxisMenuOffChange();
             Cursor.lockState = CursorLockMode.Locked;
         }
             
@@ -158,7 +162,7 @@ public class UIManager : MonoBehaviour
             menuUIOpen = true;
             InventoryUI.SetActive(true);
             Cursor.visible = true;
-            //playerShooter.AxisMenuOnChange();
+            playerShooter.AxisMenuOnChange();
             Debug.Log("인벤토리 오픈 오픈");
         }
         else if(menuUIOpen == true && InventoryUI.activeSelf == true)
@@ -166,7 +170,7 @@ public class UIManager : MonoBehaviour
             menuUIOpen = false;
             InventoryUI.SetActive(false);
             Cursor.visible = false;
-            //playerShooter.AxisMenuOffChange();
+            playerShooter.AxisMenuOffChange();
             Cursor.lockState = CursorLockMode.Locked;
         }
     }
@@ -190,5 +194,28 @@ public class UIManager : MonoBehaviour
     public void OnExitClick()
     {
         SceneManager.LoadScene("Lobby");
+    }
+    //조준감도 조절 
+    public void AxisChangeX()
+    {
+        float x;
+        x = XAxisSlider.value;
+        playerShooter.AxisChangeX(x);
+        XAxisText.text = x+"";
+    }
+    public void AxisChangeY()
+    {
+        float y;
+        y = YAxisSlider.value;
+        playerShooter.AxisChangeY(y);
+        YAxisText.text = y + "";
+    }
+    //게임 시작할때 조준감도 UI 에 적용하여 보여주기
+    public void SetAxisUI(float x, float y)
+    {
+        XAxisSlider.value = x;
+        XAxisText.text = x+"";
+        YAxisSlider.value = y;
+        YAxisText.text = y + "";
     }
 }

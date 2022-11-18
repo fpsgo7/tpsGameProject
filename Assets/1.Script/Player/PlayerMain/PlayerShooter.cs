@@ -87,7 +87,6 @@ public class PlayerShooter : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
         playerMovement = GetComponent<PlayerMovement>();
         fireGrenade = GetComponent<FireGrenade>();
-       
     }
     
     private void OnEnable()
@@ -353,10 +352,15 @@ public class PlayerShooter : MonoBehaviour
         crosshair.ScopeUse(true);
     }
     //마우스 감도 조절하기 
-    public void AxisChange(float x ,float y)//설정 마우스 감도 조절용
+    public void AxisChangeX(float x )//설정 마우스 감도 조절용
     {
-        forrowCam.m_YAxis.m_MaxSpeed = x;
-        forrowCam.m_XAxis.m_MaxSpeed = y;
+        currentXAxis = x;
+        JsonPlayerInfoManager.Instance.GetXaxis(x);
+    }
+    public void AxisChangeY(float y)//설정 마우스 감도 조절용
+    {
+        currentYAxis = y;
+        JsonPlayerInfoManager.Instance.GetYaxis(y);
     }
     public void AxisMenuOnChange()//메뉴 관련 마우스 감도
     {
@@ -367,6 +371,14 @@ public class PlayerShooter : MonoBehaviour
     }
     public void AxisMenuOffChange()
     {
+        forrowCam.m_XAxis.m_MaxSpeed = currentXAxis;
+        forrowCam.m_YAxis.m_MaxSpeed = currentYAxis;
+    }
+    public void AxisStartSet(float x, float y) 
+    {
+        UIManager.Instance.SetAxisUI(x, y);
+        currentXAxis = x;
+        currentYAxis = y;
         forrowCam.m_XAxis.m_MaxSpeed = currentXAxis;
         forrowCam.m_YAxis.m_MaxSpeed = currentYAxis;
     }

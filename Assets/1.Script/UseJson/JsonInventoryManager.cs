@@ -73,4 +73,6 @@ public class JsonInventoryManager : MonoBehaviour
         this.jdata = jdata;
         MyItemList = JsonUtility.FromJson<Serialization<Item>>(jdata).target;
     }
+
+   
 }
