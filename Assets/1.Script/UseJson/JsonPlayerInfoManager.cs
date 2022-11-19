@@ -7,22 +7,22 @@ using System.IO;
 
 //C:\Users\FPSGO\AppData\LocalLow\DefaultCompany\tpsGameProject
 //위 주소로 정보가 저장된다.
-[System.Serializable]
+//[System.Serializable]
 class Player
 {
     public string name;
     public int score;
-    public string weapon;
-    public string equipment;
+    public int weaponNum;
+    public int equipmentNum;
     public float axisX;
     public float axisY;
 
-    public Player(string name, int score, string weapon, string equipment,float axisX, float axisY)
+    public Player(string name, int score, int weaponNum, int equipmentNum, float axisX, float axisY)
     {
         this.name = name;
         this.score = score;
-        this.weapon = weapon;
-        this.equipment = equipment;
+        this.weaponNum = weaponNum;
+        this.equipmentNum = equipmentNum;
         this.axisX = axisX;
         this.axisY = axisY;
     }
@@ -41,7 +41,7 @@ public class JsonPlayerInfoManager : MonoBehaviour
         }
     }
 
-    Player player = new Player("player",0,string.Empty,string.Empty,0,0);
+    Player player = new Player("player",0,0,0,0,0);
     string filePath;
 
     private void Awake()
@@ -59,16 +59,16 @@ public class JsonPlayerInfoManager : MonoBehaviour
         Debug.Log("json 파일에 점수가 저장됩니다.");
     }
 
-    public void ChangePlayerWeapon(string weapon)
+    public void ChangePlayerWeapon(int weaponNum)
     {
-        player.weapon = weapon;
+        player.weaponNum = weaponNum;
         string jdata = JsonUtility.ToJson(player);
         File.WriteAllText(filePath, jdata);
     }
 
-    public void ChangePlayerEquipment(string equipment)
+    public void ChangePlayerEquipment(int equipmentNum)
     {
-        player.equipment = equipment;
+        player.equipmentNum = equipmentNum;
         string jdata = JsonUtility.ToJson(player);
         File.WriteAllText(filePath, jdata);
     }
@@ -81,7 +81,7 @@ public class JsonPlayerInfoManager : MonoBehaviour
             player = JsonUtility.FromJson<Player>(jdata);
             GameManager.Instance.score = player.score;
             UIManager.Instance.UpdateScoreText(player.score);
-            GameManager.Instance.PlayerStartItem(player.weapon, player.equipment);
+            GameManager.Instance.PlayerStartItem(player.weaponNum,player.equipmentNum);
             GameManager.Instance.PlayerAxisStartSet(player.axisX, player.axisY);
         }
     }

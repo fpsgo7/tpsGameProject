@@ -14,17 +14,17 @@ public class Serialization<T>//T 에는 어떤 형식이든 넣을 수 있어 T�
 [System.Serializable]
 public class Item
 {
+    public int num;
     public string type, name, weaponType, damage, shield;
-    public bool isUsing;
 
-    public Item(string type, string name, string weaponType, string damage, string shield, bool isUsing)
+    public Item(int num, string type, string name, string weaponType, string damage, string shield, bool isUsing)
     {
+        this.num = num;
         this.type = type;
         this.name = name;
         this.weaponType = weaponType;
         this.damage = damage;
         this.shield = shield;
-        this.isUsing = isUsing;
     }
 }
 
@@ -61,8 +61,8 @@ public class JsonInventoryManager : MonoBehaviour
 
     public void AddItemSave(string type, string name, string weaponType, string damage, string shield, bool isUsing)
     {
-        MyItemList.Add(new Item(type,name,weaponType,damage,shield,isUsing));
-        string jdata = JsonUtility.ToJson(new Serialization<Item>(MyItemList));
+        MyItemList.Add(new Item(MyItemList.Count+1,type,name,weaponType,damage,shield,isUsing));
+        jdata = JsonUtility.ToJson(new Serialization<Item>(MyItemList));
         File.WriteAllText(filePath, jdata);//해당 파일에 입력된다.
     }
 
@@ -73,6 +73,4 @@ public class JsonInventoryManager : MonoBehaviour
         this.jdata = jdata;
         MyItemList = JsonUtility.FromJson<Serialization<Item>>(jdata).target;
     }
-
-   
 }

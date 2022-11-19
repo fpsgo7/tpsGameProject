@@ -73,10 +73,11 @@ public class GameManager : MonoBehaviour
     }
 
     //게임 시작하면 아이템 장착 
-    public void PlayerStartItem(string weapon, string equipment)
+    public void PlayerStartItem(int weaponNum, int equipmentNum)
     {
         inventory.StartAcquireItem();//아이템을 불러온후
-        inventory.StartEquipItem(weapon, equipment);// 아이템 장착을한다.
+        inventory.StartWeaponItem(weaponNum);// 아이템 장착을한다.
+        inventory.StartEquipItem(equipmentNum);
     }
 
     public void PlayerAxisStartSet(float x , float y)

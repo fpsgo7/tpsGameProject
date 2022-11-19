@@ -13,6 +13,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] public List<Item> MyItemList;// 받아온 정보를 넣을 리스트 
     private string getJdata = string.Empty;
     EquipmentItem item = new EquipmentItem();
+    int lastNum;// 아이템을 새로 획득하면 넣을 숫자의 이전값
 
     void Awake()
     {
@@ -36,10 +37,12 @@ public class Inventory : MonoBehaviour
             {
                 if (weaponSlots[i].itemName == string.Empty)
                 {
+                    MyItemList.Add(new Item(MyItemList.Count+1,item.itemType.ToString(), item.name, item.weaponType.ToString(),
+                        item.damage.ToString(), item.shield.ToString(), false));
                     JsonInventoryManager.Instance.AddItemSave
                         (item.itemType.ToString(),item.name,item.weaponType.ToString(),
                         item.damage.ToString(),item.shield.ToString(),false);
-                    weaponSlots[i].AddItem(item);
+                    weaponSlots[i].AddItem(++lastNum, item);
                     weaponSlots[i].gameObject.SetActive(true);
                     return true;
                 }
@@ -51,10 +54,12 @@ public class Inventory : MonoBehaviour
             {
                 if (equipmentSlots[i].itemName == string.Empty)
                 {
+                    MyItemList.Add(new Item(MyItemList.Count + 1, item.itemType.ToString(), item.name, item.weaponType.ToString(),
+                        item.damage.ToString(), item.shield.ToString(), false));
                     JsonInventoryManager.Instance.AddItemSave
                         (item.itemType.ToString(), item.name, item.weaponType.ToString(),
                         item.damage.ToString(), item.shield.ToString(), false);
-                    equipmentSlots[i].AddItem(item);
+                    equipmentSlots[i].AddItem(++lastNum, item);
                     equipmentSlots[i].gameObject.SetActive(true);
                     return true;
                 }
@@ -65,12 +70,15 @@ public class Inventory : MonoBehaviour
 
     public void StartAcquireItem()
     {
+        //json으로 얻어온 내용을 리스트 그대로 가져올 수 없어 string 형태로 
+        //받은후 다시 리스트에 넣어 사용한다.
         getJdata = JsonInventoryManager.Instance.jdata;
         if (getJdata == string.Empty)
             return;
         MyItemList = JsonUtility.FromJson<Serialization<Item>>(getJdata).target;
         for (int j = 0; j < MyItemList.Count; j++)
         {
+            lastNum = MyItemList[j].num;
             if (MyItemList[j].type.Equals(EquipmentItem.ItemType.Weapon.ToString()))
             {
                 for (int i = 0; i < weaponSlots.Length; i++)
@@ -87,7 +95,7 @@ public class Inventory : MonoBehaviour
                             item.weaponType = EquipmentItem.WeaponType.ShotGun;
                         item.damage = int.Parse(MyItemList[j].damage);
                         item.shield = int.Parse(MyItemList[j].shield);
-                        weaponSlots[i].AddItem(item);
+                        weaponSlots[i].AddItem(MyItemList[j].num,item);
                         weaponSlots[i].gameObject.SetActive(true);
                         break;
                     }
@@ -104,7 +112,7 @@ public class Inventory : MonoBehaviour
                         item.weaponType = EquipmentItem.WeaponType.none;
                         item.damage = int.Parse(MyItemList[j].damage);
                         item.shield = int.Parse(MyItemList[j].shield);
-                        equipmentSlots[i].AddItem(item);
+                        equipmentSlots[i].AddItem(MyItemList[j].num, item);
                         equipmentSlots[i].gameObject.SetActive(true);
                         break;
                     }
@@ -156,7 +164,7 @@ public class Inventory : MonoBehaviour
             {
                 for (int j = 0; j < MyItemList.Count; j++)
                 {
-                    if (MyItemList[j].name == weaponSlots[i].itemName)
+                    if (MyItemList[j].num == weaponSlots[i].num)
                     {
                         Item item = MyItemList[j];
                         MyItemList.Remove(item);
@@ -174,7 +182,7 @@ public class Inventory : MonoBehaviour
             {
                 for (int j = 0; j < MyItemList.Count; j++)
                 {
-                    if (MyItemList[j].name == equipmentSlots[i].itemName)
+                    if (MyItemList[j].num == equipmentSlots[i].num)
                     {
                         Item item = MyItemList[j];
                         MyItemList.Remove(item);
@@ -189,28 +197,36 @@ public class Inventory : MonoBehaviour
         
     }
     //게임을 시작하면 자동으로 아이템을 장착한다.
-    public void StartEquipItem(string weaponName, string equipmentName)
+    public void StartWeaponItem(int num)
     {
+        Debug.Log(num);
         for (int j = 0; j < MyItemList.Count; j++)
         {
             if (MyItemList[j].type.Equals(EquipmentItem.ItemType.Weapon.ToString()))
             {
                 for (int i = 0; i < weaponSlots.Length; i++)
                 {
-                    if (weaponSlots[i].itemName == weaponName)
+                    if (weaponSlots[i].num == num)
                     {
-                        Debug.Log(weaponSlots[i].itemName + " " + weaponName);
                         weaponSlots[i].EquipItemSlot();
                         break;
                     }
                 }
             }
+        }
+    }
+    public void StartEquipItem(int num)
+    {
+        
+        for (int j = 0; j < MyItemList.Count; j++)
+        {
             if (MyItemList[j].type.Equals(EquipmentItem.ItemType.Equipment.ToString()))
             {
                 for (int i = 0; i < equipmentSlots.Length; i++)
                 {
-                    if (equipmentSlots[i].itemName == equipmentName)
+                    if (equipmentSlots[i].num == num)
                     {
+                        Debug.Log(num+""+equipmentSlots[i].itemName);
                         equipmentSlots[i].EquipItemSlot();
                         break;
                     }

@@ -844,6 +844,7 @@ MonoBehaviour:
   itemImage: {fileID: 916067871}
   itemNameText: {fileID: 990801504}
   abilityText: {fileID: 2137838940}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -1986,6 +1987,7 @@ MonoBehaviour:
   itemImage: {fileID: 1214132461}
   itemNameText: {fileID: 865746231}
   abilityText: {fileID: 1975981035}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -2424,6 +2426,7 @@ MonoBehaviour:
   itemImage: {fileID: 4372386}
   itemNameText: {fileID: 1042970661}
   abilityText: {fileID: 143056629}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -2607,6 +2610,7 @@ MonoBehaviour:
   itemImage: {fileID: 924652935}
   itemNameText: {fileID: 1608212969}
   abilityText: {fileID: 1590586176}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -2779,6 +2783,7 @@ MonoBehaviour:
   itemImage: {fileID: 994981026}
   itemNameText: {fileID: 1145074386}
   abilityText: {fileID: 118499372}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -3449,6 +3454,7 @@ MonoBehaviour:
   itemImage: {fileID: 551245601}
   itemNameText: {fileID: 302864455}
   abilityText: {fileID: 52825181}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -3787,6 +3793,7 @@ MonoBehaviour:
   itemImage: {fileID: 1929100457}
   itemNameText: {fileID: 1052818980}
   abilityText: {fileID: 38152868}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -5244,6 +5251,7 @@ MonoBehaviour:
   itemImage: {fileID: 1913057423}
   itemNameText: {fileID: 1282367984}
   abilityText: {fileID: 1504198171}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -5549,6 +5557,7 @@ MonoBehaviour:
   itemImage: {fileID: 128763002}
   itemNameText: {fileID: 1882881224}
   abilityText: {fileID: 1959984947}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -6278,6 +6287,7 @@ MonoBehaviour:
   itemImage: {fileID: 462618611}
   itemNameText: {fileID: 183397276}
   abilityText: {fileID: 168200710}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -7838,6 +7848,7 @@ MonoBehaviour:
   itemImage: {fileID: 1808561739}
   itemNameText: {fileID: 1770088267}
   abilityText: {fileID: 1291156455}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -10949,6 +10960,7 @@ MonoBehaviour:
   itemImage: {fileID: 2021201854}
   itemNameText: {fileID: 1417168909}
   abilityText: {fileID: 332040305}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -11282,6 +11294,7 @@ MonoBehaviour:
   itemImage: {fileID: 707242316}
   itemNameText: {fileID: 1789805006}
   abilityText: {fileID: 1585934823}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -11543,6 +11556,7 @@ MonoBehaviour:
   itemImage: {fileID: 370286966}
   itemNameText: {fileID: 1410537706}
   abilityText: {fileID: 801251730}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -12053,6 +12067,7 @@ MonoBehaviour:
   itemImage: {fileID: 487212130}
   itemNameText: {fileID: 679610014}
   abilityText: {fileID: 343035275}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -13008,6 +13023,7 @@ MonoBehaviour:
   itemImage: {fileID: 984438000}
   itemNameText: {fileID: 1772921579}
   abilityText: {fileID: 1248177131}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -13506,6 +13522,7 @@ MonoBehaviour:
   itemImage: {fileID: 108953133}
   itemNameText: {fileID: 2115658607}
   abilityText: {fileID: 486325951}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -13775,6 +13792,7 @@ MonoBehaviour:
   itemImage: {fileID: 852440098}
   itemNameText: {fileID: 1224837973}
   abilityText: {fileID: 882299944}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -15149,6 +15167,7 @@ MonoBehaviour:
   itemImage: {fileID: 218329355}
   itemNameText: {fileID: 1543378042}
   abilityText: {fileID: 1894866823}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -16240,6 +16259,7 @@ MonoBehaviour:
   itemImage: {fileID: 1134770845}
   itemNameText: {fileID: 1008144198}
   abilityText: {fileID: 763994201}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -16355,6 +16375,7 @@ MonoBehaviour:
   itemImage: {fileID: 2024750293}
   itemNameText: {fileID: 2124873761}
   abilityText: {fileID: 26443333}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -16482,6 +16503,7 @@ MonoBehaviour:
   itemImage: {fileID: 120402308}
   itemNameText: {fileID: 1938954636}
   abilityText: {fileID: 1407967818}
+  num: 0
   itemName: 
   damage: 0
   shield: 0
@@ -37352,7 +37374,7 @@ PrefabInstance:
     - target: {fileID: 7229090996256159677, guid: 2bafe1ab08614eb47ad99b2b0c2b5fa4,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7229090996256320413, guid: 2bafe1ab08614eb47ad99b2b0c2b5fa4,
         type: 3}
@@ -37447,7 +37469,7 @@ PrefabInstance:
     - target: {fileID: 6613585910379154889, guid: 76573f865e85fd244878b1d89cb865b8,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6613585910379154893, guid: 76573f865e85fd244878b1d89cb865b8,
         type: 3}
@@ -38040,7 +38062,7 @@ PrefabInstance:
     - target: {fileID: 8534371504184505780, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0076068896
+      value: -0.007606906
       objectReference: {fileID: 0}
     - target: {fileID: 8534371504184505780, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
@@ -38050,7 +38072,7 @@ PrefabInstance:
     - target: {fileID: 8534371504184505780, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000772716
+      value: 0.00077271665
       objectReference: {fileID: 0}
     - target: {fileID: 8534371504184505781, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
@@ -38065,7 +38087,7 @@ PrefabInstance:
     - target: {fileID: 8534371504999340954, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0076068896
+      value: -0.007606906
       objectReference: {fileID: 0}
     - target: {fileID: 8534371504999340954, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
@@ -38075,7 +38097,7 @@ PrefabInstance:
     - target: {fileID: 8534371504999340954, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000772716
+      value: 0.00077271665
       objectReference: {fileID: 0}
     - target: {fileID: 8534371504999340955, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
@@ -38100,22 +38122,22 @@ PrefabInstance:
     - target: {fileID: 8534371505308520219, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_FollowOffset.y
-      value: 0.7626665
+      value: 1.140648
       objectReference: {fileID: 0}
     - target: {fileID: 8534371505308520219, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_FollowOffset.z
-      value: -1.778668
+      value: -1.946854
       objectReference: {fileID: 0}
     - target: {fileID: 8534371505383620622, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_FollowOffset.y
-      value: 0.7626665
+      value: 1.140648
       objectReference: {fileID: 0}
     - target: {fileID: 8534371505383620622, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_FollowOffset.z
-      value: -1.778668
+      value: -1.946854
       objectReference: {fileID: 0}
     - target: {fileID: 8534371505383620623, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
@@ -38195,7 +38217,7 @@ PrefabInstance:
     - target: {fileID: 8534371506013309853, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0076068896
+      value: -0.007606906
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506013309853, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
@@ -38205,7 +38227,7 @@ PrefabInstance:
     - target: {fileID: 8534371506013309853, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000772716
+      value: 0.00077271665
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506201116274, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
@@ -38215,42 +38237,42 @@ PrefabInstance:
     - target: {fileID: 8534371506201116277, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.7373047
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506201116277, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.22132874
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506201116277, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.974216
+      value: 0.9948512
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506201116277, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.20171742
+      value: -0.007606905
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506201116277, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.098961756
+      value: 0.10105791
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506201116277, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.020490635
+      value: 0.0007727165
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506288777924, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_FollowOffset.y
-      value: 0.7626665
+      value: 1.140648
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506288777924, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_FollowOffset.z
-      value: -1.778668
+      value: -1.946854
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506288777925, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}

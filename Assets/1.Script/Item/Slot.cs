@@ -31,6 +31,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     public Text itemNameText;
     public Text abilityText;
 
+    public int num;// 아이템 번호
     public string itemName=string.Empty; // 아이템 이름
     public float damage;// 장비 대미지
     public float shield;// 장비 방어력
@@ -44,9 +45,10 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     }
 
     //인벤토리에 아이템 추가
-    public void AddItem(EquipmentItem equipmentItem)
+    public void AddItem(int num,EquipmentItem equipmentItem )
     {
         this.equipmentItem = equipmentItem;
+        this.num=num;
         itemName = equipmentItem.itemName;
         itemType = (ItemType)equipmentItem.itemType;
         if (itemType == ItemType.Equipment)
@@ -109,15 +111,8 @@ public class Slot : MonoBehaviour, IPointerClickHandler
             if (itemType == ItemType.Weapon)
             {
                 inventory.ClearWeaponSlotColor();//전체색깔 초기화
-                JsonPlayerInfoManager.Instance.ChangePlayerWeapon(itemName);
-            }
-            if (itemType == ItemType.Equipment)
-            {
-                inventory.ClearEquipmentSlotColor();//전체색깔 초기화
-                JsonPlayerInfoManager.Instance.ChangePlayerEquipment(itemName);
-            }
-            if (itemType == ItemType.Weapon)
-            {
+                JsonPlayerInfoManager.Instance.ChangePlayerWeapon(num);
+
                 //무기 교체및 대미지 변환
                 if (weaponType == WeaponType.RifleGun)
                     playerShooter.ChooseGun(0, damage);
@@ -126,12 +121,14 @@ public class Slot : MonoBehaviour, IPointerClickHandler
                 if (weaponType == WeaponType.ShotGun)
                     playerShooter.ChooseGun(2, damage);
             }
-            else
+            if (itemType == ItemType.Equipment)
             {
+                inventory.ClearEquipmentSlotColor();//전체색깔 초기화
+                JsonPlayerInfoManager.Instance.ChangePlayerEquipment(num);
+
                 //장비에 따른 체력 변화
                 playerHealth.EqipmentWear(shield);
             }
-
 
             Color color = this.GetComponent<Image>().color;
             color.a = 0.5f;
