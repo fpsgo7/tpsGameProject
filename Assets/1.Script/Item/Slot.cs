@@ -35,7 +35,8 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     public string itemName=string.Empty; // 아이템 이름
     public float damage;// 장비 대미지
     public float shield;// 장비 방어력
-
+    public bool chosenSlot=false;// 슬롯 선택상태값
+    public bool equipSlot = false;//슬록 장착 값
     // 아이템 이미지의 투명도 조절
     private void SetColor(float alphaColor)
     {
@@ -91,13 +92,19 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             //클릭을 받으면 아이템이 선택이 된것을 표시한다.
-            if(itemName != null && this.GetComponent<Image>().color.a !=0.5f)
+            if(itemName != null && chosenSlot == false && equipSlot == false)
             {
-                inventory.ClearSlotChooseImage();
+                inventory.ClearSlotChoose();
+                chosenSlot = true;
                 chooseImage.SetActive(true);
             }
+            else// 선택된 것을 비활성화 
+            {
+                inventory.ClearSlotChoose();
+            }
         }
-        if (eventData.button == PointerEventData.InputButton.Right)
+        if (eventData.button == PointerEventData.InputButton.Right 
+            && chosenSlot == false && equipSlot == false)
         {
             EquipItemSlot();   
         }
@@ -133,7 +140,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
             Color color = this.GetComponent<Image>().color;
             color.a = 0.5f;
             this.GetComponent<Image>().color = color;
-
+            equipSlot = true;
         }
     }
 }

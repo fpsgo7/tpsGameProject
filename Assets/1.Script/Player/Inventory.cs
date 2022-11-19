@@ -128,6 +128,7 @@ public class Inventory : MonoBehaviour
             Color color = weaponSlots[i].GetComponent<Image>().color;
             color.a = 0;
             weaponSlots[i].GetComponent<Image>().color = color;
+            weaponSlots[i].equipSlot = false;
         }
     }
     //장비일경우
@@ -138,20 +139,23 @@ public class Inventory : MonoBehaviour
             Color color = equipmentSlots[i].GetComponent<Image>().color;
             color.a = 0;
             equipmentSlots[i].GetComponent<Image>().color = color;
+            equipmentSlots[i].equipSlot = false;
         }
     }
     //아이템 선택하면 나머지 아이템 선택 이미지 비활 성화와 
     //또는 장비창에서 무기창으로 교체할 때도 작동한다.
-    public void ClearSlotChooseImage()
+    public void ClearSlotChoose()
     {
         // 선택된 이미지 비활성화
         for (int i = 0; i < weaponSlots.Length; i++)
         {
             weaponSlots[i].chooseImage.SetActive(false);
+            weaponSlots[i].chosenSlot = false;
         }
         for (int i = 0; i < equipmentSlots.Length; i++)
         {
             equipmentSlots[i].chooseImage.SetActive(false);
+            equipmentSlots[i].chosenSlot = false;
         }
     }
     //아이템이 선택된 상테에서 삭제버튼을 누르면 작동한다.

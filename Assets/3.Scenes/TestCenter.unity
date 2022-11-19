@@ -848,6 +848,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &42742827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1991,6 +1993,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &168778502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2430,6 +2434,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &220517364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2614,6 +2620,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &234747177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2787,6 +2795,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &247776532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3458,6 +3468,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &344934542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3797,6 +3809,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &391072953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5255,6 +5269,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &630234456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5561,6 +5577,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &669501281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6291,6 +6309,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &754305341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7852,6 +7872,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &929685702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10964,6 +10986,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &1348503826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11298,6 +11322,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &1410810225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11560,6 +11586,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &1431515666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12071,6 +12099,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!1 &1504198169
 GameObject:
   m_ObjectHideFlags: 0
@@ -13027,6 +13057,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &1642796303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13526,6 +13558,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &1696249952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13796,6 +13830,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &1727984171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15171,6 +15207,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &1907012689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16263,6 +16301,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &2049112754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16379,6 +16419,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &2076852039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16507,6 +16549,8 @@ MonoBehaviour:
   itemName: 
   damage: 0
   shield: 0
+  chosenSlot: 0
+  equipSlot: 0
 --- !u!114 &2100920475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38062,7 +38106,7 @@ PrefabInstance:
     - target: {fileID: 8534371504184505780, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.007606906
+      value: -0.0076069003
       objectReference: {fileID: 0}
     - target: {fileID: 8534371504184505780, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
@@ -38072,7 +38116,7 @@ PrefabInstance:
     - target: {fileID: 8534371504184505780, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.00077271665
+      value: 0.00077271485
       objectReference: {fileID: 0}
     - target: {fileID: 8534371504184505781, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
@@ -38087,7 +38131,7 @@ PrefabInstance:
     - target: {fileID: 8534371504999340954, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.007606906
+      value: -0.0076069003
       objectReference: {fileID: 0}
     - target: {fileID: 8534371504999340954, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
@@ -38097,7 +38141,7 @@ PrefabInstance:
     - target: {fileID: 8534371504999340954, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.00077271665
+      value: 0.00077271485
       objectReference: {fileID: 0}
     - target: {fileID: 8534371504999340955, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
@@ -38122,22 +38166,22 @@ PrefabInstance:
     - target: {fileID: 8534371505308520219, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_FollowOffset.y
-      value: 1.140648
+      value: 1.11915
       objectReference: {fileID: 0}
     - target: {fileID: 8534371505308520219, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_FollowOffset.z
-      value: -1.946854
+      value: -1.940357
       objectReference: {fileID: 0}
     - target: {fileID: 8534371505383620622, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_FollowOffset.y
-      value: 1.140648
+      value: 1.11915
       objectReference: {fileID: 0}
     - target: {fileID: 8534371505383620622, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_FollowOffset.z
-      value: -1.946854
+      value: -1.940357
       objectReference: {fileID: 0}
     - target: {fileID: 8534371505383620623, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
@@ -38217,7 +38261,7 @@ PrefabInstance:
     - target: {fileID: 8534371506013309853, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.007606906
+      value: -0.0076069003
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506013309853, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
@@ -38227,7 +38271,7 @@ PrefabInstance:
     - target: {fileID: 8534371506013309853, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.00077271665
+      value: 0.00077271485
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506201116274, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
@@ -38237,42 +38281,42 @@ PrefabInstance:
     - target: {fileID: 8534371506201116277, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.38085938
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506201116277, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.059646606
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506201116277, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9948512
+      value: 0.9895101
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506201116277, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.007606905
+      value: -0.103230104
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506201116277, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.10105791
+      value: 0.100515366
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506201116277, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0007727165
+      value: 0.01048621
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506288777924, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_FollowOffset.y
-      value: 1.140648
+      value: 1.11915
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506288777924, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_FollowOffset.z
-      value: -1.946854
+      value: -1.940357
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506288777925, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
