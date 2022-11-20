@@ -6,6 +6,18 @@ using UnityEngine.SceneManagement;
 
 public class LobbyScript : MonoBehaviour
 {
+    private static LobbyScript instance;
+
+    public static LobbyScript Instance
+    {
+        get
+        {
+            if (instance == null) instance = FindObjectOfType<LobbyScript>();
+
+            return instance;
+        }
+    }
+
     public Dropdown dropdown;
     public static int chooseWeapon;
     public GameObject titleText;
@@ -17,7 +29,13 @@ public class LobbyScript : MonoBehaviour
 
     private const string titleName = "TPS Project";
     private const string welcomeName = " 님 환영합니다.";
-    public string playerName ="Guest";
+    public string name ="Guest";
+    public string id;
+    public int score;
+    public int weaponNum;
+    public int equipmentNum;
+    public float axisX;
+    public float axisY;
     public void GameStart()
     {
         chooseWeapon = dropdown.value;
@@ -37,7 +55,7 @@ public class LobbyScript : MonoBehaviour
             GameStartPanel.SetActive(true);
             JoinPanel.SetActive(false);
         }
-        titleText.GetComponent<Text>().text = playerName + welcomeName;
+        titleText.GetComponent<Text>().text = name + welcomeName;
     }
 
     public void OpenLoginPanel()

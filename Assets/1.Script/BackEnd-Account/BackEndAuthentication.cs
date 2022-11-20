@@ -36,7 +36,7 @@ public class BackEndAuthentication : MonoBehaviour
                 backEndNickname.CreateName();
                 backEndGetUserInfo.GetUserInfo();
                 lobbyScript.OpenGameStartPanel();
-              
+                backEndPlayerInfo.InsertPlayerInfoData(LobbyScript.Instance.id,LobbyScript.Instance.name);
                 break;
             default:
                 Debug.Log("중복된 아이디입니다.");
@@ -59,8 +59,7 @@ public class BackEndAuthentication : MonoBehaviour
                 lobbyScript.OpenGameStartPanel();
                 lobbyScript.logoutButton.SetActive(true);
                 lobbyScript.GoLoginPanelButton.SetActive(false);
-                backEndPlayerInfo.GetPlayerInfo();
-                //backEndPlayerInfo.InsertPlayerInfoData();
+                backEndPlayerInfo.GetPlayerInfo(LoginIdInput.text);
                 break;
             default:
                 Debug.Log("아이디 또는 비번이 틀렸습니다.");

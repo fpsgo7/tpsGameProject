@@ -45,6 +45,7 @@ public class JsonPlayerInfoManager : MonoBehaviour
 
     Player player = new Player("player","name",0,0,0,0,0);
     string filePath;
+    public bool onlineStatus;
 
     private void Awake()
     {
@@ -77,7 +78,14 @@ public class JsonPlayerInfoManager : MonoBehaviour
 
     public void LoadPlayer()
     {
-        if(File.Exists(filePath))
+        if(onlineStatus == true)
+        {
+            GameManager.Instance.score = player.score;
+            UIManager.Instance.UpdateScoreText(player.score);
+            GameManager.Instance.PlayerStartItem(player.weaponNum, player.equipmentNum);
+            GameManager.Instance.PlayerAxisStartSet(player.axisX, player.axisY);
+        }
+        else if(File.Exists(filePath))
         {
             string jdata = File.ReadAllText(filePath);
             player = JsonUtility.FromJson<Player>(jdata);
@@ -88,16 +96,23 @@ public class JsonPlayerInfoManager : MonoBehaviour
         }
     }
     // 마우스 감도 값 넣기
-    public void GetXaxis(float x)
+    public void SetXaxis(float x)
     {
         player.axisX = x;
         string jdata = JsonUtility.ToJson(player);
         File.WriteAllText(filePath, jdata);
     }
-    public void GetYaxis(float y)
+    public void SetYaxis(float y)
     {
         player.axisY = y;
         string jdata = JsonUtility.ToJson(player);
         File.WriteAllText(filePath, jdata);
+    }
+
+    //온라인으로 상태값으로 변경하고 받아온값 가져오기
+    public void SetOnline(string id,string name,int score, int weaponNum, int equipmentNum, float axisX, float axisY)
+    {
+        onlineStatus = true;
+        player = new Player(id , name , score, weaponNum, equipmentNum, axisX, axisY);
     }
 }

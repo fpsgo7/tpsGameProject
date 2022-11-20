@@ -6,7 +6,12 @@ using BackEnd;
 public class BackEndGetUserInfo : MonoBehaviour
 {
     //유저정보 받아오기
-    public LobbyScript lobbyScript;
+    public BackEndPlayerInfo backEndPlayerInfo;
+
+    public void Start()
+    {
+        backEndPlayerInfo = GetComponent<BackEndPlayerInfo>();
+    }
     public void GetUserInfo()
     {
         BackendReturnObject BRO = Backend.BMember.GetUserInfo();
@@ -14,7 +19,7 @@ public class BackEndGetUserInfo : MonoBehaviour
         if (BRO.IsSuccess())
         {
             Debug.Log(BRO.GetReturnValue());
-            lobbyScript.playerName = BRO.GetReturnValuetoJSON()["row"]["nickname"].ToString();
+            LobbyScript.Instance.name = BRO.GetReturnValuetoJSON()["row"]["nickname"].ToString();
         }
         else
         {
