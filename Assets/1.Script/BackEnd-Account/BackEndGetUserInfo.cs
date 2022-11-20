@@ -5,6 +5,7 @@ using BackEnd;
 
 public class BackEndGetUserInfo : MonoBehaviour
 {
+    //유저정보 받아오기
     public LobbyScript lobbyScript;
     public void GetUserInfo()
     {

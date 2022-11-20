@@ -3,6 +3,7 @@ using BackEnd;
 
 public class BackEndInitalize : MonoBehaviour
 {
+    // 백엔드 기본작업
     //.Net4 버전
     void Awake()
     {

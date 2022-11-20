@@ -14,6 +14,7 @@ public class Serialization<T>//T 에는 어떤 형식이든 넣을 수 있어 T�
 [System.Serializable]
 public class Item
 {
+   
     public int num;
     public string type, name, weaponType, damage, shield;
 
@@ -57,6 +58,7 @@ public class JsonInventoryManager : MonoBehaviour
         if (!File.Exists(filePath)) { return; }
         jdata = File.ReadAllText(filePath);
         MyItemList = JsonUtility.FromJson<Serialization<Item>>(jdata).target;
+
     }
 
     public void AddItemSave(string type, string name, string weaponType, string damage, string shield, bool isUsing)

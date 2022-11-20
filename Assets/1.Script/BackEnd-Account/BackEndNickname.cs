@@ -7,6 +7,7 @@ using BackEnd;
 
 public class BackEndNickname : MonoBehaviour
 {
+    //닉네임 생성
     public InputField nickNameInput;
     private bool CheckNickname()
     {

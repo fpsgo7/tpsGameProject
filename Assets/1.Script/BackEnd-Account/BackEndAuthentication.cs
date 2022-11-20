@@ -6,13 +6,20 @@ using BackEnd;
 
 public class BackEndAuthentication : MonoBehaviour
 {
+    //회원가입 로그인 관리
     public LobbyScript lobbyScript;
     public BackEndGetUserInfo backEndGetUserInfo;
     public BackEndNickname backEndNickname;
+    public BackEndPlayerInfo backEndPlayerInfo;
     public InputField LoginIdInput;
     public InputField LoginPwInput;
     public InputField JoinIdInput;
     public InputField JoinPwInput;
+
+    public void Start()
+    {
+        backEndPlayerInfo = GetComponent<BackEndPlayerInfo>();    
+    }
 
     //회원가입
     public void Sign()
@@ -52,6 +59,8 @@ public class BackEndAuthentication : MonoBehaviour
                 lobbyScript.OpenGameStartPanel();
                 lobbyScript.logoutButton.SetActive(true);
                 lobbyScript.GoLoginPanelButton.SetActive(false);
+                backEndPlayerInfo.GetPlayerInfo();
+                //backEndPlayerInfo.InsertPlayerInfoData();
                 break;
             default:
                 Debug.Log("아이디 또는 비번이 틀렸습니다.");

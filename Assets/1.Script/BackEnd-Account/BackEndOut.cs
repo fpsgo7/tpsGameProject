@@ -6,6 +6,7 @@ using BackEnd;
 
 public class BackEndOut : MonoBehaviour
 {
+    //로그아웃
     public LobbyScript lobbyScript;
    public void LogOut()
     {

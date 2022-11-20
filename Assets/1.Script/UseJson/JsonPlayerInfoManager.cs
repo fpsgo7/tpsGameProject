@@ -10,6 +10,7 @@ using System.IO;
 //[System.Serializable]
 class Player
 {
+    public string id;
     public string name;
     public int score;
     public int weaponNum;
@@ -17,8 +18,9 @@ class Player
     public float axisX;
     public float axisY;
 
-    public Player(string name, int score, int weaponNum, int equipmentNum, float axisX, float axisY)
+    public Player(string id,string name, int score, int weaponNum, int equipmentNum, float axisX, float axisY)
     {
+        this.id = id;
         this.name = name;
         this.score = score;
         this.weaponNum = weaponNum;
@@ -41,7 +43,7 @@ public class JsonPlayerInfoManager : MonoBehaviour
         }
     }
 
-    Player player = new Player("player",0,0,0,0,0);
+    Player player = new Player("player","name",0,0,0,0,0);
     string filePath;
 
     private void Awake()
