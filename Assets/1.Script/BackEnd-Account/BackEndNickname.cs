@@ -9,19 +9,32 @@ public class BackEndNickname : MonoBehaviour
 {
     //닉네임 생성
     public InputField nickNameInput;
-    private bool CheckNickname()
+    private bool CheckNicknameCollect()
     {
         return Regex.IsMatch(nickNameInput.text, "^[0-9a-zA-Z가-힣]*$");
     }
+    // 닉네임  중복 체크
+    public bool CheckNickname()
+    {
+       
+
+        BackendReturnObject bro = Backend.BMember.CheckNicknameDuplication(nickNameInput.text);
+        if (bro.IsSuccess())
+        {
+            Debug.Log("해당 닉네임으로 수정 가능합니다");
+            return true;
+        }
+        return false;
+    }
 
     // 닉네임 생성
-    public void CreateName()
+    public bool CreateName()
     {
         // 한글, 영어, 숫자로만 닉네임을 만들었는지 체크
-        if (CheckNickname() == false)
+        if (CheckNicknameCollect() == false)
         {
             Debug.Log("닉네임은 한글, 영어, 숫자로만 만들 수 있습니다.");
-            return;
+            return false;
         }
 
         BackendReturnObject BRO = Backend.BMember.CreateNickname(nickNameInput.text);
@@ -29,6 +42,7 @@ public class BackEndNickname : MonoBehaviour
         if (BRO.IsSuccess())
         {
             Debug.Log("닉네임 생성 완료");
+            return true;
         }
         else// 실패했을경우
         {
@@ -47,6 +61,7 @@ public class BackEndNickname : MonoBehaviour
                     Debug.Log("서버 공통 에러 발생: " + BRO.GetErrorCode());
                     break;
             }
+            return false;
         }
     }
 }
