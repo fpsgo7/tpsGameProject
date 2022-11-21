@@ -41,14 +41,13 @@ public class BackEndPlayerInfo : MonoBehaviour
         JsonPlayerInfoManager.Instance.SetOnline(id, name, score, weaponNum, equipmentNum, axisX, axisY);
     }
     // Insert 는 '생성' 작업에 주로 사용된다. 
-    public void InsertPlayerInfoData(string id,string name)
+    public void InsertPlayerInfoData(string id)
     {
 
         // Param은 뒤끝 서버와 통신을 할 떄 넘겨주는 파라미터 클래스 입니다. 
         Param param = new Param();
         //int 형에서 string 형으로 자동 변환 이 되지않아 문자열 형태로 교체후 사용할 것
         param.Add("id",id);
-        param.Add("name",name);
         param.Add("score",0);
         param.Add("axisX",200);
         param.Add("axisY",2);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BackEnd;
+using System;
 
 public class BackEndGetUserInfo : MonoBehaviour
 {
@@ -19,7 +20,15 @@ public class BackEndGetUserInfo : MonoBehaviour
         if (BRO.IsSuccess())
         {
             Debug.Log(BRO.GetReturnValue());
-            LobbyScript.Instance.name = BRO.GetReturnValuetoJSON()["row"]["nickname"].ToString();
+            try
+            {
+                LobbyScript.Instance.name = BRO.GetReturnValuetoJSON()["row"]["nickname"].ToString();
+            }
+            catch(Exception e){
+                Debug.Log("닉네임이 없습니다.");
+                LobbyScript.Instance.name = string.Empty;
+            }
+            
         }
         else
         {

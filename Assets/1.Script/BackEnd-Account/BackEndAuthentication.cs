@@ -8,7 +8,6 @@ public class BackEndAuthentication : MonoBehaviour
 {
     //회원가입 로그인 관리
     public BackEndGetUserInfo backEndGetUserInfo;
-    public BackEndNickname backEndNickname;
     public BackEndPlayerInfo backEndPlayerInfo;
     public InputField LoginIdInput;
     public InputField LoginPwInput;
@@ -32,10 +31,9 @@ public class BackEndAuthentication : MonoBehaviour
             case "Success":
                 Debug.Log("회원가입 성공");
                 Login(JoinIdInput.text, JoinPwInput.text);
-                backEndNickname.CreateName();
                 backEndGetUserInfo.GetUserInfo();
                 LobbyScript.Instance.OpenGameStartPanel();
-                backEndPlayerInfo.InsertPlayerInfoData(JoinIdInput.text, LobbyScript.Instance.name);
+                backEndPlayerInfo.InsertPlayerInfoData(JoinIdInput.text);
                 break;
             default:
                 Debug.Log("중복된 아이디입니다.");

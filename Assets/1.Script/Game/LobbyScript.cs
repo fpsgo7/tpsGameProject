@@ -26,6 +26,7 @@ public class LobbyScript : MonoBehaviour
     public GameObject JoinPanel;
     public GameObject logoutButton;
     public GameObject GoLoginPanelButton;
+    public InputField nameInputField;
 
     private const string titleName = "TPS Project";
     private const string welcomeName = " 님 환영합니다.";

@@ -7,18 +7,17 @@ using BackEnd;
 
 public class BackEndNickname : MonoBehaviour
 {
-    //닉네임 생성
-    public InputField nickNameInput;
+    
     private bool CheckNicknameCollect()
     {
-        return Regex.IsMatch(nickNameInput.text, "^[0-9a-zA-Z가-힣]*$");
+        return Regex.IsMatch(LobbyScript.Instance.nameInputField.text, "^[0-9a-zA-Z가-힣]*$");
     }
     // 닉네임  중복 체크
     public bool CheckNickname()
     {
        
 
-        BackendReturnObject bro = Backend.BMember.CheckNicknameDuplication(nickNameInput.text);
+        BackendReturnObject bro = Backend.BMember.CheckNicknameDuplication(LobbyScript.Instance.nameInputField.text);
         if (bro.IsSuccess())
         {
             Debug.Log("해당 닉네임으로 수정 가능합니다");
@@ -37,7 +36,7 @@ public class BackEndNickname : MonoBehaviour
             return false;
         }
 
-        BackendReturnObject BRO = Backend.BMember.CreateNickname(nickNameInput.text);
+        BackendReturnObject BRO = Backend.BMember.CreateNickname(LobbyScript.Instance.nameInputField.text);
 
         if (BRO.IsSuccess())
         {
