@@ -4,9 +4,9 @@ using BackEnd;
 using LitJson;
 using System;
 
-public class BackEndPlayerInfo : MonoBehaviour
+public static class BackEndPlayerInfo
 {
-    public void GetPlayerInfo(string id)
+    public static void GetPlayerInfoInLobby(string id)
     {
         Where where = new Where();
         where.Equal("id",id);
@@ -39,7 +39,7 @@ public class BackEndPlayerInfo : MonoBehaviour
             LobbyScript.Instance.axisY);
     }
     // Insert 는 '생성' 작업에 주로 사용된다. 
-    public void InsertPlayerInfoData(string id)
+    public static void CreateInsertPlayerInfoData(string id)
     {
 
         // Param은 뒤끝 서버와 통신을 할 떄 넘겨주는 파라미터 클래스 입니다. 
@@ -79,7 +79,7 @@ public class BackEndPlayerInfo : MonoBehaviour
         }
     }
 
-    public void SetNickName(string id, string name)
+    public static void SetNickName(string id, string name)
     {
         Where where = new Where();
         where.Equal("id",id);
@@ -100,4 +100,5 @@ public class BackEndPlayerInfo : MonoBehaviour
             Debug.Log("성공"+bro);
         }
     }
+
 }

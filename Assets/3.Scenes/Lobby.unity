@@ -3189,7 +3189,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1311757450
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4022,7 +4022,6 @@ GameObject:
   - component: {fileID: 1574782609}
   - component: {fileID: 1574782610}
   - component: {fileID: 1574782611}
-  - component: {fileID: 1574782612}
   m_Layer: 0
   m_Name: LobbyScript
   m_TagString: Untagged
@@ -4072,7 +4071,6 @@ MonoBehaviour:
   backEndGetUserInfo: {fileID: 0}
   backEndNickname: {fileID: 0}
   backEndOut: {fileID: 0}
-  backEndPlayerInfo: {fileID: 0}
   dropdown: {fileID: 1867772659}
   titleText: {fileID: 5506513316761389519}
   GameStartPanel: {fileID: 8525440397513123127}
@@ -4139,18 +4137,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4187cd8eb9add248b0523f484e4b565, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1574782612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1574782604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56536e173fe7fb642ace7bec9958e6d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1610424909
@@ -5991,4 +5977,4 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0

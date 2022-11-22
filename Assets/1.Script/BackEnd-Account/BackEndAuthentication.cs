@@ -18,7 +18,7 @@ public class BackEndAuthentication : MonoBehaviour
         {
             case "Success":
                 Debug.Log("회원가입 성공");
-                LobbyScript.Instance.backEndPlayerInfo.InsertPlayerInfoData(id);
+                BackEndPlayerInfo.CreateInsertPlayerInfoData(id);
                 Login(id , pw);
                 LobbyScript.Instance.backEndGetUserInfo.GetUserInfo();
                 LobbyScript.Instance.OpenGameStartPanel();
@@ -42,7 +42,8 @@ public class BackEndAuthentication : MonoBehaviour
                 LobbyScript.Instance.OpenGameStartPanel();
                 LobbyScript.Instance.logoutButton.SetActive(true);
                 LobbyScript.Instance.GoLoginPanelButton.SetActive(false);
-                LobbyScript.Instance.backEndPlayerInfo.GetPlayerInfo(id);
+                BackEndPlayerInfo.GetPlayerInfoInLobby(id);
+                LobbyScript.Instance.SetTitleText();
                 break;
             default:
                 Debug.Log("아이디 또는 비번이 틀렸습니다.");

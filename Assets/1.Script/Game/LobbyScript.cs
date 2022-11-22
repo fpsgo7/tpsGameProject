@@ -22,7 +22,6 @@ public class LobbyScript : MonoBehaviour
     [HideInInspector] public BackEndGetUserInfo backEndGetUserInfo;
     [HideInInspector] public BackEndNickname backEndNickname;
     [HideInInspector] public BackEndOut backEndOut;
-    [HideInInspector] public BackEndPlayerInfo backEndPlayerInfo;
 
     public Dropdown dropdown;
     public static int chooseWeapon;
@@ -59,7 +58,6 @@ public class LobbyScript : MonoBehaviour
         backEndGetUserInfo = GetComponent<BackEndGetUserInfo>();
         backEndNickname = GetComponent<BackEndNickname>();
         backEndOut = GetComponent<BackEndOut>();
-        backEndPlayerInfo = GetComponent<BackEndPlayerInfo>();
     }
     public void GameStart()
     {
@@ -107,6 +105,11 @@ public class LobbyScript : MonoBehaviour
         }
     }
 
+    public void SetTitleText()
+    {
+        titleText.GetComponent<Text>().text = name + welcomeName;
+    }
+
     public void Login()
     {
         backEndAuthentication.Login(LoginIdInput.text,LoginPwInput.text);
@@ -130,7 +133,8 @@ public class LobbyScript : MonoBehaviour
             if (backEndNickname.CreateName(nameInputField.text))
             {
                 SetNickNameResultText.text = setNickNameSuccess;
-                backEndPlayerInfo.SetNickName(id, nameInputField.text);
+                
+                BackEndPlayerInfo.SetNickName(id, nameInputField.text);
             }
             else
             {
@@ -142,7 +146,7 @@ public class LobbyScript : MonoBehaviour
             if (backEndNickname.UpdateName(nameInputField.text))
             {
                 SetNickNameResultText.text = setNickNameSuccess;
-                backEndPlayerInfo.SetNickName(id, nameInputField.text);
+                BackEndPlayerInfo.SetNickName(id, nameInputField.text);
             }
             else
             {
