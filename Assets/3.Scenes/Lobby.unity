@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 2636785}
   - component: {fileID: 2636784}
   m_Layer: 5
-  m_Name: Join-Button
+  m_Name: Sign-Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1574782608}
+      - m_Target: {fileID: 1574782607}
         m_MethodName: Sign
         m_Mode: 1
         m_Arguments:
@@ -552,7 +552,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1574782608}
+      - m_Target: {fileID: 1574782607}
         m_MethodName: Login
         m_Mode: 1
         m_Arguments:
@@ -1825,9 +1825,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Join
-
-'
+  m_Text: Sign
 --- !u!222 &659536191
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2159,7 +2157,7 @@ GameObject:
   - component: {fileID: 939870193}
   - component: {fileID: 939870192}
   m_Layer: 5
-  m_Name: Join-Panel
+  m_Name: Sign-Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3990,6 +3988,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c31ca1b1cbbab1e438a93d5eba227d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  backEndAuthentication: {fileID: 0}
+  backEndGetUserInfo: {fileID: 0}
+  backEndNickname: {fileID: 0}
+  backEndOut: {fileID: 0}
+  backEndPlayerInfo: {fileID: 0}
   dropdown: {fileID: 1867772659}
   titleText: {fileID: 5506513316761389519}
   GameStartPanel: {fileID: 8525440397513123127}
@@ -3997,7 +4000,11 @@ MonoBehaviour:
   JoinPanel: {fileID: 939870190}
   logoutButton: {fileID: 2093774352}
   GoLoginPanelButton: {fileID: 1724042998}
-  nameInputField: {fileID: 0}
+  nameInputField: {fileID: 260109626}
+  LoginIdInput: {fileID: 1633984750}
+  LoginPwInput: {fileID: 1659971093}
+  SignIdInput: {fileID: 887017363}
+  SignPwInput: {fileID: 13053699}
   name: Guest
   id: 
   score: 0
@@ -4017,12 +4024,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34309cb80dc0f3b44aee29cdf0e8c42b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backEndGetUserInfo: {fileID: 1574782611}
-  backEndPlayerInfo: {fileID: 0}
-  LoginIdInput: {fileID: 1633984750}
-  LoginPwInput: {fileID: 1659971093}
-  JoinIdInput: {fileID: 887017363}
-  JoinPwInput: {fileID: 13053699}
 --- !u!114 &1574782609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4035,7 +4036,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b08acb9211509d4ea76e61f8b2e5962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbyScript: {fileID: 1574782607}
 --- !u!114 &1574782610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4060,7 +4060,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4187cd8eb9add248b0523f484e4b565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backEndPlayerInfo: {fileID: 0}
 --- !u!114 &1574782612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4073,13 +4072,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56536e173fe7fb642ace7bec9958e6d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 
-  name: 
-  score: 0
-  weaponNum: 0
-  equipmentNum: 0
-  axisX: 0
-  axisY: 0
 --- !u!1 &1610424909
 GameObject:
   m_ObjectHideFlags: 0
@@ -4524,12 +4516,12 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
+      - m_Target: {fileID: 1574782607}
+        m_MethodName: SetName
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5213,7 +5205,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1574782609}
+      - m_Target: {fileID: 1574782607}
         m_MethodName: LogOut
         m_Mode: 1
         m_Arguments:

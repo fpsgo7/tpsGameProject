@@ -6,13 +6,6 @@ using System;
 
 public class BackEndGetUserInfo : MonoBehaviour
 {
-    //유저정보 받아오기
-    public BackEndPlayerInfo backEndPlayerInfo;
-
-    public void Start()
-    {
-        backEndPlayerInfo = GetComponent<BackEndPlayerInfo>();
-    }
     public void GetUserInfo()
     {
         BackendReturnObject BRO = Backend.BMember.GetUserInfo();

@@ -6,16 +6,27 @@ using BackEnd;
 
 public class BackEndOut : MonoBehaviour
 {
-    //로그아웃
-    public LobbyScript lobbyScript;
    public void LogOut()
     {
         BackendReturnObject BRO = Backend.BMember.Logout();
         if (BRO.IsSuccess())
         {
             Debug.Log(BRO.GetMessage());
-            lobbyScript.GoLoginPanelButton.SetActive(true);
-            lobbyScript.logoutButton.SetActive(false);
+            LobbyScript.Instance.GoLoginPanelButton.SetActive(true);
+            LobbyScript.Instance.logoutButton.SetActive(false);
+
+            LobbyScript.Instance.id = string.Empty;
+            LobbyScript.Instance.name = string.Empty;
+            LobbyScript.Instance.score = 0;
+            LobbyScript.Instance.weaponNum = 0;
+            LobbyScript.Instance.equipmentNum = 0;
+            LobbyScript.Instance.axisX = 200;
+            LobbyScript.Instance.axisY = 2;
+
+            JsonPlayerInfoManager.Instance.SetOnline(false,LobbyScript.Instance.id, LobbyScript.Instance.name,
+                LobbyScript.Instance.score, LobbyScript.Instance.weaponNum,
+                LobbyScript.Instance.equipmentNum, LobbyScript.Instance.axisX,
+                LobbyScript.Instance.axisY);
         }
         else
         {

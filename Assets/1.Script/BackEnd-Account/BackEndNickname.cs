@@ -41,6 +41,7 @@ public class BackEndNickname : MonoBehaviour
         if (BRO.IsSuccess())
         {
             Debug.Log("닉네임 생성 완료");
+
             return true;
         }
         else// 실패했을경우

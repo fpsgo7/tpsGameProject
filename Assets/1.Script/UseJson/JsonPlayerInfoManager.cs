@@ -110,9 +110,10 @@ public class JsonPlayerInfoManager : MonoBehaviour
     }
 
     //온라인으로 상태값으로 변경하고 받아온값 가져오기
-    public void SetOnline(string id,string name,int score, int weaponNum, int equipmentNum, float axisX, float axisY)
+    public void SetOnline(bool onlineStatus,string id,string name,int score, int weaponNum, 
+        int equipmentNum, float axisX, float axisY)
     {
-        onlineStatus = true;
+        this.onlineStatus = onlineStatus;
         player = new Player(id , name , score, weaponNum, equipmentNum, axisX, axisY);
     }
 }

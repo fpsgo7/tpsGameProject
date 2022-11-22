@@ -18,6 +18,12 @@ public class LobbyScript : MonoBehaviour
         }
     }
 
+    [HideInInspector] public BackEndAuthentication backEndAuthentication;
+    [HideInInspector] public BackEndGetUserInfo backEndGetUserInfo;
+    [HideInInspector] public BackEndNickname backEndNickname;
+    [HideInInspector] public BackEndOut backEndOut;
+    [HideInInspector] public BackEndPlayerInfo backEndPlayerInfo;
+
     public Dropdown dropdown;
     public static int chooseWeapon;
     public GameObject titleText;
@@ -26,7 +32,13 @@ public class LobbyScript : MonoBehaviour
     public GameObject JoinPanel;
     public GameObject logoutButton;
     public GameObject GoLoginPanelButton;
+    //닉네임 입력 필드
     public InputField nameInputField;
+    //아이디 비번 입력 필드
+    public InputField LoginIdInput;
+    public InputField LoginPwInput;
+    public InputField SignIdInput;
+    public InputField SignPwInput;
 
     private const string titleName = "TPS Project";
     private const string welcomeName = " 님 환영합니다.";
@@ -37,6 +49,15 @@ public class LobbyScript : MonoBehaviour
     public int equipmentNum;
     public float axisX;
     public float axisY;
+
+    private void Start()
+    {
+        backEndAuthentication = GetComponent<BackEndAuthentication>();
+        backEndGetUserInfo = GetComponent<BackEndGetUserInfo>();
+        backEndNickname = GetComponent<BackEndNickname>();
+        backEndOut = GetComponent<BackEndOut>();
+        backEndPlayerInfo = GetComponent<BackEndPlayerInfo>();
+    }
     public void GameStart()
     {
         chooseWeapon = dropdown.value;
@@ -80,6 +101,34 @@ public class LobbyScript : MonoBehaviour
         {
             LoginPanel.SetActive(false);
             JoinPanel.SetActive(true);
+        }
+    }
+
+    public void Login()
+    {
+        backEndAuthentication.Login(LoginIdInput.text,LoginPwInput.text);
+    }
+
+    public void Sign()
+    {
+        backEndAuthentication.Sign(SignIdInput.text, SignPwInput.text);
+    }
+
+    public void LogOut()
+    {
+        backEndOut.LogOut();
+    }
+
+    public void SetName()
+    {
+        if(name == string.Empty)
+        {
+            Debug.Log("이름이 없습니다.");
+            //backEndNickname.CreateName();
+        }
+        else
+        {
+
         }
     }
 }

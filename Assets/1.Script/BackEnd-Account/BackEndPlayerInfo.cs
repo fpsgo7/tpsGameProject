@@ -6,13 +6,6 @@ using System;
 
 public class BackEndPlayerInfo : MonoBehaviour
 {
-    public string id;
-    public string name;
-    public int score;
-    public int weaponNum;
-    public int equipmentNum;
-    public float axisX;
-    public float axisY;
     public void GetPlayerInfo(string id)
     {
         Where where = new Where();
@@ -31,14 +24,19 @@ public class BackEndPlayerInfo : MonoBehaviour
             Debug.Log("성공"+bro);
         }
 
-        id = bro.FlattenRows()[0]["id"].ToString();
-        name = bro.FlattenRows()[0]["name"].ToString();
-        score = Convert.ToInt32( bro.FlattenRows()[0]["score"].ToString());
-        weaponNum = Convert.ToInt32( bro.FlattenRows()[0]["weaponNum"].ToString());
-        equipmentNum  = Convert.ToInt32(bro.FlattenRows()[0]["equipmentNum"].ToString());
-        axisX = float.Parse(bro.FlattenRows()[0]["axisX"].ToString());
-        axisY = float.Parse(bro.FlattenRows()[0]["axisY"].ToString()); 
-        JsonPlayerInfoManager.Instance.SetOnline(id, name, score, weaponNum, equipmentNum, axisX, axisY);
+        LobbyScript.Instance.id = bro.FlattenRows()[0]["id"].ToString();
+        LobbyScript.Instance.name = bro.FlattenRows()[0]["name"].ToString();
+        LobbyScript.Instance.score = Convert.ToInt32(bro.FlattenRows()[0]["score"].ToString());
+        LobbyScript.Instance.weaponNum = Convert.ToInt32(bro.FlattenRows()[0]["weaponNum"].ToString());
+        LobbyScript.Instance.equipmentNum = Convert.ToInt32(bro.FlattenRows()[0]["equipmentNum"].ToString());
+        LobbyScript.Instance.axisX = float.Parse(bro.FlattenRows()[0]["axisX"].ToString());
+        LobbyScript.Instance.axisY = float.Parse(bro.FlattenRows()[0]["axisY"].ToString());
+       
+
+        JsonPlayerInfoManager.Instance.SetOnline(true,LobbyScript.Instance.id, LobbyScript.Instance.name,
+            LobbyScript.Instance.score, LobbyScript.Instance.weaponNum,
+            LobbyScript.Instance.equipmentNum, LobbyScript.Instance.axisX,
+            LobbyScript.Instance.axisY);
     }
     // Insert 는 '생성' 작업에 주로 사용된다. 
     public void InsertPlayerInfoData(string id)
@@ -79,5 +77,10 @@ public class BackEndPlayerInfo : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public void SetNickName()
+    {
+
     }
 }
