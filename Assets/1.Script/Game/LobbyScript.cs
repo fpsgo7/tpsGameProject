@@ -32,6 +32,7 @@ public class LobbyScript : MonoBehaviour
     public GameObject JoinPanel;
     public GameObject logoutButton;
     public GameObject GoLoginPanelButton;
+    public Text SetNickNameResultText;
     //닉네임 입력 필드
     public InputField nameInputField;
     //아이디 비번 입력 필드
@@ -42,6 +43,8 @@ public class LobbyScript : MonoBehaviour
 
     private const string titleName = "TPS Project";
     private const string welcomeName = " 님 환영합니다.";
+    private const string setNickNameFaild = "Faild";
+    private const string setNickNameSuccess = "Success";
     public string name ="Guest";
     public string id;
     public int score;
@@ -124,11 +127,27 @@ public class LobbyScript : MonoBehaviour
         if(name == string.Empty)
         {
             Debug.Log("이름이 없습니다.");
-            //backEndNickname.CreateName();
+            if (backEndNickname.CreateName(nameInputField.text))
+            {
+                SetNickNameResultText.text = setNickNameSuccess;
+                backEndPlayerInfo.SetNickName(id, nameInputField.text);
+            }
+            else
+            {
+                SetNickNameResultText.text = setNickNameFaild;
+            }
         }
         else
         {
-
+            if (backEndNickname.UpdateName(nameInputField.text))
+            {
+                SetNickNameResultText.text = setNickNameSuccess;
+                backEndPlayerInfo.SetNickName(id, nameInputField.text);
+            }
+            else
+            {
+                SetNickNameResultText.text = setNickNameFaild;
+            }
         }
     }
 }

@@ -79,8 +79,25 @@ public class BackEndPlayerInfo : MonoBehaviour
         }
     }
 
-    public void SetNickName()
+    public void SetNickName(string id, string name)
     {
+        Where where = new Where();
+        where.Equal("id",id);
 
+        Param param = new Param();
+        param.Add("name", name);
+
+        var bro = Backend.GameData.Update("PlayerInfo", where, param);
+      
+        if (bro.IsSuccess() == false)
+        {
+            // 요청 실패 처리
+            Debug.Log("실패"+bro);
+            return;
+        }
+        else
+        {
+            Debug.Log("성공"+bro);
+        }
     }
 }
