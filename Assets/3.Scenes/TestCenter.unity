@@ -7324,6 +7324,7 @@ MonoBehaviour:
   inventory: {fileID: 8676247794830196611}
   playerShooter: {fileID: 8676247794830196605}
   score: 0
+  onlineStatus: 0
 --- !u!4 &846757619
 Transform:
   m_ObjectHideFlags: 0
@@ -38238,7 +38239,7 @@ PrefabInstance:
     - target: {fileID: 8534371506201116277, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0076069045
+      value: -0.007606904
       objectReference: {fileID: 0}
     - target: {fileID: 8534371506201116277, guid: 0991a0e5a5212fd489014e1b4be75759,
         type: 3}

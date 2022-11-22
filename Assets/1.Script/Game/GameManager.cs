@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     private int enemyCount;
 
     public bool isGameover { get; private set; }
+    public bool onlineStatus = false;
 
     private void Awake()
     {
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         JsonPlayerInfoManager.Instance.LoadPlayer();
+        onlineStatus = JsonPlayerInfoManager.Instance.onlineStatus;
     }
     
     public void AddScore(int newScore)

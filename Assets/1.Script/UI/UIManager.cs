@@ -202,6 +202,10 @@ public class UIManager : MonoBehaviour
         x = XAxisSlider.value;
         playerShooter.AxisChangeX(x);
         XAxisText.text = x+"";
+        if (GameManager.Instance.onlineStatus)
+        {
+            BackEndPlayerInfo.SetAxisXToServer(JsonPlayerInfoManager.Instance.GetId(), x);
+        }
     }
     public void AxisChangeY()
     {
@@ -209,6 +213,10 @@ public class UIManager : MonoBehaviour
         y = YAxisSlider.value;
         playerShooter.AxisChangeY(y);
         YAxisText.text = y + "";
+        if (GameManager.Instance.onlineStatus)
+        {
+            BackEndPlayerInfo.SetAxisYToServer(JsonPlayerInfoManager.Instance.GetId(), y);
+        }
     }
     //게임 시작할때 조준감도 UI 에 적용하여 보여주기
     public void SetAxisUI(float x, float y)

@@ -101,4 +101,46 @@ public static class BackEndPlayerInfo
         }
     }
 
+    public static void SetAxisXToServer(string id, float axisX)
+    {
+        Where where = new Where();
+        where.Equal("id", id);
+
+        Param param = new Param();
+        param.Add("axisX", axisX);
+
+        var bro = Backend.GameData.Update("PlayerInfo", where, param);
+
+        if (bro.IsSuccess() == false)
+        {
+            // 요청 실패 처리
+            Debug.Log("실패" + bro);
+            return;
+        }
+        else
+        {
+            Debug.Log("성공" + bro);
+        }
+    }
+    public static void SetAxisYToServer(string id, float axisY)
+    {
+        Where where = new Where();
+        where.Equal("id", id);
+
+        Param param = new Param();
+        param.Add("axisY", axisY);
+
+        var bro = Backend.GameData.Update("PlayerInfo", where, param);
+
+        if (bro.IsSuccess() == false)
+        {
+            // 요청 실패 처리
+            Debug.Log("실패" + bro);
+            return;
+        }
+        else
+        {
+            Debug.Log("성공" + bro);
+        }
+    }
 }

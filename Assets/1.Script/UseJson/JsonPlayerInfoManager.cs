@@ -116,4 +116,9 @@ public class JsonPlayerInfoManager : MonoBehaviour
         this.onlineStatus = onlineStatus;
         player = new Player(id , name , score, weaponNum, equipmentNum, axisX, axisY);
     }
+
+    public string GetId()
+    {
+        return player.id;
+    }
 }
