@@ -33,7 +33,7 @@ public static class BackEndPlayerInfo
         LobbyScript.Instance.axisY = float.Parse(bro.FlattenRows()[0]["axisY"].ToString());
        
 
-        JsonPlayerInfoManager.Instance.SetOnline(true,LobbyScript.Instance.id, LobbyScript.Instance.name,
+        PlayerInfoManager.Instance.SetOnline(true,LobbyScript.Instance.id, LobbyScript.Instance.name,
             LobbyScript.Instance.score, LobbyScript.Instance.weaponNum,
             LobbyScript.Instance.equipmentNum, LobbyScript.Instance.axisX,
             LobbyScript.Instance.axisY);
@@ -129,6 +129,27 @@ public static class BackEndPlayerInfo
 
         Param param = new Param();
         param.Add("axisY", axisY);
+
+        var bro = Backend.GameData.Update("PlayerInfo", where, param);
+
+        if (bro.IsSuccess() == false)
+        {
+            // 요청 실패 처리
+            Debug.Log("실패" + bro);
+            return;
+        }
+        else
+        {
+            Debug.Log("성공" + bro);
+        }
+    }
+    public static void SetScoreToServer(string id, int score)
+    {
+        Where where = new Where();
+        where.Equal("id", id);
+
+        Param param = new Param();
+        param.Add("score", score);
 
         var bro = Backend.GameData.Update("PlayerInfo", where, param);
 

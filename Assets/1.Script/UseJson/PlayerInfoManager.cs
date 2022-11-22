@@ -29,15 +29,15 @@ class Player
         this.axisY = axisY;
     }
 }
-public class JsonPlayerInfoManager : MonoBehaviour
+public class PlayerInfoManager : MonoBehaviour
 {
-    private static JsonPlayerInfoManager instance;
+    private static PlayerInfoManager instance;
 
-    public static JsonPlayerInfoManager Instance
+    public static PlayerInfoManager Instance
     {
         get
         {
-            if (instance == null) instance = FindObjectOfType<JsonPlayerInfoManager>();
+            if (instance == null) instance = FindObjectOfType<PlayerInfoManager>();
 
             return instance;
         }
@@ -57,9 +57,16 @@ public class JsonPlayerInfoManager : MonoBehaviour
     {
 
         player.score = score;
-        string jdata = JsonUtility.ToJson(player);
-        File.WriteAllText(filePath,jdata);//해당 파일에 입력된다.
-        Debug.Log("json 파일에 점수가 저장됩니다.");
+        if (onlineStatus)
+        {
+            BackEndPlayerInfo.SetScoreToServer(player.id, score);
+        }
+        else
+        {
+            string jdata = JsonUtility.ToJson(player);
+            File.WriteAllText(filePath, jdata);//해당 파일에 입력된다.
+            Debug.Log("json 파일에 점수가 저장됩니다.");
+        }
     }
 
     public void ChangePlayerWeapon(int weaponNum)
@@ -78,7 +85,7 @@ public class JsonPlayerInfoManager : MonoBehaviour
 
     public void LoadPlayer()
     {
-        if(onlineStatus == true)
+        if(onlineStatus)
         {
             GameManager.Instance.score = player.score;
             UIManager.Instance.UpdateScoreText(player.score);

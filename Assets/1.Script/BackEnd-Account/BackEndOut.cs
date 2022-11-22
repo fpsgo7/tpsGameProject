@@ -23,7 +23,7 @@ public class BackEndOut : MonoBehaviour
             LobbyScript.Instance.axisX = 200;
             LobbyScript.Instance.axisY = 2;
 
-            JsonPlayerInfoManager.Instance.SetOnline(false,LobbyScript.Instance.id, LobbyScript.Instance.name,
+            PlayerInfoManager.Instance.SetOnline(false,LobbyScript.Instance.id, LobbyScript.Instance.name,
                 LobbyScript.Instance.score, LobbyScript.Instance.weaponNum,
                 LobbyScript.Instance.equipmentNum, LobbyScript.Instance.axisX,
                 LobbyScript.Instance.axisY);

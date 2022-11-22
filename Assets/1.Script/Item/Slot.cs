@@ -118,7 +118,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
             if (itemType == ItemType.Weapon)
             {
                 inventory.ClearWeaponSlotColor();//전체색깔 초기화
-                JsonPlayerInfoManager.Instance.ChangePlayerWeapon(num);
+                PlayerInfoManager.Instance.ChangePlayerWeapon(num);
 
                 //무기 교체및 대미지 변환
                 if (weaponType == WeaponType.RifleGun)
@@ -131,7 +131,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
             if (itemType == ItemType.Equipment)
             {
                 inventory.ClearEquipmentSlotColor();//전체색깔 초기화
-                JsonPlayerInfoManager.Instance.ChangePlayerEquipment(num);
+                PlayerInfoManager.Instance.ChangePlayerEquipment(num);
 
                 //장비에 따른 체력 변화
                 playerHealth.EqipmentWear(shield);

@@ -43,6 +43,8 @@ public class UIManager : MonoBehaviour
 
     public bool menuUIOpen = false;
     public PlayerShooter playerShooter;
+    private float AxisX;
+    private float AxisY;
 
     public void Start()
     {
@@ -149,6 +151,7 @@ public class UIManager : MonoBehaviour
             MenuUI.SetActive(false);
             Cursor.visible = false;
             playerShooter.AxisMenuOffChange();
+            SettingByMenu();
             Cursor.lockState = CursorLockMode.Locked;
         }
             
@@ -198,24 +201,29 @@ public class UIManager : MonoBehaviour
     //조준감도 조절 
     public void AxisChangeX()
     {
-        float x;
-        x = XAxisSlider.value;
-        playerShooter.AxisChangeX(x);
-        XAxisText.text = x+"";
-        if (GameManager.Instance.onlineStatus)
-        {
-            BackEndPlayerInfo.SetAxisXToServer(JsonPlayerInfoManager.Instance.GetId(), x);
-        }
+        AxisX = XAxisSlider.value;
+        XAxisText.text = AxisX + "";
     }
+    
     public void AxisChangeY()
     {
-        float y;
-        y = YAxisSlider.value;
-        playerShooter.AxisChangeY(y);
-        YAxisText.text = y + "";
+        AxisY = YAxisSlider.value;
+        YAxisText.text = AxisY + "";
+    }
+    //메뉴를 닫으면 메뉴에 설정된 값이 적용됨
+    public void SettingByMenu()
+    {
+        playerShooter.AxisChangeX(AxisX);
+        playerShooter.AxisChangeY(AxisY);
         if (GameManager.Instance.onlineStatus)
         {
-            BackEndPlayerInfo.SetAxisYToServer(JsonPlayerInfoManager.Instance.GetId(), y);
+            BackEndPlayerInfo.SetAxisXToServer(PlayerInfoManager.Instance.GetId(), AxisX);
+            BackEndPlayerInfo.SetAxisYToServer(PlayerInfoManager.Instance.GetId(), AxisY);
+        }
+        else
+        {
+            PlayerInfoManager.Instance.SetXaxis(AxisX);
+            PlayerInfoManager.Instance.SetYaxis(AxisY);
         }
     }
     //게임 시작할때 조준감도 UI 에 적용하여 보여주기

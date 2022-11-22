@@ -355,12 +355,10 @@ public class PlayerShooter : MonoBehaviour
     public void AxisChangeX(float x )//설정 마우스 감도 조절용
     {
         currentXAxis = x;
-        JsonPlayerInfoManager.Instance.SetXaxis(x);
     }
     public void AxisChangeY(float y)//설정 마우스 감도 조절용
     {
         currentYAxis = y;
-        JsonPlayerInfoManager.Instance.SetYaxis(y);
     }
     public void AxisMenuOnChange()//메뉴 관련 마우스 감도
     {

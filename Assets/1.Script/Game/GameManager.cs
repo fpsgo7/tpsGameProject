@@ -32,8 +32,8 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        JsonPlayerInfoManager.Instance.LoadPlayer();
-        onlineStatus = JsonPlayerInfoManager.Instance.onlineStatus;
+        PlayerInfoManager.Instance.LoadPlayer();
+        onlineStatus = PlayerInfoManager.Instance.onlineStatus;
     }
     
     public void AddScore(int newScore)
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
         {
             score += newScore;
             UIManager.Instance.UpdateScoreText(score);
-            JsonPlayerInfoManager.Instance.SavePlayerScore(score);
+            PlayerInfoManager.Instance.SavePlayerScore(score);
         }
     }
     
