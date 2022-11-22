@@ -72,15 +72,30 @@ public class PlayerInfoManager : MonoBehaviour
     public void ChangePlayerWeapon(int weaponNum)
     {
         player.weaponNum = weaponNum;
-        string jdata = JsonUtility.ToJson(player);
-        File.WriteAllText(filePath, jdata);
+        if (onlineStatus)
+        {
+            BackEndPlayerInfo.SetPlayerWeaponToServer(player.id, weaponNum);
+        }
+        else
+        {
+            string jdata = JsonUtility.ToJson(player);
+            File.WriteAllText(filePath, jdata);
+        }
+        
     }
 
     public void ChangePlayerEquipment(int equipmentNum)
     {
         player.equipmentNum = equipmentNum;
-        string jdata = JsonUtility.ToJson(player);
-        File.WriteAllText(filePath, jdata);
+        if (onlineStatus)
+        {
+            BackEndPlayerInfo.SetPlayerEquipmentToServer(player.id, equipmentNum);
+        }
+        else
+        {
+            string jdata = JsonUtility.ToJson(player);
+            File.WriteAllText(filePath, jdata);
+        }
     }
 
     public void LoadPlayer()
@@ -106,14 +121,28 @@ public class PlayerInfoManager : MonoBehaviour
     public void SetXaxis(float x)
     {
         player.axisX = x;
-        string jdata = JsonUtility.ToJson(player);
-        File.WriteAllText(filePath, jdata);
+        if (onlineStatus)
+        {
+            BackEndPlayerInfo.SetAxisXToServer(player.id, x);
+        }
+        else
+        {
+            string jdata = JsonUtility.ToJson(player);
+            File.WriteAllText(filePath, jdata);
+        }
     }
     public void SetYaxis(float y)
     {
         player.axisY = y;
-        string jdata = JsonUtility.ToJson(player);
-        File.WriteAllText(filePath, jdata);
+        if (onlineStatus)
+        {
+            BackEndPlayerInfo.SetAxisYToServer(PlayerInfoManager.Instance.GetId(), y);
+        }
+        else
+        {
+            string jdata = JsonUtility.ToJson(player);
+            File.WriteAllText(filePath, jdata);
+        }
     }
 
     //온라인으로 상태값으로 변경하고 받아온값 가져오기

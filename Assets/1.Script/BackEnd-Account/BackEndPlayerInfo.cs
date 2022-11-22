@@ -47,6 +47,8 @@ public static class BackEndPlayerInfo
         //int 형에서 string 형으로 자동 변환 이 되지않아 문자열 형태로 교체후 사용할 것
         param.Add("id",id);
         param.Add("score",0);
+        param.Add("weaponNum", 0);
+        param.Add("equipmentNum", 0);
         param.Add("axisX",200);
         param.Add("axisY",2);
 
@@ -150,6 +152,49 @@ public static class BackEndPlayerInfo
 
         Param param = new Param();
         param.Add("score", score);
+
+        var bro = Backend.GameData.Update("PlayerInfo", where, param);
+
+        if (bro.IsSuccess() == false)
+        {
+            // 요청 실패 처리
+            Debug.Log("실패" + bro);
+            return;
+        }
+        else
+        {
+            Debug.Log("성공" + bro);
+        }
+    }
+
+    public static void SetPlayerWeaponToServer(string id, int weaponNum)
+    {
+        Where where = new Where();
+        where.Equal("id", id);
+
+        Param param = new Param();
+        param.Add("weaponNum", weaponNum);
+
+        var bro = Backend.GameData.Update("PlayerInfo", where, param);
+
+        if (bro.IsSuccess() == false)
+        {
+            // 요청 실패 처리
+            Debug.Log("실패" + bro);
+            return;
+        }
+        else
+        {
+            Debug.Log("성공" + bro);
+        }
+    }
+    public static void SetPlayerEquipmentToServer(string id, int equipmentNum)
+    {
+        Where where = new Where();
+        where.Equal("id", id);
+
+        Param param = new Param();
+        param.Add("equipmentNum", equipmentNum);
 
         var bro = Backend.GameData.Update("PlayerInfo", where, param);
 

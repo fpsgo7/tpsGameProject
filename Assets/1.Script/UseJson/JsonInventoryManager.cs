@@ -61,9 +61,9 @@ public class JsonInventoryManager : MonoBehaviour
 
     }
 
-    public void AddItemSave(string type, string name, string weaponType, string damage, string shield, bool isUsing)
+    public void AddItemSave(int num,string type, string name, string weaponType, string damage, string shield, bool isUsing)
     {
-        MyItemList.Add(new Item(MyItemList.Count+1,type,name,weaponType,damage,shield,isUsing));
+        MyItemList.Add(new Item(num,type,name,weaponType,damage,shield,isUsing));
         jdata = JsonUtility.ToJson(new Serialization<Item>(MyItemList));
         File.WriteAllText(filePath, jdata);//해당 파일에 입력된다.
     }

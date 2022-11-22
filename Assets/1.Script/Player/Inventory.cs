@@ -13,7 +13,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] public List<Item> MyItemList;// 받아온 정보를 넣을 리스트 
     private string getJdata = string.Empty;
     EquipmentItem item = new EquipmentItem();
-    int lastNum;// 아이템을 새로 획득하면 넣을 숫자의 이전값
+    int lastNum=0;// 아이템을 새로 획득하면 넣을 숫자의 이전값
 
     void Awake()
     {
@@ -37,12 +37,15 @@ public class Inventory : MonoBehaviour
             {
                 if (weaponSlots[i].itemName == string.Empty)
                 {
-                    MyItemList.Add(new Item(MyItemList.Count+1,item.itemType.ToString(), item.name, item.weaponType.ToString(),
+                    //아이템 리스트 에 넣기
+                    MyItemList.Add(new Item(++lastNum, item.itemType.ToString(), 
+                        item.name, item.weaponType.ToString(),
                         item.damage.ToString(), item.shield.ToString(), false));
+                    //json 인벤토리에 넣기
                     JsonInventoryManager.Instance.AddItemSave
-                        (item.itemType.ToString(),item.name,item.weaponType.ToString(),
+                        (lastNum,item.itemType.ToString(),item.name,item.weaponType.ToString(),
                         item.damage.ToString(),item.shield.ToString(),false);
-                    weaponSlots[i].AddItem(++lastNum, item);
+                    weaponSlots[i].AddItem(lastNum, item);
                     weaponSlots[i].gameObject.SetActive(true);
                     return true;
                 }
@@ -54,12 +57,12 @@ public class Inventory : MonoBehaviour
             {
                 if (equipmentSlots[i].itemName == string.Empty)
                 {
-                    MyItemList.Add(new Item(MyItemList.Count + 1, item.itemType.ToString(), item.name, item.weaponType.ToString(),
+                    MyItemList.Add(new Item(++lastNum, item.itemType.ToString(), item.name, item.weaponType.ToString(),
                         item.damage.ToString(), item.shield.ToString(), false));
                     JsonInventoryManager.Instance.AddItemSave
-                        (item.itemType.ToString(), item.name, item.weaponType.ToString(),
+                        (lastNum,item.itemType.ToString(), item.name, item.weaponType.ToString(),
                         item.damage.ToString(), item.shield.ToString(), false);
-                    equipmentSlots[i].AddItem(++lastNum, item);
+                    equipmentSlots[i].AddItem(lastNum, item);
                     equipmentSlots[i].gameObject.SetActive(true);
                     return true;
                 }
