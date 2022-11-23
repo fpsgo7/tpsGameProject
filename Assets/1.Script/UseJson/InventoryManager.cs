@@ -67,19 +67,33 @@ public class InventoryManager : MonoBehaviour
             MyItemList = JsonUtility.FromJson<Serialization<Item>>(jdata).target;
         }
     }
-
+    //아이템 획득
     public void AddItemSave(int num,string type, string name, string weaponType, string damage, string shield)
     {
         MyItemList.Add(new Item(num,type,name,weaponType,damage,shield));
-        jdata = JsonUtility.ToJson(new Serialization<Item>(MyItemList));
-        File.WriteAllText(filePath, jdata);//해당 파일에 입력된다.
+        if (PlayerInfoManager.Instance.onlineStatus)
+        {
+            BackEndInventory.InsertItem(num, type, name, weaponType, damage, shield);
+        }
+        else
+        {
+            jdata = JsonUtility.ToJson(new Serialization<Item>(MyItemList));
+            File.WriteAllText(filePath, jdata);//해당 파일에 입력된다.
+        }
     }
 
-    public void DeleteItemSave(string jdata)
-    {
-        File.WriteAllText(filePath,jdata);
+    public void DeleteItemSave(string jdata, int num)
+    {   
         // Inventory 의 MyItemList의 변화된 값을 여기도 적용시켜 똑같이 한다.
         this.jdata = jdata;
         MyItemList = JsonUtility.FromJson<Serialization<Item>>(jdata).target;
+        if (PlayerInfoManager.Instance.onlineStatus)
+        {
+            BackEndInventory.DeleteItem(num);
+        }
+        else
+        {
+            File.WriteAllText(filePath, jdata);
+        }
     }
 }

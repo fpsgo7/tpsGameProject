@@ -28,7 +28,7 @@ public class Inventory : MonoBehaviour
             equipmentSlots[i].gameObject.SetActive(false);
         }
     }
-
+    //아이템 획득
     public bool AcquireItem(EquipmentItem item)
     {
         if(item.itemType == EquipmentItem.ItemType.Weapon)
@@ -41,7 +41,7 @@ public class Inventory : MonoBehaviour
                     MyItemList.Add(new Item(++lastNum, item.itemType.ToString(), 
                         item.name, item.weaponType.ToString(),
                         item.damage.ToString(), item.shield.ToString()));
-                    //json 인벤토리에 넣기
+                    //json 데이터 파일 또는 서버 인벤토리에 넣기
                     InventoryManager.Instance.AddItemSave
                         (lastNum,item.itemType.ToString(),item.name,item.weaponType.ToString(),
                         item.damage.ToString(),item.shield.ToString());
@@ -169,9 +169,10 @@ public class Inventory : MonoBehaviour
                     if (MyItemList[j].num == weaponSlots[i].num)
                     {
                         Item item = MyItemList[j];
+                        int num = item.num;
                         MyItemList.Remove(item);
                         string jdata = JsonUtility.ToJson(new Serialization<Item>(MyItemList));
-                        InventoryManager.Instance.DeleteItemSave(jdata);
+                        InventoryManager.Instance.DeleteItemSave(jdata,num);
                         break;
                     }
                 }
@@ -187,9 +188,10 @@ public class Inventory : MonoBehaviour
                     if (MyItemList[j].num == equipmentSlots[i].num)
                     {
                         Item item = MyItemList[j];
+                        int num = item.num;
                         MyItemList.Remove(item);
                         string jdata = JsonUtility.ToJson(new Serialization<Item>(MyItemList));
-                        InventoryManager.Instance.DeleteItemSave(jdata);
+                        InventoryManager.Instance.DeleteItemSave(jdata,num);
                         break;
                     }
                 }
