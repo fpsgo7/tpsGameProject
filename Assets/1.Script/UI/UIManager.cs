@@ -196,6 +196,11 @@ public class UIManager : MonoBehaviour
     //로비로 돌아가기
     public void OnExitClick()
     {
+        if (PlayerInfoManager.Instance.onlineStatus)
+        {
+            BackEndInventory.InventoryItemList.Clear();// 로그아웃 을했기 때문에 리스트를 초기화 시켜준다.
+            BackEndAuthentication.LogOut();// 로그아웃
+        }
         SceneManager.LoadScene("Lobby");
     }
     //조준감도 조절 

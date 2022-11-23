@@ -21,7 +21,6 @@ public class LobbyScript : MonoBehaviour
     [HideInInspector] public BackEndAuthentication backEndAuthentication;
     [HideInInspector] public BackEndGetUserInfo backEndGetUserInfo;
     [HideInInspector] public BackEndNickname backEndNickname;
-    [HideInInspector] public BackEndOut backEndOut;
 
     public Dropdown dropdown;
     public static int chooseWeapon;
@@ -57,7 +56,6 @@ public class LobbyScript : MonoBehaviour
         backEndAuthentication = GetComponent<BackEndAuthentication>();
         backEndGetUserInfo = GetComponent<BackEndGetUserInfo>();
         backEndNickname = GetComponent<BackEndNickname>();
-        backEndOut = GetComponent<BackEndOut>();
     }
     public void GameStart()
     {
@@ -122,7 +120,19 @@ public class LobbyScript : MonoBehaviour
 
     public void LogOut()
     {
-        backEndOut.LogOut();
+        BackEndAuthentication.LogOut();
+        GoLoginPanelButton.SetActive(true);
+        logoutButton.SetActive(false);
+
+        id = string.Empty;
+        name = string.Empty;
+        score = 0;
+        weaponNum = 0;
+        equipmentNum = 0;
+        axisX = 200;
+        axisY = 2;
+        PlayerInfoManager.Instance.SetOnline(false, id, name, score, weaponNum,
+                equipmentNum, axisX, axisY);
     }
 
     public void SetName()

@@ -53,4 +53,16 @@ public class BackEndAuthentication : MonoBehaviour
         }
     }
 
+    public static void LogOut()
+    {
+        BackendReturnObject BRO = Backend.BMember.Logout();
+        if (BRO.IsSuccess())
+        {
+            Debug.Log(BRO.GetMessage());
+        }
+        else
+        {
+            Debug.Log(BRO.GetMessage());
+        }
+    }
 }
