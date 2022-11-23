@@ -18,7 +18,7 @@ public class Item
     public int num;
     public string type, name, weaponType, damage, shield;
 
-    public Item(int num, string type, string name, string weaponType, string damage, string shield, bool isUsing)
+    public Item(int num, string type, string name, string weaponType, string damage, string shield)
     {
         this.num = num;
         this.type = type;
@@ -29,15 +29,15 @@ public class Item
     }
 }
 
-public class JsonInventoryManager : MonoBehaviour
+public class InventoryManager : MonoBehaviour
 {
-    private static JsonInventoryManager instance;
+    private static InventoryManager instance;
 
-    public static JsonInventoryManager Instance
+    public static InventoryManager Instance
     {
         get
         {
-            if (instance == null) instance = FindObjectOfType<JsonInventoryManager>();
+            if (instance == null) instance = FindObjectOfType<InventoryManager>();
 
             return instance;
         }
@@ -55,15 +55,22 @@ public class JsonInventoryManager : MonoBehaviour
 
     public void Load()
     {
-        if (!File.Exists(filePath)) { return; }
-        jdata = File.ReadAllText(filePath);
-        MyItemList = JsonUtility.FromJson<Serialization<Item>>(jdata).target;
-
+        if (PlayerInfoManager.Instance.onlineStatus)
+        {
+            Debug.Log("서버에서 데이터를 가져와 덮어 씌웁니다..");
+            BackEndInventory.GetPlayerInventoryInLobby();
+            MyItemList = BackEndInventory.InventoryItemList;
+        }
+        else if (File.Exists(filePath)) {
+            Debug.Log("오프라인에서 가져옵니다.");
+            jdata = File.ReadAllText(filePath);
+            MyItemList = JsonUtility.FromJson<Serialization<Item>>(jdata).target;
+        }
     }
 
-    public void AddItemSave(int num,string type, string name, string weaponType, string damage, string shield, bool isUsing)
+    public void AddItemSave(int num,string type, string name, string weaponType, string damage, string shield)
     {
-        MyItemList.Add(new Item(num,type,name,weaponType,damage,shield,isUsing));
+        MyItemList.Add(new Item(num,type,name,weaponType,damage,shield));
         jdata = JsonUtility.ToJson(new Serialization<Item>(MyItemList));
         File.WriteAllText(filePath, jdata);//해당 파일에 입력된다.
     }

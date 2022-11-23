@@ -42,8 +42,9 @@ public class BackEndAuthentication : MonoBehaviour
                 LobbyScript.Instance.OpenGameStartPanel();
                 LobbyScript.Instance.logoutButton.SetActive(true);
                 LobbyScript.Instance.GoLoginPanelButton.SetActive(false);
-                BackEndPlayerInfo.GetPlayerInfoInLobby(id);
                 LobbyScript.Instance.SetTitleText();
+                BackEndPlayerInfo.GetPlayerInfoInLobby(id);
+                InventoryManager.Instance.Load();
                 break;
             default:
                 Debug.Log("아이디 또는 비번이 틀렸습니다.");

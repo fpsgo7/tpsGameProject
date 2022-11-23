@@ -40,11 +40,11 @@ public class Inventory : MonoBehaviour
                     //아이템 리스트 에 넣기
                     MyItemList.Add(new Item(++lastNum, item.itemType.ToString(), 
                         item.name, item.weaponType.ToString(),
-                        item.damage.ToString(), item.shield.ToString(), false));
+                        item.damage.ToString(), item.shield.ToString()));
                     //json 인벤토리에 넣기
-                    JsonInventoryManager.Instance.AddItemSave
+                    InventoryManager.Instance.AddItemSave
                         (lastNum,item.itemType.ToString(),item.name,item.weaponType.ToString(),
-                        item.damage.ToString(),item.shield.ToString(),false);
+                        item.damage.ToString(),item.shield.ToString());
                     weaponSlots[i].AddItem(lastNum, item);
                     weaponSlots[i].gameObject.SetActive(true);
                     return true;
@@ -58,10 +58,10 @@ public class Inventory : MonoBehaviour
                 if (equipmentSlots[i].itemName == string.Empty)
                 {
                     MyItemList.Add(new Item(++lastNum, item.itemType.ToString(), item.name, item.weaponType.ToString(),
-                        item.damage.ToString(), item.shield.ToString(), false));
-                    JsonInventoryManager.Instance.AddItemSave
+                        item.damage.ToString(), item.shield.ToString()));
+                    InventoryManager.Instance.AddItemSave
                         (lastNum,item.itemType.ToString(), item.name, item.weaponType.ToString(),
-                        item.damage.ToString(), item.shield.ToString(), false);
+                        item.damage.ToString(), item.shield.ToString());
                     equipmentSlots[i].AddItem(lastNum, item);
                     equipmentSlots[i].gameObject.SetActive(true);
                     return true;
@@ -73,12 +73,7 @@ public class Inventory : MonoBehaviour
 
     public void StartAcquireItem()
     {
-        //json으로 얻어온 내용을 리스트 그대로 가져올 수 없어 string 형태로 
-        //받은후 다시 리스트에 넣어 사용한다.
-        getJdata = JsonInventoryManager.Instance.jdata;
-        if (getJdata == string.Empty)
-            return;
-        MyItemList = JsonUtility.FromJson<Serialization<Item>>(getJdata).target;
+        MyItemList = InventoryManager.Instance.MyItemList;
         for (int j = 0; j < MyItemList.Count; j++)
         {
             lastNum = MyItemList[j].num;
@@ -176,7 +171,7 @@ public class Inventory : MonoBehaviour
                         Item item = MyItemList[j];
                         MyItemList.Remove(item);
                         string jdata = JsonUtility.ToJson(new Serialization<Item>(MyItemList));
-                        JsonInventoryManager.Instance.DeleteItemSave(jdata);
+                        InventoryManager.Instance.DeleteItemSave(jdata);
                         break;
                     }
                 }
@@ -194,7 +189,7 @@ public class Inventory : MonoBehaviour
                         Item item = MyItemList[j];
                         MyItemList.Remove(item);
                         string jdata = JsonUtility.ToJson(new Serialization<Item>(MyItemList));
-                        JsonInventoryManager.Instance.DeleteItemSave(jdata);
+                        InventoryManager.Instance.DeleteItemSave(jdata);
                         break;
                     }
                 }

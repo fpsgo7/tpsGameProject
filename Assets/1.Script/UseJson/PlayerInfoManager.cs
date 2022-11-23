@@ -44,6 +44,10 @@ public class PlayerInfoManager : MonoBehaviour
     }
 
     Player player = new Player("player","name",0,0,0,0,0);
+    public string GetPlayerId()
+    {
+        return player.id;
+    }
     string filePath;
     public bool onlineStatus;
 
@@ -136,7 +140,7 @@ public class PlayerInfoManager : MonoBehaviour
         player.axisY = y;
         if (onlineStatus)
         {
-            BackEndPlayerInfo.SetAxisYToServer(PlayerInfoManager.Instance.GetId(), y);
+            BackEndPlayerInfo.SetAxisYToServer(player.id, y);
         }
         else
         {
@@ -153,8 +157,5 @@ public class PlayerInfoManager : MonoBehaviour
         player = new Player(id , name , score, weaponNum, equipmentNum, axisX, axisY);
     }
 
-    public string GetId()
-    {
-        return player.id;
-    }
+    
 }
