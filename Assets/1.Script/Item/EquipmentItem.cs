@@ -32,7 +32,8 @@ public class EquipmentItem : MonoBehaviour
     {
         if(itemGetSucess = inventory.AcquireItem(this))
         {
-            Destroy(gameObject);
+            Destroy(gameObject.transform.parent.transform.gameObject);
+            //Destroy(gameObject);
         }
     }
 }

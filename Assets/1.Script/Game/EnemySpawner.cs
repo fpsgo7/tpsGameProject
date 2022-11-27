@@ -20,28 +20,21 @@ public class EnemySpawner : MonoBehaviour
     //좀비 생성 결정
     public Color strongEnemyColor = Color.red;
     private int wave;//웨이브
-    public int Count;
+    public int EnemyCount;
 
     private void Start()
     {
         Spawn();
     }
-    //private void Update()
-    //{
-    //    //게임오버가 되면 진행을 막느낟.
-    //    if (GameManager.Instance != null && GameManager.Instance.isGameover) return;
-    //    //적이 다죽으면 적 스폰을 실행해준다.
-    //    //if (enemies.Count <= 0) Spawn();
-    //}
-
    
     //적 스폰에서 웨이브와 적 새
     private void Spawn()
     {
-        for (var i = 0; i < Count; i++)
+        //적들을 생성합니다.
+        for (var i = 0; i < EnemyCount; i++)
         {
             var enemyIntensity = Random.Range(0, 3);
-            GameManager.Instance.EnemyMake();
+            EnemyManager.Instance.EnemyMake();
             CreateEnemy(enemyIntensity);
         }
     }
@@ -59,7 +52,7 @@ public class EnemySpawner : MonoBehaviour
         enemies.Add(enemy);
 
         enemy.GetComponent<LivingEntity>().OnDeath += () => enemies.Remove(enemy);// 사망한 대상은 리스트에서 제외한다.
-        enemy.GetComponent<LivingEntity>().OnDeath += () => GameManager.Instance.EnemyDie();
+        enemy.GetComponent<LivingEntity>().OnDeath += () => EnemyManager.Instance.EnemyDie();
         enemy.GetComponent<LivingEntity>().OnDeath += () => Destroy(enemy.gameObject, 3f);
         enemy.GetComponent<LivingEntity>().OnDeath += () => enemy.GetComponent<ItemSpawn>().Spawn();
         enemy.GetComponent<LivingEntity>().OnDeath += () => GameManager.Instance.AddScore(100);

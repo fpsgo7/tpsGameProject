@@ -89,6 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000013943713070}
   - component: {fileID: 205000010707581854}
+  - component: {fileID: 2039585915847930479}
   m_Layer: 0
   m_Name: chainlink_group-3
   m_TagString: Untagged
@@ -135,6 +136,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 23000011143123040}
   m_Enabled: 1
+--- !u!65 &2039585915847930479
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000012579619758}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.8015604, y: 2.6561456, z: 0.11664724}
+  m_Center: {x: -0.033030033, y: 0.8280728, z: 0.0068342686}
 --- !u!1 &1000013051442408
 GameObject:
   m_ObjectHideFlags: 0

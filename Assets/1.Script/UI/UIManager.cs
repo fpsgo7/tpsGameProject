@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject WeaponPanel;
     [SerializeField] private GameObject EquipmentPanel;
     [SerializeField] private GameObject EquipmentChangeButton;
+    [SerializeField] private GameObject itemBoxOpenText;
     [SerializeField] private Crosshair crosshair;
     [SerializeField] private Slider healthSlider;
     [SerializeField] private Slider XAxisSlider;
@@ -230,5 +231,15 @@ public class UIManager : MonoBehaviour
         XAxisText.text = x+"";
         YAxisSlider.value = y;
         YAxisText.text = y + "";
+    }
+
+    //아이템 박스 오픈 텍스트 활성화 및 비활성화
+    public void OnItemBoxText()
+    {
+        itemBoxOpenText.SetActive(true);
+    }
+    public void OffItemBoxText()
+    {
+        itemBoxOpenText.SetActive(false);
     }
 }

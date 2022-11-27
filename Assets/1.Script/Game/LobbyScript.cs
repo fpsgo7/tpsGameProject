@@ -61,7 +61,8 @@ public class LobbyScript : MonoBehaviour
     {
         chooseWeapon = dropdown.value;
         Debug.Log("게임이 시작됩니다."+chooseWeapon);
-        SceneManager.LoadScene("TestCenter");
+        //SceneManager.LoadScene("TestCenter");
+        SceneManager.LoadScene("MainGame");
     }
 
     public void OpenGameStartPanel()

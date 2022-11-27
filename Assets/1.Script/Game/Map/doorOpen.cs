@@ -19,7 +19,7 @@ public class doorOpen : MonoBehaviour
         {
             Debug.Log(" 문열기 시작");
             StartCoroutine(DoorOpening());
-            GameManager.Instance.NextMap();
+           
         }
     }
 

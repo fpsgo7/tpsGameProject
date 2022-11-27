@@ -53,6 +53,7 @@ public class PlayerInfoManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != this) Destroy(gameObject);
         DontDestroyOnLoad(this.gameObject);
         filePath = Application.persistentDataPath+"/PlayerInfo.txt";
     }

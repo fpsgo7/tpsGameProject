@@ -14,14 +14,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public GameObject firstMap;
-    public GameObject firstDoor;
-    public GameObject SecondMap;
     public Inventory inventory;
     public PlayerShooter playerShooter;
 
     public int score;
-    private int enemyCount;
+
 
     public bool isGameover { get; private set; }
     public bool onlineStatus = false;
@@ -50,28 +47,6 @@ public class GameManager : MonoBehaviour
     {
         isGameover = true;
         UIManager.Instance.SetActiveGameoverUI(true);
-    }
-    //애너미 생성과 죽음 수 관리 
-    public void EnemyMake()
-    {
-        enemyCount += 1;
-        UIManager.Instance.UpdateEnemyText(enemyCount);
-    }
-
-    public void EnemyDie()
-    {
-        enemyCount -= 1;
-        UIManager.Instance.UpdateEnemyText(enemyCount);
-        if(enemyCount == 0 && firstMap.activeSelf== true)
-        {
-            firstDoor.GetComponent<doorOpen>().doorRock = false;
-        }
-    }
-    //다음맵 이동
-    public void NextMap()
-    {
-        if (firstMap.activeSelf == true)
-            SecondMap.SetActive(true);
     }
 
     //게임 시작하면 아이템 장착 

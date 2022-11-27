@@ -4019,7 +4019,6 @@ GameObject:
   - component: {fileID: 1574782605}
   - component: {fileID: 1574782607}
   - component: {fileID: 1574782608}
-  - component: {fileID: 1574782609}
   - component: {fileID: 1574782610}
   - component: {fileID: 1574782611}
   m_Layer: 0
@@ -4070,7 +4069,6 @@ MonoBehaviour:
   backEndAuthentication: {fileID: 0}
   backEndGetUserInfo: {fileID: 0}
   backEndNickname: {fileID: 0}
-  backEndOut: {fileID: 0}
   dropdown: {fileID: 1867772659}
   titleText: {fileID: 5506513316761389519}
   GameStartPanel: {fileID: 8525440397513123127}
@@ -4101,18 +4099,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 34309cb80dc0f3b44aee29cdf0e8c42b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1574782609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1574782604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b08acb9211509d4ea76e61f8b2e5962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1574782610
