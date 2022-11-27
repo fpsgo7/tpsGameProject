@@ -9,6 +9,7 @@ TagManager:
   - SHOTGUN
   - Slot
   - ItemBox
+  - ExplosionWall
   layers:
   - Default
   - TransparentFX

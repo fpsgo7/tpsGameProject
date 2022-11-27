@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject EquipmentPanel;
     [SerializeField] private GameObject EquipmentChangeButton;
     [SerializeField] private GameObject itemBoxOpenText;
+    [SerializeField] private GameObject explosionWallText;
     [SerializeField] private Crosshair crosshair;
     [SerializeField] private Slider healthSlider;
     [SerializeField] private Slider XAxisSlider;
@@ -241,5 +242,14 @@ public class UIManager : MonoBehaviour
     public void OffItemBoxText()
     {
         itemBoxOpenText.SetActive(false);
+    }
+    //폭탄으로 벽 부시기 
+    public void OnExplosionWallText()
+    {
+        explosionWallText.SetActive(true);
+    }
+    public void OffExplosionWallText()
+    {
+        explosionWallText.SetActive(false);
     }
 }
