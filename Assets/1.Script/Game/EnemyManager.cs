@@ -21,6 +21,14 @@ public class EnemyManager : MonoBehaviour
     public GameObject enemySpawnerBridgeLeftMap;
     public GameObject enemySpawnerBridgeRightMap;
     public GameObject enemySpawnerLastMap;
+    public GameObject RightFence1;
+    public GameObject RightFence2;
+    public GameObject RightEndFence1;
+    public GameObject RightEndFence2;
+    public GameObject LeftFence1;
+    public GameObject LeftFence2;
+    private readonly int fenceLeftMove = Animator.StringToHash("LeftOpen");
+    private readonly int fenceRightMove = Animator.StringToHash("RightOpen");
     private const string firstMap = "FirstMap";
     private const string bridgeLeftMap = "BridgeLeftMap";
     private const string bridgeRightMap = "BridgeRightMap";
@@ -30,7 +38,6 @@ public class EnemyManager : MonoBehaviour
     private bool bridgeRightKey;// 다음 단계를 가기위한 통곡의 다리
     private bool lastMaplKey;
     private bool mapIn;// 해당 던전안에 있는지 체크
-
     private int enemyCount;
 
 
@@ -65,6 +72,8 @@ public class EnemyManager : MonoBehaviour
     {
         if (mapIn == false && bridgeLeftKey == true)
         {
+            LeftFence1.GetComponent<Animator>().SetTrigger(fenceLeftMove);
+            LeftFence2.GetComponent<Animator>().SetTrigger(fenceRightMove);
             enemySpawnerBridgeLeftMap.SetActive(true);
             mapIn = true;
             this.mapName = mapName;
@@ -75,6 +84,8 @@ public class EnemyManager : MonoBehaviour
     {
         if (mapIn == false && bridgeRightKey == true)
         {
+            RightFence1.GetComponent<Animator>().SetTrigger(fenceLeftMove);
+            RightFence2.GetComponent<Animator>().SetTrigger(fenceRightMove);
             enemySpawnerBridgeRightMap.SetActive(true);
             mapIn = true;
             this.mapName = mapName;
@@ -106,6 +117,8 @@ public class EnemyManager : MonoBehaviour
         else if( mapName == bridgeRightMap)
         {
             lastMaplKey = true;
+            RightEndFence1.GetComponent<Animator>().SetTrigger(fenceLeftMove);
+            RightEndFence2.GetComponent<Animator>().SetTrigger(fenceRightMove);
         }
         else if(mapName == lastMap)
         {
