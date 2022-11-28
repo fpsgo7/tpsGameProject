@@ -30,7 +30,7 @@ public class PlayerInput : MonoBehaviour
     public bool jump { get; private set; }
     public bool restoreHealth { get; private set; }
     public bool scopeZoomIn { get; private set; }
-    public bool Interaction { get; private set; }
+    public bool interaction { get; private set; }
 
     private void Awake()
     {
@@ -69,6 +69,7 @@ public class PlayerInput : MonoBehaviour
             reload = false;
             jump = false;
             Grenade = false;
+            interaction = false;
             return;
         }
         // 점프중인 경우
@@ -78,6 +79,8 @@ public class PlayerInput : MonoBehaviour
             zoomIn = false;
             reload = false;
             jump = false;
+            Grenade = false;
+            interaction = false;
             return;
         }
 
@@ -91,6 +94,7 @@ public class PlayerInput : MonoBehaviour
         Grenade = Input.GetButtonDown(FireGrenadeButtonName);
         zoomIn = Input.GetButton(zoomInButtonName);
         reload = Input.GetButtonDown(reloadButtonName);
+        interaction = Input.GetButtonDown(InteractionButtonName);
         //스코프 조작
         scopeZoomIn = Input.GetButton(scopeZoomInButtonName);
 

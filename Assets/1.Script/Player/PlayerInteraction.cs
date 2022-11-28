@@ -9,12 +9,17 @@ public class PlayerInteraction : MonoBehaviour
 
     private RaycastHit hitInfo; // 충돌체 정보 저장
     private WaitForSeconds wfs = new WaitForSeconds(2f);
+    private PlayerInput playerInput;
     //아이템 레이어를 지정하여 아이템 레이어 에만 반응하도록 레이어 마스크
-
     [SerializeField] private LayerMask layerMask;//레이어 마스크로 상호작용 대상으로 선정
     [SerializeField] private GameObject GunPivot;// 플레이어의 시야 높이를 대변함
 
-    void Update()
+    private void Start()
+    {
+        playerInput = GetComponent<PlayerInput>();
+    }
+
+    private void Update()
     {
         //주의 레이케스트 발사 위치는 플레이어의 위치를 기준으로 하기 때문에 발바닥에서 발사된다 봐야한다. (수정필요)
         //닿은 대상이 범위내에 상호작용 대상일경우 true
@@ -26,7 +31,7 @@ public class PlayerInteraction : MonoBehaviour
             {
                 //상호작용 이 가능해짐
                 UIManager.Instance.OnItemBoxText();
-                if (Input.GetButtonDown("Interaction"))
+                if (playerInput.interaction)
                 {
                     //안에 들어있는 아이템을 활성화 시키고 아이템 박스의 렌더러를 비활성화 하고 트리거를 true 로 하여 플레이어가 아이템을 먹을 수 있게함
                     hitInfo.transform.GetChild(0).gameObject.SetActive(true);
@@ -39,8 +44,9 @@ public class PlayerInteraction : MonoBehaviour
             {
                 //상호작용 이 가능해짐
                 UIManager.Instance.OnExplosionWallText();
-                if (Input.GetButtonDown("Interaction"))
+                if (playerInput.interaction)
                 {
+                    hitInfo.transform.tag = "Untagged";//테그 비활성화로 상호작용 ui 가 활성화되는 것을 막음
                     hitInfo.transform.GetChild(0).gameObject.SetActive(true);// 폭탄 오브젝트 활성화
                     UIManager.Instance.OffExplosionWallText();
                     StartCoroutine(Explosion(hitInfo.transform));
