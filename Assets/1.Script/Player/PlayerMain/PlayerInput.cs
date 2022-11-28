@@ -9,14 +9,15 @@ public class PlayerInput : MonoBehaviour
     public const string fireButtonName = "Fire1";
     public const string FireGrenadeButtonName = "Grenade";//g 키
     public const string zoomInButtonName = "ZoomIn";// 우클릭
-    public const string jumpButtonName = "Jump";
+    public const string jumpButtonName = "Jump"; //  space 키
     public const string moveHorizontalAxisName = "Horizontal";
     public const string moveVerticalAxisName = "Vertical";
-    public const string reloadButtonName = "Reload";
+    public const string reloadButtonName = "Reload"; //r키
     public const string restoreHealthButtonName = "RestoreHealth";//v 키
     public const string scopeZoomInButtonName = "ScopeZoomIn";//tab 키
     private const string ESCButtonName = "Cancel";//esc 키
     private const string InventoryButtonName = "Inventory";//m 키
+    private const string InteractionButtonName = "Interaction";//e 키
 
     //실제로 입력된 값들을 저장할 프로퍼티
     //값을 읽을때는 public 형이라 밬에서 읽기 쉽지만
@@ -29,6 +30,7 @@ public class PlayerInput : MonoBehaviour
     public bool jump { get; private set; }
     public bool restoreHealth { get; private set; }
     public bool scopeZoomIn { get; private set; }
+    public bool Interaction { get; private set; }
 
     private void Awake()
     {

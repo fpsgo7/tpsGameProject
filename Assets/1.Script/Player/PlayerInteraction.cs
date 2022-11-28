@@ -8,15 +8,17 @@ public class PlayerInteraction : MonoBehaviour
     private float range;//아이템 박스 열기위한 사정거리
 
     private RaycastHit hitInfo; // 충돌체 정보 저장
+    private WaitForSeconds wfs = new WaitForSeconds(2f);
     //아이템 레이어를 지정하여 아이템 레이어 에만 반응하도록 레이어 마스크
-    [SerializeField]
-    private LayerMask layerMask;//레이어 마스크로 상호작용 대상으로 선정
+
+    [SerializeField] private LayerMask layerMask;//레이어 마스크로 상호작용 대상으로 선정
+    [SerializeField] private GameObject GunPivot;// 플레이어의 시야 높이를 대변함
 
     void Update()
     {
         //주의 레이케스트 발사 위치는 플레이어의 위치를 기준으로 하기 때문에 발바닥에서 발사된다 봐야한다. (수정필요)
         //닿은 대상이 범위내에 상호작용 대상일경우 true
-        if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward),out hitInfo,range, layerMask))
+        if(Physics.Raycast(GunPivot.transform.position, GunPivot.transform.TransformDirection(Vector3.forward),out hitInfo,range, layerMask))
         {
             Debug.Log(hitInfo.transform.gameObject.name);
             // 해당 상호작용 대상이 아이템 박스일 경우
@@ -24,7 +26,7 @@ public class PlayerInteraction : MonoBehaviour
             {
                 //상호작용 이 가능해짐
                 UIManager.Instance.OnItemBoxText();
-                if (Input.GetKeyDown(KeyCode.E))
+                if (Input.GetButtonDown("Interaction"))
                 {
                     //안에 들어있는 아이템을 활성화 시키고 아이템 박스의 렌더러를 비활성화 하고 트리거를 true 로 하여 플레이어가 아이템을 먹을 수 있게함
                     hitInfo.transform.GetChild(0).gameObject.SetActive(true);
@@ -37,11 +39,11 @@ public class PlayerInteraction : MonoBehaviour
             {
                 //상호작용 이 가능해짐
                 UIManager.Instance.OnExplosionWallText();
-                if (Input.GetKeyDown(KeyCode.E))
+                if (Input.GetButtonDown("Interaction"))
                 {
                     hitInfo.transform.GetChild(0).gameObject.SetActive(true);// 폭탄 오브젝트 활성화
                     UIManager.Instance.OffExplosionWallText();
-                    Invoke(nameof(Explosion), 2f);
+                    StartCoroutine(Explosion(hitInfo.transform));
                 }
             }
         }
@@ -53,13 +55,14 @@ public class PlayerInteraction : MonoBehaviour
         
     }
 
-    private void Explosion()
+    private IEnumerator Explosion(Transform transform)
     {
-        hitInfo.transform.GetComponent<MeshRenderer>().enabled = false;
-        hitInfo.transform.GetComponent<BoxCollider>().isTrigger = true;
-        hitInfo.transform.GetChild(0).gameObject.SetActive(false);
-        hitInfo.transform.GetChild(1).gameObject.SetActive(true);
-        EffectManager.Instance.ExplosionEffect(hitInfo.transform);
-        Destroy(hitInfo.transform.gameObject,5f);
+        yield return wfs;
+        transform.GetComponent<MeshRenderer>().enabled = false;
+        transform.GetComponent<BoxCollider>().isTrigger = true;
+        transform.GetChild(0).gameObject.SetActive(false);
+        transform.GetChild(1).gameObject.SetActive(true);
+        EffectManager.Instance.ExplosionEffect(transform);
+        Destroy(transform.gameObject,5f);
     }
 }

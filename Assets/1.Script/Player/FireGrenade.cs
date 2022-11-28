@@ -20,6 +20,7 @@ public class FireGrenade : MonoBehaviour
     {
         grenadeAmmo = 10;
     }
+    //발사 명령은 PlayerInput 에서 입력을 받아 PlayerShooter에서 실행된다.
     public void Fire()
     {
         //수류탄 발사 딜레이와 발사 조건
