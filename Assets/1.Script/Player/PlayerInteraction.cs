@@ -40,8 +40,8 @@ public class PlayerInteraction : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     hitInfo.transform.GetChild(0).gameObject.SetActive(true);// 폭탄 오브젝트 활성화
-                    Invoke(nameof(Explosion), 2f);
                     UIManager.Instance.OffExplosionWallText();
+                    Invoke(nameof(Explosion), 2f);
                 }
             }
         }
@@ -58,7 +58,8 @@ public class PlayerInteraction : MonoBehaviour
         hitInfo.transform.GetComponent<MeshRenderer>().enabled = false;
         hitInfo.transform.GetComponent<BoxCollider>().isTrigger = true;
         hitInfo.transform.GetChild(0).gameObject.SetActive(false);
-        EffectManager.Instance.ExplosionEffect(this.transform);
         hitInfo.transform.GetChild(1).gameObject.SetActive(true);
+        EffectManager.Instance.ExplosionEffect(hitInfo.transform);
+        Destroy(hitInfo.transform.gameObject,5f);
     }
 }
