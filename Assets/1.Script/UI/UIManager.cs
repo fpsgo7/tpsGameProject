@@ -27,6 +27,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject EquipmentChangeButton;
     [SerializeField] private GameObject itemBoxOpenText;
     [SerializeField] private GameObject explosionWallText;
+    [SerializeField] private GameObject DamageTextParents;
+    [SerializeField] private GameObject damageText;
     [SerializeField] private Crosshair crosshair;
     [SerializeField] private Slider healthSlider;
     [SerializeField] private Slider XAxisSlider;
@@ -251,5 +253,11 @@ public class UIManager : MonoBehaviour
     public void OffExplosionWallText()
     {
         explosionWallText.SetActive(false);
+    }
+    //데미지 텍스트 생성하여 띄우기
+    public void OnDamageText(float damage)
+    {
+        GameObject Text = Instantiate(damageText,DamageTextParents.transform);
+        Text.GetComponent<DamageText>().damage = damage;
     }
 }
