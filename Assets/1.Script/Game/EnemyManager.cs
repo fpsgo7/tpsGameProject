@@ -45,13 +45,13 @@ public class EnemyManager : MonoBehaviour
     public void EnemyMake()
     {
         enemyCount += 1;
-        UIManager.Instance.UpdateEnemyText(enemyCount);
+        UIManager.Instance.SetEnemyText(enemyCount);
     }
 
     public void EnemyDie()
     {
         enemyCount -= 1;
-        UIManager.Instance.UpdateEnemyText(enemyCount);
+        UIManager.Instance.SetEnemyText(enemyCount);
         if (enemyCount == 0)
         {
             MapClear();

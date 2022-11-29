@@ -2,6 +2,11 @@
 
 public class PlayerInput : MonoBehaviour
 {
+    //스크립트 수정
+    //1.입력 시스템을 유니티 레거시 시스템 지금 쓰는 방식이아닌 
+    // new 입력 시스템을 활용할것 !
+    //플레이어의 인풋 입력을 관리하는 방법은 ㄱㅊ다.
+
     //다른 스크립트와 연결하기
     private PlayerHealth playerHealth;
     private PlayerMovement playerMovement;
@@ -50,11 +55,11 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetButtonDown(ESCButtonName))
         {
             //Debug.Log("메뉴 키입력");
-            UIManager.Instance.MenuOnOff();
+            UIManager.Instance.SetMenuOnOff();
         }
         if (Input.GetButtonDown(InventoryButtonName))
         {
-            UIManager.Instance.InventoryOnOff();
+            UIManager.Instance.SetInventoryOnOff();
         }
 
         //게임 오버가 되거나 체력 회복 중인 경우와 메뉴를 보는 동안 정지한다.

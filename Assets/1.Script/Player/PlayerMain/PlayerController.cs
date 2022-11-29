@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
         playerHealth.OnDeath += HandleDeath;// 플레이어 가 죽으면 핸들 데스만큼 값증가
 
-        UIManager.Instance.UpdateLifeText(lifeRemains);
+        UIManager.Instance.SetLifeText(lifeRemains);
         Cursor.visible = false;// 게임이 시작되면 마우스 커서를 비활성화 한다.
     }
 
@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
         if (lifeRemains > 0)
         {
             lifeRemains--;
-            UIManager.Instance.UpdateLifeText(lifeRemains);
+            UIManager.Instance.SetLifeText(lifeRemains);
             Invoke("Respawn", 3f);
         }
         else

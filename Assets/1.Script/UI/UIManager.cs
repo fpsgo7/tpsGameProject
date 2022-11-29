@@ -2,6 +2,10 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+//스크립트 수정할것!
+//1.getcomponent 등 두번이상 작동하는 대상은 start 함수로 캐싱한다..
+//2.함수이름 수정할것 update 나 이런 이름대신 set 활용
+//3.UIManager이 너무 많은 기능을 함유하고 있기 때문에 기능을 분리하여 새로운 클래스에 옮길것!
 //UI 와 마우스 커서를 관리한다.
 public class UIManager : MonoBehaviour
 {
@@ -56,71 +60,71 @@ public class UIManager : MonoBehaviour
     }
 
     //탄약 업데읻트
-    public void UpdateAmmoText(int magAmmo, int remainAmmo)
+    public void SetAmmoText(int magAmmo, int remainAmmo)
     {
-        ammoText.text = magAmmo+"" ;
-        fullAmmoText.text = remainAmmo+"";
+        ammoText.text = magAmmo.ToString();
+        fullAmmoText.text = remainAmmo.ToString();
     }
     //점수 업데이트
-    public void UpdateScoreText(int newScore)
+    public void SetScoreText(int newScore)
     {
         scoreText.text = "Score : " + newScore;
     }
     //웨이브 업데이트
-    public void UpdateEnemyText(int count)
+    public void SetEnemyText(int count)
     {
         waveText.text = "Enemy Left : " + count;
     }
     //체력 업데이트
-    public void UpdateLifeText(int count)
+    public void SetLifeText(int count)
     {
         lifeText.text = "Life : " + count;
     }
     //크로스해어 업데이트
-    public void UpdateCrossHairPosition(Vector3 worldPosition)
+    public void SetCrossHairPosition(Vector3 worldPosition)
     {
         crosshair.UpdatePosition(worldPosition);
     }
     //최대 체력 슬라이더에 적용
-    public void UpdateHealthMaxSlider(float maxHealth)
+    public void SetHealthMaxSlider(float maxHealth)
     {
         healthSlider.maxValue = maxHealth;
     }
     //체력을 보여줌
-    public void UpdateHealthText(float health)
+    public void SetHealthText(float health)
     {
         healthText.text = Mathf.Floor(health).ToString();
         healthSlider.value = health;
     }
     //체력 회복 킷트
-    public void UpdateHealthKitText(int healthKit)
+    public void SetHealthKitText(int healthKit)
     {
-        healthKitText.text = healthKit+"";
+        healthKitText.text = healthKit.ToString();
     }
-    //체력 충전 값 공유
-    public void HealthMax(int max)
+    //체력 슬라이더의 최대값을 설정함
+    public void SetHealthSliderMaxValue(int max)
     {
         restoreHealthSlider.GetComponent<Slider>().maxValue = max;
     }
     //체력 충전 시작
-    public void UpdateRestoreHealthStart()
+    public void SetActiveRestoreHealthSlider()
     {
         restoreHealthSlider.SetActive(true);
     }
     //체력 충전 업데이트
-    public void UpdateRestoreHealth(int restore)
+    public void SetRestoreHealthSlideValuer(int restore)
     {
         restoreHealthSlider.GetComponent<Slider>().value = restore;
     }
     //체력 충전 종료
-    public void UpdateRestoreHealthEnd()
+    public void SetRestoreHealtSliderActiveFalse()
     {
         restoreHealthSlider.SetActive(false);
     }
     //수류탄 개수
-    public void UpdateGrenadeText(int grenade)
+    public void SetGrenadeText(int grenade)
     {
-        grenadeText.text = grenade + "";
+        grenadeText.text = grenade.ToString();
     }
     //크로스헤어 보여주기 관련 
     public void SetActiveCrosshair(bool active)
@@ -138,7 +142,7 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     //메뉴 오픈
-    public void MenuOnOff()
+    public void SetMenuOnOff()
     {
         if (menuUIOpen == false && MenuUI.activeSelf == false)
         {
@@ -161,7 +165,7 @@ public class UIManager : MonoBehaviour
             
     }
     //인벤토리 오픈
-    public void InventoryOnOff()
+    public void SetInventoryOnOff()
     {
         if (menuUIOpen == false && InventoryUI.activeSelf == false)
         {
@@ -182,6 +186,7 @@ public class UIManager : MonoBehaviour
         }
     }
     //장비창 변경
+    //배열로 하여 관리하기 ***
     public void ChangeEquipmentPanel()
     {
         if(WeaponPanel.activeSelf == false)
@@ -211,13 +216,13 @@ public class UIManager : MonoBehaviour
     public void AxisChangeX()
     {
         AxisX = XAxisSlider.value;
-        XAxisText.text = AxisX + "";
+        XAxisText.text = AxisX.ToString();
     }
     
     public void AxisChangeY()
     {
         AxisY = YAxisSlider.value;
-        YAxisText.text = AxisY + "";
+        YAxisText.text = AxisY.ToString();
     }
     //메뉴를 닫으면 메뉴에 설정된 값이 적용됨
     public void SettingByMenu()
@@ -231,9 +236,9 @@ public class UIManager : MonoBehaviour
     public void SetAxisUI(float x, float y)
     {
         XAxisSlider.value = x;
-        XAxisText.text = x+"";
+        XAxisText.text = x.ToString();
         YAxisSlider.value = y;
-        YAxisText.text = y + "";
+        YAxisText.text = y.ToString();
     }
 
     //아이템 박스 오픈 텍스트 활성화 및 비활성화

@@ -108,7 +108,7 @@ public class PlayerInfoManager : MonoBehaviour
         if(onlineStatus)
         {
             GameManager.Instance.score = player.score;
-            UIManager.Instance.UpdateScoreText(player.score);
+            UIManager.Instance.SetScoreText(player.score);
             GameManager.Instance.PlayerStartItem(player.weaponNum, player.equipmentNum);
             GameManager.Instance.PlayerAxisStartSet(player.axisX, player.axisY);
         }
@@ -117,7 +117,7 @@ public class PlayerInfoManager : MonoBehaviour
             string jdata = File.ReadAllText(filePath);
             player = JsonUtility.FromJson<Player>(jdata);
             GameManager.Instance.score = player.score;
-            UIManager.Instance.UpdateScoreText(player.score);
+            UIManager.Instance.SetScoreText(player.score);
             GameManager.Instance.PlayerStartItem(player.weaponNum,player.equipmentNum);
             GameManager.Instance.PlayerAxisStartSet(player.axisX, player.axisY);
         }

@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         if (!isGameover)
         {
             score += newScore;
-            UIManager.Instance.UpdateScoreText(score);
+            UIManager.Instance.SetScoreText(score);
             PlayerInfoManager.Instance.SavePlayerScore(score);
         }
     }
