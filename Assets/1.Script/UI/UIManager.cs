@@ -25,7 +25,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gameoverUI;
     [SerializeField] private GameObject MenuUI;
     [SerializeField] private GameObject InventoryUI;
-    [SerializeField] private GameObject restoreHealthSlider;
+    [SerializeField] private GameObject restoreHealthSliderObject;
     [SerializeField] private GameObject WeaponPanel;
     [SerializeField] private GameObject EquipmentPanel;
     [SerializeField] private GameObject EquipmentChangeButton;
@@ -35,6 +35,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject damageText;
     [SerializeField] private Crosshair crosshair;
     [SerializeField] private Slider healthSlider;
+    [SerializeField] private Slider restoreHealthSlider;
     [SerializeField] private Slider XAxisSlider;
     [SerializeField] private Slider YAxisSlider;
 
@@ -104,22 +105,22 @@ public class UIManager : MonoBehaviour
     //체력 슬라이더의 최대값을 설정함
     public void SetHealthSliderMaxValue(int max)
     {
-        restoreHealthSlider.GetComponent<Slider>().maxValue = max;
+        restoreHealthSlider.maxValue = max;
     }
     //체력 충전 시작
     public void SetActiveRestoreHealthSlider()
     {
-        restoreHealthSlider.SetActive(true);
+        restoreHealthSliderObject.SetActive(true);
     }
     //체력 충전 업데이트
     public void SetRestoreHealthSlideValuer(int restore)
     {
-        restoreHealthSlider.GetComponent<Slider>().value = restore;
+        restoreHealthSlider.value = restore;
     }
     //체력 충전 종료
     public void SetRestoreHealtSliderActiveFalse()
     {
-        restoreHealthSlider.SetActive(false);
+        restoreHealthSliderObject.SetActive(false);
     }
     //수류탄 개수
     public void SetGrenadeText(int grenade)
@@ -263,7 +264,7 @@ public class UIManager : MonoBehaviour
     public void OnDamageText(float damage)
     {
         GameObject damageTextObject;
-        damageTextObject = DamageTextPooling.Instance.GetObjet(DamageTextParents, damage);
+        damageTextObject = DamageTextPooling.GetObjet(DamageTextParents, damage);
         for (int i = 0; i < DamageTextParents.transform.childCount; i++)
         {
             DamageTextParents.transform.GetChild(i).transform.position = new Vector3(
@@ -272,6 +273,6 @@ public class UIManager : MonoBehaviour
                 DamageTextParents.transform.GetChild(i).transform.position.z);
         }
         
-        StartCoroutine(DamageTextPooling.Instance.ReturnObject(damageTextObject));
+        StartCoroutine(DamageTextPooling.ReturnObject(damageTextObject));
     }
 }

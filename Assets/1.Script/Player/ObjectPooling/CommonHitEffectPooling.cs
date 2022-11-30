@@ -9,7 +9,7 @@ public class CommonHitEffectPooling : MonoBehaviour
     [SerializeField]
     private GameObject poolingObject;
     private Queue<GameObject> poolingQueue = new Queue<GameObject>();
-
+    private static WaitForSeconds wfs = new WaitForSeconds(0.9f);
     void Awake()
     {
         Instance = this;
@@ -52,7 +52,7 @@ public class CommonHitEffectPooling : MonoBehaviour
     }
     public static IEnumerator ReturnObject(GameObject particle)
     {
-        yield return new WaitForSeconds(0.9f);
+        yield return wfs;
         particle.gameObject.SetActive(false);
         particle.transform.SetParent(Instance.transform);
         Instance.poolingQueue.Enqueue(particle);//다시 큐에 넣음

@@ -50,7 +50,8 @@ public class Enemy2Shooter : MonoBehaviour
         reloadTime = 2.0f;
         maxBullet = 30;
         currBullet = 30;
-        damage = 0;
+        damage = 1;
+        //damage = 0; 테스트용
         wsReload = new WaitForSeconds(reloadTime);
         nextFire = 0;
         fireRate = 0.1f;

@@ -7,33 +7,33 @@ public class DamageTextPooling : MonoBehaviour
     public static DamageTextPooling Instance;
     [SerializeField] private GameObject poolingObject;
     private Queue<GameObject> poolingQueue = new Queue<GameObject>();
+    private static WaitForSeconds wfs = new WaitForSeconds(3f);
     void Awake()
     {
         Instance = this;
         Initalize(30);
     }
     // 오브젝트 생성
-    private GameObject CreateNewParticle()
+    private GameObject CreateNewObject()
     {
-        var newParticle = Instantiate(poolingObject, transform);
-        newParticle.SetActive(false);
-        return newParticle;
+        var newGameObject = Instantiate(poolingObject, transform);
+        newGameObject.SetActive(false);
+        return newGameObject;
     }
     // 실제 오브젝트 생성 실행을휘한 함수
     private void Initalize(int count)
     {
         for (int i = 0; i < count; i++)
         {
-            poolingQueue.Enqueue(CreateNewParticle());
+            poolingQueue.Enqueue(CreateNewObject());
         }
     }
     //오브젝트를 풀링하기
-    public GameObject GetObjet(GameObject pos , float damage)
+    public static GameObject GetObjet(GameObject pos , float damage)
     {
         if (Instance.poolingQueue.Count > 0)
         {
             var gameObject = Instance.poolingQueue.Dequeue();//큐에서 하나 꺼내옴
-            gameObject = Instance.poolingQueue.Dequeue();//큐에서 하나 꺼내옴
             gameObject.transform.position = pos.transform.position;
             gameObject.GetComponent<DamageText>().damage = damage;
             gameObject.transform.SetParent(pos.transform);
@@ -42,7 +42,8 @@ public class DamageTextPooling : MonoBehaviour
         }
         else
         {
-            var newGameObject = Instance.CreateNewParticle();
+            Debug.Log("오브젝트 풀링 실패 새로 생성합니다.");
+            var newGameObject = Instance.CreateNewObject();
             newGameObject.transform.position = pos.transform.position;
             newGameObject.GetComponent<DamageText>().damage = damage;
             newGameObject.transform.SetParent(pos.transform);
@@ -50,9 +51,9 @@ public class DamageTextPooling : MonoBehaviour
             return newGameObject;
         }
     }
-    public IEnumerator ReturnObject(GameObject gameObject)
+    public static IEnumerator ReturnObject(GameObject gameObject)
     {
-        yield return new WaitForSeconds(3f);
+        yield return wfs;
         gameObject.gameObject.SetActive(false);
         gameObject.transform.SetParent(Instance.transform);
         Instance.poolingQueue.Enqueue(gameObject);//다시 큐에 넣음

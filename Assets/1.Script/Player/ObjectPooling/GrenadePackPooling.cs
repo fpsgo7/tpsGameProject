@@ -9,7 +9,7 @@ public class GrenadePackPooling : MonoBehaviour
     [SerializeField]
     private GameObject poolingObject;
     private Queue<GameObject> poolingQueue = new Queue<GameObject>();
-
+    private static WaitForSeconds wfs = new WaitForSeconds(0.1f);
     void Awake()
     {
         Instance = this;
@@ -51,7 +51,7 @@ public class GrenadePackPooling : MonoBehaviour
     //다시 오브젝트를 반납하기
     public static IEnumerator ReturnObject(GameObject item)
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return wfs;
         item.gameObject.SetActive(false);
         item.transform.SetParent(Instance.transform);
         Instance.poolingQueue.Enqueue(item);//다시 큐에 넣음

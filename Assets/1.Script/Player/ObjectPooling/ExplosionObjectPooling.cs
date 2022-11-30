@@ -9,7 +9,7 @@ public class ExplosionObjectPooling : MonoBehaviour
     [SerializeField]
     private GameObject poolingGrenadeExplosionObject;
     private Queue<GameObject> poolingQueue = new Queue<GameObject>();
-
+    private static WaitForSeconds wfs = new WaitForSeconds(2f);
     void Awake()
     {
         Instance = this;
@@ -53,7 +53,7 @@ public class ExplosionObjectPooling : MonoBehaviour
     public static IEnumerator ReturnObject(GameObject explosion)
     {
         Debug.Log("되돌리기");
-        yield return new WaitForSeconds(2f);
+        yield return wfs;
         explosion.gameObject.SetActive(false);
         explosion.transform.SetParent(Instance.transform);
         Instance.poolingQueue.Enqueue(explosion);//다시 큐에 넣음
