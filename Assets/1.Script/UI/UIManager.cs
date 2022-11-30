@@ -262,7 +262,16 @@ public class UIManager : MonoBehaviour
     //데미지 텍스트 생성하여 띄우기
     public void OnDamageText(float damage)
     {
-        GameObject Text = Instantiate(damageText,DamageTextParents.transform);
-        Text.GetComponent<DamageText>().damage = damage;
+        GameObject damageTextObject;
+        damageTextObject = DamageTextPooling.Instance.GetObjet(DamageTextParents, damage);
+        for (int i = 0; i < DamageTextParents.transform.childCount; i++)
+        {
+            DamageTextParents.transform.GetChild(i).transform.position = new Vector3(
+                DamageTextParents.transform.GetChild(i).transform.position.x,
+                DamageTextParents.transform.GetChild(i).transform.position.y + 50f,
+                DamageTextParents.transform.GetChild(i).transform.position.z);
+        }
+        
+        StartCoroutine(DamageTextPooling.Instance.ReturnObject(damageTextObject));
     }
 }
