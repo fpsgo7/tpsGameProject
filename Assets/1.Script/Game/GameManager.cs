@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         isGameover = true;
-        UIManager.Instance.SetActiveGameoverUI(true);
+        UIManager.Instance.ActiveGameoverUI(true);
     }
 
     //게임 시작하면 아이템 장착 

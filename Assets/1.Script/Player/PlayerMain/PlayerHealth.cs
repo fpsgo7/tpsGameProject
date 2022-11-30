@@ -52,17 +52,17 @@ public class PlayerHealth : LivingEntity
     private void RestoreHealthSlider()
     {
         restoreHealth += 1;
-        UIManager.Instance.SetRestoreHealthSlideValuer(restoreHealth);
+        UIManager.Instance.RestoreHealthSlideValue(restoreHealth);
         // 체력 회복 UI 활성화
         if (restoreHealth >= 1 && restoreHealthProceeding == false)
         {
-            UIManager.Instance.SetActiveRestoreHealthSlider();
+            UIManager.Instance.ActiveRestoreHealthSlider();
             restoreHealthProceeding = true;
         }
         // 체력 회복 완료
         if (restoreHealth >= restoreHealthMax)
         {
-            UIManager.Instance.SetRestoreHealtSliderActiveFalse();
+            UIManager.Instance.InactiveRestoreHealtSlider();
             RestoreHealth();
             restoreHealth = 0;
             restoreHealthProceeding = false;
@@ -72,8 +72,8 @@ public class PlayerHealth : LivingEntity
     private void RestoreHealthStop()
     {
         restoreHealth = 0;
-        UIManager.Instance.SetRestoreHealthSlideValuer(restoreHealth);
-        UIManager.Instance.SetRestoreHealtSliderActiveFalse();
+        UIManager.Instance.RestoreHealthSlideValue(restoreHealth);
+        UIManager.Instance.InactiveRestoreHealtSlider();
         restoreHealthProceeding = false;
     }
 

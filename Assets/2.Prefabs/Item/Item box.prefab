@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8120188753085656318}
   - component: {fileID: -2577742402486086776}
   m_Layer: 10
-  m_Name: Weapon box
+  m_Name: Item box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,5 +91,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.0099943355, y: 0.0051729, z: 0.0039999993}
-  m_Center: {x: 4.656613e-10, y: 0.00008644989, z: 0}
+  m_Size: {x: 0.0099943355, y: 0.005172904, z: 0.035328686}
+  m_Center: {x: 4.6929094e-10, y: 0.00008644985, z: 0.015664343}

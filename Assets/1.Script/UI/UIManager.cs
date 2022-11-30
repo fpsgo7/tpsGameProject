@@ -3,9 +3,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 //스크립트 수정할것!
-//1.getcomponent 등 두번이상 작동하는 대상은 start 함수로 캐싱한다..
-//2.함수이름 수정할것 update 나 이런 이름대신 set 활용
+//2. 무기 창과 장비창 배열로 하여 관리하여 다른 장비창도 들어올 수 있게 설계하기 ***
 //3.UIManager이 너무 많은 기능을 함유하고 있기 때문에 기능을 분리하여 새로운 클래스에 옮길것!
+
 //UI 와 마우스 커서를 관리한다.
 public class UIManager : MonoBehaviour
 {
@@ -36,8 +36,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Crosshair crosshair;
     [SerializeField] private Slider healthSlider;
     [SerializeField] private Slider restoreHealthSlider;
-    [SerializeField] private Slider XAxisSlider;
-    [SerializeField] private Slider YAxisSlider;
+    [SerializeField] private Slider xAxisSlider;
+    [SerializeField] private Slider yAxisSlider;
 
     [SerializeField] private Text healthText;
     [SerializeField] private Text lifeText;
@@ -46,14 +46,16 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text healthKitText;
     [SerializeField] private Text grenadeText;
     [SerializeField] private Text fullAmmoText;
+    [SerializeField] private Text EquipmentChangeButtonText;
     [SerializeField] private Text waveText;
-    [SerializeField] private Text XAxisText;
-    [SerializeField] private Text YAxisText;
+    [SerializeField] private Text xAxisText;
+    [SerializeField] private Text yAxisText;
 
-    public bool menuUIOpen = false;
+
+    public bool isMenuUI = false;
     public PlayerShooter playerShooter;
-    private float AxisX;
-    private float AxisY;
+    private float xAxis;
+    private float yAxis;
 
     public void Start()
     {
@@ -108,17 +110,17 @@ public class UIManager : MonoBehaviour
         restoreHealthSlider.maxValue = max;
     }
     //체력 충전 시작
-    public void SetActiveRestoreHealthSlider()
+    public void ActiveRestoreHealthSlider()
     {
         restoreHealthSliderObject.SetActive(true);
     }
     //체력 충전 업데이트
-    public void SetRestoreHealthSlideValuer(int restore)
+    public void RestoreHealthSlideValue(int restore)
     {
         restoreHealthSlider.value = restore;
     }
     //체력 충전 종료
-    public void SetRestoreHealtSliderActiveFalse()
+    public void InactiveRestoreHealtSlider()
     {
         restoreHealthSliderObject.SetActive(false);
     }
@@ -128,14 +130,14 @@ public class UIManager : MonoBehaviour
         grenadeText.text = grenade.ToString();
     }
     //크로스헤어 보여주기 관련 
-    public void SetActiveCrosshair(bool active)
+    public void ActiveCrosshair(bool isActive)
     {
-        crosshair.SetActiveCrosshair(active);
+        crosshair.SetActiveCrosshair(isActive);
     }
     //게임오버 관련
-    public void SetActiveGameoverUI(bool active)
+    public void ActiveGameoverUI(bool isActive)
     {
-        gameoverUI.SetActive(active);
+        gameoverUI.SetActive(isActive);
     }
     //게임 제시작
     public void GameRestart()
@@ -145,22 +147,26 @@ public class UIManager : MonoBehaviour
     //메뉴 오픈
     public void SetMenuOnOff()
     {
-        if (menuUIOpen == false && MenuUI.activeSelf == false)
+        if (isMenuUI == false && MenuUI.activeSelf == false)
         {
             Cursor.lockState = CursorLockMode.Confined;
-            menuUIOpen = true;
+            isMenuUI = true;
             MenuUI.SetActive(true);
             Cursor.visible = true;
             playerShooter.AxisMenuOnChange();
             //Debug.Log("메뉴 오픈");
         }
-        else if(menuUIOpen == true && MenuUI.activeSelf == true)
+        else if(isMenuUI == true && MenuUI.activeSelf == true)
         {
-            menuUIOpen = false;
+            isMenuUI = false;
             MenuUI.SetActive(false);
             Cursor.visible = false;
+            //조준감도 설정
+            playerShooter.AxisChangeX(xAxis);
+            playerShooter.AxisChangeY(yAxis);
+            PlayerInfoManager.Instance.SetXaxis(xAxis);
+            PlayerInfoManager.Instance.SetYaxis(yAxis);
             playerShooter.AxisMenuOffChange();
-            SettingByMenu();
             Cursor.lockState = CursorLockMode.Locked;
         }
             
@@ -168,18 +174,18 @@ public class UIManager : MonoBehaviour
     //인벤토리 오픈
     public void SetInventoryOnOff()
     {
-        if (menuUIOpen == false && InventoryUI.activeSelf == false)
+        if (isMenuUI == false && InventoryUI.activeSelf == false)
         {
             Cursor.lockState = CursorLockMode.Confined;
-            menuUIOpen = true;
+            isMenuUI = true;
             InventoryUI.SetActive(true);
             Cursor.visible = true;
             playerShooter.AxisMenuOnChange();
             Debug.Log("인벤토리 오픈 오픈");
         }
-        else if(menuUIOpen == true && InventoryUI.activeSelf == true)
+        else if(isMenuUI == true && InventoryUI.activeSelf == true)
         {
-            menuUIOpen = false;
+            isMenuUI = false;
             InventoryUI.SetActive(false);
             Cursor.visible = false;
             playerShooter.AxisMenuOffChange();
@@ -194,17 +200,17 @@ public class UIManager : MonoBehaviour
         {
             EquipmentPanel.SetActive(false);
             WeaponPanel.SetActive(true);
-            EquipmentChangeButton.GetComponentInChildren<Text>().text = "장비창으로";
+            EquipmentChangeButtonText.text = "장비창으로";
         }
         else
         {
             WeaponPanel.SetActive(false);
             EquipmentPanel.SetActive(true);
-            EquipmentChangeButton.GetComponentInChildren<Text>().text = "무기창으로";
+            EquipmentChangeButtonText.text = "무기창으로";
         }
     }
     //로비로 돌아가기
-    public void OnExitClick()
+    public void ExitClick()
     {
         if (PlayerInfoManager.Instance.onlineStatus)
         {
@@ -214,54 +220,46 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene("Lobby");
     }
     //조준감도 조절 
-    public void AxisChangeX()
+    public void ChangeXAxisSlider()
     {
-        AxisX = XAxisSlider.value;
-        XAxisText.text = AxisX.ToString();
+        xAxis = xAxisSlider.value;
+        xAxisText.text = xAxis.ToString();
     }
     
-    public void AxisChangeY()
+    public void ChangeYAxisSlider()
     {
-        AxisY = YAxisSlider.value;
-        YAxisText.text = AxisY.ToString();
-    }
-    //메뉴를 닫으면 메뉴에 설정된 값이 적용됨
-    public void SettingByMenu()
-    {
-        playerShooter.AxisChangeX(AxisX);
-        playerShooter.AxisChangeY(AxisY);
-        PlayerInfoManager.Instance.SetXaxis(AxisX);
-        PlayerInfoManager.Instance.SetYaxis(AxisY);
+        yAxis = yAxisSlider.value;
+        yAxisText.text = yAxis.ToString();
     }
     //게임 시작할때 조준감도 UI 에 적용하여 보여주기
     public void SetAxisUI(float x, float y)
     {
-        XAxisSlider.value = x;
-        XAxisText.text = x.ToString();
-        YAxisSlider.value = y;
-        YAxisText.text = y.ToString();
+        xAxisSlider.value = x;
+        xAxisText.text = x.ToString();
+        yAxisSlider.value = y;
+        yAxisText.text = y.ToString();
     }
 
     //아이템 박스 오픈 텍스트 활성화 및 비활성화
-    public void OnItemBoxText()
+    public void ActiveItemBoxText()
     {
         itemBoxOpenText.SetActive(true);
     }
-    public void OffItemBoxText()
+    public void InactiveItemBoxText()
     {
         itemBoxOpenText.SetActive(false);
     }
     //폭탄으로 벽 부시기 
-    public void OnExplosionWallText()
+    public void ActiveExplosionWallText()
     {
         explosionWallText.SetActive(true);
     }
-    public void OffExplosionWallText()
+    public void InactiveExplosionWallText()
     {
         explosionWallText.SetActive(false);
     }
     //데미지 텍스트 생성하여 띄우기
-    public void OnDamageText(float damage)
+    public void ShowDamageText(float damage)
     {
         GameObject damageTextObject;
         damageTextObject = DamageTextPooling.GetObjet(DamageTextParents, damage);

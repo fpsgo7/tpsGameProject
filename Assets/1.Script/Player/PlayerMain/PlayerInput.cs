@@ -65,7 +65,7 @@ public class PlayerInput : MonoBehaviour
         //게임 오버가 되거나 체력 회복 중인 경우와 메뉴를 보는 동안 정지한다.
         if (GameManager.Instance != null
             && GameManager.Instance.isGameover || playerHealth.restoreHealthProceeding == true
-            || UIManager.Instance.menuUIOpen == true
+            || UIManager.Instance.isMenuUI == true
             )
         {
             moveInput = Vector2.zero;

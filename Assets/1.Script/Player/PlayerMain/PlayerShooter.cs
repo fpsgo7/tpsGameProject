@@ -235,7 +235,7 @@ public class PlayerShooter : MonoBehaviour
 
         UIManager.Instance.SetAmmoText(gun.magAmmo, gun.ammoRemain);//남은 탄약수 갱신
 
-        UIManager.Instance.SetActiveCrosshair(hasEnoughDistance);//크로스 해어 활성화
+        UIManager.Instance.ActiveCrosshair(hasEnoughDistance);//크로스 해어 활성화
         UIManager.Instance.SetCrossHairPosition(aimPoint);//총알이 맞게되는 지점을 보내줘 조준점 이동하게함
     }
     //총을 쥐는 것을 다룸

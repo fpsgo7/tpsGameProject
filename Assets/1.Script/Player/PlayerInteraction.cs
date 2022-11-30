@@ -30,33 +30,33 @@ public class PlayerInteraction : MonoBehaviour
             if(hitInfo.transform.tag == "ItemBox")
             {
                 //상호작용 이 가능해짐
-                UIManager.Instance.OnItemBoxText();
+                UIManager.Instance.ActiveItemBoxText();
                 if (playerInput.interaction)
                 {
                     //안에 들어있는 아이템을 활성화 시키고 아이템 박스의 렌더러를 비활성화 하고 트리거를 true 로 하여 플레이어가 아이템을 먹을 수 있게함
                     hitInfo.transform.GetChild(0).gameObject.SetActive(true);
                     hitInfo.transform.GetComponent<MeshRenderer>().enabled = false;
-                    hitInfo.transform.GetComponent<BoxCollider>().isTrigger = true;
-                    UIManager.Instance.OffItemBoxText();
+                    hitInfo.transform.GetComponent<BoxCollider>().enabled = false;
+                    UIManager.Instance.InactiveItemBoxText();
                 }
             }
             if (hitInfo.transform.tag == "ExplosionWall")
             {
                 //상호작용 이 가능해짐
-                UIManager.Instance.OnExplosionWallText();
+                UIManager.Instance.ActiveExplosionWallText();
                 if (playerInput.interaction)
                 {
                     hitInfo.transform.tag = "Untagged";//테그 비활성화로 상호작용 ui 가 활성화되는 것을 막음
                     hitInfo.transform.GetChild(0).gameObject.SetActive(true);// 폭탄 오브젝트 활성화
-                    UIManager.Instance.OffExplosionWallText();
+                    UIManager.Instance.InactiveExplosionWallText();
                     StartCoroutine(Explosion(hitInfo.transform));
                 }
             }
         }
         else
         {
-            UIManager.Instance.OffItemBoxText();
-            UIManager.Instance.OffExplosionWallText();
+            UIManager.Instance.InactiveItemBoxText();
+            UIManager.Instance.InactiveExplosionWallText();
         }
         
     }
