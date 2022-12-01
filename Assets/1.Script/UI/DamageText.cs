@@ -7,16 +7,20 @@ using TMPro;
 public class DamageText : MonoBehaviour
 {
     private float moveSpeed = 10;
-    public float damage;
-    Text text;
-    void Start()
+    public Text damageText;
+    void Awake()
     {
-        text = GetComponent<Text>();
-        text.text = damage.ToString();
+        damageText = GetComponent<Text>();
     }
-
+    
     void Update()
     {
         transform.Translate(new Vector3(0, moveSpeed * Time.deltaTime, 0));
+    }
+
+    public void SetDamageText(float damage)
+    {
+        Debug.Log(damage);
+        damageText.text = damage.ToString();
     }
 }

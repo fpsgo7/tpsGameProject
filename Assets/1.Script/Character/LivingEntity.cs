@@ -66,6 +66,11 @@ public class LivingEntity : MonoBehaviour, IDamageable
         //대미지를 입었으므로 시간을 넣어 업데이터한다.
         //lastDamagedTime = Time.time;
         health -= damage;
+        //layer은 숫자번째로 취급되어 숫자를찾아 조건을 넣는다.
+        if (this.gameObject.layer == 9)
+        {
+            UIManager.Instance.ShowDamageText(damage);
+        }
         if (enemyHealthSlider != null)
         {
             enemyHealthSlider.value = health;

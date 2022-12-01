@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 //스크립트 수정할것!
+//tip 이벤트나 다른데서 호출이 되는 함수이름은On 이 좋다.
 //2. 무기 창과 장비창 배열로 하여 관리하여 다른 장비창도 들어올 수 있게 설계하기 ***
 //3.UIManager이 너무 많은 기능을 함유하고 있기 때문에 기능을 분리하여 새로운 클래스에 옮길것!
 
@@ -261,8 +262,8 @@ public class UIManager : MonoBehaviour
     //데미지 텍스트 생성하여 띄우기
     public void ShowDamageText(float damage)
     {
-        GameObject damageTextObject;
-        damageTextObject = DamageTextPooling.GetObjet(DamageTextParents, damage);
+        DamageText damageTextObject;
+        damageTextObject = DamageTextPooling.GetObject(DamageTextParents, damage);
         for (int i = 0; i < DamageTextParents.transform.childCount; i++)
         {
             DamageTextParents.transform.GetChild(i).transform.position = new Vector3(
