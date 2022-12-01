@@ -8,12 +8,18 @@ public class DamageText : MonoBehaviour
 {
     private float moveSpeed = 10;
     public Text damageText;
-    void Awake()
+    public bool isDamageTextActive=false;
+    private void Awake()
     {
         damageText = GetComponent<Text>();
     }
-    
-    void Update()
+
+    private void OnEnable()
+    {
+        isDamageTextActive = true;
+    }
+
+    private void Update()
     {
         transform.Translate(new Vector3(0, moveSpeed * Time.deltaTime, 0));
     }
@@ -22,5 +28,11 @@ public class DamageText : MonoBehaviour
     {
         Debug.Log(damage);
         damageText.text = damage.ToString();
+    }
+
+    public void InActiveDamageText()
+    {
+        isDamageTextActive = false;
+        this.gameObject.SetActive(false);
     }
 }

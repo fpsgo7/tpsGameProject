@@ -29,7 +29,7 @@ public class DamageTextPooling : MonoBehaviour
         }
     }
     //오브젝트를 풀링하기
-    public static DamageText GetObject(GameObject pos , float damage)
+    public DamageText GetObject(GameObject pos , float damage)
     {
         if (Instance.poolingQueue.Count > 0)
         {
@@ -38,6 +38,7 @@ public class DamageTextPooling : MonoBehaviour
             gameObject.SetDamageText(damage);
             gameObject.transform.SetParent(pos.transform);
             gameObject.gameObject.SetActive(true);// 활성화하여 보여줌
+            StartCoroutine(ReturnObject(gameObject));//일정시간뒤 비활성화 하게함
             return gameObject;
         }
         else
@@ -48,13 +49,14 @@ public class DamageTextPooling : MonoBehaviour
             newGameObject.SetDamageText(damage);
             newGameObject.transform.SetParent(pos.transform);
             newGameObject.gameObject.SetActive(true);// 활성화하여 보여줌
+            StartCoroutine(ReturnObject(newGameObject));
             return newGameObject;
         }
     }
-    public static IEnumerator ReturnObject(DamageText gameObject)
+    public IEnumerator ReturnObject(DamageText gameObject)
     {
         yield return WaitReturnText;
-        gameObject.gameObject.SetActive(false);
+        gameObject.InActiveDamageText();
         gameObject.transform.SetParent(Instance.transform);
         Instance.poolingQueue.Enqueue(gameObject);//다시 큐에 넣음
     }

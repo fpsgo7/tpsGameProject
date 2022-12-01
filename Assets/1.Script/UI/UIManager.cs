@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -51,6 +52,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text waveText;
     [SerializeField] private Text xAxisText;
     [SerializeField] private Text yAxisText;
+
 
 
     public bool isMenuUI = false;
@@ -260,18 +262,22 @@ public class UIManager : MonoBehaviour
         explosionWallText.SetActive(false);
     }
     //데미지 텍스트 생성하여 띄우기
+    private List<DamageText> damageTexts = new List<DamageText>();
     public void ShowDamageText(float damage)
     {
-        DamageText damageTextObject;
-        damageTextObject = DamageTextPooling.GetObject(DamageTextParents, damage);
-        for (int i = 0; i < DamageTextParents.transform.childCount; i++)
+        DamageText damageText = DamageTextPooling.Instance.GetObject(DamageTextParents, damage);
+        damageTexts.Add(damageText);
+        for (int i = 0; i < damageTexts.Count; i++)
         {
-            DamageTextParents.transform.GetChild(i).transform.position = new Vector3(
-                DamageTextParents.transform.GetChild(i).transform.position.x,
-                DamageTextParents.transform.GetChild(i).transform.position.y + 50f,
-                DamageTextParents.transform.GetChild(i).transform.position.z);
+            damageTexts[i].transform.position = new Vector3(
+                damageTexts[i].transform.position.x,
+                damageTexts[i].transform.position.y + 50f,
+                damageTexts[i].transform.position.z);
+            if (damageTexts[i].isDamageTextActive == false)
+            {
+                damageTexts.RemoveAt(i);
+            }
         }
         
-        StartCoroutine(DamageTextPooling.ReturnObject(damageTextObject));
     }
 }
