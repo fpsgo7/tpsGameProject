@@ -1,5 +1,64 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &73692400
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 73692401}
+  - component: {fileID: 73692402}
+  - component: {fileID: 73692403}
+  m_Layer: 9
+  m_Name: HeadShotCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &73692401
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73692400}
+  m_LocalRotation: {x: 0.0000000037252899, y: -3.5763628e-11, z: 1.21345095e-11, w: 1}
+  m_LocalPosition: {x: 0.00005606853, y: 0.09343243, z: 0.03242568}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7675172710765951820}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &73692402
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73692400}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.20402922
+  m_Center: {x: 0, y: -0.05402921, z: 0}
+--- !u!114 &73692403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73692400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74651a23971691e41b6cbf077636643b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  livingEntity: {fileID: 1068198861807580999}
+  hitPosition: 0
 --- !u!1 &30778448530948169
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,6 +1089,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6904688488919299669}
+  - {fileID: 73692401}
   m_Father: {fileID: 584334715656464515}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1771,6 +1831,7 @@ GameObject:
   - component: {fileID: 891821821}
   - component: {fileID: 1068198861807580999}
   - component: {fileID: 7541537501660748281}
+  - component: {fileID: 398150928}
   m_Layer: 9
   m_Name: Enemy1
   m_TagString: Untagged
@@ -1827,9 +1888,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.3
-  m_Height: 1.8
+  m_Height: 1.4146215
   m_Direction: 1
-  m_Center: {x: 0, y: 0.9, z: 0}
+  m_Center: {x: 0, y: 0.70731074, z: 0}
 --- !u!82 &7075776006250765683
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1965,13 +2026,13 @@ MonoBehaviour:
   attackRoot: {fileID: 294194901590704781}
   eyeTransform: {fileID: 294194901485591558}
   audioPlayer: {fileID: 0}
-  runSpeed: 8
+  runSpeed: 3
   turnSmoothTime: 0.1
   damage: 30
   attackRadius: 0.5
   fieldOfView: 100
   viewDistance: 10
-  patrolSpeed: 2
+  patrolSpeed: 1
   targetEntity: {fileID: 0}
   whatIsTarget:
     serializedVersion: 2
@@ -1988,6 +2049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7192c1e7e2e2e8458e0561d325d853f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxHealth: 0
   startingHealth: 100
   enemyHealthSlider: {fileID: 104373357}
   hitClip: {fileID: 8300000, guid: 2027806ff2dfad74580b0822dc0c159d, type: 3}
@@ -2005,10 +2067,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bff644fb4b0a24cbfaacc4f51cd366ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items:
-  - {fileID: 1045172808418600, guid: c90bf41c504e541b98989b07b736097c, type: 3}
-  - {fileID: 1838412652947266, guid: b4e7df10a580e4a1a88a79995b741816, type: 3}
-  - {fileID: 1520669973596254487, guid: 2b0f2dfc1a268f449adaa940b4ddb75d, type: 3}
+--- !u!114 &398150928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7075776006250765680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74651a23971691e41b6cbf077636643b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  livingEntity: {fileID: 1068198861807580999}
+  hitPosition: 1
 --- !u!1 &7080931406387280190
 GameObject:
   m_ObjectHideFlags: 0

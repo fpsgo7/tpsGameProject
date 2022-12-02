@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 //LivingEntity 는 체력을 데미지를 받는 기능을 사용하여 IDamageable을 상속받는다.
 //ApplyDamage 함수를 사용하기위하여 상속받는다.
-public class LivingEntity : MonoBehaviour, IDamageable 
+public class LivingEntity : MonoBehaviour 
 {
 
     public float MaxHealth;//최대체력
@@ -47,7 +47,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
         //layer은 숫자번째로 취급되어 숫자를찾아 조건을 넣는다.
         if (this.gameObject.layer == 9)
         {
-            UIManager.Instance.ShowDamageText(damageMessage.amount);
+            UIManager.Instance.ShowDamageText(damageMessage.amount,damageMessage.isHeadShot);
         }
         health -= damageMessage.amount;//체력을 감소 시킴
         if(enemyHealthSlider != null)
@@ -69,7 +69,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
         //layer은 숫자번째로 취급되어 숫자를찾아 조건을 넣는다.
         if (this.gameObject.layer == 9)
         {
-            UIManager.Instance.ShowDamageText(damage);
+            UIManager.Instance.ShowDamageText(damage,false);
         }
         if (enemyHealthSlider != null)
         {

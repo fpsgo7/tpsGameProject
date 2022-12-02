@@ -15,7 +15,8 @@ public class Enemy1Health : LivingEntity
     private void Awake()
     {
         enemy1AI = GetComponent<Enemy1AI>();
-        MaxHealth = 100;
+        //MaxHealth = 1000; 테스트용
+        MaxHealth=100;
     }
     //private void FixedUpdate()
     //{

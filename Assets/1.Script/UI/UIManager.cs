@@ -262,10 +262,10 @@ public class UIManager : MonoBehaviour
         explosionWallText.SetActive(false);
     }
     //데미지 텍스트 생성하여 띄우기
-    private List<DamageText> damageTexts = new List<DamageText>();
-    public void ShowDamageText(float damage)
+    public List<DamageText> damageTexts = new List<DamageText>();
+    public void ShowDamageText(float damage,bool isHeadShot)
     {
-        DamageText damageText = DamageTextPooling.Instance.GetObject(DamageTextParents, damage);
+        DamageText damageText = DamageTextPooling.Instance.GetObject(DamageTextParents, damage,isHeadShot);
         damageTexts.Add(damageText);
         for (int i = 0; i < damageTexts.Count; i++)
         {
@@ -278,6 +278,5 @@ public class UIManager : MonoBehaviour
                 damageTexts.RemoveAt(i);
             }
         }
-        
     }
 }

@@ -105,14 +105,14 @@ public class Gun : MonoBehaviour
         //Time.time >= lastFireTime + timeBetFire 현제시각이 발사 간격보다 큰경우
         if (state == State.Ready && Time.time >= lastFireTime + timeBetFire)
         {
-            var fireDirection1 = aimTarget - fireTransform.position;
-            var fireDirection2 = aimTarget - fireTransform.position;
-            var fireDirection3 = aimTarget - fireTransform.position;
-            var fireDirection4 = aimTarget - fireTransform.position;
-            var fireDirection5 = aimTarget - fireTransform.position;
+            Vector3 fireDirection1 = aimTarget - fireTransform.position;
+            Vector3 fireDirection2 = aimTarget - fireTransform.position;
+            Vector3 fireDirection3 = aimTarget - fireTransform.position;
+            Vector3 fireDirection4 = aimTarget - fireTransform.position;
+            Vector3 fireDirection5 = aimTarget - fireTransform.position;
             //탄퍼지기 정도 만들기
-            var xError1 = Utility.GedRandomNormalDistribution(0f, currentSpread);//currentSpread 값이 클수록 xError의 값이 커질 확률이 높다.
-            var yError1 = Utility.GedRandomNormalDistribution(0f, currentSpread);
+            float xError1 = Utility.GedRandomNormalDistribution(0f, currentSpread);//currentSpread 값이 클수록 xError의 값이 커질 확률이 높다.
+            float yError1 = Utility.GedRandomNormalDistribution(0f, currentSpread);
 
             fireDirection1 = Quaternion.AngleAxis(yError1, Vector3.up)*fireDirection1;//y 축을 기준으로 y Error만큼 회전시킨다.
             fireDirection1 = Quaternion.AngleAxis(xError1, Vector3.right) * fireDirection1;//x 축일경우
@@ -122,31 +122,31 @@ public class Gun : MonoBehaviour
             //샷건 발사 추가
             if (this.gameObject.tag == "SHOTGUN")
             {
-               
+
                 //탄퍼지기 정도 만들기
-                var xError2 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);//currentSpread 값이 클수록 xError의 값이 커질 확률이 높다.
-                var yError2 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);
+                float xError2 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);//currentSpread 값이 클수록 xError의 값이 커질 확률이 높다.
+                float yError2 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);
 
                 fireDirection2 = Quaternion.AngleAxis(yError2, Vector3.up) * fireDirection2;//y 축을 기준으로 y Error만큼 회전시킨다.
                 fireDirection2 = Quaternion.AngleAxis(xError2, Vector3.right) * fireDirection2;//x 축일경우
                                                                                                //탄퍼지기 정도 만들기
-                var xError3 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);//currentSpread 값이 클수록 xError의 값이 커질 확률이 높다.
-                var yError3 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);
+                float xError3 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);//currentSpread 값이 클수록 xError의 값이 커질 확률이 높다.
+                float yError3 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);
 
                 fireDirection3 = Quaternion.AngleAxis(yError3, Vector3.up) * fireDirection3;//y 축을 기준으로 y Error만큼 회전시킨다.
                 fireDirection3 = Quaternion.AngleAxis(xError3, Vector3.right) * fireDirection3;//x 축일경우
                                                                                                //탄퍼지기 정도 만들기
-                var xError4 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);//currentSpread 값이 클수록 xError의 값이 커질 확률이 높다.
-                var yError4 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);
+                float xError4 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);//currentSpread 값이 클수록 xError의 값이 커질 확률이 높다.
+                float yError4 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);
 
                 fireDirection4 = Quaternion.AngleAxis(yError4, Vector3.up) * fireDirection4;//y 축을 기준으로 y Error만큼 회전시킨다.
                 fireDirection4 = Quaternion.AngleAxis(xError4, Vector3.right) * fireDirection4;//x 축일경우
                                                                                                //탄퍼지기 정도 만들기
-                var xError5 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);//currentSpread 값이 클수록 xError의 값이 커질 확률이 높다.
-                var yError5 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);
+                float xError5 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);//currentSpread 값이 클수록 xError의 값이 커질 확률이 높다.
+                float yError5 = Utility.GedRandomNormalDistribution(0.5f, currentSpread);
 
-                fireDirection2 = Quaternion.AngleAxis(yError5, Vector3.up) * fireDirection5;//y 축을 기준으로 y Error만큼 회전시킨다.
-                fireDirection2 = Quaternion.AngleAxis(xError5, Vector3.right) * fireDirection5;//x 축일경우
+                fireDirection5 = Quaternion.AngleAxis(yError5, Vector3.up) * fireDirection5;//y 축을 기준으로 y Error만큼 회전시킨다.
+                fireDirection5 = Quaternion.AngleAxis(xError5, Vector3.right) * fireDirection5;//x 축일경우
                 Shot(fireTransform.position, fireDirection2);
                 Shot(fireTransform.position, fireDirection3);
                 Shot(fireTransform.position, fireDirection4);
@@ -170,7 +170,7 @@ public class Gun : MonoBehaviour
 
         if(Physics.Raycast(startPoint,direction, out hit,fireDistance, ~excludeTarget))//~을 사용하여 조건문에서 ~을 가진 조건의 반대부분을 조건으로 사용한다.
         {
-            var target = hit.collider.GetComponent<IDamageable>();// 충돌대상이 데미지를 받을수 있는 타입인지 검사
+            IDamageable target = hit.collider.GetComponent<IDamageable>();// 충돌대상이 데미지를 받을수 있는 타입인지 검사
 
             if(target != null)
             {
@@ -180,7 +180,7 @@ public class Gun : MonoBehaviour
                 damageMessage.amount = damage;//데미지값
                 damageMessage.hitPoint = hit.point;//피격 위치
                 damageMessage.hitNormal = hit.normal;//피격위치 반대방향
-
+                damageMessage.isHeadShot = false;
                 target.ApplyDamage(damageMessage);
             }
             else

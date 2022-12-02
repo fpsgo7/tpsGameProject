@@ -779,6 +779,7 @@ GameObject:
   - component: {fileID: 2320961210934898393}
   - component: {fileID: 2320961210934898398}
   - component: {fileID: -1935852500796353253}
+  - component: {fileID: 2046802852}
   m_Layer: 9
   m_Name: Enemy2
   m_TagString: Untagged
@@ -831,9 +832,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.3
-  m_Height: 1.7
+  m_Height: 1.3845892
   m_Direction: 1
-  m_Center: {x: 0, y: 0.9, z: 0}
+  m_Center: {x: -0, y: 0.74229455, z: 0}
 --- !u!82 &2320961210934898394
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1130,10 +1131,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bff644fb4b0a24cbfaacc4f51cd366ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items:
-  - {fileID: 1045172808418600, guid: c90bf41c504e541b98989b07b736097c, type: 3}
-  - {fileID: 1838412652947266, guid: b4e7df10a580e4a1a88a79995b741816, type: 3}
-  - {fileID: 1520669973596254487, guid: 2b0f2dfc1a268f449adaa940b4ddb75d, type: 3}
+--- !u!114 &2046802852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2320961210934898407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74651a23971691e41b6cbf077636643b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  livingEntity: {fileID: 2320961210934898395}
+  hitPosition: 1
 --- !u!1 &2493501902567324355
 GameObject:
   m_ObjectHideFlags: 0
@@ -2097,6 +2108,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2199615109434191496}
+  - component: {fileID: 1356924667}
+  - component: {fileID: 1356924668}
   m_Layer: 0
   m_Name: mixamorig:Head
   m_TagString: Untagged
@@ -2122,6 +2135,33 @@ Transform:
   m_Father: {fileID: 1847603943079530235}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1356924667
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5080488247502653379}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1356924668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5080488247502653379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74651a23971691e41b6cbf077636643b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  livingEntity: {fileID: 2320961210934898395}
+  hitPosition: 0
 --- !u!1 &5124651628561946203
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ public class DamageText : MonoBehaviour
     private void Awake()
     {
         damageText = GetComponent<Text>();
+        damageText.color = Color.yellow;
     }
 
     private void OnEnable()
@@ -24,14 +25,19 @@ public class DamageText : MonoBehaviour
         transform.Translate(new Vector3(0, moveSpeed * Time.deltaTime, 0));
     }
 
-    public void SetDamageText(float damage)
+    public void SetDamageText(float damage,bool isHeadShot)
     {
-        Debug.Log(damage);
+        Debug.Log("헤드샷"+isHeadShot);
+        if (isHeadShot == true)
+        {
+            damageText.color = Color.red;
+        }
         damageText.text = damage.ToString();
     }
 
     public void InActiveDamageText()
     {
+        damageText.color = Color.yellow;
         isDamageTextActive = false;
         this.gameObject.SetActive(false);
     }

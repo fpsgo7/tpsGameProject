@@ -104,7 +104,7 @@ public class EnemyTurretGun : MonoBehaviour
                 damageMessage.amount = damage;//데미지값
                 damageMessage.hitPoint = hit.point;//피격 위치
                 damageMessage.hitNormal = hit.normal;//피격위치 반대방향
-
+                damageMessage.isHeadShot = false;
                 target.ApplyDamage(damageMessage);
             }
             else
