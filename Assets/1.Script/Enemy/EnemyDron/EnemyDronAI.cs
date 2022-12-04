@@ -117,7 +117,7 @@ public class EnemyDronAI : MonoBehaviour
             LayerMask.GetMask("Player"));
         ExplosionAttack();
         EffectManager.Instance.ExplosionEffect(this.transform);
-        Destroy(this.gameObject, 0.1f);
+        //Destroy(this.gameObject, 0.1f);
     }
     public void ExplosionAttack()
     {

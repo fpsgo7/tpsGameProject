@@ -8,6 +8,7 @@ public class EnemySpawner : MonoBehaviour
 
    
     public GameObject enemyPrefab;//적 프리팹
+    private PlayerRader playerRader;
     //생성할 적의 최대 최소 범위
     public float healthMax = 200f;
     public float healthMin = 100f;
@@ -22,6 +23,10 @@ public class EnemySpawner : MonoBehaviour
     private int wave;//웨이브
     public int EnemyCount;
 
+    private void Awake()
+    {
+        playerRader = GameObject.Find("Player").GetComponent<PlayerRader>();
+    }
     private void Start()
     {
         Spawn();
@@ -43,14 +48,16 @@ public class EnemySpawner : MonoBehaviour
     {
         //Debug.Log(intensity);
 
-        var spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
-        var enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
 
         enemy.GetComponent<LivingEntity>().EnemySetup(intensity);
 
         enemies.Add(enemy);
+        playerRader.GetTrackedObjects(enemy);
 
+        enemy.GetComponent<LivingEntity>().OnDeath += () => playerRader.RemoveTrackedObject(enemy);
         enemy.GetComponent<LivingEntity>().OnDeath += () => enemies.Remove(enemy);// 사망한 대상은 리스트에서 제외한다.
         enemy.GetComponent<LivingEntity>().OnDeath += () => EnemyManager.Instance.EnemyDie();
         enemy.GetComponent<LivingEntity>().OnDeath += () => Destroy(enemy.gameObject, 3f);
