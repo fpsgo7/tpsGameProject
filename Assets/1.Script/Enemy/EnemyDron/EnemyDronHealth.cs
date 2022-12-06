@@ -64,5 +64,6 @@ public class EnemyDronHealth : LivingEntity
         GetComponent<Collider>().enabled = false;
 
         enemyDronAI.Explosion();
+        Destroy(gameObject, 0.1f);
     }
 }

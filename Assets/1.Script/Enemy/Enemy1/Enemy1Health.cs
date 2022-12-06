@@ -73,5 +73,6 @@ public class Enemy1Health : LivingEntity
 
         // 사망 효과음 재생
         if (deathClip != null) enemy1AI.audioPlayer.PlayOneShot(deathClip);
+        Destroy(gameObject, 3f);
     }
 }

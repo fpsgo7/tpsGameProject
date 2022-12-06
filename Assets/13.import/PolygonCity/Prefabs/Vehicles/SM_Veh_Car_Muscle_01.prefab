@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 484704}
   - component: {fileID: 3334542}
   - component: {fileID: 2383878}
-  - component: {fileID: -661613317831250957}
+  - component: {fileID: 5011948198404353590}
   m_Layer: 0
   m_Name: SM_Veh_Car_Muscle_01
   m_TagString: Untagged
@@ -245,8 +245,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &-661613317831250957
-BoxCollider:
+--- !u!64 &5011948198404353590
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -255,9 +255,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.429984, y: 1.3140848, z: 5.642581}
-  m_Center: {x: 0.000000059604645, y: 0.8365443, z: 0.13018548}
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 823ed423ae6ba0d4589ddb8fe51e7f14, type: 3}
 --- !u!1 &166256
 GameObject:
   m_ObjectHideFlags: 0

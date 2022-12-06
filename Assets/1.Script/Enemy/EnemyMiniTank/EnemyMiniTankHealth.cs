@@ -67,5 +67,6 @@ public class EnemyMiniTankHealth : LivingEntity
         GetComponent<Collider>().enabled = false;
 
         enemyAI.Explosion();
+        Destroy(gameObject, 0.1f);
     }
 }

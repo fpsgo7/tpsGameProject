@@ -57,6 +57,7 @@ public class UIManager : MonoBehaviour
 
     public bool isMenuUI = false;
     public PlayerShooter playerShooter;
+    public PlayerSubCamera playerSubCamera;
     private float xAxis;
     private float yAxis;
 
@@ -152,6 +153,7 @@ public class UIManager : MonoBehaviour
     {
         if (isMenuUI == false && MenuUI.activeSelf == false)
         {
+            playerSubCamera.ActiveForrowCamInventory();
             Cursor.lockState = CursorLockMode.Confined;
             isMenuUI = true;
             MenuUI.SetActive(true);
@@ -161,6 +163,7 @@ public class UIManager : MonoBehaviour
         }
         else if(isMenuUI == true && MenuUI.activeSelf == true)
         {
+            playerSubCamera.InactiveForrowCamInventory();
             isMenuUI = false;
             MenuUI.SetActive(false);
             Cursor.visible = false;
@@ -179,6 +182,7 @@ public class UIManager : MonoBehaviour
     {
         if (isMenuUI == false && InventoryUI.activeSelf == false)
         {
+            playerSubCamera.ActiveForrowCamInventory();
             Cursor.lockState = CursorLockMode.Confined;
             isMenuUI = true;
             InventoryUI.SetActive(true);
@@ -188,6 +192,7 @@ public class UIManager : MonoBehaviour
         }
         else if(isMenuUI == true && InventoryUI.activeSelf == true)
         {
+            playerSubCamera.InactiveForrowCamInventory();
             isMenuUI = false;
             InventoryUI.SetActive(false);
             Cursor.visible = false;
