@@ -123,6 +123,7 @@ public class EnemyManager : MonoBehaviour
         else if(mapName == lastMap)
         {
             // 게임클리어 관련 내용 실행
+            UIManager.Instance.ActiveGameClearUI();
         }
     }
 }

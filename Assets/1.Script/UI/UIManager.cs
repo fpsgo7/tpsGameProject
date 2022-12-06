@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gameoverUI;
     [SerializeField] private GameObject MenuUI;
     [SerializeField] private GameObject InventoryUI;
+    [SerializeField] private GameObject gameClearUI;
     [SerializeField] private GameObject restoreHealthSliderObject;
     [SerializeField] private GameObject WeaponPanel;
     [SerializeField] private GameObject EquipmentPanel;
@@ -52,6 +53,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text waveText;
     [SerializeField] private Text xAxisText;
     [SerializeField] private Text yAxisText;
+    [SerializeField] private Text GameClearScoreText;
 
 
 
@@ -184,9 +186,9 @@ public class UIManager : MonoBehaviour
         {
             playerSubCamera.ActiveForrowCamInventory();
             Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
             isMenuUI = true;
             InventoryUI.SetActive(true);
-            Cursor.visible = true;
             playerShooter.AxisMenuOnChange();
             Debug.Log("인벤토리 오픈 오픈");
         }
@@ -283,5 +285,13 @@ public class UIManager : MonoBehaviour
                 damageTexts.RemoveAt(i);
             }
         }
+    }
+    //게임 클리어
+    public void ActiveGameClearUI()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+        GameClearScoreText.text = GameManager.Instance.thisGameScore.ToString() + " 점";
+        gameClearUI.SetActive(true);
     }
 }

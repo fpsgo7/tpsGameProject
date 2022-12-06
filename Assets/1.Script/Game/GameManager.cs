@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public PlayerShooter playerShooter;
 
     public int score;
+    public int thisGameScore;
 
 
     public bool isGameover { get; private set; }
@@ -38,6 +39,7 @@ public class GameManager : MonoBehaviour
         if (!isGameover)
         {
             score += newScore;
+            thisGameScore += newScore;
             UIManager.Instance.SetScoreText(score);
             PlayerInfoManager.Instance.SavePlayerScore(score);
         }
