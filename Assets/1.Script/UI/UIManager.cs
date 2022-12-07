@@ -155,7 +155,7 @@ public class UIManager : MonoBehaviour
     {
         if (isMenuUI == false && MenuUI.activeSelf == false)
         {
-            playerSubCamera.ActiveForrowCamInventory();
+            //playerSubCamera.ActiveForrowCamInventory();
             Cursor.lockState = CursorLockMode.Confined;
             isMenuUI = true;
             MenuUI.SetActive(true);
@@ -165,7 +165,7 @@ public class UIManager : MonoBehaviour
         }
         else if(isMenuUI == true && MenuUI.activeSelf == true)
         {
-            playerSubCamera.InactiveForrowCamInventory();
+            //playerSubCamera.InactiveForrowCamInventory();
             isMenuUI = false;
             MenuUI.SetActive(false);
             Cursor.visible = false;

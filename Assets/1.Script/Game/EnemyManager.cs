@@ -34,9 +34,9 @@ public class EnemyManager : MonoBehaviour
     private const string bridgeRightMap = "BridgeRightMap";
     private const string lastMap = "LastMap";
     private string mapName;
-    private bool bridgeLeftKey;//아이템을 얻기 위한 통곡의 다리
-    private bool bridgeRightKey;// 다음 단계를 가기위한 통곡의 다리
-    private bool lastMaplKey;
+    public bool bridgeLeftKey;//아이템을 얻기 위한 통곡의 다리
+    public bool bridgeRightKey;// 다음 단계를 가기위한 통곡의 다리
+    public bool lastMaplKey;
     private bool mapIn;// 해당 던전안에 있는지 체크
     private int enemyCount;
 
@@ -105,22 +105,22 @@ public class EnemyManager : MonoBehaviour
     public void MapClear()
     {
         mapIn = false;
-        if (mapName == firstMap)
+        if (mapName.Equals(firstMap))
         {
             bridgeLeftKey = true;
             bridgeRightKey = true;
         }
-        else if (mapName == bridgeLeftMap) 
+        if (mapName.Equals(bridgeLeftMap)) 
         {
             //아이템 박스 활성화
         }
-        else if( mapName == bridgeRightMap)
+        if( mapName.Equals(bridgeRightMap))
         {
             lastMaplKey = true;
             RightEndFence1.GetComponent<Animator>().SetTrigger(fenceLeftMove);
             RightEndFence2.GetComponent<Animator>().SetTrigger(fenceRightMove);
         }
-        else if(mapName == lastMap)
+        if(mapName.Equals(lastMap))
         {
             // 게임클리어 관련 내용 실행
             UIManager.Instance.ActiveGameClearUI();

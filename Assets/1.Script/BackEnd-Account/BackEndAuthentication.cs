@@ -42,8 +42,8 @@ public class BackEndAuthentication : MonoBehaviour
                 LobbyScript.Instance.OpenGameStartPanel();
                 LobbyScript.Instance.logoutButton.SetActive(true);
                 LobbyScript.Instance.GoLoginPanelButton.SetActive(false);
-                LobbyScript.Instance.SetTitleText();
                 BackEndPlayerInfo.GetPlayerInfoInLobby(id);
+                LobbyScript.Instance.SetTitleText();
                 InventoryManager.Instance.Load();
                 break;
             default:
