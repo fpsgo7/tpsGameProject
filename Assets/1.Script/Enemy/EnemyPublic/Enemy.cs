@@ -52,7 +52,7 @@ public class Enemy : LivingEntity
     private List<LivingEntity> lastAttackedTargets = new List<LivingEntity>();
     // 람다식을 활용한다.
     //targetEntity 가 널이아니고 추적할 대상이 죽지 않았다면  true 가 된다.
-    private bool hasTarget => targetEntity != null && !targetEntity.dead;
+    private bool isHasTarget => targetEntity != null && !targetEntity.IsDead;
 
 
 #if UNITY_EDITOR
@@ -119,7 +119,7 @@ public class Enemy : LivingEntity
 
     private void Update()
     {
-        if (dead) return;//죽으면 반복문을 멈춤
+        if (IsDead) return;//죽으면 반복문을 멈춤
         //상태값이 추적이고 추적상대가 존재한다면 참이됨
         if (state == State.Tracking && targetEntity != null)
         {
@@ -133,7 +133,7 @@ public class Enemy : LivingEntity
             }
         }
 
-        enemyHealth = health;//체력을 유니티 에디터에서 보기위해 임시로 사용
+        enemyHealth = Health;//체력을 유니티 에디터에서 보기위해 임시로 사용
 
 
         // 추적 대상의 존재 여부에 따라 다른 애니메이션을 재생
@@ -142,7 +142,7 @@ public class Enemy : LivingEntity
 
     private void FixedUpdate()
     {
-        if (dead) return;//죽으면 실행을 막음
+        if (IsDead) return;//죽으면 실행을 막음
 
         //공격하는 동안 자연스럽게 플레이어를 보게한다.
         if (state == State.AttackBegin || state == State.Attacking)
@@ -175,7 +175,7 @@ public class Enemy : LivingEntity
                     message.hitPoint = attackRoot.TransformPoint(hits[i].point);
                     message.hitNormal = attackRoot.TransformDirection(hits[i].normal);
 
-                    attackTargetEntity.ApplyDamage(message);
+                    attackTargetEntity.IsApplyDamage(message);
 
                     lastAttackedTargets.Add(attackTargetEntity);
                     break;
@@ -188,9 +188,9 @@ public class Enemy : LivingEntity
     private IEnumerator UpdatePath()
     {
         // 살아있는 동안 무한 루프
-        while (!dead)
+        while (!IsDead)
         {
-            if (hasTarget)
+            if (isHasTarget)
             {
                 if (state == State.Patrol)
                 {
@@ -229,7 +229,7 @@ public class Enemy : LivingEntity
                     var livingEntity = collider.GetComponent<LivingEntity>();
 
                     // LivingEntity 컴포넌트가 존재하며, 해당 LivingEntity가 살아있다면,
-                    if (livingEntity != null && !livingEntity.dead)
+                    if (livingEntity != null && !livingEntity.IsDead)
                     {
                         // 추적 대상을 해당 LivingEntity로 설정
                         targetEntity = livingEntity;
@@ -246,9 +246,9 @@ public class Enemy : LivingEntity
     }
 
     // 데미지를 입었을때 실행할 처리 체력부분
-    public override bool ApplyDamage(DamageMessage damageMessage)
+    public override bool IsApplyDamage(DamageMessage damageMessage)
     {
-        if (!base.ApplyDamage(damageMessage)) return false;
+        if (!base.IsApplyDamage(damageMessage)) return false;
 
         if (targetEntity == null)
         {

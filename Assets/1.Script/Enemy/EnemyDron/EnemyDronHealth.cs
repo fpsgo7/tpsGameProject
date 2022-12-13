@@ -16,7 +16,7 @@ public class EnemyDronHealth : LivingEntity
     private void Awake()
     {
         enemyDronAI = GetComponent<EnemyDronAI>();
-        MaxHealth = 50;
+        maxHealth = 50;
     }
     //private void FixedUpdate()
     //{
@@ -25,9 +25,9 @@ public class EnemyDronHealth : LivingEntity
     //}
 
     // 데미지를 입었을때 실행할 처리 체력부분
-    public override bool ApplyDamage(DamageMessage damageMessage)
+    public override bool IsApplyDamage(DamageMessage damageMessage)
     {
-        if (!base.ApplyDamage(damageMessage)) return false;
+        if (!base.IsApplyDamage(damageMessage)) return false;
 
         if (enemyDronAI.targetEntity == null)
         {
@@ -41,9 +41,9 @@ public class EnemyDronHealth : LivingEntity
         return true;
     }
     //폭파 데미지를 입을 경우 실행할 처리 부분
-    public override bool ApplyDamage(int damage, GameObject damager)
+    public override bool IsApplyDamage(int damage, GameObject damager)
     {
-        if (!base.ApplyDamage(damage, damager)) return false;
+        if (!base.IsApplyDamage(damage, damager)) return false;
 
         if (enemyDronAI.targetEntity == null)
         {

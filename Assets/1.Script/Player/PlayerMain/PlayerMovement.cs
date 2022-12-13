@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     //점프 딜레이 
     private float waitingForJump = 4f;//점프 딜레이
     private float lastJumpTime; //마지막 점프시간
-    public bool jumpState = false;// 점프 상태
+    public bool isJumpState = false;// 점프 상태
 
     //지면상의 현제 속도를 표현한다. 람다식 활용
     public float currentSpeed =>
@@ -57,12 +57,12 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()//업데이트 문 필요
     {
         //회전 관련 함수를 실행하게함
-        if (currentSpeed > 0.2f || playerInput.fire || playerShooter.aimState == PlayerShooter.AimState.HipFire) 
+        if (currentSpeed > 0.2f || playerInput.IsFire || playerShooter.aimState == PlayerShooter.AimState.HipFire) 
             Rotate();
         //움직임 함수를 실행하게함
         Move(playerInput.moveInput);
         //점프함수를 실행하게함
-        if (playerInput.jump && Time.time >= lastJumpTime + waitingForJump)
+        if (playerInput.IsJump && Time.time >= lastJumpTime + waitingForJump)
             Jump();
     }
 
@@ -115,8 +115,8 @@ public class PlayerMovement : MonoBehaviour
     public void JumpStart()
     {
         //Debug.Log("점프시작");
-        playerHealth.invincibility = true;
-        jumpState = true;
+        playerHealth.isInvincibility = true;
+        isJumpState = true;
         speed = jumpStopSpeed;
     }
     public void JumpMoveStart()
@@ -130,8 +130,8 @@ public class PlayerMovement : MonoBehaviour
     public void JumpEnd()
     {
         //Debug.Log("점프끝");
-        playerHealth.invincibility = false;
-        jumpState = false;
+        playerHealth.isInvincibility = false;
+        isJumpState = false;
         animator.applyRootMotion = false;
         speed = runSpeed;
     }
@@ -141,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //부드럽게 값이 변화 하기위해 사용
         var animationSpeedPercent = currentSpeed / speed;
-        if(playerInput.zoomIn == true)
+        if(playerInput.IszoomIn == true)
         {
             animator.SetFloat(hashVerticalMove, moveInput.y * animationSpeedPercent/2, 0.05f, Time.deltaTime);
             animator.SetFloat(hashHorizontalMove, moveInput.x * animationSpeedPercent/2, 0.05f, Time.deltaTime);

@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
 
     public bool isGameover { get; private set; }
-    public bool onlineStatus = false;
+    public bool isOnlineStatus = false;
 
     private void Awake()
     {
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         PlayerInfoManager.Instance.LoadPlayer();
-        onlineStatus = PlayerInfoManager.Instance.onlineStatus;
+        isOnlineStatus = PlayerInfoManager.Instance.onlineStatus;
     }
     
     public void AddScore(int newScore)

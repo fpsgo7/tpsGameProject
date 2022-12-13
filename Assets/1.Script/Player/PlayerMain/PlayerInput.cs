@@ -28,14 +28,14 @@ public class PlayerInput : MonoBehaviour
     //값을 읽을때는 public 형이라 밬에서 읽기 쉽지만
     //값설정은 private 로 막아뒀다.
     public Vector2 moveInput { get; private set; }//방향을 위해 사용
-    public bool fire { get; private set; }
-    public bool Grenade { get; private set; }
-    public bool zoomIn { get; private set; }
-    public bool reload { get; private set; }
-    public bool jump { get; private set; }
-    public bool restoreHealth { get; private set; }
-    public bool scopeZoomIn { get; private set; }
-    public bool interaction { get; private set; }
+    public bool IsFire { get; private set; }
+    public bool IsGrenade { get; private set; }
+    public bool IszoomIn { get; private set; }
+    public bool Isreload { get; private set; }
+    public bool IsJump { get; private set; }
+    public bool IsRestoreHealth { get; private set; }
+    public bool IsScopeZoomIn { get; private set; }
+    public bool IsInteraction { get; private set; }
 
     private void Awake()
     {
@@ -47,9 +47,9 @@ public class PlayerInput : MonoBehaviour
     {
         //체력 회복 관리
         if (Input.GetButtonDown(restoreHealthButtonName))
-            restoreHealth = true;
+            IsRestoreHealth = true;
         if (Input.GetButtonUp(restoreHealthButtonName))
-            restoreHealth = false;
+            IsRestoreHealth = false;
 
         //메뉴 온오프 
         if (Input.GetButtonDown(ESCButtonName))
@@ -64,28 +64,28 @@ public class PlayerInput : MonoBehaviour
 
         //게임 오버가 되거나 체력 회복 중인 경우와 메뉴를 보는 동안 정지한다.
         if (GameManager.Instance != null
-            && GameManager.Instance.isGameover || playerHealth.restoreHealthProceeding == true
+            && GameManager.Instance.isGameover || playerHealth.isRestoreHealthProceeding == true
             || UIManager.Instance.isMenuUI == true
             )
         {
             moveInput = Vector2.zero;
-            fire = false;
-            zoomIn = false;
-            reload = false;
-            jump = false;
-            Grenade = false;
-            interaction = false;
+            IsFire = false;
+            IszoomIn = false;
+            Isreload = false;
+            IsJump = false;
+            IsGrenade = false;
+            IsInteraction = false;
             return;
         }
         // 점프중인 경우
-        if(playerMovement.jumpState == true)
+        if(playerMovement.isJumpState == true)
         {
-            fire = false;
-            zoomIn = false;
-            reload = false;
-            jump = false;
-            Grenade = false;
-            interaction = false;
+            IsFire = false;
+            IszoomIn = false;
+            Isreload = false;
+            IsJump = false;
+            IsGrenade = false;
+            IsInteraction = false;
             return;
         }
 
@@ -94,14 +94,14 @@ public class PlayerInput : MonoBehaviour
         //move Input 값이 1보다 크면 그값을 1로 교환해주어 속도가 잘못되는 현상을 방지한다.
         if (moveInput.sqrMagnitude > 1) moveInput = moveInput.normalized;//정규화 활용
         // 해당 파라미터에 입력을 받아 true 와 false 로 바꿔 조종하는데 쓴다.
-        jump = Input.GetButtonDown(jumpButtonName);
-        fire = Input.GetButton(fireButtonName);
-        Grenade = Input.GetButtonDown(FireGrenadeButtonName);
-        zoomIn = Input.GetButton(zoomInButtonName);
-        reload = Input.GetButtonDown(reloadButtonName);
-        interaction = Input.GetButtonDown(InteractionButtonName);
+        IsJump = Input.GetButtonDown(jumpButtonName);
+        IsFire = Input.GetButton(fireButtonName);
+        IsGrenade = Input.GetButtonDown(FireGrenadeButtonName);
+        IszoomIn = Input.GetButton(zoomInButtonName);
+        Isreload = Input.GetButtonDown(reloadButtonName);
+        IsInteraction = Input.GetButtonDown(InteractionButtonName);
         //스코프 조작
-        scopeZoomIn = Input.GetButton(scopeZoomInButtonName);
+        IsScopeZoomIn = Input.GetButton(scopeZoomInButtonName);
 
        
     }

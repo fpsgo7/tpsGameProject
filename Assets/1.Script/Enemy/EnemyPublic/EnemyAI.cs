@@ -47,7 +47,7 @@ public class EnemyAI : MonoBehaviour
     private List<LivingEntity> lastAttackedTargets = new List<LivingEntity>();
     // 람다식을 활용한다.
     //targetEntity 가 널이아니고 추적할 대상이 죽지 않았다면  true 가 된다.
-    private bool hasTarget => targetEntity != null && !targetEntity.dead;
+    private bool isTarget => targetEntity != null && !targetEntity.IsDead;
 
 
 #if UNITY_EDITOR
@@ -89,7 +89,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        if (enemyHealth.dead) return;//죽으면 반복문을 멈춤
+        if (enemyHealth.IsDead) return;//죽으면 반복문을 멈춤
         //상태값이 추적이고 추적상대가 존재한다면 참이됨
         if (state == State.Tracking && targetEntity != null)
         {
@@ -105,7 +105,7 @@ public class EnemyAI : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (enemyHealth.dead) return;//죽으면 실행을 막음
+        if (enemyHealth.IsDead) return;//죽으면 실행을 막음
 
         //공격하는 동안 자연스럽게 플레이어를 보게한다.
         if (state == State.AttackBegin || state == State.Attacking)
@@ -131,9 +131,9 @@ public class EnemyAI : MonoBehaviour
     private IEnumerator UpdatePath()
     {
         // 살아있는 동안 무한 루프
-        while (!enemyHealth.dead)
+        while (!enemyHealth.IsDead)
         {
-            if (hasTarget)
+            if (isTarget)
             {
                 if (state == State.Patrol)
                 {
@@ -172,7 +172,7 @@ public class EnemyAI : MonoBehaviour
                     var livingEntity = collider.GetComponent<LivingEntity>();
 
                     // LivingEntity 컴포넌트가 존재하며, 해당 LivingEntity가 살아있다면,
-                    if (livingEntity != null && !livingEntity.dead)
+                    if (livingEntity != null && !livingEntity.IsDead)
                     {
                         // 추적 대상을 해당 LivingEntity로 설정
                         targetEntity = livingEntity;

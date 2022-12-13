@@ -35,7 +35,7 @@ public class Grenade : MonoBehaviour
         foreach(RaycastHit hitobj in rayHits)
         {
             if (hitobj.transform.GetComponent<LivingEntity>())
-                hitobj.transform.GetComponent<LivingEntity>().ApplyDamage(damage,FireMan);
+                hitobj.transform.GetComponent<LivingEntity>().IsApplyDamage(damage,FireMan);
         }
     }
     //오브젝트 풀링방식으로 없에기

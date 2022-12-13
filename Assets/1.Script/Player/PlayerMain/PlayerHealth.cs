@@ -14,8 +14,8 @@ public class PlayerHealth : LivingEntity
     private int restoreHealthMax;//체력회복 게이지 최댁값
     public int healthKit;// 체력회복 킷
     //bool 형
-    public bool restoreHealthProceeding = false;
-    public bool invincibility = false;
+    public bool isRestoreHealthProceeding = false;
+    public bool isInvincibility = false;
 
     //컴포넌트 연결
     private void Awake()
@@ -29,7 +29,7 @@ public class PlayerHealth : LivingEntity
     private void FixedUpdate()
     {
         //회복 문장
-        if (playerInput.restoreHealth && health < MaxHealth && healthKit >=1)
+        if (playerInput.IsRestoreHealth && Health < maxHealth && healthKit >=1)
         {
             RestoreHealthSlider();
         }
@@ -54,10 +54,10 @@ public class PlayerHealth : LivingEntity
         restoreHealth += 1;
         UIManager.Instance.RestoreHealthSlideValue(restoreHealth);
         // 체력 회복 UI 활성화
-        if (restoreHealth >= 1 && restoreHealthProceeding == false)
+        if (restoreHealth >= 1 && isRestoreHealthProceeding == false)
         {
             UIManager.Instance.ActiveRestoreHealthSlider();
-            restoreHealthProceeding = true;
+            isRestoreHealthProceeding = true;
         }
         // 체력 회복 완료
         if (restoreHealth >= restoreHealthMax)
@@ -65,7 +65,7 @@ public class PlayerHealth : LivingEntity
             UIManager.Instance.InactiveRestoreHealtSlider();
             RestoreHealth();
             restoreHealth = 0;
-            restoreHealthProceeding = false;
+            isRestoreHealthProceeding = false;
         }
     }
     //체력 회복 중단
@@ -74,7 +74,7 @@ public class PlayerHealth : LivingEntity
         restoreHealth = 0;
         UIManager.Instance.RestoreHealthSlideValue(restoreHealth);
         UIManager.Instance.InactiveRestoreHealtSlider();
-        restoreHealthProceeding = false;
+        isRestoreHealthProceeding = false;
     }
 
 
@@ -95,16 +95,16 @@ public class PlayerHealth : LivingEntity
     {
         //UIManager에 체력 업데이트를 체력값을 보내어 사용하며
         //죽음 상태인 경우 0값을 보낸다.
-        UIManager.Instance.SetHealthText(dead ? 0f : health);
+        UIManager.Instance.SetHealthText(IsDead ? 0f : Health);
         UIManager.Instance.SetHealthKitText(healthKit);
     }
 
-    public override bool ApplyDamage(DamageMessage damageMessage)
+    public override bool IsApplyDamage(DamageMessage damageMessage)
     {
-        if (invincibility == true)// 데미지 적용을 무적상태 동안은 막음
+        if (isInvincibility == true)// 데미지 적용을 무적상태 동안은 막음
             return false;
         //데미지 적용이 실패한경우 return false를 시킨다.
-        if (!base.ApplyDamage(damageMessage))
+        if (!base.IsApplyDamage(damageMessage))
             return false;
         //피격효과 (피격지점, 피격각도, 플레이어 위치, 사용할 이펙트)
         // EffectManager.Instance.PlayHitEffect(damageMessage.hitPoint, damageMessage.hitNormal, transform, EffectManager.EffectType.Flesh);
@@ -116,12 +116,12 @@ public class PlayerHealth : LivingEntity
         return true;//공격이 성공한 것을 알림
     }
     //폭파 대미지용
-    public override bool ApplyDamage(int damage, GameObject damager)
+    public override bool IsApplyDamage(int damage, GameObject damager)
     {
-        if (invincibility == true)// 데미지 적용을 무적상태 동안은 막음
+        if (isInvincibility == true)// 데미지 적용을 무적상태 동안은 막음
             return false;
         //데미지 적용이 실패한경우 return false를 시킨다.
-        if (!base.ApplyDamage(damage, damager))
+        if (!base.IsApplyDamage(damage, damager))
             return false;
         //피격사운드 재생
         //playerAudioPlayer.PlayOneShot(hitClip);
@@ -143,18 +143,18 @@ public class PlayerHealth : LivingEntity
 
     public void EqipmentWear(float shield)
     {
-        if (health >= MaxHealth)
+        if (Health >= maxHealth)
         {
-            MaxHealth = startingHealth;//체력 초기화
-            MaxHealth += shield;//방어구만큼 최대체력 증가.
-            health = MaxHealth;
+            maxHealth = startingHealth;//체력 초기화
+            maxHealth += shield;//방어구만큼 최대체력 증가.
+            Health = maxHealth;
         }
         else
         {
-            MaxHealth = startingHealth;//체력 초기화
-            MaxHealth += shield;//방어구만큼 최대체력 증가.
+            maxHealth = startingHealth;//체력 초기화
+            maxHealth += shield;//방어구만큼 최대체력 증가.
         }
-        UIManager.Instance.SetHealthMaxSlider(MaxHealth);//방어구 수정으로 슬라이더 최대값 수정 추가
+        UIManager.Instance.SetHealthMaxSlider(maxHealth);//방어구 수정으로 슬라이더 최대값 수정 추가
         UpdateUI();
     }
 }

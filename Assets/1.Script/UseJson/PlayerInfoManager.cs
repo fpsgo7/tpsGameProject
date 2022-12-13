@@ -123,25 +123,13 @@ public class PlayerInfoManager : MonoBehaviour
         }
     }
     // 마우스 감도 값 넣기
-    public void SetXaxis(float x)
+    public void SetAxis(float xAxis, float yAxis)
     {
-        player.axisX = x;
+        player.axisX = xAxis;
+        player.axisY = yAxis;
         if (onlineStatus)
         {
-            BackEndPlayerInfo.SetAxisXToServer(player.id, x);
-        }
-        else
-        {
-            string jdata = JsonUtility.ToJson(player);
-            File.WriteAllText(filePath, jdata);
-        }
-    }
-    public void SetYaxis(float y)
-    {
-        player.axisY = y;
-        if (onlineStatus)
-        {
-            BackEndPlayerInfo.SetAxisYToServer(player.id, y);
+            BackEndPlayerInfo.SetAxisToServer(player.id, xAxis, yAxis);
         }
         else
         {

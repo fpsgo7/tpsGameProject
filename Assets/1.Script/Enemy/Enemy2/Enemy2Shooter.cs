@@ -33,7 +33,7 @@ public class Enemy2Shooter : MonoBehaviour
     protected float reloadTime;//제장전시간
     public int maxBullet;//최대 탄수
     public int currBullet;//현제 탄수
-    public bool death = false;//죽음상탠
+    public bool isDeath = false;//죽음상탠
     protected float fireDistance = 50f; // 사정거리
     protected float damage;//데미지
     
@@ -69,7 +69,7 @@ public class Enemy2Shooter : MonoBehaviour
     public void Update()
     {
         //죽음상태가 true인경우 반복문을 실행하지 못하게함
-        if (enemy2Health.dead == true)
+        if (enemy2Health.IsDead == true)
         {
             enemyAnimator.SetBool(hashFire, false);
         }

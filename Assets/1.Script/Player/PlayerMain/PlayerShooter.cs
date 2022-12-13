@@ -26,7 +26,7 @@ public class PlayerShooter : MonoBehaviour
     public CinemachineFreeLook forrowCam;// 줌인 카메라
     public Crosshair crosshair;
     public GameObject playerDgree;// 플레이어 각도 수정
-    public Transform GunPivot;//총 위치를 위한 오브젝트
+    public Transform gunPivot;//총 위치를 위한 오브젝트
 
     private float waitingTimeForReleasingAim = 2.5f;//총 조준후 다시 풀어지는 시간
     private float lastFireInputTime; //마지막 발사 시간
@@ -58,12 +58,12 @@ public class PlayerShooter : MonoBehaviour
     public readonly int hashZoomIn = Animator.StringToHash("ZoomIn");
 
     private Vector3 aimPoint;//실제 조준대상 tps 기에 사용한다. 실제 조준점이 무조건 정중앙이 아니라서이다.
-    private bool linedUp => !(Mathf.Abs(playerCamera.transform.eulerAngles.y - transform.eulerAngles.y) > 1f);//플레이어가 바라보는 각도와 실제 조준 각도를 너무큰치 체크해준다.
+    private bool isLinedUp => !(Mathf.Abs(playerCamera.transform.eulerAngles.y - transform.eulerAngles.y) > 1f);//플레이어가 바라보는 각도와 실제 조준 각도를 너무큰치 체크해준다.
     //정면에 사격할수 있는지 적정거리가 되는지 체크하는 변수 (플레이어 케릭터 위치 + Vector3.up *
     //총의 발사 위치의 y축, 발사 포지션, 사격제외대상 레이어)
     //값에 따라 사격할수 없는 거리가되면 크로스 헤어를 비활성화 하고 스코프를 비활성화 시키기위한 조건값을 구해준다.
-    private bool hasEnoughDistance => !Physics.Linecast(transform.position + Vector3.up * gun.fireTransform.position.y, gun.fireTransform.position, ~excludeTarget);
-    public bool zoomIn=false;
+    private bool isEnoughDistance => !Physics.Linecast(transform.position + Vector3.up * gun.fireTransform.position.y, gun.fireTransform.position, ~excludeTarget);
+    public bool isZoomIn=false;
     void Awake()
     {
         //플레이어가 자기자신을 쏘는 상황을 방지하기위하여 자기자신의 레이어를 추가한다.
@@ -104,30 +104,30 @@ public class PlayerShooter : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (playerInput.fire)
+        if (playerInput.IsFire)
         {
             lastFireInputTime = Time.time;
             Shoot();
         }
-        if (playerInput.reload)
+        if (playerInput.Isreload)
         {
             Reload();
         }
 
-        if (playerInput.zoomIn == true && zoomIn == false)
+        if (playerInput.IszoomIn == true && isZoomIn == false)
         {
             ZoomIn();
         }
-        else if (playerInput.zoomIn == false && zoomIn == true)
+        else if (playerInput.IszoomIn == false && isZoomIn == true)
         {
             ZoomOut();
         }
 
-        if (playerInput.scopeZoomIn == true && scopeCamera.activeSelf == false && zoomIn == true && hasEnoughDistance == true && gun.guns == Gun.Guns.DMRGUN)
+        if (playerInput.IsScopeZoomIn == true && scopeCamera.activeSelf == false && isZoomIn == true && isEnoughDistance == true && gun.guns == Gun.Guns.DMRGUN)
         {
             ScopeZoomIn();
         }
-        else if (playerInput.scopeZoomIn == false && scopeCamera.activeSelf == true || hasEnoughDistance==false && gun.guns == Gun.Guns.DMRGUN)
+        else if (playerInput.IsScopeZoomIn == false && scopeCamera.activeSelf == true || isEnoughDistance==false && gun.guns == Gun.Guns.DMRGUN)
         {   //스코프 줌인 입력 상태가 false 이고 스코프 카메라가 트루이거나 , 사격거리가 짧아 사격이 불가능할경우 실행
             ScopeZoomOut();
         }
@@ -142,7 +142,7 @@ public class PlayerShooter : MonoBehaviour
         angle = angle / -180f + 0.5f;
         playerAnimator.SetFloat(hashAngle, angle);// 에니메이터에 각도값을 보내어 총을 위아레로 움직이게함
         //발사버튼을 안누른시간이 지정된시간보다 오래걸리면 실행됨
-        if (!playerInput.fire && Time.time >= lastFireInputTime + waitingTimeForReleasingAim)
+        if (!playerInput.IsFire && Time.time >= lastFireInputTime + waitingTimeForReleasingAim)
         {
             aimState = AimState.Idle;
         }
@@ -160,8 +160,8 @@ public class PlayerShooter : MonoBehaviour
         {
             Destroy(gun.gameObject);
         }
-        gun = Instantiate(gunToEquip, GunPivot.position, GunPivot.rotation) as Gun;
-        gun.transform.parent = GunPivot;
+        gun = Instantiate(gunToEquip, gunPivot.position, gunPivot.rotation) as Gun;
+        gun.transform.parent = gunPivot;
         if(damage != 0.0f)
         {
             gun.Setup(this,damage);
@@ -175,7 +175,7 @@ public class PlayerShooter : MonoBehaviour
         if (aimState == AimState.Idle)
         {
 
-            if (linedUp)
+            if (isLinedUp)
             { //조준점과 캐릭터가 정렬될 경우 
                 aimState = AimState.HipFire;//사격 상태로 바꾼다.
             }
@@ -185,7 +185,7 @@ public class PlayerShooter : MonoBehaviour
         {
             //정면에 충분한 공간을 확보하는지 체크함
            
-            if (hasEnoughDistance)
+            if (isEnoughDistance)
             {
                 if (gun.Fire(aimPoint))//발사를 실행함과 동시에 발사가 성공하는 것을 2가지동작을한다.
                 {
@@ -235,7 +235,7 @@ public class PlayerShooter : MonoBehaviour
 
         UIManager.Instance.SetAmmoText(gun.magAmmo, gun.ammoRemain);//남은 탄약수 갱신
 
-        UIManager.Instance.ActiveCrosshair(hasEnoughDistance);//크로스 해어 활성화
+        UIManager.Instance.ActiveCrosshair(isEnoughDistance);//크로스 해어 활성화
         UIManager.Instance.SetCrossHairPosition(aimPoint);//총알이 맞게되는 지점을 보내줘 조준점 이동하게함
     }
     //총을 쥐는 것을 다룸
@@ -289,8 +289,8 @@ public class PlayerShooter : MonoBehaviour
         playerMovement.speed = playerMovement.walkSpeed;// 움직임 속도 조절
         //lateUpdateFollow.ZoomInFollow();
         //gun.ZoomInFollow();
-        zoomIn = true;
-        playerAnimator.SetBool(hashZoomIn, zoomIn);
+        isZoomIn = true;
+        playerAnimator.SetBool(hashZoomIn, isZoomIn);
     }
     //조준 끝
     private void ZoomOut()
@@ -327,8 +327,8 @@ public class PlayerShooter : MonoBehaviour
         playerMovement.speed = playerMovement.runSpeed;
         //lateUpdateFollow.ZoomOutFollow();
         //gun.ZoomOutFollow();
-        zoomIn = false;
-        playerAnimator.SetBool(hashZoomIn, zoomIn);
+        isZoomIn = false;
+        playerAnimator.SetBool(hashZoomIn, isZoomIn);
     }
 
     private void ScopeZoomIn()
@@ -345,22 +345,22 @@ public class PlayerShooter : MonoBehaviour
         crosshair.ScopeUse(true);
     }
     //마우스 감도 조절하기 
-    public void AxisChangeX(float x )//설정 마우스 감도 조절용
+    public void XAxisChange(float x )//설정 마우스 감도 조절용
     {
         currentXAxis = x;
     }
-    public void AxisChangeY(float y)//설정 마우스 감도 조절용
+    public void YAxisChange(float y)//설정 마우스 감도 조절용
     {
         currentYAxis = y;
     }
-    public void AxisMenuOnChange()//메뉴 관련 마우스 감도
+    public void AxisActiveMenuChange()//메뉴 관련 마우스 감도
     {
         currentXAxis = forrowCam.m_XAxis.m_MaxSpeed;
         currentYAxis = forrowCam.m_YAxis.m_MaxSpeed;
         forrowCam.m_XAxis.m_MaxSpeed = 0;
         forrowCam.m_YAxis.m_MaxSpeed = 0;
     }
-    public void AxisMenuOffChange()
+    public void AxisMenuInactiveChange()
     {
         forrowCam.m_XAxis.m_MaxSpeed = currentXAxis;
         forrowCam.m_YAxis.m_MaxSpeed = currentYAxis;

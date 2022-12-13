@@ -48,8 +48,8 @@ public class LobbyScript : MonoBehaviour
     public int score;
     public int weaponNum;
     public int equipmentNum;
-    public float axisX;
-    public float axisY;
+    public float xAxis;
+    public float yAxis;
 
     private void Start()
     {
@@ -130,10 +130,10 @@ public class LobbyScript : MonoBehaviour
         score = 0;
         weaponNum = 0;
         equipmentNum = 0;
-        axisX = 200;
-        axisY = 2;
+        xAxis = 200;
+        yAxis = 2;
         PlayerInfoManager.Instance.SetOnline(false, id, name, score, weaponNum,
-                equipmentNum, axisX, axisY);
+                equipmentNum, xAxis, yAxis);
     }
 
     public void SetName()

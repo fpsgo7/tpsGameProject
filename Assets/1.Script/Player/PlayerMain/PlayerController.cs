@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (playerHealth.dead)
+        if (playerHealth.IsDead)
         {
             return;
         }

@@ -51,7 +51,7 @@ public class Enemy1AI : MonoBehaviour
     private List<LivingEntity> lastAttackedTargets = new List<LivingEntity>();
     // 람다식을 활용한다.
     //targetEntity 가 널이아니고 추적할 대상이 죽지 않았다면  true 가 된다.
-    private bool hasTarget => targetEntity != null && !targetEntity.dead;
+    private bool isTarget => targetEntity != null && !targetEntity.IsDead;
 
 
 #if UNITY_EDITOR
@@ -100,7 +100,7 @@ public class Enemy1AI : MonoBehaviour
 
     private void Update()
     {
-        if (enemy1Health.dead) return;//죽으면 반복문을 멈춤
+        if (enemy1Health.IsDead) return;//죽으면 반복문을 멈춤
         //상태값이 추적이고 추적상대가 존재한다면 참이됨
         if (state == State.Tracking && targetEntity != null)
         {
@@ -119,7 +119,7 @@ public class Enemy1AI : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (enemy1Health.dead) return;//죽으면 실행을 막음
+        if (enemy1Health.IsDead) return;//죽으면 실행을 막음
 
         //공격하는 동안 자연스럽게 플레이어를 보게한다.
         if (state == State.AttackBegin || state == State.Attacking)
@@ -152,7 +152,7 @@ public class Enemy1AI : MonoBehaviour
                     message.hitPoint = attackRoot.TransformPoint(hits[i].point);
                     message.hitNormal = attackRoot.TransformDirection(hits[i].normal);
 
-                    attackTargetEntity.ApplyDamage(message);
+                    attackTargetEntity.IsApplyDamage(message);
 
                     lastAttackedTargets.Add(attackTargetEntity);
                     break;
@@ -166,9 +166,9 @@ public class Enemy1AI : MonoBehaviour
     {
         var wfs = new WaitForSeconds(0.2f);
         // 살아있는 동안 무한 루프
-        while (!enemy1Health.dead)
+        while (!enemy1Health.IsDead)
         {
-            if (hasTarget)
+            if (isTarget)
             {
                 if (state == State.Patrol)
                 {
@@ -207,7 +207,7 @@ public class Enemy1AI : MonoBehaviour
                     var livingEntity = collider.GetComponent<LivingEntity>();
 
                     // LivingEntity 컴포넌트가 존재하며, 해당 LivingEntity가 살아있다면,
-                    if (livingEntity != null && !livingEntity.dead)
+                    if (livingEntity != null && !livingEntity.IsDead)
                     {
                         // 추적 대상을 해당 LivingEntity로 설정
                         targetEntity = livingEntity;

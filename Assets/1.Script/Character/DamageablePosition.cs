@@ -17,11 +17,11 @@ public class DamageablePosition : MonoBehaviour, IDamageable
         {
             damageMessage.amount *= 1.5f;
             damageMessage.isHeadShot = true;
-            livingEntity.ApplyDamage(damageMessage);
+            livingEntity.IsApplyDamage(damageMessage);
         }
         if(hitPosition == HitPosition.BODDY)
         {
-            livingEntity.ApplyDamage(damageMessage);
+            livingEntity.IsApplyDamage(damageMessage);
         }
         return true;
     }

@@ -16,7 +16,7 @@ public class EnemyMiniTankHealth : LivingEntity
     private void Awake()
     {
         enemyAI = GetComponent<EnemyMiniTankAI>();
-        MaxHealth = 50;
+        maxHealth = 50;
     }
     //private void FixedUpdate()
     //{
@@ -25,9 +25,9 @@ public class EnemyMiniTankHealth : LivingEntity
     //}
 
     // 데미지를 입었을때 실행할 처리 체력부분
-    public override bool ApplyDamage(DamageMessage damageMessage)
+    public override bool IsApplyDamage(DamageMessage damageMessage)
     {
-        if (!base.ApplyDamage(damageMessage))
+        if (!base.IsApplyDamage(damageMessage))
         {
             Debug.Log("데미지 실패");
             return false;
@@ -45,9 +45,9 @@ public class EnemyMiniTankHealth : LivingEntity
         return true;
     }
     //폭파 데미지를 입을 경우 실행할 처리 부분
-    public override bool ApplyDamage(int damage, GameObject damager)
+    public override bool IsApplyDamage(int damage, GameObject damager)
     {
-        if (!base.ApplyDamage(damage, damager)) return false;
+        if (!base.IsApplyDamage(damage, damager)) return false;
 
         if (enemyAI.targetEntity == null)
         {

@@ -160,7 +160,7 @@ public class UIManager : MonoBehaviour
             isMenuUI = true;
             MenuUI.SetActive(true);
             Cursor.visible = true;
-            playerShooter.AxisMenuOnChange();
+            playerShooter.AxisActiveMenuChange();
             //Debug.Log("메뉴 오픈");
         }
         else if(isMenuUI == true && MenuUI.activeSelf == true)
@@ -170,11 +170,10 @@ public class UIManager : MonoBehaviour
             MenuUI.SetActive(false);
             Cursor.visible = false;
             //조준감도 설정
-            playerShooter.AxisChangeX(xAxis);
-            playerShooter.AxisChangeY(yAxis);
-            PlayerInfoManager.Instance.SetXaxis(xAxis);
-            PlayerInfoManager.Instance.SetYaxis(yAxis);
-            playerShooter.AxisMenuOffChange();
+            playerShooter.XAxisChange(xAxis);
+            playerShooter.YAxisChange(yAxis);
+            PlayerInfoManager.Instance.SetAxis(xAxis, yAxis);
+            playerShooter.AxisMenuInactiveChange();
             Cursor.lockState = CursorLockMode.Locked;
         }
             
@@ -189,7 +188,7 @@ public class UIManager : MonoBehaviour
             Cursor.visible = true;
             isMenuUI = true;
             InventoryUI.SetActive(true);
-            playerShooter.AxisMenuOnChange();
+            playerShooter.AxisActiveMenuChange();
             Debug.Log("인벤토리 오픈 오픈");
         }
         else if(isMenuUI == true && InventoryUI.activeSelf == true)
@@ -198,7 +197,7 @@ public class UIManager : MonoBehaviour
             isMenuUI = false;
             InventoryUI.SetActive(false);
             Cursor.visible = false;
-            playerShooter.AxisMenuOffChange();
+            playerShooter.AxisMenuInactiveChange();
             Cursor.lockState = CursorLockMode.Locked;
         }
     }

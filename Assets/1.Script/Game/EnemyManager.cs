@@ -34,10 +34,10 @@ public class EnemyManager : MonoBehaviour
     private const string bridgeRightMap = "BridgeRightMap";
     private const string lastMap = "LastMap";
     private string mapName;
-    public bool bridgeLeftKey;//아이템을 얻기 위한 통곡의 다리
-    public bool bridgeRightKey;// 다음 단계를 가기위한 통곡의 다리
-    public bool lastMaplKey;
-    private bool mapIn;// 해당 던전안에 있는지 체크
+    public bool isBridgeLeftKey;//아이템을 얻기 위한 통곡의 다리
+    public bool isBridgeRightKey;// 다음 단계를 가기위한 통곡의 다리
+    public bool isLastMaplKey;
+    private bool isMapIn;// 해당 던전안에 있는지 체크
     private int enemyCount;
 
 
@@ -60,55 +60,55 @@ public class EnemyManager : MonoBehaviour
 
     public void StartEnemySpawnerFirstMap(string mapName)
     {
-        if(mapIn == false)
+        if(isMapIn == false)
         {
             enemySpawnerFirstMap.SetActive(true);
-            mapIn = true;
+            isMapIn = true;
             this.mapName = mapName;
         }
     }
 
     public void StartEnemySpawnerBridgeLeftMap(string mapName)
     {
-        if (mapIn == false && bridgeLeftKey == true)
+        if (isMapIn == false && isBridgeLeftKey == true)
         {
             LeftFence1.GetComponent<Animator>().SetTrigger(fenceLeftMove);
             LeftFence2.GetComponent<Animator>().SetTrigger(fenceRightMove);
             enemySpawnerBridgeLeftMap.SetActive(true);
-            mapIn = true;
+            isMapIn = true;
             this.mapName = mapName;
         }
     }
 
     public void StartEnemySpawnerBridgeRightMap(string mapName)
     {
-        if (mapIn == false && bridgeRightKey == true)
+        if (isMapIn == false && isBridgeRightKey == true)
         {
             RightFence1.GetComponent<Animator>().SetTrigger(fenceLeftMove);
             RightFence2.GetComponent<Animator>().SetTrigger(fenceRightMove);
             enemySpawnerBridgeRightMap.SetActive(true);
-            mapIn = true;
+            isMapIn = true;
             this.mapName = mapName;
         }
     }
 
     public void StartEnemySpawnerLastMap(string mapName)
     {
-        if (mapIn == false && lastMaplKey == true)
+        if (isMapIn == false && isLastMaplKey == true)
         {
             enemySpawnerLastMap.SetActive(true);
-            mapIn = true;
+            isMapIn = true;
             this.mapName = mapName;
         }
     }
 
     public void MapClear()
     {
-        mapIn = false;
+        isMapIn = false;
         if (mapName.Equals(firstMap))
         {
-            bridgeLeftKey = true;
-            bridgeRightKey = true;
+            isBridgeLeftKey = true;
+            isBridgeRightKey = true;
         }
         if (mapName.Equals(bridgeLeftMap)) 
         {
@@ -116,7 +116,7 @@ public class EnemyManager : MonoBehaviour
         }
         if( mapName.Equals(bridgeRightMap))
         {
-            lastMaplKey = true;
+            isLastMaplKey = true;
             RightEndFence1.GetComponent<Animator>().SetTrigger(fenceLeftMove);
             RightEndFence2.GetComponent<Animator>().SetTrigger(fenceRightMove);
         }

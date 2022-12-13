@@ -16,7 +16,7 @@ public class Enemy1Health : LivingEntity
     {
         enemy1AI = GetComponent<Enemy1AI>();
         //MaxHealth = 1000; 테스트용
-        MaxHealth=100;
+        maxHealth=100;
     }
     //private void FixedUpdate()
     //{
@@ -27,9 +27,9 @@ public class Enemy1Health : LivingEntity
 
 
     // 데미지를 입었을때 실행할 처리 체력부분
-    public override bool ApplyDamage(DamageMessage damageMessage)
+    public override bool IsApplyDamage(DamageMessage damageMessage)
     {
-        if (!base.ApplyDamage(damageMessage)) return false;
+        if (!base.IsApplyDamage(damageMessage)) return false;
 
         if (enemy1AI.targetEntity == null)
         {
@@ -42,9 +42,9 @@ public class Enemy1Health : LivingEntity
         return true;
     }
     //폭파 데미지를 입을 경우 실행할 처리 부분
-    public override bool ApplyDamage(int damage ,GameObject damager)
+    public override bool IsApplyDamage(int damage ,GameObject damager)
     {
-        if (!base.ApplyDamage(damage,damager)) return false;
+        if (!base.IsApplyDamage(damage,damager)) return false;
 
         if (enemy1AI.targetEntity == null)
         {

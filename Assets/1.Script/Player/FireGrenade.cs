@@ -24,7 +24,7 @@ public class FireGrenade : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (playerInput.Grenade)
+        if (playerInput.IsGrenade)
         {
             Fire();
         }

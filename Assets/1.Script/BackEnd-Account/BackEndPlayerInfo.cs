@@ -29,14 +29,14 @@ public static class BackEndPlayerInfo
         LobbyScript.Instance.score = Convert.ToInt32(bro.FlattenRows()[0]["score"].ToString());
         LobbyScript.Instance.weaponNum = Convert.ToInt32(bro.FlattenRows()[0]["weaponNum"].ToString());
         LobbyScript.Instance.equipmentNum = Convert.ToInt32(bro.FlattenRows()[0]["equipmentNum"].ToString());
-        LobbyScript.Instance.axisX = float.Parse(bro.FlattenRows()[0]["axisX"].ToString());
-        LobbyScript.Instance.axisY = float.Parse(bro.FlattenRows()[0]["axisY"].ToString());
+        LobbyScript.Instance.xAxis = float.Parse(bro.FlattenRows()[0]["xAxis"].ToString());
+        LobbyScript.Instance.yAxis = float.Parse(bro.FlattenRows()[0]["yAxis"].ToString());
        
 
         PlayerInfoManager.Instance.SetOnline(true,LobbyScript.Instance.id, LobbyScript.Instance.name,
             LobbyScript.Instance.score, LobbyScript.Instance.weaponNum,
-            LobbyScript.Instance.equipmentNum, LobbyScript.Instance.axisX,
-            LobbyScript.Instance.axisY);
+            LobbyScript.Instance.equipmentNum, LobbyScript.Instance.xAxis,
+            LobbyScript.Instance.yAxis);
     }
     // Insert 는 '생성' 작업에 주로 사용된다. 
     public static void CreateInsertPlayerInfoData(string id)
@@ -49,8 +49,8 @@ public static class BackEndPlayerInfo
         param.Add("score",0);
         param.Add("weaponNum", 0);
         param.Add("equipmentNum", 0);
-        param.Add("axisX",200);
-        param.Add("axisY",2);
+        param.Add("xAxis",200);
+        param.Add("yAxis",2);
 
         BackendReturnObject BRO = Backend.GameData.Insert("PlayerInfo", param);
 
@@ -103,13 +103,14 @@ public static class BackEndPlayerInfo
         }
     }
 
-    public static void SetAxisXToServer(string id, float axisX)
+    public static void SetAxisToServer(string id, float xAxis, float yAxis)
     {
         Where where = new Where();
         where.Equal("id", id);
 
         Param param = new Param();
-        param.Add("axisX", axisX);
+        param.Add("xAxis", xAxis);
+        param.Add("yAxis", yAxis);
 
         var bro = Backend.GameData.Update("PlayerInfo", where, param);
 
@@ -124,27 +125,7 @@ public static class BackEndPlayerInfo
             Debug.Log("성공" + bro);
         }
     }
-    public static void SetAxisYToServer(string id, float axisY)
-    {
-        Where where = new Where();
-        where.Equal("id", id);
 
-        Param param = new Param();
-        param.Add("axisY", axisY);
-
-        var bro = Backend.GameData.Update("PlayerInfo", where, param);
-
-        if (bro.IsSuccess() == false)
-        {
-            // 요청 실패 처리
-            Debug.Log("실패" + bro);
-            return;
-        }
-        else
-        {
-            Debug.Log("성공" + bro);
-        }
-    }
     public static void SetScoreToServer(string id, int score)
     {
         Where where = new Where();
