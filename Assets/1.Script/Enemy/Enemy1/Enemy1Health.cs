@@ -12,8 +12,9 @@ public class Enemy1Health : LivingEntity
     public float enemyHealth;// 체력 확인용
     public readonly int hashDie = Animator.StringToHash("Die");
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         enemy1AI = GetComponent<Enemy1AI>();
         //MaxHealth = 1000; 테스트용
         maxHealth=100;

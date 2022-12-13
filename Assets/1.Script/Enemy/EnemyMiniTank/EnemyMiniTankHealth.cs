@@ -13,8 +13,9 @@ public class EnemyMiniTankHealth : LivingEntity
 
     public float enemyHealth;// 체력 확인용
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         enemyAI = GetComponent<EnemyMiniTankAI>();
         maxHealth = 50;
     }

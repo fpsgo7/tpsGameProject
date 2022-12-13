@@ -13,8 +13,9 @@ public class EnemyDronHealth : LivingEntity
 
     public float enemyHealth;// 체력 확인용
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         enemyDronAI = GetComponent<EnemyDronAI>();
         maxHealth = 50;
     }

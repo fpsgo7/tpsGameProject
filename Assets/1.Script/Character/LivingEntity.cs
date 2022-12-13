@@ -7,7 +7,7 @@ public class LivingEntity : MonoBehaviour
 {
 
     public float maxHealth;//최대체력
-    public float startingHealth;//초기체력
+    public float startingPlayerHealth;//플레이어 초기체력
     public float Health { get; protected set; }//현제 체력
     public bool IsDead { get; protected set; }//죽음 상태값
     //OnDeath 라는 이름으로 Action 타입의 이벤트가 있다.
@@ -29,7 +29,7 @@ public class LivingEntity : MonoBehaviour
             return true;
         }
     }
-    protected void Awake()
+    protected virtual void Awake()
     {
         enemyHealthSliderImage = enemyHealthSlider.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>();
     }
@@ -37,7 +37,7 @@ public class LivingEntity : MonoBehaviour
     protected virtual void OnEnable()
     {
         IsDead = false;
-        startingHealth = maxHealth;
+        startingPlayerHealth = maxHealth;
         Health = maxHealth;
     }
     //데미지 관련

@@ -18,7 +18,7 @@ public class PlayerHealth : LivingEntity
     public bool isInvincibility = false;
 
     //컴포넌트 연결
-    private void Awake()
+    protected override void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
         playerAudioPlayer = GetComponent<AudioSource>();
@@ -145,13 +145,13 @@ public class PlayerHealth : LivingEntity
     {
         if (Health >= maxHealth)
         {
-            maxHealth = startingHealth;//체력 초기화
+            maxHealth = startingPlayerHealth;//체력 초기화
             maxHealth += shield;//방어구만큼 최대체력 증가.
             Health = maxHealth;
         }
         else
         {
-            maxHealth = startingHealth;//체력 초기화
+            maxHealth = startingPlayerHealth;//체력 초기화
             maxHealth += shield;//방어구만큼 최대체력 증가.
         }
         UIManager.Instance.SetHealthMaxSlider(maxHealth);//방어구 수정으로 슬라이더 최대값 수정 추가
