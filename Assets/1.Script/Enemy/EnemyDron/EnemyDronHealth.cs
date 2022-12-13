@@ -32,7 +32,7 @@ public class EnemyDronHealth : LivingEntity
 
         if (enemyDronAI.targetEntity == null)
         {
-            enemyDronAI.targetEntity = damageMessage.damager.GetComponent<LivingEntity>();
+            enemyDronAI.targetEntity = damageMessage.damagerLivingEntity;
         }
         //이펙트 추가?
 

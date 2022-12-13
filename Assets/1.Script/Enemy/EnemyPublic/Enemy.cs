@@ -171,7 +171,7 @@ public class Enemy : LivingEntity
                 {
                     var message = new DamageMessage();
                     message.amount = damage;
-                    message.damager = gameObject;
+                    message.damagerLivingEntity = gameObject.GetComponent<LivingEntity>();
                     message.hitPoint = attackRoot.TransformPoint(hits[i].point);
                     message.hitNormal = attackRoot.TransformDirection(hits[i].normal);
 
@@ -252,7 +252,7 @@ public class Enemy : LivingEntity
 
         if (targetEntity == null)
         {
-            targetEntity = damageMessage.damager.GetComponent<LivingEntity>();
+            targetEntity = damageMessage.damagerLivingEntity.GetComponent<LivingEntity>();
         }
 
         EffectManager.Instance.PlayHitEffect(damageMessage.hitPoint, damageMessage.hitNormal, transform, EffectManager.EffectType.Flesh);

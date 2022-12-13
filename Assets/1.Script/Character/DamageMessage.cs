@@ -2,7 +2,7 @@
 
 public struct DamageMessage
 {
-    public GameObject damager;//공격을 가한측
+    public LivingEntity damagerLivingEntity;//공격을 가한측
 
     public float amount;// 공격 대미지
     public bool isHeadShot;

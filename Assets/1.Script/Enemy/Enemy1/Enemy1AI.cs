@@ -148,7 +148,7 @@ public class Enemy1AI : MonoBehaviour
                 {
                     var message = new DamageMessage();
                     message.amount = damage;
-                    message.damager = gameObject;
+                    message.damagerLivingEntity = enemy1Health.livingEntity;
                     message.hitPoint = attackRoot.TransformPoint(hits[i].point);
                     message.hitNormal = attackRoot.TransformDirection(hits[i].normal);
 

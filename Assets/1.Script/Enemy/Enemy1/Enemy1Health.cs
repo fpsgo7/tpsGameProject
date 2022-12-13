@@ -34,7 +34,7 @@ public class Enemy1Health : LivingEntity
 
         if (enemy1AI.targetEntity == null)
         {
-            enemy1AI.targetEntity = damageMessage.damager.GetComponent<LivingEntity>();
+            enemy1AI.targetEntity = damageMessage.damagerLivingEntity;
         }
 
         EffectManager.Instance.PlayHitEffect(damageMessage.hitPoint, damageMessage.hitNormal, transform, EffectManager.EffectType.Flesh);

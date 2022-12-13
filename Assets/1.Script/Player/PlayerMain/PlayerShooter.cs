@@ -21,6 +21,7 @@ public class PlayerShooter : MonoBehaviour
     private PlayerMovement playerMovement;//플레이어 움직임 스크립트와 연결
     private Animator playerAnimator;//플레이어 에니메이션
     private Camera playerCamera;//플레이어 카메러
+    public PlayerHealth playerHealth;//플레이어 헬스 스크립트와 연결
     public GameObject scopeCamera;
     public GameObject scopeImage;
     public CinemachineFreeLook forrowCam;// 줌인 카메라
@@ -85,6 +86,7 @@ public class PlayerShooter : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         playerAnimator = GetComponent<Animator>();
         playerMovement = GetComponent<PlayerMovement>();
+        playerHealth = GetComponent<PlayerHealth>();
     }
     
     private void OnEnable()

@@ -18,6 +18,7 @@ public class LivingEntity : MonoBehaviour
     private float lastDamagedTime;//마지막 데미지 시간
     public Slider enemyHealthSlider;
     private Image enemyHealthSliderImage;
+    public LivingEntity livingEntity;
     //공격을 당하는 상태를 관리
     protected bool IsInvulnerabe
     {
@@ -32,6 +33,7 @@ public class LivingEntity : MonoBehaviour
     protected virtual void Awake()
     {
         enemyHealthSliderImage = enemyHealthSlider.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>();
+        livingEntity = GetComponent<LivingEntity>();
     }
     //virtual 로 자식 스크립트에서 활용할 수잇다.
     protected virtual void OnEnable()
@@ -45,7 +47,7 @@ public class LivingEntity : MonoBehaviour
     {
         //IsInvulnerabe 가 true 즉 무적상태이거나 damageMessage.damager
         //공격한자가 여가 대미지를 받는 대상과 갇거나 죽은경우 return 시켜 데미지기능을 막는다.
-        if (IsInvulnerabe || damageMessage.damager == gameObject || IsDead)
+        if (IsInvulnerabe || damageMessage.damagerLivingEntity == livingEntity || IsDead)
             return false;
         //대미지를 입었으므로 시간을 넣어 업데이터한다.
         lastDamagedTime = Time.time;

@@ -14,6 +14,7 @@ public class EnemyTurretGun : MonoBehaviour
     public State state { get; private set; }//파라미터로 사용하여 내부에서만 상태를 바꿀수 있다.
     //컴포넌트 형변수
     public EnemyMiniTankGun gunHolder;
+    public EnemyMiniTankHealth enemyMiniTankHealth;
     private LineRenderer bulletLineRenderer;
     //사운드 관련
     private AudioSource gunAudioPlayer;
@@ -100,7 +101,7 @@ public class EnemyTurretGun : MonoBehaviour
             {
                 DamageMessage damageMessage;
 
-                damageMessage.damager = gunHolder.gameObject;//공격을 가한측
+                damageMessage.damagerLivingEntity = enemyMiniTankHealth.livingEntity;
                 damageMessage.amount = damage;//데미지값
                 damageMessage.hitPoint = hit.point;//피격 위치
                 damageMessage.hitNormal = hit.normal;//피격위치 반대방향

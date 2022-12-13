@@ -20,6 +20,7 @@ public class PlayerHealth : LivingEntity
     //컴포넌트 연결
     protected override void Awake()
     {
+        livingEntity = GetComponent<LivingEntity>();
         playerInput = GetComponent<PlayerInput>();
         playerAudioPlayer = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();

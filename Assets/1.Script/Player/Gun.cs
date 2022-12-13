@@ -20,7 +20,7 @@ public class Gun : MonoBehaviour
     }
     public Guns guns { get; private set; }//파라미터로 사용하여 내부에서만 상태를 바꿀수 있다.
     //컴포넌트 형변수
-    private PlayerShooter gunHolder;
+    private PlayerShooter playerShooter;
     private LineRenderer bulletLineRenderer;
     //사운드 관련
     private AudioSource gunAudioPlayer;
@@ -68,7 +68,7 @@ public class Gun : MonoBehaviour
     public void Setup(PlayerShooter gunHolder, float damage)
     {
         //총을 교체하면 그곳에맞는 gunHolder을 다시 맞춰줘야해서 총을 교체할때도 사용한다.
-        this.gunHolder = gunHolder;
+        this.playerShooter = gunHolder;
         excludeTarget = gunHolder.excludeTarget;//쏘지않을 대상의 값을 가져와 레이어에 저장
         if (damage != 0.0f)
             this.damage = damage;
@@ -176,7 +176,7 @@ public class Gun : MonoBehaviour
             {
                 DamageMessage damageMessage;
 
-                damageMessage.damager = gunHolder.gameObject;//공격을 가한측
+                damageMessage.damagerLivingEntity = playerShooter.playerHealth.livingEntity;//공격을 가한측
                 damageMessage.amount = damage;//데미지값
                 damageMessage.hitPoint = hit.point;//피격 위치
                 damageMessage.hitNormal = hit.normal;//피격위치 반대방향
