@@ -68,7 +68,7 @@ public class LivingEntity : MonoBehaviour
         return true;
     }
     //폭파 데미지
-    public virtual bool IsApplyDamage(int damage , GameObject damager)//매계변수로 DamageMessage 스크립트의 내용을 받는다.
+    public virtual bool IsApplyDamage(int damage , LivingEntity damager)//매계변수로 DamageMessage 스크립트의 내용을 받는다.
     {
         //대미지를 입었으므로 시간을 넣어 업데이터한다.
         //lastDamagedTime = Time.time;

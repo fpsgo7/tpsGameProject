@@ -43,13 +43,13 @@ public class Enemy1Health : LivingEntity
         return true;
     }
     //폭파 데미지를 입을 경우 실행할 처리 부분
-    public override bool IsApplyDamage(int damage ,GameObject damager)
+    public override bool IsApplyDamage(int damage ,LivingEntity damager)
     {
         if (!base.IsApplyDamage(damage,damager)) return false;
 
         if (enemy1AI.targetEntity == null)
         {
-            enemy1AI.targetEntity = damager.GetComponent<LivingEntity>();
+            enemy1AI.targetEntity = damager;
         }
         enemy1AI.audioPlayer.PlayOneShot(hitClip);
 

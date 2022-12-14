@@ -117,7 +117,7 @@ public class PlayerHealth : LivingEntity
         return true;//공격이 성공한 것을 알림
     }
     //폭파 대미지용
-    public override bool IsApplyDamage(int damage, GameObject damager)
+    public override bool IsApplyDamage(int damage, LivingEntity damager)
     {
         if (isInvincibility == true)// 데미지 적용을 무적상태 동안은 막음
             return false;

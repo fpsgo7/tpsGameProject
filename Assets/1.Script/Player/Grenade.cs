@@ -7,9 +7,14 @@ public class Grenade : MonoBehaviour
 {
     public float speed = 500.0f;//수류탄 속도
     public GameObject explosion;
-    public GameObject FireMan;
+    private LivingEntity FireManEntity;
     private int damage = 50;
     private RaycastHit[] rayHits;
+    public void SetGrenadeInfo(LivingEntity FireManEntity, Transform firePos)
+    {
+        this.FireManEntity = FireManEntity;
+        transform.position = firePos.position;
+    }
     public void Shoot()
     {
         GetComponent<Rigidbody>().AddForce(transform.forward * speed);
@@ -35,7 +40,7 @@ public class Grenade : MonoBehaviour
         foreach(RaycastHit hitobj in rayHits)
         {
             if (hitobj.transform.GetComponent<LivingEntity>())
-                hitobj.transform.GetComponent<LivingEntity>().IsApplyDamage(damage,FireMan);
+                hitobj.transform.GetComponent<LivingEntity>().IsApplyDamage(damage, FireManEntity);
         }
     }
     //오브젝트 풀링방식으로 없에기

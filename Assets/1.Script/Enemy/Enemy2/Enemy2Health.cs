@@ -45,13 +45,13 @@ public class Enemy2Health : LivingEntity
     }
 
     //폭파 데미지를 입을 경우 실행할 처리 부분
-    public override bool IsApplyDamage(int damage, GameObject damager)
+    public override bool IsApplyDamage(int damage, LivingEntity damager)
     {
         if (!base.IsApplyDamage(damage, damager)) return false;
 
         if (enemy2AI.targetEntity == null)
         {
-            enemy2AI.targetEntity = damager.GetComponent<LivingEntity>();
+            enemy2AI.targetEntity = damager;
         }
         enemy2AI.audioPlayer.PlayOneShot(hitClip);
 
