@@ -18,7 +18,7 @@ public class GrenadeObjectPooling : MonoBehaviour
     // 오브젝트 생성
     private Grenade CreateNewObject()
     {
-        var newObj = Instantiate(poolingGrenadeObject, transform).GetComponent<Grenade>();
+        Grenade newObj = Instantiate(poolingGrenadeObject, transform).GetComponent<Grenade>();
         newObj.gameObject.SetActive(false);
         return newObj;
     }
@@ -35,14 +35,14 @@ public class GrenadeObjectPooling : MonoBehaviour
     {
         if (Instance.poolingGrenadeQueue.Count > 0)
         {
-            var obj = Instance.poolingGrenadeQueue.Dequeue();//큐에서 하나 꺼내옴
+            Grenade obj = Instance.poolingGrenadeQueue.Dequeue();//큐에서 하나 꺼내옴
             obj.transform.SetParent(null);//
             obj.gameObject.SetActive(true);// 활성화하여 보여줌
             return obj;
         }
         else
         {
-            var newObj = Instance.CreateNewObject();
+            Grenade newObj = Instance.CreateNewObject();
             newObj.transform.SetParent(null);
             newObj.gameObject.SetActive(true);
             return newObj;

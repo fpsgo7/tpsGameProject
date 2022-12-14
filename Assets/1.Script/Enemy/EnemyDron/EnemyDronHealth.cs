@@ -61,9 +61,6 @@ public class EnemyDronHealth : LivingEntity
         // LivingEntity의 Die()를 실행하여 기본 사망 처리 실행
         base.Die(die);
 
-        // 다른 AI들을 방해하지 않도록 자신의 모든 콜라이더들을 비활성화
-        GetComponent<Collider>().enabled = false;
-
         enemyDronAI.Explosion();
         Destroy(gameObject, 0.1f);
     }

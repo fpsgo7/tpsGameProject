@@ -36,9 +36,9 @@ public class EnemySpawner : MonoBehaviour
     private void Spawn()
     {
         //적들을 생성합니다.
-        for (var i = 0; i < EnemyCount; i++)
+        for (int i = 0; i < EnemyCount; i++)
         {
-            var enemyIntensity = Random.Range(0, 3);
+            int enemyIntensity = Random.Range(0, 3);
             EnemyManager.Instance.EnemyMake();
             CreateEnemy(enemyIntensity);
         }

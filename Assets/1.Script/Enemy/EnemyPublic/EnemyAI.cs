@@ -169,7 +169,7 @@ public class EnemyAI : MonoBehaviour
                 {
                     if (!IsTargetOnSight(collider.transform)) break;
 
-                    var livingEntity = collider.GetComponent<LivingEntity>();
+                    LivingEntity livingEntity = collider.GetComponent<LivingEntity>();
 
                     // LivingEntity 컴포넌트가 존재하며, 해당 LivingEntity가 살아있다면,
                     if (livingEntity != null && !livingEntity.IsDead)

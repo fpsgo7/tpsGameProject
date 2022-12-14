@@ -34,6 +34,7 @@ public class Enemy1AI : MonoBehaviour
     public float damage = 30f;
     public float attackRadius = 2f;
     private float attackDistance;
+    private WaitForSeconds wfs = new WaitForSeconds(0.2f);
 
     public float fieldOfView = 50f;
     public float viewDistance = 10f;
@@ -65,8 +66,8 @@ public class Enemy1AI : MonoBehaviour
             Gizmos.DrawSphere(attackRoot.position, attackRadius);
         }
 
-        var leftRayRotation = Quaternion.AngleAxis(-fieldOfView * 0.5f, Vector3.up);
-        var leftRayDirection = leftRayRotation * transform.forward;
+        Quaternion leftRayRotation = Quaternion.AngleAxis(-fieldOfView * 0.5f, Vector3.up);
+        Vector3 leftRayDirection = leftRayRotation * transform.forward;
         Handles.color = new Color(1f, 1f, 1f, 0.2f);
         Handles.DrawSolidArc(eyeTransform.position, Vector3.up, leftRayDirection, fieldOfView, viewDistance);
     }
@@ -105,7 +106,7 @@ public class Enemy1AI : MonoBehaviour
         if (state == State.Tracking && targetEntity != null)
         {
             //적과 플레이어간 거리를 구함
-            var distance = Vector3.Distance(targetEntity.transform.position, transform.position);
+            float distance = Vector3.Distance(targetEntity.transform.position, transform.position);
             //플레이어와 적과의 거리가 공격거리보다 작다면
             if (distance <= attackDistance)
             {
@@ -124,9 +125,9 @@ public class Enemy1AI : MonoBehaviour
         //공격하는 동안 자연스럽게 플레이어를 보게한다.
         if (state == State.AttackBegin || state == State.Attacking)
         {
-            var lookRotation =
+            Quaternion lookRotation =
                 Quaternion.LookRotation(targetEntity.transform.position - transform.position, Vector3.up);
-            var targetAngleY = lookRotation.eulerAngles.y;
+            float targetAngleY = lookRotation.eulerAngles.y;
 
             transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngleY,
                                         ref turnSmoothVelocity, turnSmoothTime);
@@ -134,19 +135,19 @@ public class Enemy1AI : MonoBehaviour
         //공격 상태일 경우
         if (state == State.Attacking)
         {
-            var direction = transform.forward;//적의 앞방향값을 가짐
-            var deltaDistance = agent.velocity.magnitude * Time.deltaTime;
+            Vector3 direction = transform.forward;//적의 앞방향값을 가짐
+            float deltaDistance = agent.velocity.magnitude * Time.deltaTime;
 
-            var size = Physics.SphereCastNonAlloc(attackRoot.position, attackRadius, direction, hits, deltaDistance,
+            int size = Physics.SphereCastNonAlloc(attackRoot.position, attackRadius, direction, hits, deltaDistance,
                 whatIsTarget);
 
-            for (var i = 0; i < size; i++)
+            for (int i = 0; i < size; i++)
             {
-                var attackTargetEntity = hits[i].collider.GetComponent<LivingEntity>();
+                LivingEntity attackTargetEntity = hits[i].collider.GetComponent<LivingEntity>();
 
                 if (attackTargetEntity != null && !lastAttackedTargets.Contains(attackTargetEntity))
                 {
-                    var message = new DamageMessage();
+                    DamageMessage message = new DamageMessage();
                     message.amount = damage;
                     message.damagerLivingEntity = enemy1Health.livingEntity;
                     message.hitPoint = attackRoot.TransformPoint(hits[i].point);
@@ -164,7 +165,6 @@ public class Enemy1AI : MonoBehaviour
     // 주기적으로 추적할 대상의 위치를 찾아 경로를 갱신
     private IEnumerator UpdatePath()
     {
-        var wfs = new WaitForSeconds(0.2f);
         // 살아있는 동안 무한 루프
         while (!enemy1Health.IsDead)
         {
@@ -191,20 +191,20 @@ public class Enemy1AI : MonoBehaviour
 
                 if (agent.remainingDistance <= 1f)
                 {
-                    var patrolPosition = Utility.GetRandomPointOnNavMesh(transform.position, 20f, NavMesh.AllAreas);
+                    Vector3 patrolPosition = Utility.GetRandomPointOnNavMesh(transform.position, 20f, NavMesh.AllAreas);
                     agent.SetDestination(patrolPosition);
                 }
 
                 // 20 유닛의 반지름을 가진 가상의 구를 그렸을때, 구와 겹치는 모든 콜라이더를 가져옴
                 // 단, whatIsTarget 레이어를 가진 콜라이더만 가져오도록 필터링
-                var colliders = Physics.OverlapSphere(eyeTransform.position, viewDistance, whatIsTarget);
+                Collider[] colliders = Physics.OverlapSphere(eyeTransform.position, viewDistance, whatIsTarget);
 
                 // 모든 콜라이더들을 순회하면서, 살아있는 LivingEntity 찾기
-                foreach (var collider in colliders)
+                foreach (Collider collider in colliders)
                 {
                     if (!IsTargetOnSight(collider.transform)) break;
 
-                    var livingEntity = collider.GetComponent<LivingEntity>();
+                    LivingEntity livingEntity = collider.GetComponent<LivingEntity>();
 
                     // LivingEntity 컴포넌트가 존재하며, 해당 LivingEntity가 살아있다면,
                     if (livingEntity != null && !livingEntity.IsDead)
@@ -249,7 +249,7 @@ public class Enemy1AI : MonoBehaviour
     {
         RaycastHit hit;
 
-        var direction = target.position - eyeTransform.position;
+        Vector3 direction = target.position - eyeTransform.position;
 
         direction.y = eyeTransform.forward.y;
 

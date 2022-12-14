@@ -95,7 +95,7 @@ public class EnemyTurretGun : MonoBehaviour
 
         if (Physics.Raycast(startPoint, fireTransform.forward, out hit, fireDistance, ~excludeTarget))//~을 사용하여 조건문에서 ~을 가진 조건의 반대부분을 조건으로 사용한다.
         {
-            var target = hit.collider.GetComponent<IDamageable>();// 충돌대상이 데미지를 받을수 있는 타입인지 검사
+            IDamageable target = hit.collider.GetComponent<IDamageable>();// 충돌대상이 데미지를 받을수 있는 타입인지 검사
 
             if (target != null)
             {
@@ -161,7 +161,7 @@ public class EnemyTurretGun : MonoBehaviour
 
         yield return new WaitForSeconds(reloadTime);
 
-        var ammoToFill = Mathf.Clamp(magCapacity - magAmmo, 0, ammoRemain);
+        int ammoToFill = Mathf.Clamp(magCapacity - magAmmo, 0, ammoRemain);
         magAmmo += ammoToFill;
         //ammoRemain -= ammoToFill;
 

@@ -27,6 +27,12 @@ public class EnemyManager : MonoBehaviour
     public GameObject RightEndFence2;
     public GameObject LeftFence1;
     public GameObject LeftFence2;
+    private Animator rightFence1Animator;
+    private Animator rightFence2Animator;
+    private Animator leftFence1Animator;
+    private Animator leftFence2Animator;
+    private Animator rightEndFence1Animator;
+    private Animator rightEndFence2Animator;
     private readonly int fenceLeftMove = Animator.StringToHash("LeftOpen");
     private readonly int fenceRightMove = Animator.StringToHash("RightOpen");
     private const string firstMap = "FirstMap";
@@ -40,7 +46,16 @@ public class EnemyManager : MonoBehaviour
     private bool isMapIn;// 해당 던전안에 있는지 체크
     private int enemyCount;
 
+    private void Awake()
+    {
+        rightFence1Animator = RightFence1.GetComponent<Animator>();
+        rightFence2Animator = RightFence2.GetComponent<Animator>();
+        leftFence1Animator = LeftFence1.GetComponent<Animator>();
+        leftFence2Animator = LeftFence2.GetComponent<Animator>();
+        rightEndFence1Animator = RightEndFence1.GetComponent<Animator>();
+        rightEndFence2Animator = RightEndFence2.GetComponent<Animator>();
 
+    }
     //애너미 생성과 죽음 수 관리 
     public void EnemyMake()
     {
@@ -72,8 +87,8 @@ public class EnemyManager : MonoBehaviour
     {
         if (isMapIn == false && isBridgeLeftKey == true)
         {
-            LeftFence1.GetComponent<Animator>().SetTrigger(fenceLeftMove);
-            LeftFence2.GetComponent<Animator>().SetTrigger(fenceRightMove);
+            leftFence1Animator.SetTrigger(fenceLeftMove);
+            leftFence2Animator.SetTrigger(fenceRightMove);
             enemySpawnerBridgeLeftMap.SetActive(true);
             isMapIn = true;
             this.mapName = mapName;
@@ -84,8 +99,8 @@ public class EnemyManager : MonoBehaviour
     {
         if (isMapIn == false && isBridgeRightKey == true)
         {
-            RightFence1.GetComponent<Animator>().SetTrigger(fenceLeftMove);
-            RightFence2.GetComponent<Animator>().SetTrigger(fenceRightMove);
+            rightFence1Animator.SetTrigger(fenceLeftMove);
+            rightFence2Animator.SetTrigger(fenceRightMove);
             enemySpawnerBridgeRightMap.SetActive(true);
             isMapIn = true;
             this.mapName = mapName;
@@ -117,8 +132,8 @@ public class EnemyManager : MonoBehaviour
         if( mapName.Equals(bridgeRightMap))
         {
             isLastMaplKey = true;
-            RightEndFence1.GetComponent<Animator>().SetTrigger(fenceLeftMove);
-            RightEndFence2.GetComponent<Animator>().SetTrigger(fenceRightMove);
+            rightEndFence1Animator.SetTrigger(fenceLeftMove);
+            rightEndFence2Animator.SetTrigger(fenceRightMove);
         }
         if(mapName.Equals(lastMap))
         {

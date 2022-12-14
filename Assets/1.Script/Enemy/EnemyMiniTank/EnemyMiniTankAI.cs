@@ -32,8 +32,9 @@ public class EnemyMiniTankAI : MonoBehaviour
 
     public LivingEntity targetEntity; // 추적할 대상
     public LayerMask whatIsTarget; // 추적 대상 레이어
-    private EnemyMiniTankHealth enemyHealth;
+    private EnemyMiniTankHealth enemyMiniTankHealth;
     private EnemyMiniTankGun enemyMiniTankGun;
+    private WaitForSeconds wfs = new WaitForSeconds(0.2f);
 
     //적의 공격을 범위 기반이라서 여러 개의 충돌포인트가 생긴다.
     private RaycastHit[] rayHits; //충돌대상
@@ -47,7 +48,7 @@ public class EnemyMiniTankAI : MonoBehaviour
         //컴포넌트 연결
         agent = GetComponent<NavMeshAgent>();//네비게이션 연결
         audioPlayer = GetComponent<AudioSource>();//오디오 연결
-        enemyHealth = GetComponent<EnemyMiniTankHealth>();
+        enemyMiniTankHealth = GetComponent<EnemyMiniTankHealth>();
         enemyMiniTankGun = GetComponent<EnemyMiniTankGun>();//스크립트 연결
         //skinRenderer = GetComponentInChildren<Renderer>();//렌더러 연결
 
@@ -64,12 +65,12 @@ public class EnemyMiniTankAI : MonoBehaviour
 
     private void Update()
     {
-        if (enemyHealth.IsDead) return;//죽으면 반복문을 멈춤
+        if (enemyMiniTankHealth.IsDead) return;//죽으면 반복문을 멈춤
         //상태값이 추적이고 추적상대가 존재한다면 참이됨
         if (state == State.Tracking && targetEntity != null)
         {
             //적과 플레이어간 거리를 구함
-            var distance = Vector3.Distance(targetEntity.transform.position, transform.position);
+            float distance = Vector3.Distance(targetEntity.transform.position, transform.position);
             //플레이어와 적과의 거리가 공격거리보다 작다면
             if (distance <= attackDistance)
             {
@@ -85,9 +86,8 @@ public class EnemyMiniTankAI : MonoBehaviour
     // 주기적으로 추적할 대상의 위치를 찾아 경로를 갱신
     private IEnumerator UpdatePath()
     {
-        var wfs = new WaitForSeconds(0.2f);
         // 살아있는 동안 무한 루프
-        while (!enemyHealth.IsDead)
+        while (!enemyMiniTankHealth.IsDead)
         {
             if (isTarget)
             {
@@ -112,18 +112,18 @@ public class EnemyMiniTankAI : MonoBehaviour
 
                 if (agent.remainingDistance <= 1f)
                 {
-                    var patrolPosition = Utility.GetRandomPointOnNavMesh(transform.position, 20f, NavMesh.AllAreas);
+                    Vector3 patrolPosition = Utility.GetRandomPointOnNavMesh(transform.position, 20f, NavMesh.AllAreas);
                     agent.SetDestination(patrolPosition);
                 }
 
                 // 20 유닛의 반지름을 가진 가상의 구를 그렸을때, 구와 겹치는 모든 콜라이더를 가져옴
                 // 단, whatIsTarget 레이어를 가진 콜라이더만 가져오도록 필터링
-                var colliders = Physics.OverlapSphere(transform.position, viewDistance, whatIsTarget);
+                Collider[] colliders = Physics.OverlapSphere(transform.position, viewDistance, whatIsTarget);
 
                 // 모든 콜라이더들을 순회하면서, 살아있는 LivingEntity 찾기
-                foreach (var collider in colliders)
+                foreach (Collider collider in colliders)
                 { 
-                    var livingEntity = collider.GetComponent<LivingEntity>();
+                    LivingEntity livingEntity = collider.GetComponent<LivingEntity>();
 
                     // LivingEntity 컴포넌트가 존재하며, 해당 LivingEntity가 살아있다면,
                     if (livingEntity != null && !livingEntity.IsDead)
@@ -164,7 +164,7 @@ public class EnemyMiniTankAI : MonoBehaviour
             if (hitobj.transform.GetComponent<LivingEntity>())
             {
                 Debug.Log("공격 성공");
-                hitobj.transform.GetComponent<LivingEntity>().IsApplyDamage(damage,gameObject);
+                hitobj.transform.GetComponent<LivingEntity>().IsApplyDamage(damage,enemyMiniTankHealth.livingEntity);
             }
 
         }

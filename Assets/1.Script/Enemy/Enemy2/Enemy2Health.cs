@@ -8,6 +8,7 @@ public class Enemy2Health : LivingEntity
 
     public AudioClip hitClip; // 피격시 재생할 소리
     public AudioClip deathClip; // 사망시 재생할 소리
+    private Collider enemy2Collider;
 
     public float enemyHealth;// 체력 확인용
 
@@ -19,6 +20,7 @@ public class Enemy2Health : LivingEntity
         base.Awake();
         enemy2AI = GetComponent<Enemy2AI>();
         maxHealth = 100;
+        enemy2Collider = GetComponent<Collider>();
         //MaxHealth = 1000;//테스트용
 
     }
@@ -64,7 +66,7 @@ public class Enemy2Health : LivingEntity
         base.Die(die);
 
         // 다른 AI들을 방해하지 않도록 자신의 모든 콜라이더들을 비활성화
-        GetComponent<Collider>().enabled = false;
+        enemy2Collider.enabled = false;
 
         // AI 추적을 중지하고 내비메쉬 컴포넌트를 비활성화
         enemy2AI.agent.enabled = false;

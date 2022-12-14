@@ -18,7 +18,7 @@ public class CommonHitEffectPooling : MonoBehaviour
     // 오브젝트 생성
     private GameObject CreateNewParticle()
     {
-        var newParticle = Instantiate(poolingObject, transform);
+        GameObject newParticle = Instantiate(poolingObject, transform);
         newParticle.SetActive(false);
         return newParticle;
     }
@@ -35,7 +35,7 @@ public class CommonHitEffectPooling : MonoBehaviour
     {
         if (Instance.poolingQueue.Count > 0)
         {
-            var particle = Instance.poolingQueue.Dequeue();//큐에서 하나 꺼내옴
+            GameObject particle = Instance.poolingQueue.Dequeue();//큐에서 하나 꺼내옴
             particle.transform.position = pos;
             particle.transform.rotation = Quaternion.LookRotation(normal);
             particle.SetActive(true);// 활성화하여 보여줌
@@ -43,7 +43,7 @@ public class CommonHitEffectPooling : MonoBehaviour
         }
         else
         {
-            var newParticle = Instance.CreateNewParticle();
+            GameObject newParticle = Instance.CreateNewParticle();
             newParticle.transform.position = pos;
             newParticle.transform.rotation = Quaternion.LookRotation(normal);
             newParticle.SetActive(true);// 활성화하여 보여줌

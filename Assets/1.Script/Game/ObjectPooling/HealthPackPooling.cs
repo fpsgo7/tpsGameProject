@@ -18,7 +18,7 @@ public class HealthPackPooling : MonoBehaviour
     // 오브젝트 생성
     private GameObject CreateNewObject()
     {
-        var newObj = Instantiate(poolingObject, transform);
+        GameObject newObj = Instantiate(poolingObject, transform);
         newObj.gameObject.SetActive(false);
         return newObj;
     }
@@ -35,14 +35,14 @@ public class HealthPackPooling : MonoBehaviour
     {
         if (Instance.poolingQueue.Count > 0)
         {
-            var obj = Instance.poolingQueue.Dequeue();//큐에서 하나 꺼내옴
+            GameObject obj = Instance.poolingQueue.Dequeue();//큐에서 하나 꺼내옴
             obj.transform.position = point;
             obj.gameObject.SetActive(true);// 활성화하여 보여줌
             return obj;
         }
         else
         {
-            var newObj = Instance.CreateNewObject();
+            GameObject newObj = Instance.CreateNewObject();
             newObj.transform.position = point;
             newObj.gameObject.SetActive(true);
             return newObj;

@@ -16,9 +16,9 @@ public class DamageTextPooling : MonoBehaviour
     // 오브젝트 생성
     private DamageText CreateNewObject()
     {
-        var newGameObject = Instantiate(poolingObject, transform).GetComponent<DamageText>();
-        newGameObject.gameObject.SetActive(false);
-        return newGameObject;
+        DamageText newDamageText = Instantiate(poolingObject, transform).GetComponent<DamageText>();
+        newDamageText.gameObject.SetActive(false);
+        return newDamageText;
     }
     // 실제 오브젝트 생성 실행을휘한 함수
     private void Initalize(int count)
