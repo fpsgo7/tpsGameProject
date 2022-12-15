@@ -28,12 +28,19 @@ public class EquipmentItem : MonoBehaviour
     {
         inventory = GameObject.Find("Player").GetComponent<Inventory>();
     }
-    public void Use()
+    private void OnTriggerEnter(Collider other)
     {
-        if(itemGetSucess = inventory.AcquireItem(this))
+        if (other.CompareTag("Player"))
+        {
+            if (itemGetSucess = inventory.AcquireItem(this))
+            {
+                Destroy(gameObject.transform.parent.transform.gameObject);
+                //Destroy(gameObject);
+            }
+        }
+        else if (other.CompareTag("otherPlayer"))
         {
             Destroy(gameObject.transform.parent.transform.gameObject);
-            //Destroy(gameObject);
         }
     }
 }

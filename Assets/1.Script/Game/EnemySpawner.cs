@@ -4,10 +4,10 @@ using UnityEngine;
 // 적 게임 오브젝트를 주기적으로 생성
 public class EnemySpawner : MonoBehaviour
 {
-    private readonly List<GameObject> enemies = new List<GameObject>();//적생성기
+    private readonly List<LivingEntity> enemies = new List<LivingEntity>();//적생성기
 
    
-    public GameObject enemyPrefab;//적 프리팹
+    public LivingEntity enemyPrefab;
     private PlayerRader playerRader;
     //생성할 적의 최대 최소 범위
     public float healthMax = 200f;
@@ -50,17 +50,17 @@ public class EnemySpawner : MonoBehaviour
 
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
-        GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        LivingEntity enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
 
-        enemy.GetComponent<LivingEntity>().EnemySetup(intensity);
+        enemy.EnemySetup(intensity);
 
         enemies.Add(enemy);
-        playerRader.GetTrackedObjects(enemy);
+        playerRader.GetTrackedObjects(enemy.gameObject);
 
-        enemy.GetComponent<LivingEntity>().OnDeath += () => playerRader.RemoveTrackedObject(enemy);
-        enemy.GetComponent<LivingEntity>().OnDeath += () => enemies.Remove(enemy);// 사망한 대상은 리스트에서 제외한다.
-        enemy.GetComponent<LivingEntity>().OnDeath += () => EnemyManager.Instance.EnemyDie();
-        enemy.GetComponent<LivingEntity>().OnDeath += () => enemy.GetComponent<ItemSpawn>().Spawn();
-        enemy.GetComponent<LivingEntity>().OnDeath += () => GameManager.Instance.AddScore(100);
+        enemy.OnDeath += () => playerRader.RemoveTrackedObject(enemy.gameObject);
+        enemy.OnDeath += () => enemies.Remove(enemy);// 사망한 대상은 리스트에서 제외한다.
+        enemy.OnDeath += () => EnemyManager.Instance.EnemyDie();
+        enemy.OnDeath += () => enemy.GetComponent<ItemSpawn>().Spawn();
+        enemy.OnDeath += () => GameManager.Instance.AddScore(100);
     }
 }

@@ -1,16 +1,29 @@
 ﻿using UnityEngine;
 
-public class HealthPack : MonoBehaviour, IItem
+public class HealthPack : MonoBehaviour,IItem
 {
-    public void Use(GameObject target)
+    private PlayerHealth playerHealth;
+
+    private void Awake()
     {
-        var playerHealth = target.GetComponent<PlayerHealth>();
+        playerHealth = GameObject.FindWithTag("Player").GetComponent<PlayerHealth>();
+    }
 
-        if(playerHealth != null)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
-            playerHealth.GetHealthKit();
-        }
+            if (playerHealth != null)
+            {
+                playerHealth.GetHealthKit();
+            }
 
-        StartCoroutine(HealthPackPooling.ReturnObject(this.gameObject));
+            StartCoroutine(HealthPackPooling.ReturnObject(this.gameObject));
+        }
+        else if (other.CompareTag("otherPlayer"))
+        {
+            //다른 플레이어와 충돌 했을경우 
+            StartCoroutine(HealthPackPooling.ReturnObject(this.gameObject));
+        }
     }
 }

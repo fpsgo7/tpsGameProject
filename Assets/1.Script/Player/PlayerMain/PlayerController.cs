@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private PlayerHealth playerHealth;//플레이어 체력
     private PlayerMovement playerMovement;//플레이어 움직임
     private PlayerShooter playerShooter;//플레이어 슈터
+    private FireGrenade fireGrenade;//플레이어 수류탄 발사
 
     private void Start()
     {
@@ -64,26 +65,4 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
     }
 
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (playerHealth.IsDead)
-        {
-            return;
-        }
-
-        var item = other.GetComponent<IItem>();
-        if (item != null)
-        {
-            item.Use(gameObject);
-            playerAudioPlayer.PlayOneShot(itemPickupClip);
-        }
-
-        var equipmentItem = other.GetComponent<EquipmentItem>();
-        if (equipmentItem != null)
-        {
-            equipmentItem.Use();
-            playerAudioPlayer.PlayOneShot(itemPickupClip);
-        }
-    }
 }

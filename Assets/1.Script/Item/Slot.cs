@@ -30,6 +30,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     public Image itemImage;// 아이탬의 이미지
     public Text itemNameText;
     public Text abilityText;
+    public Image slotImage;
 
     public int num;// 아이템 번호
     public string itemName=string.Empty; // 아이템 이름
@@ -37,6 +38,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     public float shield;// 장비 방어력
     public bool chosenSlot=false;// 슬롯 선택상태값
     public bool equipSlot = false;//슬록 장착 값
+
     // 아이템 이미지의 투명도 조절
     private void SetColor(float alphaColor)
     {
@@ -137,9 +139,9 @@ public class Slot : MonoBehaviour, IPointerClickHandler
                 playerHealth.EqipmentWear(shield);
             }
 
-            Color color = this.GetComponent<Image>().color;
+            Color color = slotImage.color;
             color.a = 0.5f;
-            this.GetComponent<Image>().color = color;
+            slotImage.color = color;
             equipSlot = true;
         }
     }

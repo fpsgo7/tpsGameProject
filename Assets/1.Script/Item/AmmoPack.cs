@@ -1,18 +1,30 @@
 ﻿using UnityEngine;
 
-public class AmmoPack : MonoBehaviour, IItem
+public class AmmoPack : MonoBehaviour,IItem
 {
+    private PlayerShooter playerShooter;
     public int ammo = 30;
 
-    public void Use(GameObject target)
+    private void Awake()
     {
-        var playerShooter = target.GetComponent<PlayerShooter>();
+        playerShooter = GameObject.FindWithTag("Player").GetComponent<PlayerShooter>();
+    }
 
-        if (playerShooter != null && playerShooter.gun != null)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
-            playerShooter.gun.ammoRemain += ammo;
-        }
+            if (playerShooter != null && playerShooter.gun != null)
+            {
+                playerShooter.gun.ammoRemain += ammo;
+            }
 
-        StartCoroutine(AmmoPackPooling.ReturnObject(this.gameObject));
+            StartCoroutine(AmmoPackPooling.ReturnObject(this.gameObject));
+        }
+        else if (other.CompareTag("otherPlayer"))
+        {
+            //다른 플레이어와 충돌 했을경우 
+            StartCoroutine(AmmoPackPooling.ReturnObject(this.gameObject));
+        }
     }
 }

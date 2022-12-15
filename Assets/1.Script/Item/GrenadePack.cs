@@ -2,18 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrenadePack : MonoBehaviour, IItem
+public class GrenadePack : MonoBehaviour,IItem
 {
-    public void Use(GameObject target)
+    private FireGrenade fireGrenade;
+
+    private void Awake()
     {
-        Debug.Log("충돌이 일어남");
-        var fireGrenade = target.GetComponent<FireGrenade>();
+        fireGrenade = GameObject.FindWithTag("Player").GetComponent<FireGrenade>();
+    }
 
-        if (fireGrenade != null)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
-            fireGrenade.GetGrenade();
-        }
+            if (fireGrenade != null)
+            {
+                fireGrenade.GetGrenade();
+            }
 
-        StartCoroutine(GrenadePackPooling.ReturnObject(this.gameObject));
+            StartCoroutine(GrenadePackPooling.ReturnObject(this.gameObject));
+        }
+        else if (other.CompareTag("otherPlayer"))
+        {
+            //다른 플레이어와 충돌 했을경우 
+            StartCoroutine(GrenadePackPooling.ReturnObject(this.gameObject));
+        }
     }
 }

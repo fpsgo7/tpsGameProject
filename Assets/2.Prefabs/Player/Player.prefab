@@ -1016,7 +1016,7 @@ MonoBehaviour:
   airControlPercent: 0.1
   speedSmoothTime: 0.1
   turnSmoothTime: 0.1
-  jumpState: 0
+  isJumpState: 0
 --- !u!114 &2516284573733916119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1050,13 +1050,14 @@ MonoBehaviour:
   excludeTarget:
     serializedVersion: 2
     m_Bits: 256
+  playerHealth: {fileID: 0}
   scopeCamera: {fileID: 6522226123230113153}
   scopeImage: {fileID: 0}
   forrowCam: {fileID: 6522226123562459671}
   crosshair: {fileID: 0}
   playerDgree: {fileID: 6522226123343445612}
-  GunPivot: {fileID: 6522226123846352024}
-  zoomIn: 0
+  gunPivot: {fileID: 0}
+  isZoomIn: 0
 --- !u!114 &2516284573733915945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1069,15 +1070,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eca01a6268184ae884e138a9462f285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 100
-  startingHealth: 0
+  maxHealth: 0
+  startingPlayerHealth: 0
   enemyHealthSlider: {fileID: 0}
+  livingEntity: {fileID: 0}
   deathClip: {fileID: 8300000, guid: 3e64a0b075b5d0147808f73bc3cc99be, type: 3}
   hitClip: {fileID: 8300000, guid: f332592d40b20a64cbd5497c17ea843d, type: 3}
   restoreHealth: 0
   healthKit: 0
-  restoreHealthProceeding: 0
-  invincibility: 0
+  isRestoreHealthProceeding: 0
+  isInvincibility: 0
 --- !u!114 &2516284573733915944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1154,9 +1156,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c5f19487564fb4b8507debff35b9df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trackedObjects: []
   raderPrefab: {fileID: 6797685114930875656, guid: 23aa2eec33df7254bb1e7fe10f55564c,
     type: 3}
+  raderObjects: []
+  borderObjects: []
   switchDistance: 8
   helpTransform: {fileID: 348361030362405487}
 --- !u!114 &2516284573733915951

@@ -10,6 +10,9 @@ TagManager:
   - Slot
   - ItemBox
   - ExplosionWall
+  - AmmoPack
+  - GrenadePack
+  - HealthPack
   layers:
   - Default
   - TransparentFX
