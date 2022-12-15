@@ -80,15 +80,15 @@ public class Gun : MonoBehaviour
         currentSpread = 0f;
         lastFireTime = 0f;
         state = State.Ready;
-        if(this.tag == "SHOTGUN")
+        if(this.CompareTag("SHOTGUN"))
         {
             guns = Guns.SHOTGUN;
         }
-        if (this.tag == "RIFLEGUN")
+        if (this.CompareTag("RIFLEGUN"))
         {
             guns = Guns.RIFLEGUN;
         }
-        if (this.tag == "DMRGUN")
+        if (this.CompareTag("DMRGUN")) ;
         {
             guns = Guns.DMRGUN;
             Debug.Log("dmr");
@@ -120,7 +120,7 @@ public class Gun : MonoBehaviour
             currentSpread += 1f / stability;//탄퍼짐 정도를 갈수록 늘려준다.
             lastFireTime = Time.time;
             //샷건 발사 추가
-            if (this.gameObject.tag == "SHOTGUN")
+            if (this.gameObject.CompareTag("SHOTGUN"))
             {
 
                 //탄퍼지기 정도 만들기
@@ -232,7 +232,7 @@ public class Gun : MonoBehaviour
 
         yield return new WaitForSeconds(reloadTime);
 
-        var ammoToFill = Mathf.Clamp(magCapacity - magAmmo,0,ammoRemain);
+        int ammoToFill = Mathf.Clamp(magCapacity - magAmmo,0,ammoRemain);
         magAmmo += ammoToFill;
         ammoRemain -= ammoToFill;
 

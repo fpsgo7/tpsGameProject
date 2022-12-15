@@ -5,10 +5,11 @@ using UnityEngine;
 public class PlayerRader : MonoBehaviour
 {
     public GameObject raderPrefab;
-    public List<GameObject> raderObjects = new List<GameObject>();
-    public List<GameObject> borderObjects = new List<GameObject>();
-    public float switchDistance;
+
+    public float switchDistance;//테스트를 위해 public 사용
     public Transform helpTransform;
+    [SerializeField] private List<GameObject> raderObjects = new List<GameObject>();
+    [SerializeField] private List<GameObject> borderObjects = new List<GameObject>();
     private RaycastHit[] rayHits;
 
     void Update()

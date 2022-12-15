@@ -12,16 +12,20 @@ public class PlayerShooter : MonoBehaviour
     //파라미터형 변수
     public AimState aimState { get; private set; }
     //사용할 오브젝트
-    public Gun gun;// 총 스크립트와 연결
+    [HideInInspector] public Gun gun;// 총 스크립트와 연결
+    [HideInInspector] public LateUpdateFollow lateUpdateFollow;//총잡는 부분 수적
     public Gun[] allGuns;//총기들 종합
-    public LateUpdateFollow lateUpdateFollow;//총잡는 부분 수적
     public LayerMask excludeTarget;//조준에서 제외할 대상
-
+    [HideInInspector] public PlayerHealth playerHealth;//플레이어 헬스 스크립트와 연결
     private PlayerInput playerInput;//플레이어 입력 스크립트와 연결
     private PlayerMovement playerMovement;//플레이어 움직임 스크립트와 연결
     private Animator playerAnimator;//플레이어 에니메이션
     private Camera playerCamera;//플레이어 카메러
-    public PlayerHealth playerHealth;//플레이어 헬스 스크립트와 연결
+    //줌인카메라 케싱용 변수
+    private CinemachineComposer forrowCamCinemachineComposerGetRig0;
+    private CinemachineComposer forrowCamCinemachineComposerGetRig1;
+    private CinemachineComposer forrowCamCinemachineComposerGetRig2;
+
     public GameObject scopeCamera;
     public GameObject scopeImage;
     public CinemachineFreeLook forrowCam;// 줌인 카메라
@@ -64,7 +68,7 @@ public class PlayerShooter : MonoBehaviour
     //총의 발사 위치의 y축, 발사 포지션, 사격제외대상 레이어)
     //값에 따라 사격할수 없는 거리가되면 크로스 헤어를 비활성화 하고 스코프를 비활성화 시키기위한 조건값을 구해준다.
     private bool isEnoughDistance => !Physics.Linecast(transform.position + Vector3.up * gun.fireTransform.position.y, gun.fireTransform.position, ~excludeTarget);
-    public bool isZoomIn=false;
+    private bool isZoomIn=false;
     void Awake()
     {
         //플레이어가 자기자신을 쏘는 상황을 방지하기위하여 자기자신의 레이어를 추가한다.
@@ -87,6 +91,9 @@ public class PlayerShooter : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
         playerMovement = GetComponent<PlayerMovement>();
         playerHealth = GetComponent<PlayerHealth>();
+        forrowCamCinemachineComposerGetRig0 = forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>();
+        forrowCamCinemachineComposerGetRig1 = forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>();
+        forrowCamCinemachineComposerGetRig2 = forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>();
     }
     
     private void OnEnable()
@@ -139,7 +146,7 @@ public class PlayerShooter : MonoBehaviour
     {
         UpdateAimTarget();// 총의 조준지점은 계혹 업데이트해준다.
 
-        var angle = playerCamera.transform.eulerAngles.x;//카메라가 보는 위아래 각도를 구함
+        float angle = playerCamera.transform.eulerAngles.x;//카메라가 보는 위아래 각도를 구함
         if (angle > 270f) angle -= 360f;
         angle = angle / -180f + 0.5f;
         playerAnimator.SetFloat(hashAngle, angle);// 에니메이터에 각도값을 보내어 총을 위아레로 움직이게함
@@ -214,7 +221,7 @@ public class PlayerShooter : MonoBehaviour
     {
         RaycastHit hit;
         //ViewPortToRay 지정한 지점에서 레이저를 발사한다.
-        var ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
         if (Physics.Raycast(ray, out hit, gun.fireDistance, ~excludeTarget))
         {
@@ -261,12 +268,12 @@ public class PlayerShooter : MonoBehaviour
         {
             //부드럽게 하기
             forrowCam.m_Lens.FieldOfView = (zoomFieldOfView -= 2f);
-            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomTopScreenY += 0.02f);
-            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomMidScreenY += 0.02f);
-            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomBotScreenY += 0.02f);
-            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX -= 0.015f);
-            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX);
-            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX);
+            forrowCamCinemachineComposerGetRig0.m_ScreenY = (zoomTopScreenY += 0.02f);
+            forrowCamCinemachineComposerGetRig1.m_ScreenY = (zoomMidScreenY += 0.02f);
+            forrowCamCinemachineComposerGetRig2.m_ScreenY = (zoomBotScreenY += 0.02f);
+            forrowCamCinemachineComposerGetRig0.m_ScreenX = (zoomScreenX -= 0.015f);
+            forrowCamCinemachineComposerGetRig1.m_ScreenX = (zoomScreenX);
+            forrowCamCinemachineComposerGetRig2.m_ScreenX = (zoomScreenX);
             lastZoomTime = Time.time;
             // i++;
             // Debug.Log(i);
@@ -277,12 +284,12 @@ public class PlayerShooter : MonoBehaviour
     private void ZoomInEnd()
     {
         forrowCam.m_Lens.FieldOfView = zoomInFieldOfView;
-        forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = zoomInTopScreenY;
-        forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = zoomInMidScreenY;
-        forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = zoomInBotScreenY;
-        forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = zoomInScreenX;
-        forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = zoomInScreenX;
-        forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = zoomInScreenX;
+        forrowCamCinemachineComposerGetRig0.m_ScreenY = zoomInTopScreenY;
+        forrowCamCinemachineComposerGetRig1.m_ScreenY = zoomInMidScreenY;
+        forrowCamCinemachineComposerGetRig2.m_ScreenY = zoomInBotScreenY;
+        forrowCamCinemachineComposerGetRig0.m_ScreenX = zoomInScreenX;
+        forrowCamCinemachineComposerGetRig1.m_ScreenX = zoomInScreenX;
+        forrowCamCinemachineComposerGetRig2.m_ScreenX = zoomInScreenX;
         zoomFieldOfView = zoomInFieldOfView;
         zoomTopScreenY = zoomInTopScreenY;
         zoomMidScreenY = zoomInMidScreenY;
@@ -300,12 +307,12 @@ public class PlayerShooter : MonoBehaviour
         if (zoomFieldOfView <= zoomOutFieldOfView && Time.time >= lastZoomTime + waitingTimeForZoom)
         {
             forrowCam.m_Lens.FieldOfView = (zoomFieldOfView += 2f);
-            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomTopScreenY -= 0.02f);
-            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomMidScreenY -= 0.02f);
-            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = (zoomBotScreenY -= 0.02f);
-            forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX += 0.015f);
-            forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX);
-            forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = (zoomScreenX);
+            forrowCamCinemachineComposerGetRig0.m_ScreenY = (zoomTopScreenY -= 0.02f);
+            forrowCamCinemachineComposerGetRig1.m_ScreenY = (zoomMidScreenY -= 0.02f);
+            forrowCamCinemachineComposerGetRig2.m_ScreenY = (zoomBotScreenY -= 0.02f);
+            forrowCamCinemachineComposerGetRig0.m_ScreenX = (zoomScreenX += 0.015f);
+            forrowCamCinemachineComposerGetRig1.m_ScreenX = (zoomScreenX);
+            forrowCamCinemachineComposerGetRig2.m_ScreenX = (zoomScreenX);
             lastZoomTime = Time.time;
         }
         if (zoomFieldOfView >= zoomOutFieldOfView - 0.1f)
@@ -315,12 +322,12 @@ public class PlayerShooter : MonoBehaviour
     {
         Debug.Log("줌아웃");
         forrowCam.m_Lens.FieldOfView = zoomOutFieldOfView;
-        forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = zoomOutTopScreenY;
-        forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = zoomOutMidScreenY;
-        forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = zoomOutBotScreenY;
-        forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = zoomOutScreenX;
-        forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = zoomOutScreenX;
-        forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = zoomOutScreenX;
+        forrowCamCinemachineComposerGetRig0.m_ScreenY = zoomOutTopScreenY;
+        forrowCamCinemachineComposerGetRig1.m_ScreenY = zoomOutMidScreenY;
+        forrowCamCinemachineComposerGetRig2.m_ScreenY = zoomOutBotScreenY;
+        forrowCamCinemachineComposerGetRig0.m_ScreenX = zoomOutScreenX;
+        forrowCamCinemachineComposerGetRig1.m_ScreenX = zoomOutScreenX;
+        forrowCamCinemachineComposerGetRig2.m_ScreenX = zoomOutScreenX;
         zoomFieldOfView = zoomOutFieldOfView;
         zoomTopScreenY = zoomOutTopScreenY;
         zoomMidScreenY = zoomOutMidScreenY;

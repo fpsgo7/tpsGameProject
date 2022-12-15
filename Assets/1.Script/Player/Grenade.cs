@@ -29,9 +29,8 @@ public class Grenade : MonoBehaviour
             Vector3.up, 0f,
             LayerMask.GetMask("Enemy"));
         ExplosionAttack();
-        Invoke(nameof(DestroyGrenade), 1f);
         EffectManager.Instance.ExplosionEffect(this.transform);
-        this.gameObject.SetActive(false);
+        GrenadeObjectPooling.ReturnObject(this);
     }
     private void ExplosionAttack()
     {
@@ -42,10 +41,5 @@ public class Grenade : MonoBehaviour
             if (hitobj.transform.GetComponent<LivingEntity>())
                 hitobj.transform.GetComponent<LivingEntity>().IsApplyDamage(damage, FireManEntity);
         }
-    }
-    //오브젝트 풀링방식으로 없에기
-    private void DestroyGrenade()
-    {
-        GrenadeObjectPooling.ReturnObject(this);
     }
 }

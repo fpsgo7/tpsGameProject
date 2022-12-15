@@ -11,15 +11,15 @@ public class PlayerInput : MonoBehaviour
     private PlayerHealth playerHealth;
     private PlayerMovement playerMovement;
     //입력감지를 위해 사용하는 변수 const 사용으로 상수화 시켜 최적화
-    public const string fireButtonName = "Fire1";
-    public const string FireGrenadeButtonName = "Grenade";//g 키
-    public const string zoomInButtonName = "ZoomIn";// 우클릭
-    public const string jumpButtonName = "Jump"; //  space 키
-    public const string moveHorizontalAxisName = "Horizontal";
-    public const string moveVerticalAxisName = "Vertical";
-    public const string reloadButtonName = "Reload"; //r키
-    public const string restoreHealthButtonName = "RestoreHealth";//v 키
-    public const string scopeZoomInButtonName = "ScopeZoomIn";//tab 키
+    private const string fireButtonName = "Fire1";
+    private const string FireGrenadeButtonName = "Grenade";//g 키
+    private const string zoomInButtonName = "ZoomIn";// 우클릭
+    private const string jumpButtonName = "Jump"; //  space 키
+    private const string moveHorizontalAxisName = "Horizontal";
+    private const string moveVerticalAxisName = "Vertical";
+    private const string reloadButtonName = "Reload"; //r키
+    private const string restoreHealthButtonName = "RestoreHealth";//v 키
+    private const string scopeZoomInButtonName = "ScopeZoomIn";//tab 키
     private const string ESCButtonName = "Cancel";//esc 키
     private const string InventoryButtonName = "Inventory";//m 키
     private const string InteractionButtonName = "Interaction";//e 키

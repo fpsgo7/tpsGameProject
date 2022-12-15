@@ -123,9 +123,9 @@ public class Inventory : MonoBehaviour
     { 
         for (int i = 0; i < weaponSlots.Length; i++)
         {
-            Color color = weaponSlots[i].GetComponent<Image>().color;
+            Color color = weaponSlots[i].slotImage.color;
             color.a = 0;
-            weaponSlots[i].GetComponent<Image>().color = color;
+            weaponSlots[i].slotImage.color = color;
             weaponSlots[i].equipSlot = false;
         }
     }
@@ -134,9 +134,9 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < equipmentSlots.Length; i++)
         {
-            Color color = equipmentSlots[i].GetComponent<Image>().color;
+            Color color = equipmentSlots[i].slotImage.color;
             color.a = 0;
-            equipmentSlots[i].GetComponent<Image>().color = color;
+            equipmentSlots[i].slotImage.color = color;
             equipmentSlots[i].equipSlot = false;
         }
     }

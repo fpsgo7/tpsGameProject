@@ -5,14 +5,17 @@ using UnityEngine;
 public class FireGrenade : MonoBehaviour
 {
     public Transform firePos;
-    public int grenadeAmmo =10;
-    public float timeBetFire = 3f; // 수류탄 발사 간격
+    [HideInInspector] public LateUpdateFollow lateUpdateFollow;//총잡는 부분 수적
+
+    private int grenadeAmmo =10;
+    private float timeBetFire = 3f; // 수류탄 발사 간격
     private float lastFireTime; // 수류탄 마지막으로 발사한 시점
+    private readonly int hashGrenade = Animator.StringToHash("Grenade");//Animator의 Grenade 트리거를 가져온다. 애니메이터 최적화
     private Animator playerAnimator; // 플레이어의 애니메이터
     private PlayerInput playerInput;
     private PlayerHealth playerHealth;
-    private readonly int hashGrenade = Animator.StringToHash("Grenade");//Animator의 Grenade 트리거를 가져온다. 애니메이터 최적화
-    public LateUpdateFollow lateUpdateFollow;//총잡는 부분 수적
+    
+
 
     private void Start()
     {

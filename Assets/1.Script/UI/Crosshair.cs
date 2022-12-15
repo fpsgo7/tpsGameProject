@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class Crosshair : MonoBehaviour
 {
-    //public Image aimPointReticle;//조준위치
     public Image hitPointReticle;//실제 맞는 위치
     public GameObject hitPoint;
 
@@ -24,7 +23,6 @@ public class Crosshair : MonoBehaviour
     public void SetActiveCrosshair(bool active)
     {
         hitPointReticle.enabled = active;
-        //aimPointReticle.enabled = active;
     }
 
     public void UpdatePosition(Vector3 worldPoint)

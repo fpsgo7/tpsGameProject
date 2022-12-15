@@ -16,7 +16,7 @@ public class EnemySpawnStart : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag=="Player" )
+        if (other.CompareTag("Player"))
         {
             if(maps == Maps.FirstMap)
                 EnemyManager.Instance.StartEnemySpawnerFirstMap(maps.ToString());

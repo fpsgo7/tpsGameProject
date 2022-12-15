@@ -6,21 +6,17 @@ public class PlayerController : MonoBehaviour
     //PlayerHealth, PlayerMovement, PlayerShooter을 총괄 관리하기위한 스크립트이다.
     //생명 리스폰 아이템 먹는 기능 도포함
 
-    private Animator animator;//애니메이터
     public AudioClip itemPickupClip;//아이템 먹는 소리
-    public int lifeRemains = 3;//남은 생명수
-    private AudioSource playerAudioPlayer;//플레이어의 오디오 컴포넌트
+    public int lifeRemains;//남은 생명수
     private PlayerHealth playerHealth;//플레이어 체력
     private PlayerMovement playerMovement;//플레이어 움직임
     private PlayerShooter playerShooter;//플레이어 슈터
-    private FireGrenade fireGrenade;//플레이어 수류탄 발사
 
     private void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerShooter = GetComponent<PlayerShooter>();
         playerHealth = GetComponent<PlayerHealth>();
-        playerAudioPlayer = GetComponent<AudioSource>();
 
         playerHealth.OnDeath += HandleDeath;// 플레이어 가 죽으면 핸들 데스만큼 값증가
 

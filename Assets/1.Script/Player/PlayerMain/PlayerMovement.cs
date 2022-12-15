@@ -15,15 +15,15 @@ public class PlayerMovement : MonoBehaviour
     public readonly int hashVerticalMove = Animator.StringToHash("Vertical Move");
     public readonly int hashHorizontalMove = Animator.StringToHash("Horizontal Move");
     //플레이어 값
-    public float speed;//속도
-    public float runSpeed;// 일반속도
-    public float walkSpeed;// 걷는속도
-    public float jumpSpeed;// 구르는 동안의 속도
-    public float jumpStopSpeed;// 점프 중 느려야 하는 구간 속도
-    [Range(0.01f, 1f)] public float airControlPercent = 0.1f;//공중 속도
+    [HideInInspector] public float speed;//속도
+    [HideInInspector] public float runSpeed;// 일반속도
+    [HideInInspector] public float walkSpeed;// 걷는속도
+    [HideInInspector] public float jumpSpeed;// 구르는 동안의 속도
+    [HideInInspector] public float jumpStopSpeed;// 점프 중 느려야 하는 구간 속도
+    [Range(0.01f, 1f)] private float airControlPercent = 0.1f;//공중 속도
     //스무스의 지연 값
-    public float speedSmoothTime = 0.1f;
-    public float turnSmoothTime = 0.1f;
+    private float speedSmoothTime = 0.1f;
+    private float turnSmoothTime = 0.1f;
     //값의 변화 속도 damping 관련
     private float speedSmoothVelocity;
     private float turnSmoothVelocity;
@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     //점프 딜레이 
     private float waitingForJump = 4f;//점프 딜레이
     private float lastJumpTime; //마지막 점프시간
-    public bool isJumpState = false;// 점프 상태
+    [HideInInspector] public bool isJumpState = false;// 점프 상태
 
     //지면상의 현제 속도를 표현한다. 람다식 활용
     public float currentSpeed =>
@@ -73,13 +73,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(Vector2 moveInput)
     {
-        var targetSpeed = speed * moveInput.magnitude;//속도 결정
-        var moveDiection 
+        float targetSpeed = speed * moveInput.magnitude;//속도 결정
+        Vector3 moveDiection 
             = Vector3.Normalize(transform.forward * moveInput.y + transform.right * moveInput.x);//방향 결정
         currentVelocityY += Time.deltaTime * Physics.gravity.y;// 중력 역할을함  Physics.gravity.y 에는 중력값으로 -9.8이 들어가 있다.
 
         //지연시간
-        var smoothTime 
+        float smoothTime 
             = characterController.isGrounded ? speedSmoothTime : speedSmoothTime / airControlPercent;//땅에 있는지 체크한후 스무스 스피드 값을 넣는다.
 
         //목표 속도=Mathf.SmoothDamp(기본 속도, 목표속도,ref 값의 변화량, 지연시간)
@@ -87,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
             = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, smoothTime);
 
         //압뒤 좌우 속도 구한후 위아레 속도를 합한다.
-        var velocity 
+        Vector3 velocity 
             = moveDiection * targetSpeed + Vector3.up * currentVelocityY;
 
         characterController.Move(velocity*Time.deltaTime);//실제로 움직이게한다.
@@ -99,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Rotate()
     {
-        var targetRotation = followCam.transform.eulerAngles.y;//카메라의 y 축 각도 가져옴
+        float targetRotation = followCam.transform.eulerAngles.y;//카메라의 y 축 각도 가져옴
         //Mathf.SmoothDampAngle 로 부드럽게 각도를 바꾸게함
         targetRotation = Mathf.SmoothDampAngle(transform.eulerAngles.y,targetRotation,ref turnSmoothVelocity, turnSmoothTime);//(현제값, 목표값, 속도, 시간)
 
@@ -140,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
     private void UpdateAnimation(Vector2 moveInput)
     {
         //부드럽게 값이 변화 하기위해 사용
-        var animationSpeedPercent = currentSpeed / speed;
+        float animationSpeedPercent = currentSpeed / speed;
         if(playerInput.IszoomIn == true)
         {
             animator.SetFloat(hashVerticalMove, moveInput.y * animationSpeedPercent/2, 0.05f, Time.deltaTime);

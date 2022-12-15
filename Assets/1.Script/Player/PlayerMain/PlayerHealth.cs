@@ -6,16 +6,16 @@ public class PlayerHealth : LivingEntity
     private PlayerInput playerInput;//플레이어 입력
     private Animator animator;//에니메이터
     private AudioSource playerAudioPlayer;//오디오 소스
+     //변수 들
+    private int restoreHealth;//체력회복 게이지
+    private int restoreHealthMax;//체력회복 게이지 최댁값
+    private int healthKit;// 체력회복 킷
     //오디오 클립
     public AudioClip deathClip;
     public AudioClip hitClip;
-    //변수 들
-    public int restoreHealth;//체력회복 게이지
-    private int restoreHealthMax;//체력회복 게이지 최댁값
-    public int healthKit;// 체력회복 킷
     //bool 형
-    public bool isRestoreHealthProceeding = false;
-    public bool isInvincibility = false;
+    [HideInInspector] public bool isRestoreHealthProceeding = false;
+    [HideInInspector] public bool isInvincibility = false;
 
     //컴포넌트 연결
     protected override void Awake()

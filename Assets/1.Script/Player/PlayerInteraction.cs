@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    [SerializeField]
-    private float range;//아이템 박스 열기위한 사정거리
-
+    private float range=3;// 상호작용의 사정거리
     private RaycastHit hitInfo; // 충돌체 정보 저장
     private WaitForSeconds wfs = new WaitForSeconds(2f);
     private PlayerInput playerInput;
@@ -27,7 +25,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             Debug.Log(hitInfo.transform.gameObject.name);
             // 해당 상호작용 대상이 아이템 박스일 경우
-            if(hitInfo.transform.tag == "ItemBox")
+            if(hitInfo.transform.CompareTag("ItemBox"))
             {
                 //상호작용 이 가능해짐
                 UIManager.Instance.ActiveItemBoxText();
@@ -40,7 +38,7 @@ public class PlayerInteraction : MonoBehaviour
                     UIManager.Instance.InactiveItemBoxText();
                 }
             }
-            if (hitInfo.transform.tag == "ExplosionWall")
+            if (hitInfo.transform.CompareTag("ExplosionWall"))
             {
                 //상호작용 이 가능해짐
                 UIManager.Instance.ActiveExplosionWallText();
