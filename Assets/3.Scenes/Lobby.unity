@@ -4069,7 +4069,6 @@ MonoBehaviour:
   backEndAuthentication: {fileID: 0}
   backEndGetUserInfo: {fileID: 0}
   backEndNickname: {fileID: 0}
-  dropdown: {fileID: 1867772659}
   titleText: {fileID: 5506513316761389519}
   GameStartPanel: {fileID: 8525440397513123127}
   LoginPanel: {fileID: 1311757449}
@@ -4087,8 +4086,8 @@ MonoBehaviour:
   score: 0
   weaponNum: 0
   equipmentNum: 0
-  axisX: 0
-  axisY: 0
+  xAxis: 0
+  yAxis: 0
 --- !u!114 &1574782608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4765,7 +4764,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1867772658
 RectTransform:
   m_ObjectHideFlags: 0

@@ -22,8 +22,8 @@ public class LobbyScript : MonoBehaviour
     [HideInInspector] public BackEndGetUserInfo backEndGetUserInfo;
     [HideInInspector] public BackEndNickname backEndNickname;
 
-    public Dropdown dropdown;
-    public static int chooseWeapon;
+    //public Dropdown dropdown;
+    //public static int chooseWeapon;
     public GameObject titleText;
     public GameObject GameStartPanel;
     public GameObject LoginPanel;
@@ -59,8 +59,8 @@ public class LobbyScript : MonoBehaviour
     }
     public void GameStart()
     {
-        chooseWeapon = dropdown.value;
-        Debug.Log("게임이 시작됩니다."+chooseWeapon);
+        //chooseWeapon = dropdown.value;
+        //Debug.Log("게임이 시작됩니다."+chooseWeapon);
         //SceneManager.LoadScene("TestCenter");
         SceneManager.LoadScene("MainGame");
     }

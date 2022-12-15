@@ -100,7 +100,8 @@ public class PlayerShooter : MonoBehaviour
     {
         aimState = AimState.Idle;
         //Debug.Log(LobbyScript.chooseWeapon);
-        ChooseGun(LobbyScript.chooseWeapon,0.0f);
+        //ChooseGun(LobbyScript.chooseWeapon,0.0f);//무기 시작 선택기능은 삭제 보류
+        EquipGun(allGuns[0], 10);
         gun.gameObject.SetActive(true);
         gun.Setup(this,0.0f);
     }
@@ -159,9 +160,9 @@ public class PlayerShooter : MonoBehaviour
         UpdateUI();
     }
 
-    public void ChooseGun(int weaponIndex,float damage)
+    public void ChooseGun(int weaponIndex, float damage)
     {
-        EquipGun(allGuns[weaponIndex],damage);
+        EquipGun(allGuns[weaponIndex], damage);
     }
     public void EquipGun(Gun gunToEquip,float damage)
     {
