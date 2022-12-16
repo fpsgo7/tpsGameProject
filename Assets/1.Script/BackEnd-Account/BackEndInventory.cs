@@ -21,7 +21,6 @@ public static class BackEndInventory
         {
             for(int i =0; i< bro.Rows().Count; ++i)
             {
-                Debug.Log(i);
                 InventoryItemList.Add(new Item(Convert.ToInt32(bro.FlattenRows()[i]["num"].ToString()),
                     bro.FlattenRows()[i]["type"].ToString(),
                     bro.FlattenRows()[i]["name"].ToString(),

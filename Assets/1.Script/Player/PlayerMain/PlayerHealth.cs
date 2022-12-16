@@ -25,7 +25,7 @@ public class PlayerHealth : LivingEntity
         playerAudioPlayer = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         restoreHealthMax = 100;
-        UIManager.Instance.SetHealthSliderMaxValue(restoreHealthMax);//체력 회복 
+        UIPlayerInfo.Instance.SetHealthSliderMaxValue(restoreHealthMax);//체력 회복 
     }
     private void FixedUpdate()
     {
@@ -53,17 +53,17 @@ public class PlayerHealth : LivingEntity
     private void RestoreHealthSlider()
     {
         restoreHealth += 1;
-        UIManager.Instance.RestoreHealthSlideValue(restoreHealth);
+        UIPlayerInfo.Instance.RestoreHealthSlideValue(restoreHealth);
         // 체력 회복 UI 활성화
         if (restoreHealth >= 1 && isRestoreHealthProceeding == false)
         {
-            UIManager.Instance.ActiveRestoreHealthSlider();
+            UIPlayerInfo.Instance.ActiveRestoreHealthSlider();
             isRestoreHealthProceeding = true;
         }
         // 체력 회복 완료
         if (restoreHealth >= restoreHealthMax)
         {
-            UIManager.Instance.InactiveRestoreHealtSlider();
+            UIPlayerInfo.Instance.InactiveRestoreHealtSlider();
             RestoreHealth();
             restoreHealth = 0;
             isRestoreHealthProceeding = false;
@@ -73,8 +73,8 @@ public class PlayerHealth : LivingEntity
     private void RestoreHealthStop()
     {
         restoreHealth = 0;
-        UIManager.Instance.RestoreHealthSlideValue(restoreHealth);
-        UIManager.Instance.InactiveRestoreHealtSlider();
+        UIPlayerInfo.Instance.RestoreHealthSlideValue(restoreHealth);
+        UIPlayerInfo.Instance.InactiveRestoreHealtSlider();
         isRestoreHealthProceeding = false;
     }
 
@@ -96,8 +96,8 @@ public class PlayerHealth : LivingEntity
     {
         //UIManager에 체력 업데이트를 체력값을 보내어 사용하며
         //죽음 상태인 경우 0값을 보낸다.
-        UIManager.Instance.SetHealthText(IsDead ? 0f : Health);
-        UIManager.Instance.SetHealthKitText(healthKit);
+        UIPlayerInfo.Instance.SetHealthText(IsDead ? 0f : Health);
+        UIPlayerInfo.Instance.SetHealthKitText(healthKit);
     }
 
     public override bool IsApplyDamage(DamageMessage damageMessage)
@@ -155,7 +155,7 @@ public class PlayerHealth : LivingEntity
             maxHealth = startingPlayerHealth;//체력 초기화
             maxHealth += shield;//방어구만큼 최대체력 증가.
         }
-        UIManager.Instance.SetHealthMaxSlider(maxHealth);//방어구 수정으로 슬라이더 최대값 수정 추가
+        UIPlayerInfo.Instance.SetHealthMaxSlider(maxHealth);//방어구 수정으로 슬라이더 최대값 수정 추가
         UpdateUI();
     }
 }

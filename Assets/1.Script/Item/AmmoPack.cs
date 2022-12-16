@@ -21,10 +21,10 @@ public class AmmoPack : MonoBehaviour,IItem
 
             StartCoroutine(AmmoPackPooling.ReturnObject(this.gameObject));
         }
-        else if (other.CompareTag("otherPlayer"))
-        {
-            //다른 플레이어와 충돌 했을경우 
-            StartCoroutine(AmmoPackPooling.ReturnObject(this.gameObject));
-        }
+        //else if (other.CompareTag("otherPlayer"))
+        //{
+        //    //다른 플레이어와 충돌 했을경우 
+        //    StartCoroutine(AmmoPackPooling.ReturnObject(this.gameObject));
+        //}
     }
 }

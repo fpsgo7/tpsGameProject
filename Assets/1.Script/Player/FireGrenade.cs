@@ -44,7 +44,7 @@ public class FireGrenade : MonoBehaviour
             lateUpdateFollow.enabled = false;
             FireAnimation();
             --grenadeAmmo;
-            UIManager.Instance.SetGrenadeText(grenadeAmmo);
+            UIPlayerInfo.Instance.SetGrenadeText(grenadeAmmo);
             lastFireTime = Time.time;
         }
     }
@@ -68,6 +68,6 @@ public class FireGrenade : MonoBehaviour
     public void GetGrenade()
     {
         grenadeAmmo += 1;
-        UIManager.Instance.SetGrenadeText(grenadeAmmo);
+        UIPlayerInfo.Instance.SetGrenadeText(grenadeAmmo);
     }
 }

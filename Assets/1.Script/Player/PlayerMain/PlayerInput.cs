@@ -55,18 +55,17 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetButtonDown(ESCButtonName))
         {
             //Debug.Log("메뉴 키입력");
-            UIManager.Instance.SetMenuOnOff();
+            UIMenu.Instance.SetMenuOnOff();
         }
         if (Input.GetButtonDown(InventoryButtonName))
         {
-            UIManager.Instance.SetInventoryOnOff();
+            UIMenu.Instance.SetInventoryOnOff();
         }
 
         //게임 오버가 되거나 체력 회복 중인 경우와 메뉴를 보는 동안 정지한다.
         if (GameManager.Instance != null
             && GameManager.Instance.isGameover || playerHealth.isRestoreHealthProceeding == true
-            || UIManager.Instance.isMenuUI == true
-            )
+            || UIMenu.Instance.isMenuUI == true)
         {
             moveInput = Vector2.zero;
             IsFire = false;

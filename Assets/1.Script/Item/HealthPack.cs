@@ -20,10 +20,10 @@ public class HealthPack : MonoBehaviour,IItem
 
             StartCoroutine(HealthPackPooling.ReturnObject(this.gameObject));
         }
-        else if (other.CompareTag("otherPlayer"))
-        {
-            //다른 플레이어와 충돌 했을경우 
-            StartCoroutine(HealthPackPooling.ReturnObject(this.gameObject));
-        }
+        //else if (other.CompareTag("otherPlayer"))
+        //{
+        //    //다른 플레이어와 충돌 했을경우 
+        //    StartCoroutine(HealthPackPooling.ReturnObject(this.gameObject));
+        //}
     }
 }
