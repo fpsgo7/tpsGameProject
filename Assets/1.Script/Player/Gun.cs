@@ -88,7 +88,7 @@ public class Gun : MonoBehaviour
         {
             guns = Guns.RIFLEGUN;
         }
-        if (this.CompareTag("DMRGUN")) ;
+        if (this.CompareTag("DMRGUN")) 
         {
             guns = Guns.DMRGUN;
             Debug.Log("dmr");

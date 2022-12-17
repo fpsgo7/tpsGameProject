@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -21,14 +22,12 @@ public class UIMenu : MonoBehaviour
     //각 오브젝트들을 유니티 인스팩터 상에서 연결하기위하여 SerializeField 사용
     [SerializeField] private GameObject MenuUI;
     [SerializeField] private GameObject InventoryUI;
-    [SerializeField] private GameObject WeaponPanel;
-    [SerializeField] private GameObject EquipmentPanel;
+    [SerializeField] private List<GameObject> EquipmentPanels = new List<GameObject>();
     [SerializeField] private GameObject EquipmentChangeButton;
-    [SerializeField] private Text EquipmentChangeButtonText;
     [SerializeField] private PlayerShooter playerShooter;
     [SerializeField] private PlayerSubCamera playerSubCamera;
     [HideInInspector] public bool isMenuUI = false;
-   
+
     //메뉴 오픈
     public void SetMenuOnOff()
     {
@@ -81,21 +80,13 @@ public class UIMenu : MonoBehaviour
         }
     }
     //장비창 변경
-    //배열로 하여 관리하기 ***
-    public void ChangeEquipmentPanel()
+    public void ChangeEquipmentPanel(int EquipmentNum)
     {
-        if (WeaponPanel.activeSelf == false)
+        for (int i = 0; i < EquipmentPanels.Count; i++)
         {
-            EquipmentPanel.SetActive(false);
-            WeaponPanel.SetActive(true);
-            EquipmentChangeButtonText.text = "장비창으로";
+            EquipmentPanels[i].SetActive(false);
         }
-        else
-        {
-            WeaponPanel.SetActive(false);
-            EquipmentPanel.SetActive(true);
-            EquipmentChangeButtonText.text = "무기창으로";
-        }
+        EquipmentPanels[EquipmentNum].SetActive(true);
     }
     //로비로 돌아가기
     public void ExitClick()

@@ -54,7 +54,7 @@ public class LivingEntity : MonoBehaviour
         //layer은 숫자번째로 취급되어 숫자를찾아 조건을 넣는다.
         if (this.gameObject.layer == 9)
         {
-            UIManager.Instance.ShowDamageText(damageMessage.amount,damageMessage.isHeadShot);
+            UIManager.Instance.ShowDamageText((int)damageMessage.amount,damageMessage.isHeadShot);
         }
         Health -= damageMessage.amount;//체력을 감소 시킴
         if(enemyHealthSlider != null)

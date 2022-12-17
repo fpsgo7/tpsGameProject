@@ -84,7 +84,7 @@ public class UIManager : MonoBehaviour
     }
 
     //데미지 텍스트 생성하여 띄우기
-    public void ShowDamageText(float damage,bool isHeadShot)
+    public void ShowDamageText(int damage,bool isHeadShot)
     {
         DamageText damageText = DamageTextPooling.Instance.GetObject(DamageTextParents, damage,isHeadShot);
         damageTexts.Add(damageText);

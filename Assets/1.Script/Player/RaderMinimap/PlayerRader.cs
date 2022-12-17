@@ -54,19 +54,4 @@ public class PlayerRader : MonoBehaviour
         //raderObjects.Remove(gameObject);
         //borderObjects.Remove(gameObject);
     }
-    //void createRaderObjects()
-    //{
-    //    for (int i = 0; i < rayHits.Length; i++)
-    //    {
-    //        if (rayHits[i].transform.GetComponent<LivingEntity>())
-    //        {
-    //            GameObject k = Instantiate(raderPrefab, rayHits[i].transform.position, Quaternion.identity) as GameObject;
-    //            k.transform.SetParent(rayHits[i].transform);
-    //            raderObjects.Add(k);
-    //            GameObject j = Instantiate(raderPrefab, rayHits[i].transform.position, Quaternion.identity) as GameObject;
-    //            j.transform.SetParent(rayHits[i].transform);
-    //            borderObjects.Add(j);
-    //        }
-    //    }
-    //}
 }
