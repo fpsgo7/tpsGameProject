@@ -131,25 +131,27 @@ public class PlayerShooter : MonoBehaviour
             Reload();
         }
 
+       
         if (playerInput.IszoomIn == true && isZoomIn == false)
         {
             ZoomIn();
         }
-        else if (playerInput.IszoomIn == false && isZoomIn == true)
+        else if (playerInput.IszoomIn == false && isZoomIn == true && playerInput.IsScopeZoomIn == false)
         {
             ZoomOut();
         }
 
-        if (playerInput.IsScopeZoomIn == true && scopeCamera.activeSelf == false 
-            && isEnoughDistance == true && gun.guns == Gun.Guns.DMRGUN && playerInput.IszoomIn == true)
+        if (playerInput.IsScopeZoomIn == true && scopeCamera.activeSelf == false
+           && isEnoughDistance == true && gun.guns == Gun.Guns.DMRGUN && isZoomIn == true &&playerInput.IszoomIn ==true)
         {
             ScopeZoomIn();
         }
-        else if (playerInput.IsScopeZoomIn == false && scopeCamera.activeSelf == true 
-            || isEnoughDistance==false && gun.guns == Gun.Guns.DMRGUN || playerInput.IszoomIn == false)
+        else if (playerInput.IsScopeZoomIn == false && scopeCamera.activeSelf == true
+            || isEnoughDistance == false && gun.guns == Gun.Guns.DMRGUN)
         {   //스코프 줌인 입력 상태가 false 이고 스코프 카메라가 트루이거나 , 사격거리가 짧아 사격이 불가능할경우 실행
-            ScopeZoomOut();
+            ScopeZoomOut(playerInput.IszoomIn);
         }
+
     }
 
     private void Update()
@@ -359,11 +361,11 @@ public class PlayerShooter : MonoBehaviour
         UIAim.Instance.crosshair.UseCrosshair(false);
     }
 
-    private void ScopeZoomOut()
+    private void ScopeZoomOut(bool isCrosshair)
     {
         scopeCamera.SetActive(false);
         scopeImage.SetActive(false);
-        UIAim.Instance.crosshair.UseCrosshair(true);
+        UIAim.Instance.crosshair.UseCrosshair(isCrosshair);
     }
     //마우스 감도 조절하기 
     public void XAxisChange(float x )//설정 마우스 감도 조절용
