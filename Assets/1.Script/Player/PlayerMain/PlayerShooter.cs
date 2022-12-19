@@ -29,7 +29,6 @@ public class PlayerShooter : MonoBehaviour
     public GameObject scopeCamera;
     public GameObject scopeImage;
     public CinemachineFreeLook forrowCam;// 줌인 카메라
-    public Crosshair crosshair;
     public GameObject playerDgree;// 플레이어 각도 수정
     public Transform gunPivot;//총 위치를 위한 오브젝트
 
@@ -37,15 +36,15 @@ public class PlayerShooter : MonoBehaviour
     private float lastFireInputTime; //마지막 발사 시간
     //줌인 줌아웃 float 변수
     private const float zoomOutFieldOfView = 60f;
-    private const float zoomOutScreenX = 0.4f;
-    private const float zoomOutTopScreenY = 0.6f;
-    private const float zoomOutMidScreenY = 0.6f;
-    private const float zoomOutBotScreenY = 0.6f;
+    private const float zoomOutScreenX = 0.45f;//0.4 전에 사용하던값
+    private const float zoomOutTopScreenY = 0.55f;//0.6
+    private const float zoomOutMidScreenY = 0.55f;
+    private const float zoomOutBotScreenY = 0.55f;
     private const float zoomInFieldOfView = 40f;
-    private const float zoomInScreenX = 0.25f;
-    private const float zoomInTopScreenY = 0.8f;
-    private const float zoomInMidScreenY = 0.8f;
-    private const float zoomInBotScreenY = 0.8f;
+    private const float zoomInScreenX = 0.35f;
+    private const float zoomInTopScreenY = 0.65f;
+    private const float zoomInMidScreenY = 0.65f;
+    private const float zoomInBotScreenY = 0.65f;
     private float zoomFieldOfView = 0;
     private float zoomScreenX = 0;
     private float zoomTopScreenY = 0;
@@ -94,6 +93,14 @@ public class PlayerShooter : MonoBehaviour
         forrowCamCinemachineComposerGetRig0 = forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>();
         forrowCamCinemachineComposerGetRig1 = forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>();
         forrowCamCinemachineComposerGetRig2 = forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>();
+        //카메라 값 초기화
+        forrowCam.m_Lens.FieldOfView = zoomFieldOfView;
+        forrowCamCinemachineComposerGetRig0.m_ScreenY = zoomTopScreenY;
+        forrowCamCinemachineComposerGetRig1.m_ScreenY = zoomMidScreenY;
+        forrowCamCinemachineComposerGetRig2.m_ScreenY = zoomBotScreenY;
+        forrowCamCinemachineComposerGetRig0.m_ScreenX = zoomScreenX;
+        forrowCamCinemachineComposerGetRig1.m_ScreenX = zoomScreenX;
+        forrowCamCinemachineComposerGetRig2.m_ScreenX = zoomScreenX;
     }
     
     private void OnEnable()
@@ -284,6 +291,7 @@ public class PlayerShooter : MonoBehaviour
     }
     private void ZoomInEnd()
     {
+        UIAim.Instance.crosshair.UseCrosshair(true);
         forrowCam.m_Lens.FieldOfView = zoomInFieldOfView;
         forrowCamCinemachineComposerGetRig0.m_ScreenY = zoomInTopScreenY;
         forrowCamCinemachineComposerGetRig1.m_ScreenY = zoomInMidScreenY;
@@ -321,6 +329,7 @@ public class PlayerShooter : MonoBehaviour
     }
     private void ZoomOutEnd()
     {
+        UIAim.Instance.crosshair.UseCrosshair(false);
         Debug.Log("줌아웃");
         forrowCam.m_Lens.FieldOfView = zoomOutFieldOfView;
         forrowCamCinemachineComposerGetRig0.m_ScreenY = zoomOutTopScreenY;
@@ -345,14 +354,14 @@ public class PlayerShooter : MonoBehaviour
     {
         scopeCamera.SetActive(true);
         scopeImage.SetActive(true);
-        crosshair.ScopeUse(false);
+        UIAim.Instance.crosshair.UseCrosshair(false);
     }
 
     private void ScopeZoomOut()
     {
         scopeCamera.SetActive(false);
         scopeImage.SetActive(false);
-        crosshair.ScopeUse(true);
+        UIAim.Instance.crosshair.UseCrosshair(true);
     }
     //마우스 감도 조절하기 
     public void XAxisChange(float x )//설정 마우스 감도 조절용

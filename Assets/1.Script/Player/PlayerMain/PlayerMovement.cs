@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         characterController = GetComponent<CharacterController>();
 
         followCam = Camera.main;
-        speed = 5f;
+        speed = 3f;
         jumpSpeed = 6.1f;
         walkSpeed = 2.5f;
         runSpeed = 5f;

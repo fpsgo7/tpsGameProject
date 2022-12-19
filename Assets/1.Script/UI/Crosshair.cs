@@ -30,7 +30,7 @@ public class Crosshair : MonoBehaviour
         targetPoint = screenCamera.WorldToScreenPoint(worldPoint);
     }
 
-    public void ScopeUse(bool active)
+    public void UseCrosshair(bool active)
     {
         hitPoint.SetActive(active);
     }

@@ -19,11 +19,11 @@ public class UIAim : MonoBehaviour
     }
 
     //각 오브젝트들을 유니티 인스팩터 상에서 연결하기위하여 SerializeField 사용
-    [SerializeField] private Crosshair crosshair;
     [SerializeField] private Slider xAxisSlider;
     [SerializeField] private Slider yAxisSlider;
     [SerializeField] private Text xAxisText;
     [SerializeField] private Text yAxisText;
+    public Crosshair crosshair;
     [HideInInspector] public float xAxis;
     [HideInInspector] public float yAxis;
     //크로스해어 업데이트
