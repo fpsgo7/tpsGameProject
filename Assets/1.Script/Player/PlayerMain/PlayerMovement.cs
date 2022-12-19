@@ -16,8 +16,8 @@ public class PlayerMovement : MonoBehaviour
     public readonly int hashHorizontalMove = Animator.StringToHash("Horizontal Move");
     //플레이어 값
     [HideInInspector] public float speed;//속도
-    [HideInInspector] public float runSpeed;// 일반속도
-    [HideInInspector] public float walkSpeed;// 걷는속도
+    [HideInInspector] public float fireWalkSpeed;// 일반속도
+    [HideInInspector] public float aimWalkSpeed;// 걷는속도
     [HideInInspector] public float jumpSpeed;// 구르는 동안의 속도
     [HideInInspector] public float jumpStopSpeed;// 점프 중 느려야 하는 구간 속도
     [Range(0.01f, 1f)] private float airControlPercent = 0.1f;//공중 속도
@@ -47,11 +47,11 @@ public class PlayerMovement : MonoBehaviour
         characterController = GetComponent<CharacterController>();
 
         followCam = Camera.main;
-        speed = 3f;
         jumpSpeed = 6.1f;
-        walkSpeed = 2.5f;
-        runSpeed = 5f;
+        aimWalkSpeed = 1.5f;
+        fireWalkSpeed = 2.5f;
         jumpStopSpeed = 0.1f;
+        speed = fireWalkSpeed;
     }
 
     private void FixedUpdate()//업데이트 문 필요
@@ -133,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
         playerHealth.isInvincibility = false;
         isJumpState = false;
         animator.applyRootMotion = false;
-        speed = runSpeed;
+        speed = fireWalkSpeed;
     }
 
     //사용자 의 입력을 받아 에니메이션을 업데이트함

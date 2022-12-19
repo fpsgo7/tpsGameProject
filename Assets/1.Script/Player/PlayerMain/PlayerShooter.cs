@@ -140,11 +140,13 @@ public class PlayerShooter : MonoBehaviour
             ZoomOut();
         }
 
-        if (playerInput.IsScopeZoomIn == true && scopeCamera.activeSelf == false && isZoomIn == true && isEnoughDistance == true && gun.guns == Gun.Guns.DMRGUN)
+        if (playerInput.IsScopeZoomIn == true && scopeCamera.activeSelf == false 
+            && isEnoughDistance == true && gun.guns == Gun.Guns.DMRGUN && playerInput.IszoomIn == true)
         {
             ScopeZoomIn();
         }
-        else if (playerInput.IsScopeZoomIn == false && scopeCamera.activeSelf == true || isEnoughDistance==false && gun.guns == Gun.Guns.DMRGUN)
+        else if (playerInput.IsScopeZoomIn == false && scopeCamera.activeSelf == true 
+            || isEnoughDistance==false && gun.guns == Gun.Guns.DMRGUN || playerInput.IszoomIn == false)
         {   //스코프 줌인 입력 상태가 false 이고 스코프 카메라가 트루이거나 , 사격거리가 짧아 사격이 불가능할경우 실행
             ScopeZoomOut();
         }
@@ -276,10 +278,10 @@ public class PlayerShooter : MonoBehaviour
         {
             //부드럽게 하기
             forrowCam.m_Lens.FieldOfView = (zoomFieldOfView -= 2f);
-            forrowCamCinemachineComposerGetRig0.m_ScreenY = (zoomTopScreenY += 0.02f);
-            forrowCamCinemachineComposerGetRig1.m_ScreenY = (zoomMidScreenY += 0.02f);
-            forrowCamCinemachineComposerGetRig2.m_ScreenY = (zoomBotScreenY += 0.02f);
-            forrowCamCinemachineComposerGetRig0.m_ScreenX = (zoomScreenX -= 0.015f);
+            forrowCamCinemachineComposerGetRig0.m_ScreenY = (zoomTopScreenY += 0.01f);
+            forrowCamCinemachineComposerGetRig1.m_ScreenY = (zoomMidScreenY += 0.01f);
+            forrowCamCinemachineComposerGetRig2.m_ScreenY = (zoomBotScreenY += 0.01f);
+            forrowCamCinemachineComposerGetRig0.m_ScreenX = (zoomScreenX -= 0.01f);
             forrowCamCinemachineComposerGetRig1.m_ScreenX = (zoomScreenX);
             forrowCamCinemachineComposerGetRig2.m_ScreenX = (zoomScreenX);
             lastZoomTime = Time.time;
@@ -304,11 +306,11 @@ public class PlayerShooter : MonoBehaviour
         zoomMidScreenY = zoomInMidScreenY;
         zoomBotScreenY = zoomInBotScreenY;
         zoomScreenX = zoomInScreenX;
-        playerMovement.speed = playerMovement.walkSpeed;// 움직임 속도 조절
+        playerMovement.speed = playerMovement.aimWalkSpeed;// 움직임 속도 조절
         //lateUpdateFollow.ZoomInFollow();
         //gun.ZoomInFollow();
         isZoomIn = true;
-        playerAnimator.SetBool(hashZoomIn, isZoomIn);
+        //playerAnimator.SetBool(hashZoomIn, isZoomIn);
     }
     //조준 끝
     private void ZoomOut()
@@ -316,10 +318,10 @@ public class PlayerShooter : MonoBehaviour
         if (zoomFieldOfView <= zoomOutFieldOfView && Time.time >= lastZoomTime + waitingTimeForZoom)
         {
             forrowCam.m_Lens.FieldOfView = (zoomFieldOfView += 2f);
-            forrowCamCinemachineComposerGetRig0.m_ScreenY = (zoomTopScreenY -= 0.02f);
-            forrowCamCinemachineComposerGetRig1.m_ScreenY = (zoomMidScreenY -= 0.02f);
-            forrowCamCinemachineComposerGetRig2.m_ScreenY = (zoomBotScreenY -= 0.02f);
-            forrowCamCinemachineComposerGetRig0.m_ScreenX = (zoomScreenX += 0.015f);
+            forrowCamCinemachineComposerGetRig0.m_ScreenY = (zoomTopScreenY -= 0.01f);
+            forrowCamCinemachineComposerGetRig1.m_ScreenY = (zoomMidScreenY -= 0.01f);
+            forrowCamCinemachineComposerGetRig2.m_ScreenY = (zoomBotScreenY -= 0.01f);
+            forrowCamCinemachineComposerGetRig0.m_ScreenX = (zoomScreenX += 0.01f);
             forrowCamCinemachineComposerGetRig1.m_ScreenX = (zoomScreenX);
             forrowCamCinemachineComposerGetRig2.m_ScreenX = (zoomScreenX);
             lastZoomTime = Time.time;
@@ -343,11 +345,11 @@ public class PlayerShooter : MonoBehaviour
         zoomMidScreenY = zoomOutMidScreenY;
         zoomBotScreenY = zoomOutBotScreenY;
         zoomScreenX = zoomOutScreenX;
-        playerMovement.speed = playerMovement.runSpeed;
+        playerMovement.speed = playerMovement.fireWalkSpeed;
         //lateUpdateFollow.ZoomOutFollow();
         //gun.ZoomOutFollow();
         isZoomIn = false;
-        playerAnimator.SetBool(hashZoomIn, isZoomIn);
+        //playerAnimator.SetBool(hashZoomIn, isZoomIn);
     }
 
     private void ScopeZoomIn()
