@@ -16,8 +16,8 @@ public class PlayerMovement : MonoBehaviour
     public readonly int hashHorizontalMove = Animator.StringToHash("Horizontal Move");
     //플레이어 값
     [HideInInspector] public float speed;//속도
-    [HideInInspector] public float fireWalkSpeed;// 일반속도
-    [HideInInspector] public float aimWalkSpeed;// 걷는속도
+    [HideInInspector] public float fireWalkSpeed;// 사격 걷기 속도
+    [HideInInspector] public float WalkSpeed;// 일반속도
     [HideInInspector] public float jumpSpeed;// 구르는 동안의 속도
     [HideInInspector] public float jumpStopSpeed;// 점프 중 느려야 하는 구간 속도
     [Range(0.01f, 1f)] private float airControlPercent = 0.1f;//공중 속도
@@ -48,16 +48,16 @@ public class PlayerMovement : MonoBehaviour
 
         followCam = Camera.main;
         jumpSpeed = 6.1f;
-        aimWalkSpeed = 1.5f;
-        fireWalkSpeed = 2.5f;
+        fireWalkSpeed = 2f;
         jumpStopSpeed = 0.1f;
-        speed = fireWalkSpeed;
+        WalkSpeed = 4f;
+        speed = WalkSpeed;
     }
 
     private void FixedUpdate()//업데이트 문 필요
     {
         //회전 관련 함수를 실행하게함
-        if (currentSpeed > 0.2f || playerInput.IsFire || playerShooter.aimState == PlayerShooter.AimState.HipFire) 
+        if (currentSpeed > 0.2f ||playerInput.IsZoomIn|| playerInput.IsFire || playerShooter.aimState == PlayerShooter.AimState.FireReady) 
             Rotate();
         //움직임 함수를 실행하게함
         Move(playerInput.moveInput);
@@ -141,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //부드럽게 값이 변화 하기위해 사용
         float animationSpeedPercent = currentSpeed / speed;
-        if(playerInput.IszoomIn == true)
+        if(playerInput.IsZoomIn == true)
         {
             animator.SetFloat(hashVerticalMove, moveInput.y * animationSpeedPercent/2, 0.05f, Time.deltaTime);
             animator.SetFloat(hashHorizontalMove, moveInput.x * animationSpeedPercent/2, 0.05f, Time.deltaTime);

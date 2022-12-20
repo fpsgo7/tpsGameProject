@@ -7,7 +7,7 @@ public class PlayerShooter : MonoBehaviour
     public enum AimState
     {
         Idle,
-        HipFire//발사상태
+        FireReady//발사상태
     }
     //파라미터형 변수
     public AimState aimState { get; private set; }
@@ -59,7 +59,7 @@ public class PlayerShooter : MonoBehaviour
     public readonly int hashAngle = Animator.StringToHash("Angle");
     public readonly int hashShoot = Animator.StringToHash("Shoot");
     public readonly int hashReload = Animator.StringToHash("Reload");
-    public readonly int hashZoomIn = Animator.StringToHash("ZoomIn");
+    public readonly int hashFireReady = Animator.StringToHash("FireReady");
 
     private Vector3 aimPoint;//실제 조준대상 tps 기에 사용한다. 실제 조준점이 무조건 정중앙이 아니라서이다.
     private bool isLinedUp => !(Mathf.Abs(playerCamera.transform.eulerAngles.y - transform.eulerAngles.y) > 1f);//플레이어가 바라보는 각도와 실제 조준 각도를 너무큰치 체크해준다.
@@ -132,24 +132,24 @@ public class PlayerShooter : MonoBehaviour
         }
 
        
-        if (playerInput.IszoomIn == true && isZoomIn == false)
+        if (playerInput.IsZoomIn == true && isZoomIn == false)
         {
             ZoomIn();
         }
-        else if (playerInput.IszoomIn == false && isZoomIn == true && playerInput.IsScopeZoomIn == false)
+        else if (playerInput.IsZoomIn == false && isZoomIn == true && playerInput.IsScopeZoomIn == false)
         {
             ZoomOut();
         }
 
         if (playerInput.IsScopeZoomIn == true && scopeCamera.activeSelf == false
-           && isEnoughDistance == true && gun.guns == Gun.Guns.DMRGUN && isZoomIn == true &&playerInput.IszoomIn ==true)
+           && isEnoughDistance == true && gun.guns == Gun.Guns.DMRGUN && isZoomIn == true &&playerInput.IsZoomIn ==true)
         {
             ScopeZoomIn();
         }
         else if (playerInput.IsScopeZoomIn == false && scopeCamera.activeSelf == true
             || isEnoughDistance == false && gun.guns == Gun.Guns.DMRGUN)
         {   //스코프 줌인 입력 상태가 false 이고 스코프 카메라가 트루이거나 , 사격거리가 짧아 사격이 불가능할경우 실행
-            ScopeZoomOut(playerInput.IszoomIn);
+            ScopeZoomOut(playerInput.IsZoomIn);
         }
 
     }
@@ -163,14 +163,27 @@ public class PlayerShooter : MonoBehaviour
         angle = angle / -180f + 0.5f;
         playerAnimator.SetFloat(hashAngle, angle);// 에니메이터에 각도값을 보내어 총을 위아레로 움직이게함
         //발사버튼을 안누른시간이 지정된시간보다 오래걸리면 실행됨
-        if (!playerInput.IsFire && Time.time >= lastFireInputTime + waitingTimeForReleasingAim)
+        if (!playerInput.IsFire && !playerInput.IsZoomIn) //&& Time.time >= lastFireInputTime + waitingTimeForReleasingAim)
         {
-            aimState = AimState.Idle;
+            SetAimStateIdle();
         }
 
         UpdateUI();
     }
-
+    public void SetAimStateIdle()
+    {
+        Debug.Log("에임상태변환");
+        aimState = AimState.Idle;
+        playerMovement.speed = playerMovement.WalkSpeed;
+        playerAnimator.SetBool(hashFireReady, false);
+    }
+    public void SetAimStateFireReady()
+    {
+        Debug.Log("에임상태변환");
+        aimState = AimState.FireReady;
+        playerMovement.speed = playerMovement.fireWalkSpeed;
+        playerAnimator.SetBool(hashFireReady, true);
+    }
     public void ChooseGun(int weaponIndex, float damage)
     {
         EquipGun(allGuns[weaponIndex], damage);
@@ -195,14 +208,12 @@ public class PlayerShooter : MonoBehaviour
         //총을쏠때는 플레이어와 카메라방향이 일치해야한 다 이부분을 ㅊ크하기위하여 사용한다.
         if (aimState == AimState.Idle)
         {
-
             if (isLinedUp)
             { //조준점과 캐릭터가 정렬될 경우 
-                aimState = AimState.HipFire;//사격 상태로 바꾼다.
+                SetAimStateFireReady();
             }
-
         }
-        else if (aimState == AimState.HipFire)//발사중인 상태인경우
+        else if (aimState == AimState.FireReady)//발사중인 상태인경우
         {
             //정면에 충분한 공간을 확보하는지 체크함
            
@@ -215,7 +226,7 @@ public class PlayerShooter : MonoBehaviour
             }
             else
             {
-                aimState = AimState.Idle;
+                SetAimStateIdle();
             }
         }
     }
@@ -308,11 +319,14 @@ public class PlayerShooter : MonoBehaviour
         zoomMidScreenY = zoomInMidScreenY;
         zoomBotScreenY = zoomInBotScreenY;
         zoomScreenX = zoomInScreenX;
-        playerMovement.speed = playerMovement.aimWalkSpeed;// 움직임 속도 조절
+       
         //lateUpdateFollow.ZoomInFollow();
         //gun.ZoomInFollow();
         isZoomIn = true;
-        //playerAnimator.SetBool(hashZoomIn, isZoomIn);
+        if (aimState == AimState.Idle)
+        {
+            SetAimStateFireReady();
+        }
     }
     //조준 끝
     private void ZoomOut()
@@ -347,11 +361,10 @@ public class PlayerShooter : MonoBehaviour
         zoomMidScreenY = zoomOutMidScreenY;
         zoomBotScreenY = zoomOutBotScreenY;
         zoomScreenX = zoomOutScreenX;
-        playerMovement.speed = playerMovement.fireWalkSpeed;
+        playerMovement.speed = playerMovement.WalkSpeed;
         //lateUpdateFollow.ZoomOutFollow();
         //gun.ZoomOutFollow();
         isZoomIn = false;
-        //playerAnimator.SetBool(hashZoomIn, isZoomIn);
     }
 
     private void ScopeZoomIn()

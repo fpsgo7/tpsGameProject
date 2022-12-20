@@ -30,7 +30,7 @@ public class PlayerInput : MonoBehaviour
     public Vector2 moveInput { get; private set; }//방향을 위해 사용
     public bool IsFire { get; private set; }
     public bool IsGrenade { get; private set; }
-    public bool IszoomIn { get; private set; }
+    public bool IsZoomIn { get; private set; }
     public bool Isreload { get; private set; }
     public bool IsJump { get; private set; }
     public bool IsRestoreHealth { get; private set; }
@@ -69,7 +69,7 @@ public class PlayerInput : MonoBehaviour
         {
             moveInput = Vector2.zero;
             IsFire = false;
-            IszoomIn = false;
+            IsZoomIn = false;
             Isreload = false;
             IsJump = false;
             IsGrenade = false;
@@ -80,7 +80,7 @@ public class PlayerInput : MonoBehaviour
         if(playerMovement.isJumpState == true)
         {
             IsFire = false;
-            IszoomIn = false;
+            IsZoomIn = false;
             Isreload = false;
             IsJump = false;
             IsGrenade = false;
@@ -96,7 +96,7 @@ public class PlayerInput : MonoBehaviour
         IsJump = Input.GetButtonDown(jumpButtonName);
         IsFire = Input.GetButton(fireButtonName);
         IsGrenade = Input.GetButtonDown(FireGrenadeButtonName);
-        IszoomIn = Input.GetButton(zoomInButtonName);
+        IsZoomIn = Input.GetButton(zoomInButtonName);
         Isreload = Input.GetButtonDown(reloadButtonName);
         IsInteraction = Input.GetButtonDown(InteractionButtonName);
         //스코프 조작
