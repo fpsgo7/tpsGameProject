@@ -162,8 +162,7 @@ public class PlayerShooter : MonoBehaviour
         if (angle > 270f) angle -= 360f;
         angle = angle / -180f + 0.5f;
         playerAnimator.SetFloat(hashAngle, angle);// 에니메이터에 각도값을 보내어 총을 위아레로 움직이게함
-        //발사버튼을 안누른시간이 지정된시간보다 오래걸리면 실행됨
-        if (!playerInput.IsFire && !playerInput.IsZoomIn) //&& Time.time >= lastFireInputTime + waitingTimeForReleasingAim)
+        if (!playerInput.IsFire && !playerInput.IsZoomIn && aimState == AimState.FireReady) 
         {
             SetAimStateIdle();
         }
@@ -172,16 +171,16 @@ public class PlayerShooter : MonoBehaviour
     }
     public void SetAimStateIdle()
     {
-        Debug.Log("에임상태변환");
         aimState = AimState.Idle;
-        playerMovement.speed = playerMovement.WalkSpeed;
+        playerMovement.speed = playerMovement.walkSpeed;
+        playerAnimator.SetLayerWeight(1, 0.3f);
         playerAnimator.SetBool(hashFireReady, false);
     }
     public void SetAimStateFireReady()
     {
-        Debug.Log("에임상태변환");
         aimState = AimState.FireReady;
         playerMovement.speed = playerMovement.fireWalkSpeed;
+        playerAnimator.SetLayerWeight(1, 1);
         playerAnimator.SetBool(hashFireReady, true);
     }
     public void ChooseGun(int weaponIndex, float damage)
@@ -361,7 +360,7 @@ public class PlayerShooter : MonoBehaviour
         zoomMidScreenY = zoomOutMidScreenY;
         zoomBotScreenY = zoomOutBotScreenY;
         zoomScreenX = zoomOutScreenX;
-        playerMovement.speed = playerMovement.WalkSpeed;
+        playerMovement.speed = playerMovement.walkSpeed;
         //lateUpdateFollow.ZoomOutFollow();
         //gun.ZoomOutFollow();
         isZoomIn = false;

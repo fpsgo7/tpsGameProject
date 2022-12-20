@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     //플레이어 값
     [HideInInspector] public float speed;//속도
     [HideInInspector] public float fireWalkSpeed;// 사격 걷기 속도
-    [HideInInspector] public float WalkSpeed;// 일반속도
+    [HideInInspector] public float walkSpeed;// 일반속도
     [HideInInspector] public float jumpSpeed;// 구르는 동안의 속도
     [HideInInspector] public float jumpStopSpeed;// 점프 중 느려야 하는 구간 속도
     [Range(0.01f, 1f)] private float airControlPercent = 0.1f;//공중 속도
@@ -50,8 +50,8 @@ public class PlayerMovement : MonoBehaviour
         jumpSpeed = 6.1f;
         fireWalkSpeed = 2f;
         jumpStopSpeed = 0.1f;
-        WalkSpeed = 4f;
-        speed = WalkSpeed;
+        walkSpeed = 4f;
+        speed = walkSpeed;
     }
 
     private void FixedUpdate()//업데이트 문 필요
@@ -133,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
         playerHealth.isInvincibility = false;
         isJumpState = false;
         animator.applyRootMotion = false;
-        speed = fireWalkSpeed;
+        speed = walkSpeed;
     }
 
     //사용자 의 입력을 받아 에니메이션을 업데이트함
