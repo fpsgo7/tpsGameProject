@@ -12,10 +12,12 @@ public class PlayerMovement : MonoBehaviour
     private Camera followCam;
     //애니메이션 최적화를 위한 해쉬값
     public readonly int hashJump = Animator.StringToHash("Jump");
+    public readonly int hashRun = Animator.StringToHash("Run");
     public readonly int hashVerticalMove = Animator.StringToHash("Vertical Move");
     public readonly int hashHorizontalMove = Animator.StringToHash("Horizontal Move");
     //플레이어 값
     [HideInInspector] public float speed;//속도
+    [HideInInspector] public float runSpeed;//뛰기 속도
     [HideInInspector] public float fireWalkSpeed;// 사격 걷기 속도
     [HideInInspector] public float walkSpeed;// 일반속도
     [HideInInspector] public float jumpSpeed;// 구르는 동안의 속도
@@ -33,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     private float waitingForJump = 4f;//점프 딜레이
     private float lastJumpTime; //마지막 점프시간
     [HideInInspector] public bool isJumpState = false;// 점프 상태
-
+    [HideInInspector] public bool isRunState = false;// 뛰기 상태
     //지면상의 현제 속도를 표현한다. 람다식 활용
     public float currentSpeed =>
         new Vector2(characterController.velocity.x, characterController.velocity.z).magnitude;//x축 과 z 축의 값을 백터 형식으로 구한다.
@@ -51,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
         fireWalkSpeed = 2f;
         jumpStopSpeed = 0.1f;
         walkSpeed = 4f;
+        runSpeed = 7f; 
         speed = walkSpeed;
     }
 
@@ -59,11 +62,12 @@ public class PlayerMovement : MonoBehaviour
         //회전 관련 함수를 실행하게함
         if (currentSpeed > 0.2f ||playerInput.IsZoomIn|| playerInput.IsFire || playerShooter.aimState == PlayerShooter.AimState.FireReady) 
             Rotate();
-        //움직임 함수를 실행하게함
-        Move(playerInput.moveInput);
         //점프함수를 실행하게함
         if (playerInput.IsJump && Time.time >= lastJumpTime + waitingForJump)
             Jump();
+        //움직임 함수를 실행하게함
+        Move(playerInput.moveInput);
+       
     }
 
     private void Update()
@@ -105,6 +109,19 @@ public class PlayerMovement : MonoBehaviour
 
         transform.eulerAngles = Vector3.up * targetRotation;// y 축에대해서만 값을 설정함
 
+    }
+    public void RunStart()
+    {
+        isRunState = true;
+        speed = runSpeed;
+        animator.SetBool(hashRun, true);
+    }
+
+    public void RunEnd()
+    {
+        isRunState = false;
+        speed = walkSpeed;
+        animator.SetBool(hashRun, false);
     }
     //점프하기
     public void Jump()

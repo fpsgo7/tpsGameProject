@@ -23,6 +23,7 @@ public class PlayerInput : MonoBehaviour
     private const string ESCButtonName = "Cancel";//esc 키
     private const string InventoryButtonName = "Inventory";//m 키
     private const string InteractionButtonName = "Interaction";//e 키
+    private const string RunButtonName = "Run";//shift 키
 
     //실제로 입력된 값들을 저장할 프로퍼티
     //값을 읽을때는 public 형이라 밬에서 읽기 쉽지만
@@ -36,6 +37,8 @@ public class PlayerInput : MonoBehaviour
     public bool IsRestoreHealth { get; private set; }
     public bool IsScopeZoomIn { get; private set; }
     public bool IsInteraction { get; private set; }
+    public bool IsRunStart { get; private set; }
+    public bool IsRunEnd { get; private set; }
 
     private void Awake()
     {
@@ -85,6 +88,23 @@ public class PlayerInput : MonoBehaviour
             IsJump = false;
             IsGrenade = false;
             IsInteraction = false;
+            IsRunStart = false;
+            return;
+        }
+        //뛰기가 눌러지는 경우
+        if (playerMovement.isRunState == true)
+        {
+            IsFire = false;
+            IsZoomIn = false;
+            IsScopeZoomIn = false;
+            Isreload = false;
+            IsGrenade = false;
+            IsInteraction = false;
+            IsJump = Input.GetButtonDown(jumpButtonName);
+            if(IsRunEnd = Input.GetButtonUp(RunButtonName))
+            {
+                playerMovement.RunEnd();
+            }
             return;
         }
 
@@ -99,9 +119,10 @@ public class PlayerInput : MonoBehaviour
         IsZoomIn = Input.GetButton(zoomInButtonName);
         Isreload = Input.GetButtonDown(reloadButtonName);
         IsInteraction = Input.GetButtonDown(InteractionButtonName);
-        //스코프 조작
         IsScopeZoomIn = Input.GetButton(scopeZoomInButtonName);
-
-       
+        if(IsRunStart = Input.GetButtonDown(RunButtonName))
+        {
+            playerMovement.RunStart();
+        }
     }
 }
