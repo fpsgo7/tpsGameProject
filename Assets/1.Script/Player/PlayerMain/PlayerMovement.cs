@@ -62,9 +62,6 @@ public class PlayerMovement : MonoBehaviour
         //회전 관련 함수를 실행하게함
         if (currentSpeed > 0.2f ||playerInput.IsZoomIn|| playerInput.IsFire || playerShooter.aimState == PlayerShooter.AimState.FireReady) 
             Rotate();
-        //점프함수를 실행하게함
-        if (playerInput.IsJump && Time.time >= lastJumpTime + waitingForJump)
-            Jump();
         //움직임 함수를 실행하게함
         Move(playerInput.moveInput);
        
@@ -126,8 +123,11 @@ public class PlayerMovement : MonoBehaviour
     //점프하기
     public void Jump()
     {
-        lastJumpTime = Time.time;
-        animator.SetTrigger(hashJump);
+        if(Time.time >= lastJumpTime + waitingForJump)
+        {
+            lastJumpTime = Time.time;
+            animator.SetTrigger(hashJump);
+        }
     }
     public void JumpStart()
     {

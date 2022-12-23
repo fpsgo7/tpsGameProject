@@ -91,7 +91,6 @@ public class Gun : MonoBehaviour
         if (this.CompareTag("DMRGUN")) 
         {
             guns = Guns.DMRGUN;
-            Debug.Log("dmr");
         }
     }
     //비활 성화 되면 gun의 코루틴 비활성화

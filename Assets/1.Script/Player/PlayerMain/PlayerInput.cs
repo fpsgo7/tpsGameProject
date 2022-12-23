@@ -1,70 +1,48 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 
 public class PlayerInput : MonoBehaviour
 {
-    //스크립트 수정
-    //1.입력 시스템을 유니티 레거시 시스템 지금 쓰는 방식이아닌 
-    // new 입력 시스템을 활용할것 !
-    //플레이어의 인풋 입력을 관리하는 방법은 ㄱㅊ다.
-
-    //다른 스크립트와 연결하기
-    private PlayerHealth playerHealth;
-    private PlayerMovement playerMovement;
-    //입력감지를 위해 사용하는 변수 const 사용으로 상수화 시켜 최적화
-    private const string fireButtonName = "Fire1";
-    private const string FireGrenadeButtonName = "Grenade";//g 키
-    private const string zoomInButtonName = "ZoomIn";// 우클릭
-    private const string jumpButtonName = "Jump"; //  space 키
     private const string moveHorizontalAxisName = "Horizontal";
     private const string moveVerticalAxisName = "Vertical";
-    private const string reloadButtonName = "Reload"; //r키
-    private const string restoreHealthButtonName = "RestoreHealth";//v 키
-    private const string scopeZoomInButtonName = "ScopeZoomIn";//tab 키
-    private const string ESCButtonName = "Cancel";//esc 키
-    private const string InventoryButtonName = "Inventory";//m 키
-    private const string InteractionButtonName = "Interaction";//e 키
-    private const string RunButtonName = "Run";//shift 키
-
-    //실제로 입력된 값들을 저장할 프로퍼티
-    //값을 읽을때는 public 형이라 밬에서 읽기 쉽지만
-    //값설정은 private 로 막아뒀다.
     public Vector2 moveInput { get; private set; }//방향을 위해 사용
     public bool IsFire { get; private set; }
-    public bool IsGrenade { get; private set; }
     public bool IsZoomIn { get; private set; }
-    public bool Isreload { get; private set; }
-    public bool IsJump { get; private set; }
-    public bool IsRestoreHealth { get; private set; }
     public bool IsScopeZoomIn { get; private set; }
     public bool IsInteraction { get; private set; }
-    public bool IsRunStart { get; private set; }
-    public bool IsRunEnd { get; private set; }
 
+    private PlayerHealth playerHealth;
+    private PlayerMovement playerMovement;
+    private PlayerShooter playerShooter;
+    private PlayerInteraction playerInteraction;
+    private FireGrenade fireGrenade;
     private void Awake()
     {
         playerHealth = GetComponent<PlayerHealth>();
         playerMovement = GetComponent<PlayerMovement>();
+        playerInteraction = GetComponent<PlayerInteraction>();
+        playerShooter = GetComponent<PlayerShooter>();
+        fireGrenade = GetComponent<FireGrenade>();
     }
 
     private void Update()
     {
         //체력 회복 관리
-        if (Input.GetButtonDown(restoreHealthButtonName))
-            IsRestoreHealth = true;
-        if (Input.GetButtonUp(restoreHealthButtonName))
-            IsRestoreHealth = false;
-
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.RESTOREHEALTH]))
+            playerHealth.isRestoringHealth = true;
+        if (Input.GetKeyUp(KeySetting.keys[KeyAction.RESTOREHEALTH]))
+            playerHealth.isRestoringHealth = false;
         //메뉴 온오프 
-        if (Input.GetButtonDown(ESCButtonName))
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.CANCEL]))
         {
-            //Debug.Log("메뉴 키입력");
             UIMenu.Instance.SetMenuOnOff();
         }
-        if (Input.GetButtonDown(InventoryButtonName))
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.INVENTORY]))
         {
             UIMenu.Instance.SetInventoryOnOff();
         }
-
         //게임 오버가 되거나 체력 회복 중인 경우와 메뉴를 보는 동안 정지한다.
         if (GameManager.Instance != null
             && GameManager.Instance.isGameover || playerHealth.isRestoreHealthProceeding == true
@@ -73,56 +51,38 @@ public class PlayerInput : MonoBehaviour
             moveInput = Vector2.zero;
             IsFire = false;
             IsZoomIn = false;
-            Isreload = false;
-            IsJump = false;
-            IsGrenade = false;
             IsInteraction = false;
+            IsScopeZoomIn = false;
             return;
         }
         // 점프중인 경우
-        if(playerMovement.isJumpState == true)
+        if (playerMovement.isJumpState == true)
         {
-            IsFire = false;
-            IsZoomIn = false;
-            Isreload = false;
-            IsJump = false;
-            IsGrenade = false;
-            IsInteraction = false;
-            IsRunStart = false;
             return;
         }
         //뛰기가 눌러지는 경우
         if (playerMovement.isRunState == true)
         {
-            IsFire = false;
-            IsZoomIn = false;
-            IsScopeZoomIn = false;
-            Isreload = false;
-            IsGrenade = false;
-            IsInteraction = false;
-            IsJump = Input.GetButtonDown(jumpButtonName);
-            if(IsRunEnd = Input.GetButtonUp(RunButtonName))
-            {
+            moveInput = Vector2.up;
+            if (Input.GetKeyDown(KeySetting.keys[KeyAction.JUMP]))
+                playerMovement.Jump();
+            if (Input.GetKeyUp(KeySetting.keys[KeyAction.RUN]))
                 playerMovement.RunEnd();
-            }
             return;
         }
-
         //moveInput 에 입력된 값을 할당한다. new Vector2(수직방향입력,수평방향입력)
         moveInput = new Vector2(Input.GetAxis(moveHorizontalAxisName), Input.GetAxis(moveVerticalAxisName));
-        //move Input 값이 1보다 크면 그값을 1로 교환해주어 속도가 잘못되는 현상을 방지한다.
-        if (moveInput.sqrMagnitude > 1) moveInput = moveInput.normalized;//정규화 활용
-        // 해당 파라미터에 입력을 받아 true 와 false 로 바꿔 조종하는데 쓴다.
-        IsJump = Input.GetButtonDown(jumpButtonName);
-        IsFire = Input.GetButton(fireButtonName);
-        IsGrenade = Input.GetButtonDown(FireGrenadeButtonName);
-        IsZoomIn = Input.GetButton(zoomInButtonName);
-        Isreload = Input.GetButtonDown(reloadButtonName);
-        IsInteraction = Input.GetButtonDown(InteractionButtonName);
-        IsScopeZoomIn = Input.GetButton(scopeZoomInButtonName);
-        if(IsRunStart = Input.GetButtonDown(RunButtonName))
-        {
+        IsFire = Input.GetKey(KeySetting.keys[KeyAction.FIRE]);
+        IsInteraction = Input.GetKeyDown(KeySetting.keys[KeyAction.INTERACTION]);
+        IsScopeZoomIn = Input.GetKey(KeySetting.keys[KeyAction.SCOPEZOOMIN]);
+        IsZoomIn = Input.GetKey(KeySetting.keys[KeyAction.ZOOMIN]);
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.JUMP]))
+            playerMovement.Jump();
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.GRENADE]))
+            fireGrenade.Fire();
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.RELOAD]))
+            playerShooter.Reload();
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.RUN]))
             playerMovement.RunStart();
-        }
     }
 }

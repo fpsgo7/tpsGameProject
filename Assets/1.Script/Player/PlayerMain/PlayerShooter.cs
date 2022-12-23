@@ -126,10 +126,6 @@ public class PlayerShooter : MonoBehaviour
             lastFireInputTime = Time.time;
             Shoot();
         }
-        if (playerInput.Isreload)
-        {
-            Reload();
-        }
 
        
         if (playerInput.IsZoomIn == true && isZoomIn == false)

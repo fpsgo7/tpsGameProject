@@ -27,14 +27,6 @@ public class FireGrenade : MonoBehaviour
     {
         grenadeAmmo = 10;
     }
-    private void FixedUpdate()
-    {
-        if (playerInput.IsGrenade)
-        {
-            Fire();
-        }
-    }
-
     //발사 명령은 PlayerInput 에서 입력을 받아 PlayerShooter에서 실행된다.   
     public void Fire()
     {

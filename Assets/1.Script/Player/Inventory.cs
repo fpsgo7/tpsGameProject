@@ -203,7 +203,6 @@ public class Inventory : MonoBehaviour
     //게임을 시작하면 자동으로 아이템을 장착한다.
     public void StartWeaponItem(int num)
     {
-        Debug.Log(num);
         for (int j = 0; j < MyItemList.Count; j++)
         {
             if (MyItemList[j].type.Equals(EquipmentItem.ItemType.Weapon.ToString()))
@@ -230,7 +229,6 @@ public class Inventory : MonoBehaviour
                 {
                     if (equipmentSlots[i].num == num)
                     {
-                        Debug.Log(num+""+equipmentSlots[i].itemName);
                         equipmentSlots[i].EquipItemSlot();
                         break;
                     }

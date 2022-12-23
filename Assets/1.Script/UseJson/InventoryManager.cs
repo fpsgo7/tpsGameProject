@@ -47,7 +47,7 @@ public class InventoryManager : MonoBehaviour
 
     private string filePath;
 
-    void Awake()
+    void OnEnable()
     {
         filePath = Application.persistentDataPath + "/MyItem.txt";// 파일의 경로를 미리 지정함
         Load();

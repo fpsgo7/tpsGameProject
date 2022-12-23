@@ -10,6 +10,7 @@ public class PlayerHealth : LivingEntity
     private int restoreHealth;//체력회복 게이지
     private int restoreHealthMax;//체력회복 게이지 최댁값
     private int healthKit;// 체력회복 킷
+    public bool isRestoringHealth = false;
     //오디오 클립
     public AudioClip deathClip;
     public AudioClip hitClip;
@@ -30,7 +31,7 @@ public class PlayerHealth : LivingEntity
     private void FixedUpdate()
     {
         //회복 문장
-        if (playerInput.IsRestoreHealth && Health < maxHealth && healthKit >=1)
+        if (isRestoringHealth && Health < maxHealth && healthKit >=1)
         {
             RestoreHealthSlider();
         }
@@ -50,7 +51,7 @@ public class PlayerHealth : LivingEntity
     }
 
     //헬스슬라이더 체우기
-    private void RestoreHealthSlider()
+    public void RestoreHealthSlider()
     {
         restoreHealth += 1;
         UIPlayerInfo.Instance.RestoreHealthSlideValue(restoreHealth);

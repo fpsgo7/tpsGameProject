@@ -22,6 +22,7 @@ public class UIMenu : MonoBehaviour
     //각 오브젝트들을 유니티 인스팩터 상에서 연결하기위하여 SerializeField 사용
     [SerializeField] private GameObject MenuUI;
     [SerializeField] private GameObject InventoryUI;
+    [SerializeField] private GameObject KeyChangeUI;
     [SerializeField] private List<GameObject> EquipmentPanels = new List<GameObject>();
     [SerializeField] private GameObject EquipmentChangeButton;
     [SerializeField] private PlayerShooter playerShooter;
@@ -79,6 +80,20 @@ public class UIMenu : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
     }
+    //키보드 변경창 오픈
+    public void SetKeyChangeUIOnOff()
+    {
+        if (KeyChangeUI.activeSelf == false)
+        {
+            MenuUI.SetActive(false);
+            KeyChangeUI.SetActive(true);
+        }
+        else if (KeyChangeUI.activeSelf == true)
+        {
+            MenuUI.SetActive(true);
+            KeyChangeUI.SetActive(false);
+        }
+    }
     //장비창 변경
     public void ChangeEquipmentPanel(int EquipmentNum)
     {
@@ -98,4 +113,5 @@ public class UIMenu : MonoBehaviour
         }
         SceneManager.LoadScene("Lobby");
     }
+
 }

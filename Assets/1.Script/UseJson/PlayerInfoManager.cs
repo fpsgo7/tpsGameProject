@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.IO;
-
+//Json 방식 활용하기
 //C:\Users\FPSGO\AppData\LocalLow\DefaultCompany\tpsGameProject
 //위 주소로 정보가 저장된다.
 //[System.Serializable]
@@ -55,9 +55,12 @@ public class PlayerInfoManager : MonoBehaviour
     {
         if (Instance != this) Destroy(gameObject);
         DontDestroyOnLoad(this.gameObject);
-        filePath = Application.persistentDataPath+"/PlayerInfo.txt";
     }
 
+    private void OnEnable()
+    {
+        filePath = Application.persistentDataPath + "/PlayerInfo.txt";
+    }
     public void SavePlayerScore(int score)
     {
 
