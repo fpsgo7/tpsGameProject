@@ -22,7 +22,7 @@ public class UIKeySetting : MonoBehaviour
     private void Awake()
     {
         //키세팅 메니져에 저장된 keySettingData값들을 가져와 키보드에 적용함
-        keySettingInfoManager = GameObject.Find("JsonManager").GetComponent<KeySettingInfoManager>();
+        keySettingInfoManager = GameObject.Find("InfoManager").GetComponent<KeySettingInfoManager>();
         
         KeySetting.keys.Add(KeyAction.FIRE, (KeyCode)keySettingInfoManager.keySettingData.FIRE);
         KeySetting.keys.Add(KeyAction.ZOOMIN, (KeyCode)keySettingInfoManager.keySettingData.ZOOMIN);

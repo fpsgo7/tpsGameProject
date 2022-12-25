@@ -31,17 +31,6 @@ public class Item
 
 public class InventoryManager : MonoBehaviour
 {
-    private static InventoryManager instance;
-
-    public static InventoryManager Instance
-    {
-        get
-        {
-            if (instance == null) instance = FindObjectOfType<InventoryManager>();
-
-            return instance;
-        }
-    }
     public List<Item> MyItemList;// 아이템 관련 리스트 
     public string jdata = string.Empty;
 

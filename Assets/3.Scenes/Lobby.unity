@@ -4973,7 +4973,7 @@ GameObject:
   - component: {fileID: 1999463172}
   - component: {fileID: 1999463175}
   m_Layer: 0
-  m_Name: JsonManager
+  m_Name: InfoManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

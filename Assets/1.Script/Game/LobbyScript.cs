@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class LobbyScript : MonoBehaviour
 {
     private static LobbyScript instance;
+    private InventoryManager inventoryManager;
 
     public static LobbyScript Instance
     {
@@ -51,12 +52,14 @@ public class LobbyScript : MonoBehaviour
     public float xAxis;
     public float yAxis;
 
+    
     private void Start()
     {
         backEndAuthentication = GetComponent<BackEndAuthentication>();
         backEndGetUserInfo = GetComponent<BackEndGetUserInfo>();
         backEndNickname = GetComponent<BackEndNickname>();
-        keySettingInfoManager = GameObject.Find("JsonManager").GetComponent<KeySettingInfoManager>();
+        inventoryManager = GameObject.Find("InfoManager").GetComponent<InventoryManager>();
+        keySettingInfoManager = GameObject.Find("InfoManager").GetComponent<KeySettingInfoManager>();
     }
     public void GameStart()
     {
@@ -118,7 +121,7 @@ public class LobbyScript : MonoBehaviour
     public void OfflineLogin()
     {
         PlayerInfoManager.Instance.SetOfflineLoadPlayer();
-        InventoryManager.Instance.Load();
+        inventoryManager.Load();
         keySettingInfoManager.KeySettingLoad();
         OpenGameStartPanel();
     }

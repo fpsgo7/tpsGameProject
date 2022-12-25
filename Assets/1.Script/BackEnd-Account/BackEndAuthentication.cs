@@ -7,9 +7,11 @@ using BackEnd;
 public class BackEndAuthentication : MonoBehaviour
 {
     private KeySettingInfoManager keySettingInfoManager;
+    private InventoryManager inventoryManager;
     private void Awake()
     {
-        keySettingInfoManager = GameObject.Find("JsonManager").GetComponent<KeySettingInfoManager>();
+        keySettingInfoManager = GameObject.Find("InfoManager").GetComponent<KeySettingInfoManager>();
+        inventoryManager = GameObject.Find("InfoManager").GetComponent<InventoryManager>();
     }
     
     //회원가입
@@ -47,7 +49,7 @@ public class BackEndAuthentication : MonoBehaviour
             case "Success":
                 Debug.Log("로그인 완료 ");
                 BackEndPlayerInfo.GetPlayerInfo(id);
-                InventoryManager.Instance.Load();
+                inventoryManager.Load();
                 keySettingInfoManager.KeySettingLoad();
                 LobbyScript.Instance.OpenGameStartPanel();
                 LobbyScript.Instance.logoutButton.SetActive(true);

@@ -12,11 +12,13 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Slot[] equipmentSlots;//장비 슬롯들
     [SerializeField] public List<Item> MyItemList;// 받아온 정보를 넣을 리스트 
     private string getJdata = string.Empty;
+    private InventoryManager inventoryManager;
     EquipmentItem item = new EquipmentItem();
     int lastNum=0;// 아이템을 새로 획득하면 넣을 숫자의 이전값
 
     void Awake()
     {
+        inventoryManager = GameObject.Find("InfoManager").GetComponent<InventoryManager>();
         weaponSlots = weaponSlotParent.GetComponentsInChildren<Slot>();
         equipmentSlots = equipmentSlotParent.GetComponentsInChildren<Slot>();
         for (int i = 0; i < weaponSlots.Length; i++)
@@ -42,7 +44,7 @@ public class Inventory : MonoBehaviour
                         item.name, item.weaponType.ToString(),
                         item.damage.ToString(), item.shield.ToString()));
                     //json 데이터 파일 또는 서버 인벤토리에 넣기
-                    InventoryManager.Instance.AddItemSave
+                    inventoryManager.AddItemSave
                         (lastNum,item.itemType.ToString(),item.name,item.weaponType.ToString(),
                         item.damage.ToString(),item.shield.ToString());
                     weaponSlots[i].AddItem(lastNum, item);
@@ -59,7 +61,7 @@ public class Inventory : MonoBehaviour
                 {
                     MyItemList.Add(new Item(++lastNum, item.itemType.ToString(), item.name, item.weaponType.ToString(),
                         item.damage.ToString(), item.shield.ToString()));
-                    InventoryManager.Instance.AddItemSave
+                    inventoryManager.AddItemSave
                         (lastNum,item.itemType.ToString(), item.name, item.weaponType.ToString(),
                         item.damage.ToString(), item.shield.ToString());
                     equipmentSlots[i].AddItem(lastNum, item);
@@ -73,7 +75,7 @@ public class Inventory : MonoBehaviour
 
     public void StartAcquireItem()
     {
-        MyItemList = InventoryManager.Instance.MyItemList;
+        MyItemList = inventoryManager.MyItemList;
         for (int j = 0; j < MyItemList.Count; j++)
         {
             lastNum = MyItemList[j].num;
@@ -172,7 +174,7 @@ public class Inventory : MonoBehaviour
                         int num = item.num;
                         MyItemList.Remove(item);
                         string jdata = JsonUtility.ToJson(new Serialization<Item>(MyItemList));
-                        InventoryManager.Instance.DeleteItemSave(jdata,num);
+                        inventoryManager.DeleteItemSave(jdata,num);
                         break;
                     }
                 }
@@ -191,7 +193,7 @@ public class Inventory : MonoBehaviour
                         int num = item.num;
                         MyItemList.Remove(item);
                         string jdata = JsonUtility.ToJson(new Serialization<Item>(MyItemList));
-                        InventoryManager.Instance.DeleteItemSave(jdata,num);
+                        inventoryManager.DeleteItemSave(jdata,num);
                         break;
                     }
                 }
