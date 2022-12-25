@@ -17,7 +17,6 @@ public class KeySettingData
     public int RELOAD;
     public int RESTOREHEALTH;
     public int SCOPEZOOMIN;
-    public int CANCEL;
     public int INVENTORY;
     public int INTERACTION;
     public int RUN;
@@ -28,7 +27,7 @@ public class KeySettingInfoManager : MonoBehaviour
     public KeySettingData keySettingData;
     KeyCode[] defaultKeys = new KeyCode[]
        {KeyCode.Mouse0,KeyCode.Mouse1,KeyCode.G,KeyCode.Space,KeyCode.R,KeyCode.V,
-        KeyCode.Tab,KeyCode.Escape,KeyCode.M,KeyCode.E,KeyCode.LeftShift};
+        KeyCode.Tab,KeyCode.M,KeyCode.E,KeyCode.LeftShift};
 
     public void KeySettingLoad()
     {
@@ -60,10 +59,9 @@ public class KeySettingInfoManager : MonoBehaviour
             keySettingData.RELOAD = (int)defaultKeys[4];
             keySettingData.RESTOREHEALTH = (int)defaultKeys[5];
             keySettingData.SCOPEZOOMIN = (int)defaultKeys[6];
-            keySettingData.CANCEL = (int)defaultKeys[7];
-            keySettingData.INVENTORY = (int)defaultKeys[8];
-            keySettingData.INTERACTION = (int)defaultKeys[9];
-            keySettingData.RUN = (int)defaultKeys[10];
+            keySettingData.INVENTORY = (int)defaultKeys[7];
+            keySettingData.INTERACTION = (int)defaultKeys[8];
+            keySettingData.RUN = (int)defaultKeys[9];
         }
     }
     public void KeySettingSave(KeySettingData data)

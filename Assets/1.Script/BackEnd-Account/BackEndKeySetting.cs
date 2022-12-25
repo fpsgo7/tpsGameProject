@@ -27,7 +27,6 @@ public static class BackEndKeySetting
             keySettingData.RELOAD = (int)bro.FlattenRows()[0]["RELOAD"];
             keySettingData.RESTOREHEALTH = (int)bro.FlattenRows()[0]["RESTOREHEALTH"];
             keySettingData.SCOPEZOOMIN = (int)bro.FlattenRows()[0]["SCOPEZOOMIN"];
-            keySettingData.CANCEL = (int)bro.FlattenRows()[0]["CANCEL"];
             keySettingData.INVENTORY = (int)bro.FlattenRows()[0]["INVENTORY"];
             keySettingData.INTERACTION = (int)bro.FlattenRows()[0]["INTERACTION"];
             keySettingData.RUN = (int)bro.FlattenRows()[0]["RUN"];
@@ -50,7 +49,6 @@ public static class BackEndKeySetting
         param.Add("RELOAD", (int)KeyCode.R);
         param.Add("RESTOREHEALTH", (int)KeyCode.V);
         param.Add("SCOPEZOOMIN", (int)KeyCode.Tab);
-        param.Add("CANCEL", (int)KeyCode.Escape);
         param.Add("INVENTORY", (int)KeyCode.M);
         param.Add("INTERACTION", (int)KeyCode.E);
         param.Add("RUN", (int)KeyCode.LeftShift);
@@ -97,7 +95,6 @@ public static class BackEndKeySetting
         param.Add("RELOAD", keySettingData.RELOAD);
         param.Add("RESTOREHEALTH", keySettingData.RESTOREHEALTH);
         param.Add("SCOPEZOOMIN", keySettingData.SCOPEZOOMIN);
-        param.Add("CANCEL", keySettingData.CANCEL);
         param.Add("INVENTORY", keySettingData.INVENTORY);
         param.Add("INTERACTION", keySettingData.INTERACTION);
         param.Add("RUN", keySettingData.RUN);

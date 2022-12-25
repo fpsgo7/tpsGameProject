@@ -7,6 +7,7 @@ public class PlayerInput : MonoBehaviour
 {
     private const string moveHorizontalAxisName = "Horizontal";
     private const string moveVerticalAxisName = "Vertical";
+    private const string ESCButtonName = "Cancel";//esc 키
     public Vector2 moveInput { get; private set; }//방향을 위해 사용
     public bool IsFire { get; private set; }
     public bool IsZoomIn { get; private set; }
@@ -35,7 +36,7 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKeyUp(KeySetting.keys[KeyAction.RESTOREHEALTH]))
             playerHealth.isRestoringHealth = false;
         //메뉴 온오프 
-        if (Input.GetKeyDown(KeySetting.keys[KeyAction.CANCEL]))
+        if (Input.GetButtonDown(ESCButtonName))
         {
             UIMenu.Instance.SetMenuOnOff();
         }

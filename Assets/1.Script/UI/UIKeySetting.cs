@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public enum KeyAction
 {
     FIRE, ZOOMIN, GRENADE, JUMP, RELOAD, RESTOREHEALTH,
-    SCOPEZOOMIN, CANCEL, INVENTORY, INTERACTION, RUN
+    SCOPEZOOMIN, INVENTORY, INTERACTION, RUN
 }
 public static class KeySetting
 {
@@ -31,7 +31,6 @@ public class UIKeySetting : MonoBehaviour
         KeySetting.keys.Add(KeyAction.RELOAD, (KeyCode)keySettingInfoManager.keySettingData.RELOAD);
         KeySetting.keys.Add(KeyAction.RESTOREHEALTH, (KeyCode)keySettingInfoManager.keySettingData.RESTOREHEALTH);
         KeySetting.keys.Add(KeyAction.SCOPEZOOMIN, (KeyCode)keySettingInfoManager.keySettingData.SCOPEZOOMIN);
-        KeySetting.keys.Add(KeyAction.CANCEL, (KeyCode)keySettingInfoManager.keySettingData.CANCEL);
         KeySetting.keys.Add(KeyAction.INVENTORY, (KeyCode)keySettingInfoManager.keySettingData.INVENTORY);
         KeySetting.keys.Add(KeyAction.INTERACTION, (KeyCode)keySettingInfoManager.keySettingData.INTERACTION);
         KeySetting.keys.Add(KeyAction.RUN, (KeyCode)keySettingInfoManager.keySettingData.RUN);
@@ -62,8 +61,32 @@ public class UIKeySetting : MonoBehaviour
             Event keyEvent = Event.current;
             if (keyEvent.isKey)//현제 눌린키의 값을 상용
             {
+                Debug.Log(keyEvent.keyCode);
                 //가져온 키코드를 값에 넣는다.
                 KeySetting.keys[(KeyAction)key] = keyEvent.keyCode;
+                key = -1;
+                SetButtonText();// 키코드가 바뀌면 버튼의 택스트를 업데이트함
+                SaveKeySetting();//변경된 키값들을 온라인이면 서버 오프라인이면 파일에 저장함
+                isKeySetting = false;
+            }
+            if (Input.GetMouseButtonDown(0))
+            {
+                KeySetting.keys[(KeyAction)key] = KeyCode.Mouse0;
+                key = -1;
+                SetButtonText();// 키코드가 바뀌면 버튼의 택스트를 업데이트함
+                SaveKeySetting();//변경된 키값들을 온라인이면 서버 오프라인이면 파일에 저장함
+                isKeySetting = false;
+            }else if (Input.GetMouseButtonDown(1))
+            {
+                KeySetting.keys[(KeyAction)key] = KeyCode.Mouse1;
+                key = -1;
+                SetButtonText();// 키코드가 바뀌면 버튼의 택스트를 업데이트함
+                SaveKeySetting();//변경된 키값들을 온라인이면 서버 오프라인이면 파일에 저장함
+                isKeySetting = false;
+            }
+            else if (Input.GetMouseButtonDown(2))
+            {
+                KeySetting.keys[(KeyAction)key] = KeyCode.Mouse2;
                 key = -1;
                 SetButtonText();// 키코드가 바뀌면 버튼의 택스트를 업데이트함
                 SaveKeySetting();//변경된 키값들을 온라인이면 서버 오프라인이면 파일에 저장함
@@ -87,7 +110,6 @@ public class UIKeySetting : MonoBehaviour
         keySettingInfoManager.keySettingData.RELOAD = (int)KeySetting.keys[KeyAction.RELOAD];
         keySettingInfoManager.keySettingData.RESTOREHEALTH = (int)KeySetting.keys[KeyAction.RESTOREHEALTH];
         keySettingInfoManager.keySettingData.SCOPEZOOMIN = (int)KeySetting.keys[KeyAction.SCOPEZOOMIN];
-        keySettingInfoManager.keySettingData.CANCEL = (int)KeySetting.keys[KeyAction.CANCEL];
         keySettingInfoManager.keySettingData.INVENTORY = (int)KeySetting.keys[KeyAction.INVENTORY];
         keySettingInfoManager.keySettingData.INTERACTION = (int)KeySetting.keys[KeyAction.INTERACTION];
         keySettingInfoManager.keySettingData.RUN = (int)KeySetting.keys[KeyAction.RUN];
