@@ -30,10 +30,10 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        PlayerInfoManager.Instance.LoadPlayer();
-        isOnlineStatus = PlayerInfoManager.Instance.onlineStatus;
+        //게임메니저에 플레이어 정보를 적용함
+        PlayerInfoManager.Instance.SetGameManagerPlayerInfo();
     }
-    
+
     public void AddScore(int newScore)
     {
         if (!isGameover)

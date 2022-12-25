@@ -5005,7 +5005,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f4d637cef23bb6478d879e8ec9792b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onlineStatus: 0
+  isOnlineStatus: 0
 --- !u!4 &1999463174
 Transform:
   m_ObjectHideFlags: 0
@@ -5032,6 +5032,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e042e563f6f8bf499a3771ee4548681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keySettingData:
+    FIRE: 0
+    ZOOMIN: 0
+    GRENADE: 0
+    JUMP: 0
+    RELOAD: 0
+    RESTOREHEALTH: 0
+    SCOPEZOOMIN: 0
+    CANCEL: 0
+    INVENTORY: 0
+    INTERACTION: 0
+    RUN: 0
 --- !u!1 &2002879368
 GameObject:
   m_ObjectHideFlags: 0
@@ -5486,7 +5498,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1574782607}
-        m_MethodName: OpenGameStartPanel
+        m_MethodName: OfflineLogin
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

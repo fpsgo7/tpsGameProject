@@ -47,15 +47,14 @@ public class InventoryManager : MonoBehaviour
 
     private string filePath;
 
-    void OnEnable()
+    private void Awake()
     {
         filePath = Application.persistentDataPath + "/MyItem.txt";// 파일의 경로를 미리 지정함
-        Load();
     }
-
+    //로그인하거나 , 오프라인 형식으로 시작할때 불러지도록하게한다.
     public void Load()
     {
-        if (PlayerInfoManager.Instance.onlineStatus)
+        if (PlayerInfoManager.Instance.isOnlineStatus)
         {
             Debug.Log("서버에서 데이터를 가져와 덮어 씌웁니다..");
             BackEndInventory.GetPlayerInventoryInLobby();
@@ -71,7 +70,7 @@ public class InventoryManager : MonoBehaviour
     public void AddItemSave(int num,string type, string name, string weaponType, string damage, string shield)
     {
         MyItemList.Add(new Item(num,type,name,weaponType,damage,shield));
-        if (PlayerInfoManager.Instance.onlineStatus)
+        if (PlayerInfoManager.Instance.isOnlineStatus)
         {
             BackEndInventory.InsertItem(num, type, name, weaponType, damage, shield);
         }
@@ -87,7 +86,7 @@ public class InventoryManager : MonoBehaviour
         // Inventory 의 MyItemList의 변화된 값을 여기도 적용시켜 똑같이 한다.
         this.jdata = jdata;
         MyItemList = JsonUtility.FromJson<Serialization<Item>>(jdata).target;
-        if (PlayerInfoManager.Instance.onlineStatus)
+        if (PlayerInfoManager.Instance.isOnlineStatus)
         {
             BackEndInventory.DeleteItem(num);
         }

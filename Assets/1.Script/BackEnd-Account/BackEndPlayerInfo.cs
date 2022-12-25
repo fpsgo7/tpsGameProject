@@ -6,7 +6,7 @@ using System;
 
 public static class BackEndPlayerInfo
 {
-    public static void GetPlayerInfoInLobby(string id)
+    public static void GetPlayerInfo(string id)
     {
         Where where = new Where();
         where.Equal("id",id);
@@ -23,7 +23,7 @@ public static class BackEndPlayerInfo
         {
             Debug.Log("성공"+bro);
         }
-
+        //로비스크립트에서 정보를 활용하기위해 저장함
         LobbyScript.Instance.id = bro.FlattenRows()[0]["id"].ToString();
         LobbyScript.Instance.name = bro.FlattenRows()[0]["name"].ToString();
         LobbyScript.Instance.score = Convert.ToInt32(bro.FlattenRows()[0]["score"].ToString());
@@ -31,15 +31,15 @@ public static class BackEndPlayerInfo
         LobbyScript.Instance.equipmentNum = Convert.ToInt32(bro.FlattenRows()[0]["equipmentNum"].ToString());
         LobbyScript.Instance.xAxis = float.Parse(bro.FlattenRows()[0]["xAxis"].ToString());
         LobbyScript.Instance.yAxis = float.Parse(bro.FlattenRows()[0]["yAxis"].ToString());
-       
-
-        PlayerInfoManager.Instance.SetOnline(true,LobbyScript.Instance.id, LobbyScript.Instance.name,
+        LobbyScript.Instance.SetTitleText();
+        //플레이어 인포메니저는 파괴되지 않는 오브젝트에 값을 넣어줘 다음씬에서 사용할 수 있게한다
+        PlayerInfoManager.Instance.SetOnlineLoadPlayer(true,LobbyScript.Instance.id, LobbyScript.Instance.name,
             LobbyScript.Instance.score, LobbyScript.Instance.weaponNum,
             LobbyScript.Instance.equipmentNum, LobbyScript.Instance.xAxis,
             LobbyScript.Instance.yAxis);
     }
     // Insert 는 '생성' 작업에 주로 사용된다. 
-    public static void CreateInsertPlayerInfoData(string id)
+    public static void InsertPlayerInfoData(string id)
     {
 
         // Param은 뒤끝 서버와 통신을 할 떄 넘겨주는 파라미터 클래스 입니다. 

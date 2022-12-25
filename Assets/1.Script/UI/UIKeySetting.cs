@@ -15,12 +15,13 @@ public static class KeySetting
 public class UIKeySetting : MonoBehaviour
 {
     private int key = -1;
+    private bool isKeySetting = false;
     private KeySettingInfoManager keySettingInfoManager;
     [SerializeField] Text[] ButtonTxt;
-    KeySettingData keySettingData = new KeySettingData();
 
     private void Awake()
     {
+        //키세팅 메니져에 저장된 keySettingData값들을 가져와 키보드에 적용함
         keySettingInfoManager = GameObject.Find("JsonManager").GetComponent<KeySettingInfoManager>();
         
         KeySetting.keys.Add(KeyAction.FIRE, (KeyCode)keySettingInfoManager.keySettingData.FIRE);
@@ -55,38 +56,43 @@ public class UIKeySetting : MonoBehaviour
     //GUI 키 입력등의 이벤트가 발생할 때 호출된다.
     private void OnGUI()
     {
-        //Event 로 현재 실행되는 Evnet를 불러온다.
-        Event keyEvent = Event.current;
-        if (keyEvent.isKey)//현제 눌린키의 값을 상용
+        if (isKeySetting)
         {
-            //가져온 키코드를 값에 넣는다.
-            KeySetting.keys[(KeyAction)key] = keyEvent.keyCode;
-            key = -1;
+            //Event 로 현재 실행되는 Evnet를 불러온다.
+            Event keyEvent = Event.current;
+            if (keyEvent.isKey)//현제 눌린키의 값을 상용
+            {
+                //가져온 키코드를 값에 넣는다.
+                KeySetting.keys[(KeyAction)key] = keyEvent.keyCode;
+                key = -1;
+                SetButtonText();// 키코드가 바뀌면 버튼의 택스트를 업데이트함
+                SaveKeySetting();//변경된 키값들을 온라인이면 서버 오프라인이면 파일에 저장함
+                isKeySetting = false;
+            }
         }
-        SetButtonText();// 키코드가 바뀌면 버튼의 택스트를 업데이트함
-        SetKeySetting();
     }
     //버튼을 눌러 대상을 선택하기위한 값을 적용함
     public void ChangeKey(int num)
     {
+        isKeySetting = true;
         key = num;
     }
 
-    public void SetKeySetting()
+    public void SaveKeySetting()
     {
-        Debug.Log("키를 설정합니다.");
-        keySettingData.FIRE = (int)KeySetting.keys[KeyAction.FIRE];
-        keySettingData.ZOOMIN = (int)KeySetting.keys[KeyAction.ZOOMIN];
-        keySettingData.GRENADE = (int)KeySetting.keys[KeyAction.GRENADE];
-        keySettingData.JUMP = (int)KeySetting.keys[KeyAction.JUMP];
-        keySettingData.RELOAD = (int)KeySetting.keys[KeyAction.RELOAD];
-        keySettingData.RESTOREHEALTH = (int)KeySetting.keys[KeyAction.RESTOREHEALTH];
-        keySettingData.SCOPEZOOMIN = (int)KeySetting.keys[KeyAction.SCOPEZOOMIN];
-        keySettingData.CANCEL = (int)KeySetting.keys[KeyAction.CANCEL];
-        keySettingData.INVENTORY = (int)KeySetting.keys[KeyAction.INVENTORY];
-        keySettingData.INTERACTION = (int)KeySetting.keys[KeyAction.INTERACTION];
-        keySettingData.RUN = (int)KeySetting.keys[KeyAction.RUN];
-        keySettingInfoManager.KeySettingSave(keySettingData);
+        keySettingInfoManager.keySettingData.FIRE = (int)KeySetting.keys[KeyAction.FIRE];
+        keySettingInfoManager.keySettingData.ZOOMIN = (int)KeySetting.keys[KeyAction.ZOOMIN];
+        keySettingInfoManager.keySettingData.GRENADE = (int)KeySetting.keys[KeyAction.GRENADE];
+        keySettingInfoManager.keySettingData.JUMP = (int)KeySetting.keys[KeyAction.JUMP];
+        keySettingInfoManager.keySettingData.RELOAD = (int)KeySetting.keys[KeyAction.RELOAD];
+        keySettingInfoManager.keySettingData.RESTOREHEALTH = (int)KeySetting.keys[KeyAction.RESTOREHEALTH];
+        keySettingInfoManager.keySettingData.SCOPEZOOMIN = (int)KeySetting.keys[KeyAction.SCOPEZOOMIN];
+        keySettingInfoManager.keySettingData.CANCEL = (int)KeySetting.keys[KeyAction.CANCEL];
+        keySettingInfoManager.keySettingData.INVENTORY = (int)KeySetting.keys[KeyAction.INVENTORY];
+        keySettingInfoManager.keySettingData.INTERACTION = (int)KeySetting.keys[KeyAction.INTERACTION];
+        keySettingInfoManager.keySettingData.RUN = (int)KeySetting.keys[KeyAction.RUN];
+        //객체에 저장된 값들을 매계변수로 하여 저장 기능하는 함수 실행
+        keySettingInfoManager.KeySettingSave(keySettingInfoManager.keySettingData);
     }
 
 }

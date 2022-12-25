@@ -21,7 +21,7 @@ public class LobbyScript : MonoBehaviour
     [HideInInspector] public BackEndAuthentication backEndAuthentication;
     [HideInInspector] public BackEndGetUserInfo backEndGetUserInfo;
     [HideInInspector] public BackEndNickname backEndNickname;
-
+    private KeySettingInfoManager keySettingInfoManager;
     //public Dropdown dropdown;
     //public static int chooseWeapon;
     public GameObject titleText;
@@ -56,6 +56,7 @@ public class LobbyScript : MonoBehaviour
         backEndAuthentication = GetComponent<BackEndAuthentication>();
         backEndGetUserInfo = GetComponent<BackEndGetUserInfo>();
         backEndNickname = GetComponent<BackEndNickname>();
+        keySettingInfoManager = GameObject.Find("JsonManager").GetComponent<KeySettingInfoManager>();
     }
     public void GameStart()
     {
@@ -108,12 +109,19 @@ public class LobbyScript : MonoBehaviour
     {
         titleText.GetComponent<Text>().text = name + welcomeName;
     }
-
+    //온라인 접속
     public void Login()
     {
         backEndAuthentication.Login(LoginIdInput.text,LoginPwInput.text);
     }
-
+    //오프라인 접속
+    public void OfflineLogin()
+    {
+        PlayerInfoManager.Instance.SetOfflineLoadPlayer();
+        InventoryManager.Instance.Load();
+        keySettingInfoManager.KeySettingLoad();
+        OpenGameStartPanel();
+    }
     public void Sign()
     {
         backEndAuthentication.Sign(SignIdInput.text, SignPwInput.text);
@@ -132,7 +140,7 @@ public class LobbyScript : MonoBehaviour
         equipmentNum = 0;
         xAxis = 200;
         yAxis = 2;
-        PlayerInfoManager.Instance.SetOnline(false, id, name, score, weaponNum,
+        PlayerInfoManager.Instance.SetOnlineLoadPlayer(false, id, name, score, weaponNum,
                 equipmentNum, xAxis, yAxis);
     }
 

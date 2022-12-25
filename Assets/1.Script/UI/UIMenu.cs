@@ -106,7 +106,7 @@ public class UIMenu : MonoBehaviour
     //로비로 돌아가기
     public void ExitClick()
     {
-        if (PlayerInfoManager.Instance.onlineStatus)
+        if (PlayerInfoManager.Instance.isOnlineStatus)
         {
             BackEndInventory.InventoryItemList.Clear();// 로그아웃 을했기 때문에 리스트를 초기화 시켜준다.
             BackEndAuthentication.LogOut();// 로그아웃

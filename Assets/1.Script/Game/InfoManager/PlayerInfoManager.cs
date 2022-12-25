@@ -44,28 +44,60 @@ public class PlayerInfoManager : MonoBehaviour
     }
 
     Player player = new Player("player","name",0,0,0,0,0);
-    public string GetPlayerId()
-    {
-        return player.id;
-    }
-    string filePath;
-    public bool onlineStatus;
+    private string filePath;
+    public bool isOnlineStatus;
 
     private void Awake()
     {
         if (Instance != this) Destroy(gameObject);
         DontDestroyOnLoad(this.gameObject);
-    }
-
-    private void OnEnable()
-    {
         filePath = Application.persistentDataPath + "/PlayerInfo.txt";
+    }
+    //오프라인 방식 정보 불러오기
+    public void SetOfflineLoadPlayer()
+    {
+        if (File.Exists(filePath))
+        {
+            string jdata = File.ReadAllText(filePath);
+            player = JsonUtility.FromJson<Player>(jdata);
+        }
+        else// 게임이 처음 실행되는 경우
+        {
+            player.id = "player";
+            player.name = "name";
+            player.score = 0;
+            player.weaponNum = 0;
+            player.equipmentNum = 0;
+            player.axisX = 200;
+            player.axisY = 2;
+        }
+    }
+    //온라인 방식 정보 불러오기
+    public void SetOnlineLoadPlayer(bool onlineStatus, string id, string name, int score, int weaponNum,
+        int equipmentNum, float axisX, float axisY)
+    {
+        this.isOnlineStatus = onlineStatus;
+        player = new Player(id, name, score, weaponNum, equipmentNum, axisX, axisY);
+    }
+    //게임메니저의 정보수정
+    public void SetGameManagerPlayerInfo()
+    {
+        GameManager.Instance.PlayerStartItem(player.weaponNum, player.equipmentNum);
+        GameManager.Instance.PlayerAxisStartSet(player.axisX, player.axisY);
+        GameManager.Instance.isOnlineStatus = isOnlineStatus;
+        GameManager.Instance.score = player.score;
+        UIManager.Instance.SetScoreText(player.score);
+    }
+    //플레이어 정보 가져오기
+    public string GetPlayerID()
+    {
+        return player.id;
     }
     public void SavePlayerScore(int score)
     {
 
         player.score = score;
-        if (onlineStatus)
+        if (isOnlineStatus)
         {
             BackEndPlayerInfo.SetScoreToServer(player.id, score);
         }
@@ -80,7 +112,7 @@ public class PlayerInfoManager : MonoBehaviour
     public void ChangePlayerWeapon(int weaponNum)
     {
         player.weaponNum = weaponNum;
-        if (onlineStatus)
+        if (isOnlineStatus)
         {
             BackEndPlayerInfo.SetPlayerWeaponToServer(player.id, weaponNum);
         }
@@ -95,7 +127,7 @@ public class PlayerInfoManager : MonoBehaviour
     public void ChangePlayerEquipment(int equipmentNum)
     {
         player.equipmentNum = equipmentNum;
-        if (onlineStatus)
+        if (isOnlineStatus)
         {
             BackEndPlayerInfo.SetPlayerEquipmentToServer(player.id, equipmentNum);
         }
@@ -106,31 +138,12 @@ public class PlayerInfoManager : MonoBehaviour
         }
     }
 
-    public void LoadPlayer()
-    {
-        if(onlineStatus)
-        {
-            GameManager.Instance.score = player.score;
-            UIManager.Instance.SetScoreText(player.score);
-            GameManager.Instance.PlayerStartItem(player.weaponNum, player.equipmentNum);
-            GameManager.Instance.PlayerAxisStartSet(player.axisX, player.axisY);
-        }
-        else if(File.Exists(filePath))
-        {
-            string jdata = File.ReadAllText(filePath);
-            player = JsonUtility.FromJson<Player>(jdata);
-            GameManager.Instance.score = player.score;
-            UIManager.Instance.SetScoreText(player.score);
-            GameManager.Instance.PlayerStartItem(player.weaponNum,player.equipmentNum);
-            GameManager.Instance.PlayerAxisStartSet(player.axisX, player.axisY);
-        }
-    }
     // 마우스 감도 값 넣기
     public void SetAxis(float xAxis, float yAxis)
     {
         player.axisX = xAxis;
         player.axisY = yAxis;
-        if (onlineStatus)
+        if (isOnlineStatus)
         {
             BackEndPlayerInfo.SetAxisToServer(player.id, xAxis, yAxis);
         }
@@ -140,14 +153,4 @@ public class PlayerInfoManager : MonoBehaviour
             File.WriteAllText(filePath, jdata);
         }
     }
-
-    //온라인으로 상태값으로 변경하고 받아온값 가져오기
-    public void SetOnline(bool onlineStatus,string id,string name,int score, int weaponNum, 
-        int equipmentNum, float axisX, float axisY)
-    {
-        this.onlineStatus = onlineStatus;
-        player = new Player(id , name , score, weaponNum, equipmentNum, axisX, axisY);
-    }
-
-    
 }

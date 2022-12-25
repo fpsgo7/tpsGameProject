@@ -6,7 +6,12 @@ using BackEnd;
 
 public class BackEndAuthentication : MonoBehaviour
 {
-
+    private KeySettingInfoManager keySettingInfoManager;
+    private void Awake()
+    {
+        keySettingInfoManager = GameObject.Find("JsonManager").GetComponent<KeySettingInfoManager>();
+    }
+    
     //회원가입
     public void Sign(string id, string pw)
     {
@@ -18,10 +23,12 @@ public class BackEndAuthentication : MonoBehaviour
         {
             case "Success":
                 Debug.Log("회원가입 성공");
-                BackEndPlayerInfo.CreateInsertPlayerInfoData(id);
+                BackEndPlayerInfo.InsertPlayerInfoData(id);
                 Login(id , pw);
                 LobbyScript.Instance.backEndGetUserInfo.GetUserInfo();
                 LobbyScript.Instance.OpenGameStartPanel();
+                BackEndKeySetting.InsertPlayerKeySetting(id);
+                keySettingInfoManager.KeySettingLoad();
                 break;
             default:
                 Debug.Log("중복된 아이디입니다.");
@@ -39,12 +46,12 @@ public class BackEndAuthentication : MonoBehaviour
         {
             case "Success":
                 Debug.Log("로그인 완료 ");
+                BackEndPlayerInfo.GetPlayerInfo(id);
+                InventoryManager.Instance.Load();
+                keySettingInfoManager.KeySettingLoad();
                 LobbyScript.Instance.OpenGameStartPanel();
                 LobbyScript.Instance.logoutButton.SetActive(true);
                 LobbyScript.Instance.GoLoginPanelButton.SetActive(false);
-                BackEndPlayerInfo.GetPlayerInfoInLobby(id);
-                LobbyScript.Instance.SetTitleText();
-                InventoryManager.Instance.Load();
                 break;
             default:
                 Debug.Log("아이디 또는 비번이 틀렸습니다.");

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using BackEnd;
-using LitJson;
 using System;
 
 public static class BackEndInventory 
@@ -9,6 +8,7 @@ public static class BackEndInventory
     public static List<Item> InventoryItemList = new List<Item>();// 아이템 관련 리스트 
     public static void GetPlayerInventoryInLobby()
     {
+        //자신의 아이디에 맞는 정보를 가져옴
         var bro = Backend.GameData.GetMyData("PlayerInventory", new Where(), 100);
 
         if (bro.IsSuccess() == false)
