@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 적탱크의 체력관련 담당
+/// </summary>
 public class EnemyMiniTankHealth : LivingEntity
 {
     private EnemyMiniTankAI enemyAI;

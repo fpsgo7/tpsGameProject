@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 총알아이템을 오브젝트 풀링해준다.
+/// </summary>
 public class AmmoPackPooling : MonoBehaviour
 {
     public static AmmoPackPooling Instance;

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-
+/// <summary>
+/// 조준점을 관리한다.
+/// </summary>
 public class Crosshair : MonoBehaviour
 {
     public Image hitPointReticle;//실제 맞는 위치

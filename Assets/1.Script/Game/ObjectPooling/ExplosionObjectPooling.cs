@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 오브젝트 풀링 형식으로 폭파 이펙트를 보여준다.
+/// </summary>
 public class ExplosionObjectPooling : MonoBehaviour
 {
     public static ExplosionObjectPooling Instance;

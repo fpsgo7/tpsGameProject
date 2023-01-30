@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 오브젝트 풀링 방식으로 오브젝트 물체나 기계형 적의 피격이펙트를 보여준다.
+/// </summary>
 public class CommonHitEffectPooling : MonoBehaviour
 {
     public static CommonHitEffectPooling Instance;

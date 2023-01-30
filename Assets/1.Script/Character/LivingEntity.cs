@@ -1,8 +1,9 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
-//LivingEntity 는 체력을 데미지를 받는 기능을 사용하여 IDamageable을 상속받는다.
-//ApplyDamage 함수를 사용하기위하여 상속받는다.
+/// <summary>
+/// 플레이어와 적들의 체력 기능 관련의 기초가되는 스크립트이다.
+/// </summary>
 public class LivingEntity : MonoBehaviour 
 {
 

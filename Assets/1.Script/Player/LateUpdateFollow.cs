@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
-
+/// <summary>
+/// 무기가 플레이어의 팔을 따라가기 위한 스크립트 
+/// </summary>
 public class LateUpdateFollow : MonoBehaviour
 {
     public Transform targetToFollow;//따라갈 대상

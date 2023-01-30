@@ -29,6 +29,11 @@ class Player
         this.axisY = axisY;
     }
 }
+/// <summary>
+///  플레이어 정보를 관리하는 스크립트로
+///  플레이어 아이디 , 이름, 점수, 장착 무기, 장착 장비, 마우스x감도, 마우스 y감도
+///  값을 관리 사용한다. 
+/// </summary>
 public class PlayerInfoManager : MonoBehaviour
 {
     private static PlayerInfoManager instance;

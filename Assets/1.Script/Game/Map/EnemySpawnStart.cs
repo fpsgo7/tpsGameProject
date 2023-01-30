@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 플레이어가 특정 구역에 도착하면 적들을 생성하는 
+/// 클래스를 시작하게 하는 클래스이다.
+/// </summary>
 public class EnemySpawnStart : MonoBehaviour
 {
     public enum Maps

@@ -6,7 +6,9 @@ using UnityEngine.AI;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-
+/// <summary>
+/// Enemy1 의 기초 동작을 담당한다.
+/// </summary>
 public class Enemy1AI : MonoBehaviour
 {
     private enum State
@@ -29,7 +31,7 @@ public class Enemy1AI : MonoBehaviour
 
     public float runSpeed = 10f;
     [Range(0.01f, 2f)] public float turnSmoothTime = 0.1f;//회전 지연속도
-    private float turnSmoothVelocity;//좀비회전에 실시간 변화량
+    private float turnSmoothVelocity;//회전에 실시간 변화량
 
     public float damage = 30f;
     public float attackRadius = 2f;
@@ -59,7 +61,7 @@ public class Enemy1AI : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        //좀비의 시야와 공격범위를 그려준다.
+        //시야와 공격범위를 그려준다.
         if (attackRoot != null)
         {
             Gizmos.color = new Color(1f, 0f, 0f, 0.5f);

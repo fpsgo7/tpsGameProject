@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+/// <summary>
+/// 로비의 기능을 전체적으로 관리하는 클래스이다.
+/// </summary>
 public class LobbyScript : MonoBehaviour
 {
     private static LobbyScript instance;

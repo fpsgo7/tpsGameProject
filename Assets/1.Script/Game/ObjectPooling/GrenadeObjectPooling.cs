@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 플레이어가 던지는 수류탄 오브젝트를 풀링 형식으로 나타내준다.
+/// </summary>
 public class GrenadeObjectPooling : MonoBehaviour
 {
     public static GrenadeObjectPooling Instance;

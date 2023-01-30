@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 수류탄이 폭파되며 수류탄 대미지가 적용된다.
+/// </summary>
 public class Grenade : MonoBehaviour
 {
     public float speed = 500.0f;//수류탄 속도

@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 적의 위치를 표시해주는 래이더를 위해 사용되는 스크립트
+/// </summary>
 public class PlayerRader : MonoBehaviour
 {
     public GameObject raderPrefab;

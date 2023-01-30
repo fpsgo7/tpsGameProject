@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+/// <summary>
+/// 적 미니 탱크의 기본 기능을 담는다.
+/// </summary>
 public class EnemyMiniTankAI : MonoBehaviour
 {
     private enum State
@@ -21,7 +23,7 @@ public class EnemyMiniTankAI : MonoBehaviour
 
     private float runSpeed = 3f;
     [Range(0.01f, 2f)] public float turnSmoothTime = 0.1f;//회전 지연속도
-    private float turnSmoothVelocity;//좀비회전에 실시간 변화량
+    private float turnSmoothVelocity;//회전에 실시간 변화량
 
     public int damage = 30;//자폭 대미지
     private float attackDistance;

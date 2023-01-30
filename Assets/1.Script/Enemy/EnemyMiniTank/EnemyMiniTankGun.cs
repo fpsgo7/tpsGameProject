@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 적 탱크의 조준기능을 담당하며 발사를 명령한다.
+/// </summary>
 public class EnemyMiniTankGun : MonoBehaviour
 {
     [SerializeField] Transform tfGunBody = null;// 총 몸체 위치

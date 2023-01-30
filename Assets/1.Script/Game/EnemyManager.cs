@@ -1,7 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 적의 생성 죽음 
+/// 맵별 각 구역의 적생성 시작등을 작동하게하는 
+/// 클래스이다.
+/// </summary>
 public class EnemyManager : MonoBehaviour
 {
     private static EnemyManager instance;

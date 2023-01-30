@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// enemy2 의 사격 기능 관리
+/// </summary>
 public class Enemy2Shooter : MonoBehaviour
 {
     private Enemy2Health enemy2Health;

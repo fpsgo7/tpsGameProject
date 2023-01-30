@@ -2,10 +2,10 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+/// <summary>
+/// 기초적인 게임UI 와 마우스 커서를 관리한다.
+/// </summary>
 
-//스크립트 수정할것!
-//tip 이벤트나 다른데서 호출이 되는 함수이름은On 이 좋다.
-//UI 와 마우스 커서를 관리한다.
 public class UIManager : MonoBehaviour
 {
     //싱글톤 방식 사용

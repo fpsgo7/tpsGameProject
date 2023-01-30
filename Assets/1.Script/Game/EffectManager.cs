@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
-
+/// <summary>
+/// 이팩트를 담당한다.
+/// </summary>
 public class EffectManager : MonoBehaviour
 {
     // 싱글톤

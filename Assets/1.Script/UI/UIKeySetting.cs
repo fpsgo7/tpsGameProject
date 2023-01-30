@@ -12,6 +12,9 @@ public static class KeySetting
     public static Dictionary<KeyAction, KeyCode> keys
     = new Dictionary<KeyAction, KeyCode>();
 }
+/// <summary>
+/// 키 새팅 UI를 관리한다.
+/// </summary>
 public class UIKeySetting : MonoBehaviour
 {
     private int key = -1;

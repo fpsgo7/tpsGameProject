@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
-
+/// <summary>
+/// 적들이 죽으면 소비형 아이템을 랜덤으로 생성해준다.
+/// </summary>
 public class ItemSpawn : MonoBehaviour
 {
     private Vector3 point = new Vector3(0,0,0);

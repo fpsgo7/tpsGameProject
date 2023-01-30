@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Enemy2 의 체력관련 기능을 관리한다.
+/// </summary>
 public class Enemy2Health : LivingEntity
 {
     private Enemy2AI enemy2AI;

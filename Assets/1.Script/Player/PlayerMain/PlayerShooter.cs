@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using Cinemachine;
-
+/// <summary>
+/// 플레이어가 사격하는 기능 관련 스크립트로
+/// 줌인 기능등 여러기능이 있으며
+/// 마우스 회전은 여기서가아닌
+/// 시네머신 카메라가 관리한다.
+/// </summary>
 public class PlayerShooter : MonoBehaviour
 {
     //상태값 변수

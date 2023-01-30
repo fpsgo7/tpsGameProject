@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using BackEnd;
-
+/// <summary>
+/// 실제 회원가입  로그인 로그아웃 기능을 서버와 연동하여 수행하며
+/// 얻어온 정보를 키 새팅 클래스와 인벤토리 관리 클래스에 넘겨준다.
+/// </summary>
 public class BackEndAuthentication : MonoBehaviour
 {
     private KeySettingInfoManager keySettingInfoManager;
@@ -15,6 +18,13 @@ public class BackEndAuthentication : MonoBehaviour
     }
     
     //회원가입
+    /// <summary>
+    /// 회원가입 기능으로 
+    /// 해당 함수가 실행되면 서버에 회원정보를 입력시도하며
+    /// 성공하면 회원가입이 되며 
+    /// 해당 아이디 값을 통해 플레이어정보도 서버에 새로 추가해주고
+    /// 키설정 관련 값도 서버에 아이디값과 함꼐 추가된다.
+    /// </summary>
     public void Sign(string id, string pw)
     {
         //Backend.BMember.CustomSignUp을 통하여 회원가입 함수를 실행하며
@@ -38,7 +48,13 @@ public class BackEndAuthentication : MonoBehaviour
 
         }
     }
-
+    /// <summary>
+    /// 로그인 기능으로 
+    /// 로그인 시도가 성공하면 
+    /// 서버에서
+    /// 인벤토리 내용을 가져오고
+    /// 키설정 값도 가져온다.
+    /// </summary>
     public void Login(string id , string pw)
     {
         //로그인 
@@ -61,7 +77,9 @@ public class BackEndAuthentication : MonoBehaviour
 
         }
     }
-
+    /// <summary>
+    /// 로그아웃 기능을 한다.
+    /// </summary>
     public static void LogOut()
     {
         BackendReturnObject BRO = Backend.BMember.Logout();

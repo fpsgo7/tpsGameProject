@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
-
+/// <summary>
+/// 체력 충전 아이템으로 체력 충전 키트를 더해준다.
+/// </summary>
 public class HealthPack : MonoBehaviour,IItem
 {
     private PlayerHealth playerHealth;

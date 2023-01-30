@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Enemy1의 체력을 담당하며
+/// 죽음 , 데미지 입는 표현을 해준다.
+/// </summary>
 public class Enemy1Health : LivingEntity
 {
     private Enemy1AI enemy1AI;

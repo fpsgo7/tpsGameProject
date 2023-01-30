@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-// 적 게임 오브젝트를 주기적으로 생성
+/// <summary>
+/// 적생성을 담당하는 스크립트 이다.
+/// </summary>
 public class EnemySpawner : MonoBehaviour
 {
     private readonly List<LivingEntity> enemies = new List<LivingEntity>();//적생성기
@@ -18,7 +20,7 @@ public class EnemySpawner : MonoBehaviour
     //생성할 적의 속도 최대 최소 범위
     public float speedMax = 12f;
     public float speedMin = 3f;
-    //좀비 생성 결정
+    //적 생성 결정
     public Color strongEnemyColor = Color.red;
     private int wave;//웨이브
     public int EnemyCount;

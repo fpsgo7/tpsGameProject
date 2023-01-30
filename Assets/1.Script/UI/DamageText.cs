@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+/// <summary>
+/// 데미지를 보여주는 택스트이다.
+/// </summary>
 public class DamageText : MonoBehaviour
 {
     private float moveSpeed = 10;

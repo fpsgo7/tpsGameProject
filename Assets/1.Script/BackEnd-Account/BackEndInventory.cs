@@ -2,10 +2,13 @@
 using UnityEngine;
 using BackEnd;
 using System;
-
+/// <summary>
+/// 서버로부터 인벤토리를 가져오는 클래스이다.
+/// </summary>
 public static class BackEndInventory 
 {
     public static List<Item> InventoryItemList = new List<Item>();// 아이템 관련 리스트 
+    //로비씬에서 서버로부터 플레이어 정보를 가져온다.
     public static void GetPlayerInventoryInLobby()
     {
         //자신의 아이디에 맞는 정보를 가져옴
@@ -33,7 +36,7 @@ public static class BackEndInventory
             return;
         }
     }
-
+    // 서버에 새로얻은 아이템 정보를 넣는 기능을한다.
     public static void InsertItem(int num, string type, string name, string weaponType, string damage, string shield)
     {
         Param param = new Param();
@@ -70,7 +73,7 @@ public static class BackEndInventory
             }
         }
     }
-    //아이템 삭제
+    //서버의 아이템 삭제
     public static void DeleteItem(int num)
     {
         Where where = new Where();

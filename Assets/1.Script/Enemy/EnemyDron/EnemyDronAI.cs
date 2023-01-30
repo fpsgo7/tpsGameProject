@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+/// <summary>
+/// EnemyDron의 공격 기능과 자푝 그리고 기본 동작관련 기능을 관리한다.
+/// </summary>
 public class EnemyDronAI : MonoBehaviour
 {
 

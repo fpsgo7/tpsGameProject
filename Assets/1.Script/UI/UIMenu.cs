@@ -2,7 +2,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+/// <summary>
+/// 인벤토리 창 , 메뉴창, 키새팅 창등 을 띄우고 내리는 것을 관리한다.
+/// </summary>
 //2. 무기 창과 장비창 배열로 하여 관리하여 다른 장비창도 들어올 수 있게 설계하기 ***
 public class UIMenu : MonoBehaviour
 {

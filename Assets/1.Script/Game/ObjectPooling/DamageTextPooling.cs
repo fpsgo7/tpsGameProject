@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 오브젝트 풀링방식으로 데미지 택스트를 띄운다.
+/// </summary>
 public class DamageTextPooling : MonoBehaviour
 {
     public static DamageTextPooling Instance;

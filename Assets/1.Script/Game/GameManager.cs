@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
-
+/// <summary>
+/// 게임의 전체적인 부분을관리하는 매니져이다.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;

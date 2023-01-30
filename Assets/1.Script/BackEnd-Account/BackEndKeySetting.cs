@@ -2,9 +2,12 @@
 using UnityEngine;
 using BackEnd;
 using System;
-
+/// <summary>
+/// 서버의 키새팅 값을 생성하거나 변경하는 작업을 한다.
+/// </summary>
 public static class BackEndKeySetting
 {
+    //플레이어 의 키값을 서버로 부터 가져온다.
     public static KeySettingData GetPlayerKeySetting()
     {
         //사용할 객체 생성
@@ -34,7 +37,7 @@ public static class BackEndKeySetting
         }
     }
 
-    // Insert 는 '생성' 작업에 주로 사용된다. 
+    // 처음 회원가입 할때 서버에 기본 키설정값을 적용한다.
     public static void InsertPlayerKeySetting(string id)
     {
 
@@ -82,7 +85,7 @@ public static class BackEndKeySetting
             }
         }
     }
-
+    // 서버의 플레이어의 키값을 설정한다.
     public static void SetPlayerKeySetting(string id,KeySettingData keySettingData)
     {
         Where where = new Where();

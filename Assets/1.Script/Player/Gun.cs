@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-
+/// <summary>
+/// PlayerShooter에 의하여 실제로 발사가 작동된다.
+/// </summary>
 public class Gun : MonoBehaviour
 {
     //총의 상태를 담당함

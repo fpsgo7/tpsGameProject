@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
-
+/// <summary>
+/// 플레이어의 입력값을 받아 
+/// 플레이어가 이동하게 해준다.
+/// </summary>
 public class PlayerMovement : MonoBehaviour
 {
     //플레이어 컴포넌트 연결 변수

@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 플레이어의 입력을 전체적으로 관리한다.
+/// </summary>
 
 public class PlayerInput : MonoBehaviour
 {

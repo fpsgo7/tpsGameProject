@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
-
+/// <summary>
+/// 플레이어의 체력 관련 기능을 관리한다.
+/// </summary>
 public class PlayerHealth : LivingEntity
 {
     private PlayerInput playerInput;//플레이어 입력

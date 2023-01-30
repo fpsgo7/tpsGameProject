@@ -1,7 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 플레이어의 상호작용을 관리한다.
+/// 벽 폭탄 설치
+/// 아이템 상자 오픈
+/// </summary>
 public class PlayerInteraction : MonoBehaviour
 {
     private float range=3;// 상호작용의 사정거리

@@ -28,7 +28,13 @@ public class Item
         this.shield = shield;
     }
 }
-
+/// <summary>
+/// 인벤토리를 담당하는 클래스
+/// 로그인 한상태일경우
+/// 인벤토리 기능을 서버와 연동하기위하
+/// 서버와 연동된 스크립트에 명령하여 
+/// 인벤토리 기능을 수행한다.
+/// </summary>
 public class InventoryManager : MonoBehaviour
 {
     public List<Item> MyItemList;// 아이템 관련 리스트 

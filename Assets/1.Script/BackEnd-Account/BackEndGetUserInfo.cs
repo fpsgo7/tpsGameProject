@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using BackEnd;
 using System;
-
+/// <summary>
+/// 유저의 닉네임을 가져오는 클래스
+/// </summary>
 public class BackEndGetUserInfo : MonoBehaviour
 {
     public void GetUserInfo()

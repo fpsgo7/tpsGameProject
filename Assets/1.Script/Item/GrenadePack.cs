@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 수류탄 아이템으로 수류탄을 채워준다.
+/// </summary>
 public class GrenadePack : MonoBehaviour,IItem
 {
     private FireGrenade fireGrenade;

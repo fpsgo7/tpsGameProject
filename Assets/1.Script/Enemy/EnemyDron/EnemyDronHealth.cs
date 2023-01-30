@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 적 드론의 체력 기능을 관리하며
+/// 자폭과 관련한다.
+/// </summary>
 public class EnemyDronHealth : LivingEntity
 {
     private EnemyDronAI enemyDronAI;

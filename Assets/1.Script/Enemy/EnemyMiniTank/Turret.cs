@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 사용하지 않는 스크립트
+/// </summary>
 public class Turret : MonoBehaviour
 {
     [SerializeField] Transform m_tfGunBody = null;// 총 몸체 위치

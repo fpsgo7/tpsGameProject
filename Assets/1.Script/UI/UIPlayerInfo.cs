@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+/// <summary>
+/// 플레이어 정보를 나타내는 UI 스크립트
+/// </summary>
 
-// 플레이어 정보를 나타내는 UI 스크립트
 public class UIPlayerInfo : MonoBehaviour
 {
     //싱글톤 방식 사용

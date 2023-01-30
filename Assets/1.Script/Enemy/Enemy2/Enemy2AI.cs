@@ -6,7 +6,9 @@ using UnityEngine.AI;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-
+/// <summary>
+/// Enemy2 의 기본동작들을 담는 스크립트
+/// </summary>
 public class Enemy2AI : MonoBehaviour
 {
     public enum State
@@ -25,7 +27,7 @@ public class Enemy2AI : MonoBehaviour
 
     public float runSpeed = 10f;
     [Range(0.01f, 2f)] public float turnSmoothTime = 0.1f;//회전 지연속도
-    private float turnSmoothVelocity;//좀비회전에 실시간 변화량
+    private float turnSmoothVelocity;//회전에 실시간 변화량
     private float attackDistance;
     public float fieldOfView = 50f;
     public float viewDistance = 10f;

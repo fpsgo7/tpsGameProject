@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+/// <summary>
+/// 줌감도 설정관련한 UI 를 관리한다.
+/// </summary>
 public class UIAim : MonoBehaviour
 {
     //싱글톤 방식 사용

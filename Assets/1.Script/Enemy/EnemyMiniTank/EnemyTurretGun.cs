@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-
+/// <summary>
+/// 적탱크의 실제 발사를 담당한다.
+/// </summary>
 public class EnemyTurretGun : MonoBehaviour
 {
     //총의 상태를 담당함

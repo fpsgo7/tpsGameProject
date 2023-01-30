@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 오브젝트 풀링 을통해 피가나오는 이펙트를 보여준다.
+/// </summary>
 public class FlashHitEffectPooling : MonoBehaviour
 {
     public static FlashHitEffectPooling Instance;

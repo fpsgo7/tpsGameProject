@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
-
+/// <summary>
+/// 총알 아이템으로 총알을 체워준다.
+/// </summary>
 public class AmmoPack : MonoBehaviour,IItem
 {
     private PlayerShooter playerShooter;

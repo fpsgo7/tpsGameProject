@@ -21,6 +21,11 @@ public class KeySettingData
     public int INTERACTION;
     public int RUN;
 }
+/// <summary>
+/// 키 설정을 관리하는 클래스로
+/// 키값을 파일 또는 서버연동 스크립트를 통해  
+/// 가져오거나 저장한다.
+/// </summary>
 public class KeySettingInfoManager : MonoBehaviour
 {
     //다른 스크립트에서도 사용할 수 있는 클래스형 변수 생성

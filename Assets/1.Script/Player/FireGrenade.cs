@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 플레이어가 수류탄을 던지는 스크립트
+/// </summary>
 public class FireGrenade : MonoBehaviour
 {
     public Transform firePos;

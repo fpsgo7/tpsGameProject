@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+/// <summary>
+/// 사용하지 않는 스크립트
+/// </summary>
 public class TrackAnim : MonoBehaviour
 {
     //텍스처의 회전속도

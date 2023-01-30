@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+/// <summary>
+/// 플레이어의 인벤토리로 장비 무기 슬롯들을 관리하며
+/// 인벤토리 메니저에 정보를 넣거나 수정하게 시킨다.
+/// </summary>
 public class Inventory : MonoBehaviour
 {
     //인벤토리 열기 닫기는 유아이 메니져에서 관리

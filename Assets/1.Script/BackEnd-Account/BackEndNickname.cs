@@ -4,7 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Text.RegularExpressions;
 using BackEnd;
-
+/// <summary>
+/// 서버의 닉네임의 중복체크 닉네임 생성
+/// 닉네임 수정하는 기능을 담당한다.
+/// </summary>
 public class BackEndNickname : MonoBehaviour
 {
     

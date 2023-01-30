@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
-
+/// <summary>
+/// 플래이어의 기능을 비활성화하거나
+/// 리스폰을 담당한다.// 리스폰 수정 필요!
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
     //PlayerHealth, PlayerMovement, PlayerShooter을 총괄 관리하기위한 스크립트이다.

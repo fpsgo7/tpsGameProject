@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 체력 회복 키트를 풀링 형식으로 생성한다.
+/// </summary>
 public class HealthPackPooling : MonoBehaviour
 {
     public static HealthPackPooling Instance;

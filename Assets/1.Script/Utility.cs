@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
-
+/// <summary>
+/// 다른 스크립트에서 수학관련 계산을 위해 사용된다.
+/// </summary>
 public static class Utility
 {
     public static Vector3 GetRandomPointOnNavMesh(Vector3 center, float distance, int areaMask)

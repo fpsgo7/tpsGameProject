@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 장비나 , 무기 아이템과
+/// 충돌하면 해당 아이템을 먹는 기능을 수행한다.
+/// </summary>
 public class EquipmentItem : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;

@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+///  사용안하는 스크립트
+/// </summary>
 public class doorOpen : MonoBehaviour
 {
     public bool doorRock = true;

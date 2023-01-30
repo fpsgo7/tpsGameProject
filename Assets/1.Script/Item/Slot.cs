@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
+/// <summary>
+/// 아이템 슬롯으로 
+/// Inventory 안에 존재한다.
+/// 아이템을 장착 선택할 수 있게한다.
+/// </summary>
 public class Slot : MonoBehaviour, IPointerClickHandler
 {
     public enum ItemType  // 아이템 유형

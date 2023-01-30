@@ -3,9 +3,14 @@ using UnityEngine;
 using BackEnd;
 using LitJson;
 using System;
-
+/// <summary>
+/// 플레이어의 아이디 이름 점수 장착 아이템등 정보를
+/// 서버로부터 가져오거나 수정하거나
+/// 회원가입할때 생성하는 기능을한다.
+/// </summary>
 public static class BackEndPlayerInfo
 {
+    // 플레이어의 정보를 가져온다.
     public static void GetPlayerInfo(string id)
     {
         Where where = new Where();
@@ -38,7 +43,7 @@ public static class BackEndPlayerInfo
             LobbyScript.Instance.equipmentNum, LobbyScript.Instance.xAxis,
             LobbyScript.Instance.yAxis);
     }
-    // Insert 는 '생성' 작업에 주로 사용된다. 
+    // 회원가입할때 서버에 정보를 추가한다. 
     public static void InsertPlayerInfoData(string id)
     {
 
@@ -80,7 +85,7 @@ public static class BackEndPlayerInfo
             }
         }
     }
-
+    // 회원의 이름을 수정한다.
     public static void SetNickName(string id, string name)
     {
         Where where = new Where();
@@ -102,7 +107,7 @@ public static class BackEndPlayerInfo
             Debug.Log("성공"+bro);
         }
     }
-
+    // 회원의 마우스 감도값을 수정한다.
     public static void SetAxisToServer(string id, float xAxis, float yAxis)
     {
         Where where = new Where();
@@ -125,7 +130,7 @@ public static class BackEndPlayerInfo
             Debug.Log("성공" + bro);
         }
     }
-
+    // 플레이어의 점수를 서버에 적용하기
     public static void SetScoreToServer(string id, int score)
     {
         Where where = new Where();
@@ -147,7 +152,7 @@ public static class BackEndPlayerInfo
             Debug.Log("성공" + bro);
         }
     }
-
+    // 플레이어가 장착한 무기를 서버에 적용하기
     public static void SetPlayerWeaponToServer(string id, int weaponNum)
     {
         Where where = new Where();
@@ -169,6 +174,7 @@ public static class BackEndPlayerInfo
             Debug.Log("성공" + bro);
         }
     }
+    // 플레이어가 장착한 장비를 서버에 적용하기
     public static void SetPlayerEquipmentToServer(string id, int equipmentNum)
     {
         Where where = new Where();
