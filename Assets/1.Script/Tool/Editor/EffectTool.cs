@@ -113,6 +113,7 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
                                     //새롭게 이펙트를 넣을경우 이펙트를 경로를 변화시킨다.
                                     effectData.effectClips[selection].effectPath =
                                         EditorHelper.GetPath(this.effectSource);
+                                    Debug.Log(effectData.effectClips[selection].effectPath);
                                     effectData.effectClips[selection].effectName = effectSource.name;
                                 }
                                 else

@@ -10,7 +10,7 @@ using UnityEngine;
 public class BaseData : ScriptableObject
 {
     //유니티 에셋의 주소값으로 에셋에 접근하기위해 사용
-    public const string dataDirectory = "/14.DataResources/Data/";
+    public const string dataDirectory = "/3.DataResources/Resources/Data/";
     public string[] names = null;//이름들을 넣기위한 배열 변수
     //생성자
     public BaseData()

@@ -24,7 +24,7 @@ public class EditorHelper
 		// p_clip의 애샛 경로를 구한다.
 		retString = AssetDatabase.GetAssetPath(p_clip);
 		// /을 기준으로 분리하여 배열에 저장한다 
-		string[] path_node = retString.Split('/'); //Assets/9.ResourcesData/Resources/Sound/BGM.wav
+		string[] path_node = retString.Split('/'); 
 		bool findResource = false;
 		// 반복문 길이에 -1을 해줘 끝부분의 애샛 이름을 제외하여 경로만 가져오게한다.
 		for (int i = 0; i < path_node.Length - 1; i++)
@@ -56,7 +56,7 @@ public class EditorHelper
 	public static void CreateEnumStructure(string enumName, StringBuilder data)
 	{
 		// 해당 택스트 글자를 토대로  툴이사용할 enum  리스트 스크립트를 생성한다.
-		string templateFilePath = "Assets/14.DataResources/Data/EnumTemplate.txt";
+		string templateFilePath = "Assets/3.DataResources/Resources/Data/EnumTemplate.txt";
 		string entittyTemplate = File.ReadAllText(templateFilePath);
 		// Replace 함수를 사용하여 entittyTemplate의 검색문자로 검색된
 		// 문자를 찾아 치환 문자로 교체한다. 
