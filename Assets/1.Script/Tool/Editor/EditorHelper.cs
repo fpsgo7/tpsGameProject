@@ -63,7 +63,7 @@ public class EditorHelper
 		// Replace( 검색 문자 , 치환문자);
 		entittyTemplate = entittyTemplate.Replace("$DATA$", data.ToString());
 		entittyTemplate = entittyTemplate.Replace("$ENUM$", enumName);
-		string folderPath = "Assets/1.Scripts/Tool/DataPart/";// 위의 내용을 통해만든 스크립트 저장위치
+		string folderPath = "Assets/1.Script/Tool/DataPart/";// 위의 내용을 통해만든 스크립트 저장위치
 		if (Directory.Exists(folderPath) == false)
 		{
 			Directory.CreateDirectory(folderPath);

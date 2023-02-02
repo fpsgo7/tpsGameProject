@@ -14,8 +14,7 @@ public class EffectData : BaseData//BaseData를 상속받아 스크립터블 오
     //EffectClip을 통한 스크립트형 변수 객체 배열로 보면된다.
     public EffectClip[] effectClips = new EffectClip[0];
 
-    public string clipPath = "Effects/";// 이펙트의 경로
-    private string xmlFilePath = "";//xml 파일 경로
+    private string xmlFilePath = "";//xml 파일 경로 dataDirectory의 값을 널어사용한다.
     private string xmlFileName = "effectData.xml";//xml 파일 내임
     private string dataPath = "Data/effectData";//이펙트 데이터 경로
     //XML 구분자
