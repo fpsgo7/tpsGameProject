@@ -27,8 +27,7 @@ public class EffectData : BaseData//BaseData를 상속받아 스크립터블 오
     //읽어오기
     public void LoadData()
     {
-        //$ 표시를 통하여 {}안의 대상에 변수를 넣어 해당 변수를 출력할 수 있게한다.
-        Debug.Log($"xmlFilePath = {Application.dataPath}+{dataDirectory}");//파일경로 디버그출력
+        //$ 표시를 통하여 {}안의 대상에 변수를 넣어 해당 변수를 출력할 수 있게한다
         this.xmlFilePath = Application.dataPath + dataDirectory;// xml 파일 경로
         //TextAsset 에 리소스메니저로 경로를 통해 받아온 정보를 텍스트형태로  넣는다.
         TextAsset asset = (TextAsset)ResourceManager.Load(dataPath);

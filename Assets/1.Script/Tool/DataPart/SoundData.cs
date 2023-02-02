@@ -50,11 +50,16 @@ public class SoundData : BaseData
         clip.PreLoad();
         return clip;
     }
-
+    // 실제 데이터 복사
+    public override void Copy(int index)
+    {
+        this.names = ArrayHelper.Add(this.names[index], this.names);
+        this.soundClips = ArrayHelper.Add(GetCopy(index), soundClips);
+    }
     // 데이터 로드하기
     public void LoadData()
     {
-        xmlFilePath = Application.dataPath + dataDirectory;// xml 파일을 불러오기위한 주소 지정
+        this.xmlFilePath = Application.dataPath + dataDirectory;// xml 파일을 불러오기위한 주소 지정
         //경로를 통하여 로드한 정보를 TExtAsset 변수에 넣기
         TextAsset asset = (TextAsset)Resources.Load(dataPath, typeof(TextAsset));
         //만약 아무 정보도 없을경우
@@ -225,5 +230,32 @@ public class SoundData : BaseData
             xml.WriteEndElement();//sound 앨리먼트 종료
             xml.WriteEndDocument();// 다큐먼트 종료
         }
+    }
+    // 데이터 추가 
+    public override int AddData(string newName)
+    {
+        // 새로운 이름과 클립을 추가한다.
+        if (this.names == null)
+        {
+            this.names = new string[] { newName };
+            this.soundClips = new SoundClip[] { new SoundClip() };
+        }
+        else
+        {
+            this.names = ArrayHelper.Add(newName, names);
+            this.soundClips = ArrayHelper.Add(new SoundClip(), soundClips);
+        }
+        return GetDataCount();// 개수가 봐껴 새로운 숫자를 반환한다.
+    }
+    // 데이터 삭제
+    public override void RemoveData(int index)
+    {
+        // 클립스와 이름들에서 index로 찾은 대상을 제거
+        this.names = ArrayHelper.Remove(index, this.names);
+        if (this.name.Length == 0)
+        {
+            this.names = null;
+        }
+        this.soundClips = ArrayHelper.Remove(index, this.soundClips);
     }
 }
