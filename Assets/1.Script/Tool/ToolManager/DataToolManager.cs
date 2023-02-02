@@ -20,12 +20,12 @@ public class DataToolManager : MonoBehaviour
             effectData = ScriptableObject.CreateInstance<EffectData>();
             effectData.LoadData();
         }
-        //if (soundData == null)
-        //{
-        //    // 스크립터블 오브젝트형태로 사운드 데이터 생성후 로드한다.
-        //    soundData = ScriptableObject.CreateInstance<SoundData>();
-        //    soundData.LoadData();
-        //}
+        if (soundData == null)
+        {
+            // 스크립터블 오브젝트형태로 사운드 데이터 생성후 로드한다.
+            soundData = ScriptableObject.CreateInstance<SoundData>();
+            soundData.LoadData();
+        }
     }
     // effectData 를 생성하여 로드한후 반환하는 함수 이다.
     public static EffectData EffectData()
@@ -37,14 +37,14 @@ public class DataToolManager : MonoBehaviour
         }
         return effectData;
     }
-    //// 위처럼 데이터클래스 를 생성하여 로드한후 반환하는 함수이다.
-    //public static SoundData SoundData()
-    //{
-    //    if (soundData == null)
-    //    {
-    //        soundData = ScriptableObject.CreateInstance<SoundData>();
-    //        soundData.LoadData();
-    //    }
-    //    return soundData;
-    //}
+    // 위처럼 데이터클래스 를 생성하여 로드한후 반환하는 함수이다.
+    public static SoundData SoundData()
+    {
+        if (soundData == null)
+        {
+            soundData = ScriptableObject.CreateInstance<SoundData>();
+            soundData.LoadData();
+        }
+        return soundData;
+    }
 }
