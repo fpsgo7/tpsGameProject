@@ -55,15 +55,15 @@ public class EditorHelper
 	/// </summary>
 	public static void CreateEnumStructure(string enumName, StringBuilder data)
 	{
-		string templateFilePath = "Assets/Editor/EnumTemplate.txt";
-
+		// 해당 택스트 글자를 토대로  툴이사용할 enum  리스트 스크립트를 생성한다.
+		string templateFilePath = "Assets/14.DataResources/Data/EnumTemplate.txt";
 		string entittyTemplate = File.ReadAllText(templateFilePath);
 		// Replace 함수를 사용하여 entittyTemplate의 검색문자로 검색된
 		// 문자를 찾아 치환 문자로 교체한다. 
 		// Replace( 검색 문자 , 치환문자);
 		entittyTemplate = entittyTemplate.Replace("$DATA$", data.ToString());
 		entittyTemplate = entittyTemplate.Replace("$ENUM$", enumName);
-		string folderPath = "Assets/1.Scripts/GameData/";
+		string folderPath = "Assets/1.Scripts/Tool/DataPart/";// 위의 내용을 통해만든 스크립트 저장위치
 		if (Directory.Exists(folderPath) == false)
 		{
 			Directory.CreateDirectory(folderPath);
@@ -84,7 +84,7 @@ public class EditorHelper
 		// Horizontal 로 시작한다.
 		EditorGUILayout.BeginHorizontal();//Horizontal 이기때문에 (수평)가로로 된다.
 		{//구분을 위하여 괄호를 활용한다.
-		 //ADD 버튼이 눌리면 data(BaseData 또는 그 자식 클래스)의 AddData 함수가 실행된다.
+			//ADD 버튼이 눌리면 data(BaseData 또는 그 자식 클래스)의 AddData 함수가 실행된다.
 			if (GUILayout.Button("ADD", GUILayout.Width(uiWidth)))
 			{
 				data.AddData("New Data");
@@ -98,6 +98,7 @@ public class EditorHelper
 				source = null;//해당 변수를 초기화
 				selection = data.GetDataCount() - 1;//작업이 완료 되면최종 리스트를 선택하게한다.
 			}
+			// 삭제버튼
 			if (data.GetDataCount() > 1)//데이터 개수가 2개이상일경우 삭제 버튼 활성화
 			{
 				if (GUILayout.Button("Remove", GUILayout.Width(uiWidth)))
