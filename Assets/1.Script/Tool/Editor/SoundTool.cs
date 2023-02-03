@@ -172,6 +172,7 @@ public class SoundTool : EditorWindow// 에디터 형태를 사용하므로 상�
                 this.soundSource = null;
             }
             // 내가 변경한 내용을 파링ㄹ에 적용시켜 저장하는 기능
+            // 이름 중복 체크 추가하기
             if (GUILayout.Button("Save"))
             {
                 soundData.SaveData();

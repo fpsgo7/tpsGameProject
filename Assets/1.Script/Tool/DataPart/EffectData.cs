@@ -84,34 +84,60 @@ public class EffectData : BaseData//BaseData를 상속받아 스크립터블 오
         }
     }
     //저장하기 새로 추가하거나 삭제한 결과를 xml 에 저장하여서 게임이 종료되어서도 저장되기 위해 사용
-    public void SaveData()
+    public bool SaveData()
     {
-        //XmlTextWriter 의 괄호 첫번쨰 칸에 파일 경로와 xml 파일 이름을 넣어 
-        //저장할 위치를 지정한다.
-        using (XmlTextWriter xml = new XmlTextWriter
-            (xmlFilePath + xmlFileName, System.Text.Encoding.Unicode))
+        // 여기서 사용가능한 이름인지 체크하여 실행을 막는다.
+        if (ImpossibleDataName())
         {
-            //EFFECT 키 는 전체 범위로 length 데이터의 개수값을 가지며
-            //xml 에서 클립간 구분은 CLIP 키를 통해 구준한다.
-            xml.WriteStartDocument();//Document 시작
-            xml.WriteStartElement(EFFECT);//EFFECT를 이용한 element를 시작한다.
-            //xml 파일의 length 컬럼 에 GetDataCount()를 통해 얻어온 데이타의 길이값을 넣는다.
-            xml.WriteElementString("length", GetDataCount().ToString());//데이타의 길이를 얻어옴
-            for (int i = 0; i < this.names.Length; i++)
-            {
-                EffectClip clip = this.effectClips[i];//각번째에 맞은 이펙트 배열의 하나를 연결
-                xml.WriteStartElement(CLIP);//CLIP을 통해 구분한다. 
-                //아이템 클립에 각 변수에 값을 적용함
-                xml.WriteElementString("id", i.ToString());
-                xml.WriteElementString("name", this.names[i]);
-                xml.WriteElementString("effectType", clip.effectType.ToString());
-                xml.WriteElementString("effectPath", clip.effectPath);
-                xml.WriteElementString("effectName", clip.effectName);
-                xml.WriteEndElement();//CLIP element 종료
-            }
-            xml.WriteEndElement();//EFFECT element 종료
-            xml.WriteEndDocument();//Document 종료
+            Debug.Log("사용불가능한 이름입니다.");
+            return false;
         }
+        else
+        {
+            //XmlTextWriter 의 괄호 첫번쨰 칸에 파일 경로와 xml 파일 이름을 넣어 
+            //저장할 위치를 지정한다.
+            using (XmlTextWriter xml = new XmlTextWriter
+                (xmlFilePath + xmlFileName, System.Text.Encoding.Unicode))
+            {
+                //EFFECT 키 는 전체 범위로 length 데이터의 개수값을 가지며
+                //xml 에서 클립간 구분은 CLIP 키를 통해 구준한다.
+                xml.WriteStartDocument();//Document 시작
+                xml.WriteStartElement(EFFECT);//EFFECT를 이용한 element를 시작한다.
+                                              //xml 파일의 length 컬럼 에 GetDataCount()를 통해 얻어온 데이타의 길이값을 넣는다.
+                xml.WriteElementString("length", GetDataCount().ToString());//데이타의 길이를 얻어옴
+                for (int i = 0; i < this.names.Length; i++)
+                {
+                    EffectClip clip = this.effectClips[i];//각번째에 맞은 이펙트 배열의 하나를 연결
+                    xml.WriteStartElement(CLIP);//CLIP을 통해 구분한다. 
+                                                //아이템 클립에 각 변수에 값을 적용함
+                    xml.WriteElementString("id", i.ToString());
+                    xml.WriteElementString("name", this.names[i]);
+                    xml.WriteElementString("effectType", clip.effectType.ToString());
+                    xml.WriteElementString("effectPath", clip.effectPath);
+                    xml.WriteElementString("effectName", clip.effectName);
+                    xml.WriteEndElement();//CLIP element 종료
+                }
+                xml.WriteEndElement();//EFFECT element 종료
+                xml.WriteEndDocument();//Document 종료
+                return true;
+            }
+        }
+    }
+    public bool ImpossibleDataName()
+    {
+        for (int i = 0; i < effectClips.Length; i++)
+        {
+            Debug.Log(effectClips[i].effectName);
+            for (int j = 0; j < effectClips.Length; j++)
+            {
+                if (effectClips[i].effectName == effectClips[j].effectName && i != j)
+                {
+
+                    Debug.Log("중복이름 발생!");
+                }
+            }
+        }
+        return true;
     }
     //추가하기 추가한후 저장하지 않으면 추가한 값은 xml 파일에 저장되지 않는다.
     public override int AddData(string newName)

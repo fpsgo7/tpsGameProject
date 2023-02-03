@@ -87,7 +87,7 @@ public class EditorHelper
 			//ADD 버튼이 눌리면 data(BaseData 또는 그 자식 클래스)의 AddData 함수가 실행된다.
 			if (GUILayout.Button("ADD", GUILayout.Width(uiWidth)))
 			{
-				data.AddData("New Data");
+				data.AddData("NewData");
 				selection = data.GetDataCount() - 1;// 최종 리스트를 선택
 				source = null;
 			}

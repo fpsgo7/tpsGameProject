@@ -113,8 +113,8 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
                                     //새롭게 이펙트를 넣을경우 이펙트를 경로를 변화시킨다.
                                     effectData.effectClips[selection].effectPath =
                                         EditorHelper.GetPath(this.effectSource);
-                                    Debug.Log(effectData.effectClips[selection].effectPath);
                                     effectData.effectClips[selection].effectName = effectSource.name;
+                                    Debug.Log(effectData.effectClips[selection].effectName);
                                 }
                                 else
                                 {
@@ -150,9 +150,11 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
             }
             if (GUILayout.Button("Save"))//데이터 저장
             {
-                EffectTool.effectData.SaveData(); // 해당 함수 실행하여 파일 저장
-                CreateEnumStucture();// 이팩트가 추가되어 이펙트 리스트에 내용을 추가한다.
-                AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
+                if(EffectTool.effectData.SaveData()) // 해당 함수 실행하여 파일 저장
+                {
+                    CreateEnumStucture();// 이팩트가 추가되어 이펙트 리스트에 내용을 추가한다.
+                    AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
+                } 
             }
         }
         EditorGUILayout.EndHorizontal();// 수직

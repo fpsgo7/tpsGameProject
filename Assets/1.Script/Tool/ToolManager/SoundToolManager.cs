@@ -63,10 +63,10 @@ public class SoundToolManager : MonoBehaviour
     {
         // 위의 사운드의 변수들을 리소스를 통해 체워줄 문장들을 실행한다.
         // if 문으로 비어있는 경우에만 얻어오는 문장을 실행한다.
-        if (this.mixer == null)
-        {
-            this.mixer = Resources.Load(MixerName) as AudioMixer;
-        }
+        //if (this.mixer == null)
+        //{
+        //    this.mixer = Resources.Load(MixerName) as AudioMixer;
+        //}
         if (this.audioRoot == null)
         {
             audioRoot = new GameObject(ContainerName).transform;
@@ -197,6 +197,7 @@ public class SoundToolManager : MonoBehaviour
             return maxVolume;
         }
     }
+
     // 특정 지점에 이팩트 사운드 내기
     public void PlayEffectSound(SoundClip clip, Vector3 position, float volume)
     {
