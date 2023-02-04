@@ -175,25 +175,50 @@ public class SoundTool : EditorWindow// 에디터 형태를 사용하므로 상�
             // 이름 중복 체크 추가하기
             if (GUILayout.Button("Save"))
             {
-                soundData.SaveData();
-                CreateEnumStructure();
-                AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
+                if (CreateEnumStructure())
+                {
+                    soundData.SaveData();
+                    AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
+                }
+               
             }
         }
         EditorGUILayout.EndHorizontal();
     }
     // 리스트 를 담아두는 스크립트에 내용을 수정하기
-    public void CreateEnumStructure()
+    public bool CreateEnumStructure()
     {
-        string enumName = "SoundList";
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < soundData.names.Length; i++)
+        if (ImpossibleDataName())
         {
-            if (!soundData.names[i].ToLower().Contains("none"))
-            {
-                builder.AppendLine("     " + soundData.names[i] + " = " + i.ToString() + ",");
-            }
+            Debug.Log("저장을 취소합니다.");
+            return false;
         }
-        EditorHelper.CreateEnumStructure(enumName, builder);
+        else
+        {
+            string enumName = "SoundList";
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < soundData.names.Length; i++)
+            {
+                if (!soundData.names[i].ToLower().Contains("none"))
+                {
+                    builder.AppendLine("     " + soundData.names[i] + " = " + i.ToString() + ",");
+                }
+            }
+            EditorHelper.CreateEnumStructure(enumName, builder);
+            return true;
+        }
+       
+    }
+    public bool ImpossibleDataName()
+    {
+        if (NamingRules.FirstTextisNum(soundData.names[soundData.names.Length - 1]))
+            return true;
+        if (NamingRules.NamingBlank(soundData.names[soundData.names.Length - 1]))
+            return true;
+        if (!NamingRules.NumKorEng(soundData.names[soundData.names.Length - 1]))
+            return true;
+        if (NamingRules.ReservedWord(soundData.names[soundData.names.Length - 1]))
+            return true;
+        return false;
     }
 }
