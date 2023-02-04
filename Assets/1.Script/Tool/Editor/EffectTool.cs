@@ -114,7 +114,7 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
                                     effectData.effectClips[selection].effectPath =
                                         EditorHelper.GetPath(this.effectSource);
                                     effectData.effectClips[selection].effectName = effectSource.name;
-                                    Debug.Log(effectData.effectClips[selection].effectName);
+                                    //Debug.Log(effectData.effectClips[selection].effectName);
                                 }
                                 else
                                 {
@@ -150,28 +150,49 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
             }
             if (GUILayout.Button("Save"))//데이터 저장
             {
-                if(EffectTool.effectData.SaveData()) // 해당 함수 실행하여 파일 저장
+                if(CreateEnumStucture())// 이팩트가 추가되어 이펙트 리스트에 내용을 추가한다.
                 {
-                    CreateEnumStucture();// 이팩트가 추가되어 이펙트 리스트에 내용을 추가한다.
+                    EffectTool.effectData.SaveData();
                     AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-                } 
+                }
             }
         }
         EditorGUILayout.EndHorizontal();// 수직
     }
     //enum 생성하기 EffectList 라는 스크립트에 접근하여 EffectList 라는 enum 에 내용을 추가한다.
-    public void CreateEnumStucture()
+    public bool CreateEnumStucture()
     {
-        string enumName = "EffectList";
-        StringBuilder builder = new StringBuilder();// 스트링빌더 변수 생성
-        for (int i = 0; i < effectData.names.Length; i++)
+        if (ImpossibleDataName())
         {
-            if (effectData.names[i] != string.Empty)
-            {
-                //해당 변수에 라인을 추가하는 형식으로 추가한 enum 과 원래 enum을 넣어준다.
-                builder.AppendLine("     " + effectData.names[i] + " = " + i + ",");
-            }
+            Debug.Log("저장을 취소합니다.");
+            return false;
         }
-        EditorHelper.CreateEnumStructure(enumName, builder);//그리고 값들을 보내어  완료시킨다.
+        else
+        {
+            string enumName = "EffectList";
+            StringBuilder builder = new StringBuilder();// 스트링빌더 변수 생성
+            for (int i = 0; i < effectData.names.Length; i++)
+            {
+                if (effectData.names[i] != string.Empty)
+                {
+                    //해당 변수에 라인을 추가하는 형식으로 추가한 enum 과 원래 enum을 넣어준다.
+                    builder.AppendLine("     " + effectData.names[i] + " = " + i + ",");
+                }
+            }
+            EditorHelper.CreateEnumStructure(enumName, builder);//그리고 값들을 보내어  완료시킨다.
+            return true;
+        }
+    }
+    public bool ImpossibleDataName()
+    {
+        if (NamingRules.FirstTextisNum(effectData.names[effectData.names.Length - 1]))
+            return true;
+        if (NamingRules.NamingBlank(effectData.names[effectData.names.Length - 1]))
+            return true;
+        if (!NamingRules.NumKorEng(effectData.names[effectData.names.Length - 1]))
+            return true;
+        if (NamingRules.ReservedWord(effectData.names[effectData.names.Length - 1]))
+            return true;
+        return false;
     }
 }
