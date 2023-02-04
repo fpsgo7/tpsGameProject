@@ -16,46 +16,8 @@ public class SoundData : BaseData
     private string dataPath = "Data/soundData";// 데이타 경로
     private static string SOUND = "sound";// xml 파일에서 구분을 위한 저장키
     private static string CLIP = "clip";// xml 파일에서 구분을 위한 저장키
-
-    // 복사작업
-    public SoundClip GetCopy(int index)
-    {
-        if (index < 0 || index >= soundClips.Length)
-        {
-            return null;
-        }
-        // 복사에 사용하기위한 변수 생성 복사할 대상의 정보를 저장할 변수 생성
-        SoundClip clip = new SoundClip();
-        SoundClip original = soundClips[index];
-        // 값들을 넣음
-        clip.realId = index;
-        clip.clipPath = original.clipPath;
-        clip.clipName = original.clipName;
-        clip.maxVolume = original.maxVolume;
-        clip.pitch = original.pitch;
-        clip.dopplerLevel = original.dopplerLevel;
-        clip.rolloffMode = original.rolloffMode;
-        clip.minDistance = original.minDistance;
-        clip.maxDistance = original.maxDistance;
-        clip.spartialBlend = original.spartialBlend;
-        clip.isLoop = original.isLoop;
-        clip.checkTime = new float[original.checkTime.Length];
-        clip.setTime = new float[original.setTime.Length];
-        clip.playType = original.playType;
-        for (int i = 0; i < clip.checkTime.Length; i++)
-        {
-            clip.checkTime[i] = original.checkTime[i];
-            clip.setTime[i] = original.setTime[i];
-        }
-        clip.PreLoad();
-        return clip;
-    }
-    // 실제 데이터 복사
-    public override void Copy(int index)
-    {
-        this.names = ArrayHelper.Add(this.names[index], this.names);
-        this.soundClips = ArrayHelper.Add(GetCopy(index), soundClips);
-    }
+    //생성자
+    private SoundData() { }
     // 데이터 로드하기
     public void LoadData()
     {
@@ -82,8 +44,6 @@ public class SoundData : BaseData
                             int length = int.Parse(reader.ReadString());
                             this.names = new string[length];// 개수를 배열개수에 적용 배열 생성
                             this.soundClips = new SoundClip[length];
-                            break;
-                        case "clip":
                             break;
                         case "id":// id 값
                             currentID = int.Parse(reader.ReadString());
@@ -153,26 +113,6 @@ public class SoundData : BaseData
             clip.PreLoad();
         }
     }
-    // 시간값을 슬레시로 쪼개 배열로 나누어 사용할수 있게한다.
-    void SetLoopTime(bool isCheck, SoundClip clip, string timeString)
-    {
-        string[] time = timeString.Split('/');//timeString 이 /을 기준으로 나눠저서 배열에 하나씩 들어간다.
-        for (int i = 0; i < time.Length; i++)
-        {
-            if (time[i] != string.Empty)
-            {
-                if (isCheck == true)
-                {
-                    clip.checkTime[i] = float.Parse(time[i]);
-                }
-                else
-                {
-                    clip.setTime[i] = float.Parse(time[i]);
-                }
-            }
-        }
-    }
-
     // 데이터 저장하기
     public void SaveData()
     {
@@ -252,10 +192,72 @@ public class SoundData : BaseData
     {
         // 클립스와 이름들에서 index로 찾은 대상을 제거
         this.names = ArrayHelper.Remove(index, this.names);
-        if (this.name.Length == 0)
+        if (this.names.Length == 0)
         {
             this.names = null;
         }
         this.soundClips = ArrayHelper.Remove(index, this.soundClips);
     }
+    // 복사작업
+    public SoundClip GetCopy(int index)
+    {
+        if (index < 0 || index >= soundClips.Length)
+        {
+            return null;
+        }
+        // 복사에 사용하기위한 변수 생성 복사할 대상의 정보를 저장할 변수 생성
+        SoundClip clip = new SoundClip();
+        SoundClip original = soundClips[index];
+        // 값들을 넣음
+        clip.realId = index;
+        clip.clipPath = original.clipPath;
+        clip.clipName = original.clipName;
+        clip.maxVolume = original.maxVolume;
+        clip.pitch = original.pitch;
+        clip.dopplerLevel = original.dopplerLevel;
+        clip.rolloffMode = original.rolloffMode;
+        clip.minDistance = original.minDistance;
+        clip.maxDistance = original.maxDistance;
+        clip.spartialBlend = original.spartialBlend;
+        clip.isLoop = original.isLoop;
+        clip.checkTime = new float[original.checkTime.Length];
+        clip.setTime = new float[original.setTime.Length];
+        clip.playType = original.playType;
+        for (int i = 0; i < clip.checkTime.Length; i++)
+        {
+            clip.checkTime[i] = original.checkTime[i];
+            clip.setTime[i] = original.setTime[i];
+        }
+        clip.PreLoad();
+        return clip;
+    }
+    // 실제 데이터 복사
+    public override void Copy(int index)
+    {
+        this.names = ArrayHelper.Add(this.names[index], this.names);
+        this.soundClips = ArrayHelper.Add(GetCopy(index), soundClips);
+    }
+    
+    // 시간값을 슬레시로 쪼개 배열로 나누어 사용할수 있게한다.
+    void SetLoopTime(bool isCheck, SoundClip clip, string timeString)
+    {
+        string[] time = timeString.Split('/');//timeString 이 /을 기준으로 나눠저서 배열에 하나씩 들어간다.
+        for (int i = 0; i < time.Length; i++)
+        {
+            if (time[i] != string.Empty)
+            {
+                if (isCheck == true)
+                {
+                    clip.checkTime[i] = float.Parse(time[i]);
+                }
+                else
+                {
+                    clip.setTime[i] = float.Parse(time[i]);
+                }
+            }
+        }
+    }
+
+
+
 }

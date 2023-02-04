@@ -33,7 +33,7 @@ public class EffectData : BaseData//BaseData를 상속받아 스크립터블 오
         TextAsset asset = (TextAsset)ResourceManager.Load(dataPath);
         if (asset == null || asset.text == null)
         {
-            this.AddData("New Effect");//데이터가 없을경우 데이터 추가
+            this.AddData("NewEffect");//데이터가 없을경우 데이터 추가
             return;
         }
         //using 문법 사용하여 IO 관련 예외처리를 간단하게한다.
@@ -139,18 +139,6 @@ public class EffectData : BaseData//BaseData를 상속받아 스크립터블 오
             this.names = null;
         }
         this.effectClips = ArrayHelper.Remove(index, this.effectClips);
-    }
-    //초기화 하기 EffectClip 의 스크립트에서 모든클립(effectClips)의 ReleaseEffect를 실행하여 
-    // 모든 effectPrefab 에 null을 적용한다.
-    // 이후 EffectData의 2개의 정보도들도 삭제해준다.
-    public void ClearData()
-    {
-        foreach (EffectClip clip in this.effectClips)
-        {
-            clip.ReleaseEffect();
-        }
-        this.effectClips = null;
-        this.names = null;
     }
     // 복사를 위한 정보 값 얻기
     public EffectClip GetCopy(int index)

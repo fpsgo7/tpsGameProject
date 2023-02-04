@@ -47,7 +47,7 @@ public class NamingRules
         } 
         return true;
     }
-    //지울 예정
+    
     public static bool SpecialSymbol(string name)
     {
         if (
@@ -129,4 +129,6 @@ public class NamingRules
         }
         return false;
     }
+    //같은 단어입니다.
+
 }

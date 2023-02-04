@@ -51,7 +51,7 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
             EditorHelper.EditorToolTopLayer(effectData, ref selection, ref source, this.uiWidthMiddle);
             effectSource = (GameObject)source;//이후 source를 GameObject화 시키기
 
-            EditorGUILayout.BeginHorizontal();// 가로 배열
+            EditorGUILayout.BeginHorizontal();// 수평 레이아웃
             {
                 //중간, 데이터 목록 레이아웃 가져오기
                 //매계변수 SP1 백터값, 클래스형변수, 선택값, 소스, 유아이 길이

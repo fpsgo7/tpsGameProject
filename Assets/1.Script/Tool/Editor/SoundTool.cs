@@ -43,6 +43,9 @@ public class SoundTool : EditorWindow// 에디터 형태를 사용하므로 상�
             UnityObject source = soundSource;// 유니티 오브젝트 형태로 박싱
             // EditorHelper 을 통해서 에디터의 탑부분 생성
             EditorHelper.EditorToolTopLayer(soundData, ref selection, ref source, uiWidthMiddle);
+            // 선택값으로 선택된 배열의 사운드 클립이 
+            //해당 사운트 클립 변수로 박싱되서 사용된다.
+            SoundClip sound = soundData.soundClips[selection];
             soundSource = (AudioClip)source;//박싱한 대상을  언박싱
 
             EditorGUILayout.BeginHorizontal();// 수평 레이아웃
@@ -50,9 +53,7 @@ public class SoundTool : EditorWindow// 에디터 형태를 사용하므로 상�
                 // 리스트 레이어를 생성
                 EditorHelper.EditorToolListLayer(ref SP1, soundData, ref selection,
                     ref source, uiWidthMiddle);
-                // 선택값으로 선택된 배열의 사운드 클립이 
-                //해당 사운트 클립 변수로 박싱되서 사용된다.
-                SoundClip sound = soundData.soundClips[selection];
+
 
                 soundSource = (AudioClip)source;
 
