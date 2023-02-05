@@ -6,7 +6,7 @@ public class NamingRules
 {
     //아스키 코드로 범위 지정
     //첫단어 한글과 영어인지 확인
-    public static bool FirstTextisNum(string name)
+    public static bool IsFirstTextisNum(string name)
     {
         int firstLetter = (int)char.Parse(name.Substring(0,1));
         if (
@@ -23,7 +23,7 @@ public class NamingRules
         return true;
     }
     // 한글과 영어와 숫자로만 이루어져있는지 확인
-    public static bool NumKorEng(string name)
+    public static bool IsOnlyNumKorEng(string name)
     {
         int firstLetter;
         for (int i =0; i<name.Length; i++)
@@ -48,7 +48,7 @@ public class NamingRules
         return true;
     }
     
-    public static bool SpecialSymbol(string name)
+    public static bool IsSpecialSymbol(string name)
     {
         if (
             name.Contains("`") || name.Contains("~") || name.Contains("!") ||
@@ -69,7 +69,7 @@ public class NamingRules
         }
         return false;
     }
-    public static bool NamingBlank(string name)
+    public static bool IsNamingBlank(string name)
     {
         if(name.Contains(" "))
         {
@@ -78,7 +78,7 @@ public class NamingRules
         }
         return false;
     }
-    public static bool ReservedWord(string name)
+    public static bool IsReservedWord(string name)
     {
         //예약어참조 사이트
         //https://learn.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/

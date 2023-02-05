@@ -42,7 +42,7 @@ public class SoundTool : EditorWindow// 에디터 형태를 사용하므로 상�
         {
             UnityObject source = soundSource;// 유니티 오브젝트 형태로 박싱
             // EditorHelper 을 통해서 에디터의 탑부분 생성
-            EditorHelper.EditorToolTopLayer(soundData, ref selection, ref source, uiWidthMiddle);
+            EditorHelper.EditorTopLayer(soundData, ref selection, ref source, uiWidthMiddle);
             // 선택값으로 선택된 배열의 사운드 클립이 
             //해당 사운트 클립 변수로 박싱되서 사용된다.
             SoundClip sound = soundData.soundClips[selection];
@@ -160,20 +160,21 @@ public class SoundTool : EditorWindow// 에디터 형태를 사용하므로 상�
                     builder.AppendLine("     " + soundData.names[i] + " = " + i.ToString() + ",");
                 }
             }
-            EditorHelper.CreateEnumStructure(enumName, builder);
+            EditorHelper.CreateEnumList(enumName, builder);
             return true;
         }
        
     }
     public bool ImpossibleDataName()
     {
-        if (NamingRules.FirstTextisNum(soundData.names[soundData.names.Length - 1]))
+        string dataName = soundData.names[soundData.names.Length - 1];
+        if (NamingRules.IsFirstTextisNum(dataName))
             return true;
-        if (NamingRules.NamingBlank(soundData.names[soundData.names.Length - 1]))
+        if (NamingRules.IsNamingBlank(dataName))
             return true;
-        if (!NamingRules.NumKorEng(soundData.names[soundData.names.Length - 1]))
+        if (!NamingRules.IsOnlyNumKorEng(dataName))
             return true;
-        if (NamingRules.ReservedWord(soundData.names[soundData.names.Length - 1]))
+        if (NamingRules.IsReservedWord(dataName))
             return true;
         return false;
     }

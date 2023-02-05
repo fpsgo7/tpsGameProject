@@ -16,15 +16,13 @@ public class EditorHelper
 	/// <summary>
 	/// 경로 계산 함수로 경로를 구해준다.
 	/// </summary>
-	/// <param name="p_clip"></param>
-	/// <returns></returns>
-	public static string GetPath(UnityEngine.Object p_clip)
+	public static string GetPath(UnityObject sourceClip)
 	{
-		string retString = string.Empty;
-		// p_clip의 애샛 경로를 구한다.
-		retString = AssetDatabase.GetAssetPath(p_clip);
+		string clipPath = string.Empty;
+		// sourceClip의 애샛 경로를 구한다.
+		clipPath = AssetDatabase.GetAssetPath(sourceClip);
 		// /을 기준으로 분리하여 배열에 저장한다 
-		string[] path_node = retString.Split('/'); 
+		string[] path_node = clipPath.Split('/'); 
 		bool findResource = false;
 		// 반복문 길이에 -1을 해줘 끝부분의 애샛 이름을 제외하여 경로만 가져오게한다.
 		for (int i = 0; i < path_node.Length - 1; i++)
@@ -34,51 +32,53 @@ public class EditorHelper
 				if (path_node[i] == "Resources")
 				{
 					findResource = true;
-					retString = string.Empty;
+					clipPath = string.Empty;
 				}
 			}
 			else
 			{
-				retString += path_node[i] + "/";
+				clipPath += path_node[i] + "/";
 			}
 
 		}
 
-		return retString;
+		return clipPath;
 	}
 
 	/// <summary>
-	/// Data 리스트를 enum structure로 뽑아주는 함수.숫자가아닌 이름으로 검색한다.
-	/// enum 생성하기
+	/// Data 리스트를 enum structure로 뽑아주어 스크립트에 리스트를 생성한다.
 	/// 숫자가아닌 리스트에 enum 형으로 써서 중간에 껴서 순서가 엉망이 되는 것을 
 	/// 방지한다.
 	/// </summary>
-	public static void CreateEnumStructure(string enumName, StringBuilder data)
+	public static void CreateEnumList(string enumName, StringBuilder listData)
 	{
-		// 해당 택스트 글자를 토대로  툴이사용할 enum  리스트 스크립트를 생성한다.
+		// 해당 택스트 글자를 토대로  툴이사용할  리스트 스크립트를 생성한다.
 		string templateFilePath = "Assets/3.DataResources/Resources/Data/EnumTemplate.txt";
+		// 주소를 통해 찾은 파일의 택스트를 스트링에 넣는다.
 		string entittyTemplate = File.ReadAllText(templateFilePath);
+		
 		// Replace 함수를 사용하여 entittyTemplate의 검색문자로 검색된
 		// 문자를 찾아 치환 문자로 교체한다. 
 		// Replace( 검색 문자 , 치환문자);
-		entittyTemplate = entittyTemplate.Replace("$DATA$", data.ToString());
-		entittyTemplate = entittyTemplate.Replace("$ENUM$", enumName);
+		entittyTemplate = entittyTemplate.Replace("$DATA$", listData.ToString());// data 리스트의 이름으로 쓰인다.
+		entittyTemplate = entittyTemplate.Replace("$ENUM$", enumName);// 파일의 이름으로 쓰인다.
 		string folderPath = "Assets/1.Script/Tool/DataPart/";// 위의 내용을 통해만든 스크립트 저장위치
-		if (Directory.Exists(folderPath) == false)
+		if (Directory.Exists(folderPath) == false)// 해당 경로 폴더가 없을경우
 		{
-			Directory.CreateDirectory(folderPath);
+			Directory.CreateDirectory(folderPath);// 폴더를 생성한다.
 		}
-
+		// 파일이 없을경우 해당경로로 스크립트 파일을 생성해준다.
 		string FilePath = folderPath + enumName + ".cs";
 		if (File.Exists(FilePath))
 		{
 			File.Delete(FilePath);
 		}
+		// 생성되었던 스크립트에 새로운 정보를 교체해준다.
 		File.WriteAllText(FilePath, entittyTemplate);
 	}
 	//에디터의 탑 레이어를 다룸 그래서 자동으로 추가할때마다 레이어에 배치하게 도와준다.
 	// (데이터 변수, ref int 선택값, ref UnityEngine.Object 유니티 의 오브젝트, int 유아이 가로 길이 )
-	public static void EditorToolTopLayer(BaseData data, ref int selection,
+	public static void EditorTopLayer(BaseData data, ref int selection,
 		ref UnityObject source, int uiWidth)
 	{
 		// Horizontal 로 시작한다.
@@ -96,7 +96,8 @@ public class EditorHelper
 			{//selection은 선택한 대상을 찾기위한 번호값이다.
 				data.Copy(selection);
 				source = null;//해당 변수를 초기화
-				selection = data.GetDataCount() - 1;//작업이 완료 되면최종 리스트를 선택하게한다.
+				//작업이 완료 되면최종 리스트를 선택하게한다.
+				selection = data.GetDataCount() - 1;
 			}
 			// 삭제버튼
 			if (data.GetDataCount() > 1)//데이터 개수가 2개이상일경우 삭제 버튼 활성화

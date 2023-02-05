@@ -48,7 +48,7 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
             UnityObject source = effectSource;
             //EditorHelper 에 만들어두었던 툴 상단파트를 적용하기
             //매계변수 로 EffectData의 클래스형 변수와 선택값, 소스, 유아니 길이 를 보낸다.
-            EditorHelper.EditorToolTopLayer(effectData, ref selection, ref source, this.uiWidthMiddle);
+            EditorHelper.EditorTopLayer(effectData, ref selection, ref source, this.uiWidthMiddle);
             effectSource = (GameObject)source;//이후 source를 GameObject화 시키기
 
             EditorGUILayout.BeginHorizontal();// 수평 레이아웃
@@ -179,19 +179,20 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
                     builder.AppendLine("     " + effectData.names[i] + " = " + i + ",");
                 }
             }
-            EditorHelper.CreateEnumStructure(enumName, builder);//그리고 값들을 보내어  완료시킨다.
+            EditorHelper.CreateEnumList(enumName, builder);//그리고 값들을 보내어  완료시킨다.
             return true;
         }
     }
     public bool ImpossibleDataName()
     {
-        if (NamingRules.FirstTextisNum(effectData.names[effectData.names.Length - 1]))
+        string dataName= effectData.names[effectData.names.Length - 1];
+        if (NamingRules.IsFirstTextisNum(dataName))
             return true;
-        if (NamingRules.NamingBlank(effectData.names[effectData.names.Length - 1]))
+        if (NamingRules.IsNamingBlank(dataName))
             return true;
-        if (!NamingRules.NumKorEng(effectData.names[effectData.names.Length - 1]))
+        if (!NamingRules.IsOnlyNumKorEng(dataName))
             return true;
-        if (NamingRules.ReservedWord(effectData.names[effectData.names.Length - 1]))
+        if (NamingRules.IsReservedWord(dataName))
             return true;
         return false;
     }
