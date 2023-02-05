@@ -53,9 +53,6 @@ public class SoundData : BaseData
                         case "name":// 이름
                             this.names[currentID] = reader.ReadString();
                             break;
-                        case "loop":// 루프
-                            soundClips[currentID].isLoop = true;
-                            break;
                         case "clippath":// 클립 경로
                             soundClips[currentID].clipPath = reader.ReadString();
                             break;
@@ -99,11 +96,6 @@ public class SoundData : BaseData
                 xml.WriteStartElement(CLIP);//Clip 엘리먼트 시작
                 xml.WriteElementString("id", i.ToString());//몇번째를 나타내는 아이디 입력
                 xml.WriteElementString("name", this.names[i]);// 이름 임력
-                if (clip.isLoop == true)// 루프가 존재할 경우
-                {
-                    // 루프가 존재하기 때문에 루프 컬럼을 추가하며 true 값 wjrdyd
-                    xml.WriteElementString("loop", "true");
-                }
                 xml.WriteElementString("clippath", clip.clipPath);// 클립경로
                 xml.WriteElementString("clipname", clip.clipName);// 클립이름
                 xml.WriteElementString("type", clip.playType.ToString());// 타입 넣기
@@ -154,7 +146,6 @@ public class SoundData : BaseData
         clip.realId = index;
         clip.clipPath = original.clipPath;
         clip.clipName = original.clipName;
-        clip.isLoop = original.isLoop;
         clip.playType = original.playType;
         clip.PreLoad();
         return clip;

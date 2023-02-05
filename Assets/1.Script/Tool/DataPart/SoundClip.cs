@@ -10,11 +10,9 @@ public class SoundClip
     public SoundPlayType playType = SoundPlayType.None;// None으로 초기화한다.
     public string clipName = string.Empty;// 클립 이름
     public string clipPath = string.Empty;//클랩 경로
-    public bool isLoop = false;// 반복 유무
     public int realId = 0;// 아이디
     //오디오 클립
     private AudioClip clip = null;// 오디오 클립
-    public int currentLoop = 0; // 몇개가 반복중인지 값
 
 
 

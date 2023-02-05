@@ -77,8 +77,6 @@ public class SoundTool : EditorWindow// 에디터 형태를 사용하므로 상�
                                     soundData.names[selection], GUILayout.Width(uiWidthLarge));
                                 sound.playType = (SoundPlayType)EditorGUILayout.EnumPopup("PlayType",
                                     sound.playType, GUILayout.Width(uiWidthLarge));
-                                sound.isLoop = EditorGUILayout.Toggle("LoopClip",
-                                    sound.isLoop, GUILayout.Width(uiWidthLarge));
                                 EditorGUILayout.Separator();// 빈칸 띄우기
                                 // 사운드 소스가 없고 해당 소스 이름이 있을 경우 
                                 if (this.soundSource == null && sound.clipName != string.Empty)

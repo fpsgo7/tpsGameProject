@@ -32,7 +32,7 @@ public class SoundToolManager : MonoBehaviour
 
     private void Start()
     {
-        // 위의 사운드의 변수들을 리소스를 통해 체워줄 문장들을 실행한다.
+        //위의 사운드의 변수들을 리소스를 통해 체워줄 문장들을 실행한다.
         // if 문으로 비어있는 경우에만 얻어오는 문장을 실행한다.
         if (this.audioRoot == null)
         {
@@ -54,6 +54,22 @@ public class SoundToolManager : MonoBehaviour
                 this.effect_audios[i].playOnAwake = false;// 자동재생 비활성화
             }
         }
+    }
+
+    // 이팩트를 한번 실행하기
+    public void PlayOneShotEffect(int index, Vector3 postion, float volume)
+    {
+        if (index == (int)SoundList.None)
+        {
+            return;
+        }
+
+        SoundClip clip = DataToolManager.SoundData().GetCopy(index);// 사운드데이타에서 크립을 복사해온다
+        if (clip == null)
+        {
+            return;
+        }
+        PlayEffectSound(clip, postion, volume);// 이팩트 사운드를 얻어온 값으로 재생한다.
     }
 
     // 특정 지점에 이팩트 사운드 내기
@@ -83,21 +99,6 @@ public class SoundToolManager : MonoBehaviour
         {
             PlayAudioSourceAtPoint(clip, position, volume);
         }
-    }
-    // 이팩트를 한번 실행하기
-    public void PlayOneShotEffect(int index, Vector3 postion, float volume)
-    {
-        if (index == (int)SoundList.None)
-        {
-            return;
-        }
-
-        SoundClip clip = DataToolManager.SoundData().GetCopy(index);// 사운드데이타에서 크립을 복사해온다
-        if (clip == null)
-        {
-            return;
-        }
-        PlayEffectSound(clip, postion, volume);// 이팩트 사운드를 얻어온 값으로 재생한다.
     }
     //특정 지점에서 제생
     void PlayAudioSourceAtPoint(SoundClip clip, Vector3 position, float volume)
