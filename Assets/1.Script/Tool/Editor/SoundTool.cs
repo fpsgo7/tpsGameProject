@@ -77,8 +77,6 @@ public class SoundTool : EditorWindow// 에디터 형태를 사용하므로 상�
                                     soundData.names[selection], GUILayout.Width(uiWidthLarge));
                                 sound.playType = (SoundPlayType)EditorGUILayout.EnumPopup("PlayType",
                                     sound.playType, GUILayout.Width(uiWidthLarge));
-                                sound.maxVolume = EditorGUILayout.FloatField("Max Volume",
-                                    sound.maxVolume, GUILayout.Width(uiWidthLarge));
                                 sound.isLoop = EditorGUILayout.Toggle("LoopClip",
                                     sound.isLoop, GUILayout.Width(uiWidthLarge));
                                 EditorGUILayout.Separator();// 빈칸 띄우기
@@ -99,19 +97,6 @@ public class SoundTool : EditorWindow// 에디터 형태를 사용하므로 상�
                                     // 레이아웃들 작성
                                     sound.clipPath = EditorHelper.GetPath(soundSource);// 경로
                                     sound.clipName = soundSource.name;// 이름
-                                    sound.pitch = EditorGUILayout.Slider("Pitch", sound.pitch, -3.0f, 3.0f,
-                                        GUILayout.Width(uiWidthLarge));// 피치를 조절할 슬라이더 레이아웃
-                                    sound.dopplerLevel = EditorGUILayout.Slider("Doppler",
-                                        sound.dopplerLevel, 0.0f, 5.0f, GUILayout.Width(uiWidthLarge));// 도플러 레벨을 조절할 슬라이더 레이아수
-                                    sound.rolloffMode = (AudioRolloffMode)EditorGUILayout.EnumPopup(
-                                        "volume Rolloff", sound.rolloffMode, GUILayout.Width(uiWidthLarge));// 롤오프 모드 팝업창
-                                    sound.minDistance = EditorGUILayout.FloatField("min Distance", sound.minDistance,
-                                        GUILayout.Width(uiWidthLarge));// 최소거리 입력란
-                                    sound.maxDistance = EditorGUILayout.FloatField("MaxDistance",
-                                        sound.maxDistance, GUILayout.Width(uiWidthLarge));// 최대거리 입력란
-                                    sound.spartialBlend = EditorGUILayout.Slider("PanLevel",
-                                        sound.spartialBlend, 0.0f, 1.0f, GUILayout.Width(uiWidthLarge));// 스패셜 블랜더 슬라이더
-
                                 }
                                 else
                                 {
@@ -120,34 +105,6 @@ public class SoundTool : EditorWindow// 에디터 형태를 사용하므로 상�
                                     sound.clipPath = string.Empty;
                                 }
                                 EditorGUILayout.Separator();// 한줄 띄우기
-                                // 애드루프를 적용하는 버튼으로
-                                // 해당 버튼을 클립하면 밑의 문장이 실행되어
-                                // 해당 클립에 애드루프가 실행된다.
-                                if (GUILayout.Button("Add Loop", GUILayout.Width(uiWidthMiddle)))
-                                {
-                                    soundData.soundClips[selection].AddLoop();
-                                }
-                                // 내가 선택한 사운드 클립의 채크타임 수만큼 반복한다.
-                                for (int i = 0; i < soundData.soundClips[selection].checkTime.Length; i++)
-                                {
-                                    EditorGUILayout.BeginVertical("box");// 박스형태로 수직 레이아웃 생성
-                                    {
-
-                                        GUILayout.Label("Loop Step " + i, EditorStyles.boldLabel);// 굵은 글씨로 적음
-                                        // 해당 루프를 삭제하기 위한 버튼
-                                        if (GUILayout.Button("Remove", GUILayout.Width(uiWidthMiddle)))
-                                        {
-                                            soundData.soundClips[selection].RemoveLoop(i);
-                                            return;
-                                        }
-                                        // 체크 타임과 셋 타임 을 설정할 수 있는 레이아웃 생성
-                                        sound.checkTime[i] = EditorGUILayout.FloatField("check Time",
-                                            sound.checkTime[i], GUILayout.Width(uiWidthMiddle));
-                                        sound.setTime[i] = EditorGUILayout.FloatField("Set Time",
-                                            sound.setTime[i], GUILayout.Width(uiWidthMiddle));
-                                    }
-                                    EditorGUILayout.EndVertical();
-                                }
                             }
                             EditorGUILayout.EndVertical();
                         }
