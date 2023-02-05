@@ -10,9 +10,9 @@ using UnityEngine;
 public class EffectClip
 {
     //추후 속성은 같지만 다른 이펙트 클립이 있어서 분별용 id
-    public int realId = 0;
+    public int id = 0;
     public EffectType effectType = EffectType.NORMAL;//따른 스크립트에서 enum 형변수에 접근해 이펙트 타입 구분을 위해 사용
-    public GameObject effectPrefab = null;//이펙트 오브젝트
+    public GameObject effectObject = null;//이펙트 오브젝트
     public string effectName = string.Empty;// 이펙트 이름
     public string effectPath = string.Empty;// 이펙트 경로
     public string effectFullPath = string.Empty;// 이펙트 경로 + 이펙트 이름
@@ -25,19 +25,11 @@ public class EffectClip
         this.effectFullPath = effectPath + effectName;
         // 이경로에 경로 대이터가 있어야하고 한번도 사전로딩 되지 않았을경우 실행한다.
         //한번 만 실행하기 위해 조건문 사용
-        if (this.effectFullPath != string.Empty && this.effectPrefab == null)
+        if (this.effectFullPath != string.Empty && this.effectObject == null)
         {
             //ResourceManager의 Load 함수를 사용 매계변수를 effectFullPaht 로 경로를
             //지정한후 해당 경로로 게임오브젝트를 로드한다.
-            this.effectPrefab = ResourceManager.Load(effectFullPath) as GameObject;
-        }
-    }
-    //로드한거 해제하기
-    public void ReleaseEffect()
-    {
-        if (this.effectPrefab != null)
-        {
-            this.effectPrefab = null;
+            this.effectObject = ResourceManager.Load(effectFullPath) as GameObject;
         }
     }
     /// <summary>
@@ -45,14 +37,14 @@ public class EffectClip
     /// </summary>
     public GameObject Instantiate(Vector3 Pos)
     {
-        if (this.effectPrefab == null)
+        if (this.effectObject == null)
         {
             this.PreLoad(); //생성할 대상이 없을경우 PreLoad로 로드해온다.
         }
-        if (this.effectPrefab != null)
+        if (this.effectObject != null)
         {
             //effectPrefb 게임오브젝트를 Pos 위치에 (identity)기본 각도로 생성한다.
-            GameObject effect = GameObject.Instantiate(effectPrefab, Pos, Quaternion.identity);
+            GameObject effect = GameObject.Instantiate(effectObject, Pos, Quaternion.identity);
             return effect;
         }
         return null;

@@ -6,6 +6,6 @@ public enum SoundList
 {
 	None = -1,
 	     test = 0,
-     sdsdsfsf = 1,
+     gun = 1,
 
 }

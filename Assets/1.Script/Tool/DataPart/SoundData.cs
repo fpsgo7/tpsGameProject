@@ -48,7 +48,7 @@ public class SoundData : BaseData
                         case "id":// id 값
                             currentID = int.Parse(reader.ReadString());
                             soundClips[currentID] = new SoundClip();
-                            soundClips[currentID].realId = currentID;
+                            soundClips[currentID].id = currentID;
                             break;
                         case "name":// 이름
                             this.dataNames[currentID] = reader.ReadString();
@@ -67,12 +67,6 @@ public class SoundData : BaseData
                     }
                 }
             }
-        }
-        // 프리로딩 테스트
-        //스트리밍 할때 버벅이지 않기위해 사용 사양 타면 삭제
-        foreach (SoundClip clip in soundClips)
-        {
-            clip.PreLoad();
         }
     }
     // 데이터 저장하기
@@ -132,6 +126,12 @@ public class SoundData : BaseData
         }
         this.soundClips = ArrayHelper.Remove(index, this.soundClips);
     }
+    // 실제 데이터 복사
+    public override void Copy(int index)
+    {
+        this.dataNames = ArrayHelper.Add(this.dataNames[index], this.dataNames);
+        this.soundClips = ArrayHelper.Add(GetCopy(index), soundClips);
+    }
     // 복사작업
     public SoundClip GetCopy(int index)
     {
@@ -143,17 +143,12 @@ public class SoundData : BaseData
         SoundClip clip = new SoundClip();
         SoundClip original = soundClips[index];
         // 값들을 넣음
-        clip.realId = index;
+        clip.id = index;
         clip.clipPath = original.clipPath;
         clip.clipName = original.clipName;
         clip.playType = original.playType;
         clip.PreLoad();
         return clip;
     }
-    // 실제 데이터 복사
-    public override void Copy(int index)
-    {
-        this.dataNames = ArrayHelper.Add(this.dataNames[index], this.dataNames);
-        this.soundClips = ArrayHelper.Add(GetCopy(index), soundClips);
-    }
+
 }

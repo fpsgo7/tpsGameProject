@@ -27,7 +27,6 @@ public class EffectData : BaseData//BaseData를 상속받아 스크립터블 오
     //읽어오기
     public void LoadData()
     {
-        //$ 표시를 통하여 {}안의 대상에 변수를 넣어 해당 변수를 출력할 수 있게한다
         this.xmlFilePath = Application.dataPath + dataDirectory;// xml 파일 경로
         //TextAsset 에 리소스메니저로 경로를 통해 받아온 정보를 텍스트형태로  넣는다.
         TextAsset asset = (TextAsset)ResourceManager.Load(dataPath);
@@ -50,7 +49,7 @@ public class EffectData : BaseData//BaseData를 상속받아 스크립터블 오
                     {
                         case "length":
                             //이펙트 클립수를 가져온다.
-                            //가져운값을 인트화 시킨후 해당 길이를 names 배열에
+                            //가져운값을 인트화 시킨후 해당 길이를 names 배열의 길이를
                             //적용한다.
                             int length = int.Parse(reader.ReadString());
                             this.dataNames = new string[length];
@@ -61,11 +60,11 @@ public class EffectData : BaseData//BaseData를 상속받아 스크립터블 오
                             //아이디를 넣는다.
                             currentID = int.Parse(reader.ReadString());
                             //객체 생성후 정보를 집어넣는다.
+                            //현제 아이디 값을 배열 번째에 맞춰 넣는다.
                             this.effectClips[currentID] = new EffectClip();
-                            this.effectClips[currentID].realId = currentID;
+                            this.effectClips[currentID].id = currentID;
                             break;
                         case "name":
-                            //현제 아이디 값을 배열 번째에 맞춰 넣는다.
                             this.dataNames[currentID] = reader.ReadString();
                             break;
                         case "effectType":
@@ -93,8 +92,9 @@ public class EffectData : BaseData//BaseData를 상속받아 스크립터블 오
             //xml 에서 클립간 구분은 CLIP 키를 통해 구준한다.
             xml.WriteStartDocument();//Document 시작
             xml.WriteStartElement(EFFECT);//EFFECT를 이용한 element를 시작한다.
-                                            //xml 파일의 length 컬럼 에 GetDataCount()를 통해 얻어온 데이타의 길이값을 넣는다.
-            xml.WriteElementString("length", GetDataCount().ToString());//데이타의 길이를 얻어옴
+            //xml 파일의 length 컬럼 에 GetDataCount()를 통해 얻어온 데이타의 길이값을 넣는다.
+            xml.WriteElementString("length", GetDataCount().ToString());
+            // 각 클립별로 맞춰 정보를 입력한다.
             for (int i = 0; i < this.dataNames.Length; i++)
             {
                 EffectClip clip = this.effectClips[i];//각번째에 맞은 이펙트 배열의 하나를 연결
@@ -140,6 +140,14 @@ public class EffectData : BaseData//BaseData를 상속받아 스크립터블 오
         }
         this.effectClips = ArrayHelper.Remove(index, this.effectClips);
     }
+    //데이터 복사
+    public override void Copy(int index)
+    {
+        this.dataNames = ArrayHelper.Add(this.dataNames[index], this.dataNames);
+        //GetCopy를 통해 얻은 정보를 Add 하여 추가한다.
+        this.effectClips = ArrayHelper.Add(GetCopy(index), this.effectClips);
+    }
+
     // 복사를 위한 정보 값 얻기
     public EffectClip GetCopy(int index)
     {
@@ -156,9 +164,10 @@ public class EffectData : BaseData//BaseData를 상속받아 스크립터블 오
         clip.effectName = original.effectName;
         clip.effectType = original.effectType;
         clip.effectPath = original.effectPath;
-        clip.realId = this.effectClips.Length;
+        clip.id = this.effectClips.Length;
         return clip;
     }
+
     /// <summary>
     /// 원하는 인덱스를 프리로딩 해서 찾아준다.
     /// </summary>
@@ -171,11 +180,5 @@ public class EffectData : BaseData//BaseData를 상속받아 스크립터블 오
         effectClips[index].PreLoad();
         return effectClips[index];
     }
-    //데이터 복사
-    public override void Copy(int index)
-    {
-        this.dataNames = ArrayHelper.Add(this.dataNames[index], this.dataNames);
-        //GetCopy를 통해 얻은 정보를 Add 하여 추가한다.
-        this.effectClips = ArrayHelper.Add(GetCopy(index), this.effectClips);
-    }
+
 }

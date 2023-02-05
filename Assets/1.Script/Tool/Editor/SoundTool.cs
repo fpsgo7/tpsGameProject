@@ -15,8 +15,8 @@ public class SoundTool : EditorWindow// 에디터 형태를 사용하므로 상�
     public int uiWidthSmall = 200;// 짧은 길이
 
     private int selection = 0;//선택값
-    private Vector2 SP1 = Vector2.zero;// 백터 값
-    private Vector2 SP2 = Vector2.zero;// 백터값
+    private Vector2 listScroll = Vector2.zero;// 백터 값
+    private Vector2 selectScroll = Vector2.zero;// 백터값
     private AudioClip soundSource;// 오디오 클립
     private static SoundData soundData;// 스크립트 형 변수
 
@@ -40,27 +40,25 @@ public class SoundTool : EditorWindow// 에디터 형태를 사용하므로 상�
         }
         EditorGUILayout.BeginVertical();// 수직 레이아웃
         {
-            UnityObject source = soundSource;// 유니티 오브젝트 형태로 박싱
+            UnityObject source = soundSource;
+            soundSource = (AudioClip)source;//게임오브젝트로 해서 가져오기
             // EditorHelper 을 통해서 에디터의 탑부분 생성
-            EditorHelper.ToolTopLayer(soundData, ref selection, uiWidthMiddle);
-            // 선택값으로 선택된 배열의 사운드 클립이 
-            //해당 사운트 클립 변수로 박싱되서 사용된다.
-            SoundClip sound = soundData.soundClips[selection];
-            soundSource = (AudioClip)source;//박싱한 대상을  언박싱
+            EditorHelper.ToolTopLayer(soundData, ref selection,
+                ref source, uiWidthMiddle);
 
             EditorGUILayout.BeginHorizontal();// 수평 레이아웃
             {
                 // 리스트 레이어를 생성
-                EditorHelper.ToolListLayer(ref SP1, soundData, ref selection,
-                    uiWidthMiddle);
-
-
+                EditorHelper.ToolListLayer(ref listScroll, soundData, ref selection,
+                    ref source, uiWidthMiddle);
+                // 선택값으로 선택된 배열의 사운드 클립이 
+                //해당 사운트 클립 변수로 박싱되서 사용된다.
+                SoundClip sound = soundData.soundClips[selection];
                 soundSource = (AudioClip)source;
-
                 EditorGUILayout.BeginVertical();
                 {
                     // 스크롤 뷰 생성
-                    this.SP2 = EditorGUILayout.BeginScrollView(this.SP2);
+                    this.selectScroll = EditorGUILayout.BeginScrollView(this.selectScroll);
                     {
                         if (soundData.GetDataCount() > 0)
                         {

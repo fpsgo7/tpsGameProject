@@ -9,15 +9,12 @@ using UnityObject = UnityEngine.Object;
 public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 창을 만들수 있게된다.
 {
     //UI 그리는대 필요한 변수들
-    public int uiWidthLarge = 300;// 유아이의 겉부분 가로 
-    public int uiWidthMiddle = 200;// 유아이의 안부분 가로
+    public int uiWidth300 = 300;// 
+    public int uiWidth200 = 200;// 유아이의 안부분 가로
     private int selection = 0;// 선택값
-    private Vector2 SP1 = Vector2.zero;// 스크롤에 쓸 벡터1
-    private Vector2 SP2 = Vector2.zero;// 스크롤에 쓸 벡터2
-    //이펙트 툴용 클립
-    private GameObject effectSource = null;
-    //이펙트 데이터 싱글톤을 줄이기 위해 static 활용하여 
-    //다른 스크립트에서도 접글 할 수 있게함
+    private Vector2 listScroll = Vector2.zero;// 스크롤에 쓸 벡터1
+    private Vector2 selectScroll = Vector2.zero;// 스크롤에 쓸 벡터2
+    private GameObject effectSource = null;//이펙트 툴용 클립
     private static EffectData effectData;// 클래스형 변수 
     //MenuItem이라는 경로를 만들어서 
     //유니티에서 해당 툴을 열수 있게함
@@ -41,29 +38,23 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
         }
         EditorGUILayout.BeginVertical();// 수직 레이아웃을 시작한다.
         {
-            // 상단, add,remove, copy
-            //effectSouce 게임오브젝트를 UnityEngine.Object 형식으로 바꿔준다.
-            // 이유는 밑의 EditorToolTopLayer 의 매계변수로 UnityEngine.Object형식을 사용하며
-            // UnityEngine.Object 으로 여러 이펙트 사운드 등 여러형식을 포괄하여 사용할 수 있기 때문이다.
             UnityObject source = effectSource;
+            effectSource = (GameObject)source;//게임오브젝트로 해서 가져오기
             //EditorHelper 에 만들어두었던 툴 상단파트를 적용하기
             //매계변수 로 EffectData의 클래스형 변수와 선택값, 소스, 유아니 길이 를 보낸다.
-            EditorHelper.ToolTopLayer(effectData, ref selection, this.uiWidthMiddle);
-            effectSource = (GameObject)source;//이후 source를 GameObject화 시키기
-
+            EditorHelper.ToolTopLayer(effectData, ref selection, ref source, this.uiWidth200);
             EditorGUILayout.BeginHorizontal();// 수평 레이아웃
             {
                 //중간, 데이터 목록 레이아웃 가져오기
                 //매계변수 SP1 백터값, 클래스형변수, 선택값, 소스, 유아이 길이
-                EditorHelper.ToolListLayer(ref SP1, effectData, ref selection,
-                    this.uiWidthLarge);
+                EditorHelper.ToolListLayer(ref listScroll, effectData, ref selection,
+                    ref source, this.uiWidth300);
                 effectSource = (GameObject)source;
-
                 //설정 부분
                 EditorGUILayout.BeginVertical();//수직
                 {
                     //설정을 위한 스크롤 뷰를 만들면서 백터값을 적용한다.
-                    SP2 = EditorGUILayout.BeginScrollView(this.SP2);
+                    selectScroll = EditorGUILayout.BeginScrollView(this.selectScroll);
                     {
                         if (effectData.GetDataCount() > 0)
                         {// 데이터가 있을경우
@@ -73,7 +64,7 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
                                 // ID 라는 출력이름과 선택한대상의 아이디 즉 번째수 출력
                                 //이후 길이 지정한다.
                                 EditorGUILayout.LabelField("ID", selection.ToString(),
-                                    GUILayout.Width(uiWidthLarge));
+                                    GUILayout.Width(uiWidth300));
                                 // 이팩트 이름들은 이름들에 선택번째 값 에 
                                 // effectData.names[selection] = 을 넣음으로써
                                 // 해당 택스트필드에 세로운 정보를 입력하면 OnGUI 함수기떄문에
@@ -81,7 +72,7 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
                                 //(택스트 필드의 제목에 쓸 이름 텍스트, 이팩트데이타의 이름 , 넓이)
                                 effectData.dataNames[selection] = EditorGUILayout.TextField(
                                     "이름.", effectData.dataNames[selection],
-                                    GUILayout.Width(uiWidthLarge * 1.5f));
+                                    GUILayout.Width(uiWidth300 * 1.5f));
                                 //이 팩트 타입을 위한 파트로 EnumPopup을 써 선택하면
                                 //enum 값들을 선택할 수 잇는 팝업창이 뜬다.
                                 //,해당 팝업창에서 enum 값을 선택하면 
@@ -89,7 +80,7 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
                                 effectData.effectClips[selection].effectType =
                                     (EffectType)EditorGUILayout.EnumPopup("이팩트 타입.",
                                     effectData.effectClips[selection].effectType,
-                                    GUILayout.Width(uiWidthLarge));
+                                    GUILayout.Width(uiWidth300));
                                 // 한칸 띄운다.
                                 EditorGUILayout.Separator();
                                 //이팩트 소스가 아직 로드되지 않았고, 이팩트 데이타 클래스에서 해당 이팩트
@@ -107,7 +98,7 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
                                 }
                                 // 위의 동작을 완료하면 이펙트 소스에 오브젝트가 체워줘서 보여줄 수 있게된다.
                                 effectSource = (GameObject)EditorGUILayout.ObjectField("이팩트",
-                                    this.effectSource, typeof(GameObject), false, GUILayout.Width(uiWidthLarge * 1.5f));
+                                    this.effectSource, typeof(GameObject), false, GUILayout.Width(uiWidth300 * 1.5f));
                                 if (effectSource != null)
                                 {
                                     //새롭게 이펙트를 넣을경우 이펙트를 경로를 변화시킨다.
@@ -141,7 +132,7 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
         EditorGUILayout.BeginHorizontal();// 가로
         {
 
-            if (GUILayout.Button("Reload Settings"))//데이터 로드
+            if (GUILayout.Button("Reload"))//데이터 로드
             {
                 effectData = CreateInstance<EffectData>();// 다시 생성하여
                 effectData.LoadData();// 다시 불러오기
@@ -162,7 +153,7 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
     //enum 생성하기 EffectList 라는 스크립트에 접근하여 EffectList 라는 enum 에 내용을 추가한다.
     public bool CreateEnumStucture()
     {
-        if (ImpossibleDataName())
+        if (ImpossibleDataName())// 저장할 이름이 사용불가능할 경우
         {
             Debug.Log("저장을 취소합니다.");
             return false;
