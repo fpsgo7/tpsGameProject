@@ -48,15 +48,15 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
             UnityObject source = effectSource;
             //EditorHelper 에 만들어두었던 툴 상단파트를 적용하기
             //매계변수 로 EffectData의 클래스형 변수와 선택값, 소스, 유아니 길이 를 보낸다.
-            EditorHelper.EditorTopLayer(effectData, ref selection, ref source, this.uiWidthMiddle);
+            EditorHelper.ToolTopLayer(effectData, ref selection, this.uiWidthMiddle);
             effectSource = (GameObject)source;//이후 source를 GameObject화 시키기
 
             EditorGUILayout.BeginHorizontal();// 수평 레이아웃
             {
                 //중간, 데이터 목록 레이아웃 가져오기
                 //매계변수 SP1 백터값, 클래스형변수, 선택값, 소스, 유아이 길이
-                EditorHelper.EditorToolListLayer(ref SP1, effectData, ref selection,
-                    ref source, this.uiWidthLarge);
+                EditorHelper.ToolListLayer(ref SP1, effectData, ref selection,
+                    this.uiWidthLarge);
                 effectSource = (GameObject)source;
 
                 //설정 부분
@@ -79,8 +79,8 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
                                 // 해당 택스트필드에 세로운 정보를 입력하면 OnGUI 함수기떄문에
                                 // 새로운 값이 해당 배열에 들어간다.
                                 //(택스트 필드의 제목에 쓸 이름 텍스트, 이팩트데이타의 이름 , 넓이)
-                                effectData.names[selection] = EditorGUILayout.TextField(
-                                    "이름.", effectData.names[selection],
+                                effectData.dataNames[selection] = EditorGUILayout.TextField(
+                                    "이름.", effectData.dataNames[selection],
                                     GUILayout.Width(uiWidthLarge * 1.5f));
                                 //이 팩트 타입을 위한 파트로 EnumPopup을 써 선택하면
                                 //enum 값들을 선택할 수 잇는 팝업창이 뜬다.
@@ -171,12 +171,12 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
         {
             string enumName = "EffectList";
             StringBuilder builder = new StringBuilder();// 스트링빌더 변수 생성
-            for (int i = 0; i < effectData.names.Length; i++)
+            for (int i = 0; i < effectData.dataNames.Length; i++)
             {
-                if (effectData.names[i] != string.Empty)
+                if (effectData.dataNames[i] != string.Empty)
                 {
                     //해당 변수에 라인을 추가하는 형식으로 추가한 enum 과 원래 enum을 넣어준다.
-                    builder.AppendLine("     " + effectData.names[i] + " = " + i + ",");
+                    builder.AppendLine("     " + effectData.dataNames[i] + " = " + i + ",");
                 }
             }
             EditorHelper.CreateEnumList(enumName, builder);//그리고 값들을 보내어  완료시킨다.
@@ -185,7 +185,7 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
     }
     public bool ImpossibleDataName()
     {
-        string dataName= effectData.names[effectData.names.Length - 1];
+        string dataName= effectData.dataNames[effectData.dataNames.Length - 1];
         if (NamingRules.IsFirstTextisNum(dataName))
             return true;
         if (NamingRules.IsNamingBlank(dataName))

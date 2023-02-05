@@ -42,7 +42,7 @@ public class SoundTool : EditorWindow// 에디터 형태를 사용하므로 상�
         {
             UnityObject source = soundSource;// 유니티 오브젝트 형태로 박싱
             // EditorHelper 을 통해서 에디터의 탑부분 생성
-            EditorHelper.EditorTopLayer(soundData, ref selection, ref source, uiWidthMiddle);
+            EditorHelper.ToolTopLayer(soundData, ref selection, uiWidthMiddle);
             // 선택값으로 선택된 배열의 사운드 클립이 
             //해당 사운트 클립 변수로 박싱되서 사용된다.
             SoundClip sound = soundData.soundClips[selection];
@@ -51,8 +51,8 @@ public class SoundTool : EditorWindow// 에디터 형태를 사용하므로 상�
             EditorGUILayout.BeginHorizontal();// 수평 레이아웃
             {
                 // 리스트 레이어를 생성
-                EditorHelper.EditorToolListLayer(ref SP1, soundData, ref selection,
-                    ref source, uiWidthMiddle);
+                EditorHelper.ToolListLayer(ref SP1, soundData, ref selection,
+                    uiWidthMiddle);
 
 
                 soundSource = (AudioClip)source;
@@ -73,8 +73,8 @@ public class SoundTool : EditorWindow// 에디터 형태를 사용하므로 상�
                                 // 수정되면 해당 팝업과 필드에 입력된값이 들어간다.
                                 // 한줄한줄 추가되며 들어갈 내용과 내용의 값 그리고 해당
                                 // 줄의 길이 값이 들어간다.
-                                soundData.names[selection] = EditorGUILayout.TextField("Name",
-                                    soundData.names[selection], GUILayout.Width(uiWidthLarge));
+                                soundData.dataNames[selection] = EditorGUILayout.TextField("Name",
+                                    soundData.dataNames[selection], GUILayout.Width(uiWidthLarge));
                                 sound.playType = (SoundPlayType)EditorGUILayout.EnumPopup("PlayType",
                                     sound.playType, GUILayout.Width(uiWidthLarge));
                                 EditorGUILayout.Separator();// 빈칸 띄우기
@@ -153,11 +153,11 @@ public class SoundTool : EditorWindow// 에디터 형태를 사용하므로 상�
         {
             string enumName = "SoundList";
             StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < soundData.names.Length; i++)
+            for (int i = 0; i < soundData.dataNames.Length; i++)
             {
-                if (!soundData.names[i].ToLower().Contains("none"))
+                if (!soundData.dataNames[i].ToLower().Contains("none"))
                 {
-                    builder.AppendLine("     " + soundData.names[i] + " = " + i.ToString() + ",");
+                    builder.AppendLine("     " + soundData.dataNames[i] + " = " + i.ToString() + ",");
                 }
             }
             EditorHelper.CreateEnumList(enumName, builder);
@@ -167,7 +167,7 @@ public class SoundTool : EditorWindow// 에디터 형태를 사용하므로 상�
     }
     public bool ImpossibleDataName()
     {
-        string dataName = soundData.names[soundData.names.Length - 1];
+        string dataName = soundData.dataNames[soundData.dataNames.Length - 1];
         if (NamingRules.IsFirstTextisNum(dataName))
             return true;
         if (NamingRules.IsNamingBlank(dataName))

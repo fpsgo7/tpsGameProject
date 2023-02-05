@@ -78,8 +78,8 @@ public class EditorHelper
 	}
 	//에디터의 탑 레이어를 다룸 그래서 자동으로 추가할때마다 레이어에 배치하게 도와준다.
 	// (데이터 변수, ref int 선택값, ref UnityEngine.Object 유니티 의 오브젝트, int 유아이 가로 길이 )
-	public static void EditorTopLayer(BaseData data, ref int selection,
-		ref UnityObject source, int uiWidth)
+	public static void ToolTopLayer(BaseData data, ref int selection,
+		 int uiWidth)
 	{
 		// Horizontal 로 시작한다.
 		EditorGUILayout.BeginHorizontal();//Horizontal 이기때문에 (수평)가로로 된다.
@@ -89,13 +89,11 @@ public class EditorHelper
 			{
 				data.AddData("NewData");
 				selection = data.GetDataCount() - 1;// 최종 리스트를 선택
-				source = null;
 			}
 			//COPY 버튼이 눌리면 선택된 대상을 복사한다.
 			if (GUILayout.Button("Copy", GUILayout.Width(uiWidth)))
 			{//selection은 선택한 대상을 찾기위한 번호값이다.
 				data.Copy(selection);
-				source = null;//해당 변수를 초기화
 				//작업이 완료 되면최종 리스트를 선택하게한다.
 				selection = data.GetDataCount() - 1;
 			}
@@ -104,7 +102,6 @@ public class EditorHelper
 			{
 				if (GUILayout.Button("Remove", GUILayout.Width(uiWidth)))
 				{
-					source = null;
 					data.RemoveData(selection);
 				}
 			}
@@ -117,8 +114,8 @@ public class EditorHelper
 	}
 	//레이아웃의 리스트 부분으로  수직 형태로 한다.
 	// 스크롤을 사용하기위해 스크롤 포지션 위치값을 위한 변수 생성한다.
-	public static void EditorToolListLayer(ref Vector2 ScrollPosion, BaseData data,
-		ref int selection, ref UnityObject source, int uiWidth)
+	public static void ToolListLayer(ref Vector2 ScrollPosion, BaseData data,
+		ref int selection, int uiWidth)
 	{
 		//Vertical 형태로 레이아웃 시작
 		EditorGUILayout.BeginVertical(GUILayout.Width(uiWidth));// 수직 형태로 적용
@@ -131,16 +128,10 @@ public class EditorHelper
 				{
 					if (data.GetDataCount() > 0)//데이터가 존재한다면
 					{
-						//선택을 바꿨는지 확인하기 위해 사용
-						int lastSelection = selection;//마지막으로 선택한값을 넣는다.
-													  //한줄짜리 그리드를 만들 것이다.
-													  //(선택값, 데이터리스트, 개수)
+						//한줄짜리 그리드를 만들 것이다.
+						//(선택값, 데이터리스트, 개수)
 						selection = GUILayout.SelectionGrid(selection,
 							data.GetNameList(true), 1);
-						if (lastSelection != selection)//선택이 봐꼇을경우
-						{
-							source = null;
-						}
 					}
 				}
 				EditorGUILayout.EndScrollView();

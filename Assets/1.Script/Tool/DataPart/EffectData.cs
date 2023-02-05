@@ -53,7 +53,7 @@ public class EffectData : BaseData//BaseData를 상속받아 스크립터블 오
                             //가져운값을 인트화 시킨후 해당 길이를 names 배열에
                             //적용한다.
                             int length = int.Parse(reader.ReadString());
-                            this.names = new string[length];
+                            this.dataNames = new string[length];
                             this.effectClips = new EffectClip[length];
                             break;
                         case "id":
@@ -66,7 +66,7 @@ public class EffectData : BaseData//BaseData를 상속받아 스크립터블 오
                             break;
                         case "name":
                             //현제 아이디 값을 배열 번째에 맞춰 넣는다.
-                            this.names[currentID] = reader.ReadString();
+                            this.dataNames[currentID] = reader.ReadString();
                             break;
                         case "effectType":
                             this.effectClips[currentID].effectType = (EffectType)
@@ -95,13 +95,13 @@ public class EffectData : BaseData//BaseData를 상속받아 스크립터블 오
             xml.WriteStartElement(EFFECT);//EFFECT를 이용한 element를 시작한다.
                                             //xml 파일의 length 컬럼 에 GetDataCount()를 통해 얻어온 데이타의 길이값을 넣는다.
             xml.WriteElementString("length", GetDataCount().ToString());//데이타의 길이를 얻어옴
-            for (int i = 0; i < this.names.Length; i++)
+            for (int i = 0; i < this.dataNames.Length; i++)
             {
                 EffectClip clip = this.effectClips[i];//각번째에 맞은 이펙트 배열의 하나를 연결
                 xml.WriteStartElement(CLIP);//CLIP을 통해 구분한다. 
                                             //아이템 클립에 각 변수에 값을 적용함
                 xml.WriteElementString("id", i.ToString());
-                xml.WriteElementString("name", this.names[i]);
+                xml.WriteElementString("name", this.dataNames[i]);
                 xml.WriteElementString("effectType", clip.effectType.ToString());
                 xml.WriteElementString("effectPath", clip.effectPath);
                 xml.WriteElementString("effectName", clip.effectName);
@@ -117,15 +117,15 @@ public class EffectData : BaseData//BaseData를 상속받아 스크립터블 오
     public override int AddData(string newName)
     {
         //추가하는 작업 하기
-        if (this.names == null)//처음 추가하는 경우
+        if (this.dataNames == null)//처음 추가하는 경우
         {
-            this.names = new string[] { name };
+            this.dataNames = new string[] { name };
             this.effectClips = new EffectClip[] { new EffectClip() };
         }
         else//리스트 객체가 이미 만들어진경우 Add를 활용하여 추가
         {
             //ArrayHelper은 유틸성 스크립트로 기본적인 기능을 구현하여 함수로 불러 사용하기위해 쓴다.
-            this.names = ArrayHelper.Add(name, this.names);//this.names 라는 리스트에 name을 추가한다.
+            this.dataNames = ArrayHelper.Add(name, this.dataNames);//this.names 라는 리스트에 name을 추가한다.
             this.effectClips = ArrayHelper.Add(new EffectClip(), this.effectClips);
         }
         return GetDataCount();//추가하기로 증가한 길이를 전달한다.
@@ -133,10 +133,10 @@ public class EffectData : BaseData//BaseData를 상속받아 스크립터블 오
     //데이터 삭제 마찬가지로 저장하지 않으면 삭제한 값은 xml 파일에 적용되지 않는다.
     public override void RemoveData(int index)
     {
-        this.names = ArrayHelper.Remove(index, this.names);
-        if (this.names.Length == 0)//데이터 삭제한후 길이가 0이된경우
+        this.dataNames = ArrayHelper.Remove(index, this.dataNames);
+        if (this.dataNames.Length == 0)//데이터 삭제한후 길이가 0이된경우
         {
-            this.names = null;
+            this.dataNames = null;
         }
         this.effectClips = ArrayHelper.Remove(index, this.effectClips);
     }
@@ -174,7 +174,7 @@ public class EffectData : BaseData//BaseData를 상속받아 스크립터블 오
     //데이터 복사
     public override void Copy(int index)
     {
-        this.names = ArrayHelper.Add(this.names[index], this.names);
+        this.dataNames = ArrayHelper.Add(this.dataNames[index], this.dataNames);
         //GetCopy를 통해 얻은 정보를 Add 하여 추가한다.
         this.effectClips = ArrayHelper.Add(GetCopy(index), this.effectClips);
     }

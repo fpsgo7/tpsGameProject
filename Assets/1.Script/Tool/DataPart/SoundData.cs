@@ -42,7 +42,7 @@ public class SoundData : BaseData
                     {
                         case "length":// 사운드 데이터 개수
                             int length = int.Parse(reader.ReadString());
-                            this.names = new string[length];// 개수를 배열개수에 적용 배열 생성
+                            this.dataNames = new string[length];// 개수를 배열개수에 적용 배열 생성
                             this.soundClips = new SoundClip[length];
                             break;
                         case "id":// id 값
@@ -51,7 +51,7 @@ public class SoundData : BaseData
                             soundClips[currentID].realId = currentID;
                             break;
                         case "name":// 이름
-                            this.names[currentID] = reader.ReadString();
+                            this.dataNames[currentID] = reader.ReadString();
                             break;
                         case "clippath":// 클립 경로
                             soundClips[currentID].clipPath = reader.ReadString();
@@ -90,12 +90,12 @@ public class SoundData : BaseData
             xml.WriteElementString("length", GetDataCount().ToString());// 사운드 개수를 적용
             xml.WriteWhitespace("\n");// 줄바꾸기
             // 사온드 개수많큼 반복하며 클립 내용 넣기
-            for (int i = 0; i < this.names.Length; i++)
+            for (int i = 0; i < this.dataNames.Length; i++)
             {
                 SoundClip clip = this.soundClips[i];//soundClips 배열에서 알맞은 값 넣기
                 xml.WriteStartElement(CLIP);//Clip 엘리먼트 시작
                 xml.WriteElementString("id", i.ToString());//몇번째를 나타내는 아이디 입력
-                xml.WriteElementString("name", this.names[i]);// 이름 임력
+                xml.WriteElementString("name", this.dataNames[i]);// 이름 임력
                 xml.WriteElementString("clippath", clip.clipPath);// 클립경로
                 xml.WriteElementString("clipname", clip.clipName);// 클립이름
                 xml.WriteElementString("type", clip.playType.ToString());// 타입 넣기
@@ -109,14 +109,14 @@ public class SoundData : BaseData
     public override int AddData(string newName)
     {
         // 새로운 이름과 클립을 추가한다.
-        if (this.names == null)
+        if (this.dataNames == null)
         {
-            this.names = new string[] { newName };
+            this.dataNames = new string[] { newName };
             this.soundClips = new SoundClip[] { new SoundClip() };
         }
         else
         {
-            this.names = ArrayHelper.Add(newName, names);
+            this.dataNames = ArrayHelper.Add(newName, dataNames);
             this.soundClips = ArrayHelper.Add(new SoundClip(), soundClips);
         }
         return GetDataCount();// 개수가 봐껴 새로운 숫자를 반환한다.
@@ -125,10 +125,10 @@ public class SoundData : BaseData
     public override void RemoveData(int index)
     {
         // 클립스와 이름들에서 index로 찾은 대상을 제거
-        this.names = ArrayHelper.Remove(index, this.names);
-        if (this.names.Length == 0)
+        this.dataNames = ArrayHelper.Remove(index, this.dataNames);
+        if (this.dataNames.Length == 0)
         {
-            this.names = null;
+            this.dataNames = null;
         }
         this.soundClips = ArrayHelper.Remove(index, this.soundClips);
     }
@@ -153,7 +153,7 @@ public class SoundData : BaseData
     // 실제 데이터 복사
     public override void Copy(int index)
     {
-        this.names = ArrayHelper.Add(this.names[index], this.names);
+        this.dataNames = ArrayHelper.Add(this.dataNames[index], this.dataNames);
         this.soundClips = ArrayHelper.Add(GetCopy(index), soundClips);
     }
 }
