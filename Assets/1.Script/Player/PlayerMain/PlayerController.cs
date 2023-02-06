@@ -8,8 +8,6 @@ public class PlayerController : MonoBehaviour
 {
     //PlayerHealth, PlayerMovement, PlayerShooter을 총괄 관리하기위한 스크립트이다.
     //생명 리스폰 아이템 먹는 기능 도포함
-
-    public AudioClip itemPickupClip;//아이템 먹는 소리
     public int lifeRemains;//남은 생명수
     private PlayerHealth playerHealth;//플레이어 체력
     private PlayerMovement playerMovement;//플레이어 움직임

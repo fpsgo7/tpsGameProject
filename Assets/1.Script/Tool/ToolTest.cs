@@ -11,7 +11,7 @@ public class ToolTest : MonoBehaviour
         {
             GameObject explosion = EffectToolManager.Instance.EffectUse((int)EffectList.explosion,
                this.transform.position );
-            SoundToolManager.Instance.PlayOneShotSound((int)SoundList.test, transform.position, 1f);
+            SoundToolManager.Instance.PlayOneShotSound((int)SoundList.playerhitsound, transform.position, 1f);
         }
     }
 }

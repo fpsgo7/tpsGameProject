@@ -14,8 +14,8 @@ public class PlayerHealth : LivingEntity
     private int healthKit;// 체력회복 킷
     public bool isRestoringHealth = false;
     //오디오 클립
-    public AudioClip deathClip;
-    public AudioClip hitClip;
+    //public AudioClip deathClip;
+    //public AudioClip hitClip;
     //bool 형
     [HideInInspector] public bool isRestoreHealthProceeding = false;
     [HideInInspector] public bool isInvincibility = false;
@@ -113,7 +113,7 @@ public class PlayerHealth : LivingEntity
         //피격효과 (피격지점, 피격각도, 플레이어 위치, 사용할 이펙트)
         // EffectManager.Instance.PlayHitEffect(damageMessage.hitPoint, damageMessage.hitNormal, transform, EffectManager.EffectType.Flesh);
         //피격사운드 재생
-        playerAudioPlayer.PlayOneShot(hitClip);
+        SoundToolManager.Instance.PlayOneShotSound((int)SoundList.playerhitsound, transform.position, 1f);
 
         UpdateUI();
 

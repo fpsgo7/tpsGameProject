@@ -24,10 +24,6 @@ public class Gun : MonoBehaviour
     //컴포넌트 형변수
     private PlayerShooter playerShooter;
     private LineRenderer bulletLineRenderer;
-    //사운드 관련
-    private AudioSource gunAudioPlayer;
-    public AudioClip shotClip;
-    public AudioClip reloadClip;
     //파티클 관련
     public ParticleSystem muzzleFlashEffect;
     public ParticleSystem shellEjectEffect;
@@ -59,7 +55,6 @@ public class Gun : MonoBehaviour
 
     private void Awake()
     {
-        gunAudioPlayer = GetComponent<AudioSource>();
         bulletLineRenderer = GetComponent<LineRenderer>();
 
         bulletLineRenderer.positionCount = 2;//총구의 위치 와 총알 이 닿는 위치 총 2곳
@@ -204,8 +199,8 @@ public class Gun : MonoBehaviour
     {
         muzzleFlashEffect.Play();
         shellEjectEffect.Play();
-
-        gunAudioPlayer.PlayOneShot(shotClip);//소리는 중첩을 가능하게하기위해Play OneShot 사용
+        //사격음
+        SoundToolManager.Instance.PlayOneShotSound((int)SoundList.gunshot, transform.position, 1f);
 
         bulletLineRenderer.enabled = true;
         bulletLineRenderer.SetPosition(0, fireTransform.position);
@@ -229,7 +224,7 @@ public class Gun : MonoBehaviour
     private IEnumerator ReloadRoutine()
     {
         state = State.Reloading;
-        gunAudioPlayer.PlayOneShot(reloadClip);
+        SoundToolManager.Instance.PlayOneShotSound((int)SoundList.gunReload, transform.position, 1f);
 
         yield return new WaitForSeconds(reloadTime);
 
