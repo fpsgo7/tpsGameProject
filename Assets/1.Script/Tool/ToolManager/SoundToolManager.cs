@@ -22,7 +22,6 @@ public class SoundToolManager : MonoBehaviour
     // 상수 스트링 변수들
     public const string EffectGroupName = "Effect";
     public const string ContainerName = "SoundContainer";//오디오 소스랑 오디오 네임 담음
-    public const string EffectVolumeParam = "Volume_Effect";// 볼륨 조절하기
 
     public Transform audioRoot = null;// 위치
     public AudioSource[] effect_audios = null;// 이팩트 오디오들의 배열 로 동시에 송출되는 오디오를 제한함
@@ -57,7 +56,7 @@ public class SoundToolManager : MonoBehaviour
     }
 
     // 이팩트를 한번 실행하기
-    public void PlayOneShotEffect(int index, Vector3 postion, float volume)
+    public void PlayOneShotSound(int index, Vector3 postion, float volume)
     {
         if (index == (int)SoundList.None)
         {
@@ -69,11 +68,11 @@ public class SoundToolManager : MonoBehaviour
         {
             return;
         }
-        PlayEffectSound(clip, postion, volume);// 이팩트 사운드를 얻어온 값으로 재생한다.
+        PlaySound(clip, postion, volume);// 이팩트 사운드를 얻어온 값으로 재생한다.
     }
 
     // 특정 지점에 이팩트 사운드 내기
-    public void PlayEffectSound(SoundClip clip, Vector3 position, float volume)
+    public void PlaySound(SoundClip clip, Vector3 position, float volume)
     {
         bool isPlaySuccess = false;
         for (int i = 0; i < this.EffectChennelCount; i++)

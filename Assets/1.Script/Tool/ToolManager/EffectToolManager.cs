@@ -9,7 +9,6 @@ using UnityEngine;
 public class EffectToolManager : MonoBehaviour
 {
     private static EffectToolManager instance;
-
     public static EffectToolManager Instance
     {
         get
@@ -21,6 +20,7 @@ public class EffectToolManager : MonoBehaviour
     }
 
     private Transform effectRoot = null;
+
     void Start()
     {
         if (effectRoot == null)
@@ -30,7 +30,7 @@ public class EffectToolManager : MonoBehaviour
         }
     }
     //원하는 이펙트를 원하는 대상에 생성한다.
-    public GameObject EffectOneShot(int index, Vector3 position)
+    public GameObject EffectUse(int index, Vector3 position)
     {
         // 스킓터형 변수를 생성후 해당 포지션에 생성하며
         // 오븢게트에 넣는다. 
