@@ -7,9 +7,6 @@ using UnityEngine;
 public class Enemy2Health : LivingEntity
 {
     private Enemy2AI enemy2AI;
-
-    public AudioClip hitClip; // 피격시 재생할 소리
-    public AudioClip deathClip; // 사망시 재생할 소리
     private Collider enemy2Collider;
 
     public float enemyHealth;// 체력 확인용
@@ -43,7 +40,6 @@ public class Enemy2Health : LivingEntity
         }
 
         EffectManager.Instance.PlayHitEffect(damageMessage.hitPoint, damageMessage.hitNormal, transform, EffectManager.EffectType.Flesh);
-        enemy2AI.audioPlayer.PlayOneShot(hitClip);
 
         return true;
     }
@@ -57,7 +53,6 @@ public class Enemy2Health : LivingEntity
         {
             enemy2AI.targetEntity = damager;
         }
-        enemy2AI.audioPlayer.PlayOneShot(hitClip);
 
         return true;
     }
@@ -81,7 +76,7 @@ public class Enemy2Health : LivingEntity
             enemy2AI.animator.SetTrigger(hashDieJump);
 
         // 사망 효과음 재생
-        if (deathClip != null) enemy2AI.audioPlayer.PlayOneShot(deathClip);
+        SoundToolManager.Instance.PlayOneShotSound((int)SoundList.enemyDieSound, transform.position, 0.5f);
         Destroy(gameObject, 3f);
     }
 }

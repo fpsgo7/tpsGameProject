@@ -8,5 +8,6 @@ public enum SoundList
 	     playerhitsound = 0,
      gunshot = 1,
      gunReload = 2,
+     enemyDieSound = 3,
 
 }

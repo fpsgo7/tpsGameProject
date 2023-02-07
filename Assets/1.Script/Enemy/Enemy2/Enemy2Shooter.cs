@@ -14,8 +14,7 @@ public class Enemy2Shooter : MonoBehaviour
     public Transform RightHandMount;//오른쪽손
     private Animator enemyAnimator;
     private AudioSource enemyAudio;
-    public AudioClip fireSfx;//총소리를 저장할 변수(Audio Clip)
-    public AudioClip reloadSfx;//장전 사운드를 저장할 변수
+
     protected LineRenderer bulletLineRenderer; // 총알 궤적을 그리기 위한 렌더러
     public MeshRenderer muzzleFlash;
     public LayerMask excludeTarget;//총을 맞으면 안되는 대상
@@ -116,7 +115,8 @@ public class Enemy2Shooter : MonoBehaviour
 
     public virtual void Shot()
     {
-        enemyAudio.PlayOneShot(fireSfx, 0.3f);
+        SoundToolManager.Instance.PlayOneShotSound((int)SoundList.gunshot, transform.position, 1f);
+
         // 레이캐스트에 의한 충돌 정보를 저장하는 컨테이너
         RaycastHit hit;
         // 총알이 맞은 곳을 저장할 변수
@@ -197,7 +197,7 @@ public class Enemy2Shooter : MonoBehaviour
     {
         muzzleFlash.enabled = false;//장전하는 동안 총구 화염이 안보이게 한다.
         enemyAnimator.SetTrigger(hashReload);//Reload 트리거를 활성화
-        enemyAudio.PlayOneShot(reloadSfx, 0.3f);//사운드를 재생한다.
+        SoundToolManager.Instance.PlayOneShotSound((int)SoundList.gunReload, transform.position, 1f);
         //ReloadTime 만큼 대기한다.
         yield return wsReload;
         //총알을 채워준다.

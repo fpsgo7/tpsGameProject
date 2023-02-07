@@ -20,8 +20,6 @@ public class EnemyTurretGun : MonoBehaviour
     private LineRenderer bulletLineRenderer;
     //사운드 관련
     private AudioSource gunAudioPlayer;
-    public AudioClip shotClip;
-    public AudioClip reloadClip;
     //파티클 관련
     public ParticleSystem muzzleFlashEffect;
     public ParticleSystem shellEjectEffect;
@@ -135,7 +133,7 @@ public class EnemyTurretGun : MonoBehaviour
         muzzleFlashEffect.Play();
         shellEjectEffect.Play();
 
-        gunAudioPlayer.PlayOneShot(shotClip);//소리는 중첩을 가능하게하기위해Play OneShot 사용
+        SoundToolManager.Instance.PlayOneShotSound((int)SoundList.gunshot, transform.position, 1f);
 
         bulletLineRenderer.enabled = true;
         bulletLineRenderer.SetPosition(0, fireTransform.position);
