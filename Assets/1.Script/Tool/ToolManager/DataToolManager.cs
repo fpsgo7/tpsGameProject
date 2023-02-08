@@ -8,13 +8,13 @@ public class DataToolManager
 {
     // 다른 스크립트에서도 해당 스크립트에 접근을 위한 변수 생성
     private static SoundData soundData = null;
-    private static EffectData effectData = null;
+    private static ObjectData effectData = null;
     //이펙트 데이터를 가져오기위해 사용
-    public static EffectData EffectData()
+    public static ObjectData EffectData()
     {
         if (effectData == null)
         {
-            effectData = ScriptableObject.CreateInstance<EffectData>();
+            effectData = ScriptableObject.CreateInstance<ObjectData>();
             effectData.LoadData();
         }
         return effectData;

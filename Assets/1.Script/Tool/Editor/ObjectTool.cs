@@ -4,7 +4,7 @@ using UnityEditor;//주의 해당 using을 사용할려면 Editor 폴더 아레�
 using System.Text;
 using UnityObject = UnityEngine.Object;
 /// <summary>
-/// 이펙트 클립을 수정하고 읽고 한다.
+/// 오브젝트 클립을 수정하고 읽고 한다.
 /// </summary>
 public class ObjectTool : EditorWindow//EditorWindow를 상속받아 에디터 창을 만들수 있게된다.
 {
@@ -14,15 +14,15 @@ public class ObjectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
     private int selection = 0;// 선택값
     private Vector2 listScroll = Vector2.zero;// 스크롤에 쓸 벡터1
     private Vector2 selectScroll = Vector2.zero;// 스크롤에 쓸 벡터2
-    private GameObject effectSource = null;//이펙트 툴용 클립
-    private static EffectData effectData;// 클래스형 변수 
+    private GameObject objectSource = null;//이펙트 툴용 클립
+    private static ObjectData objectData;// 클래스형 변수 
     //MenuItem이라는 경로를 만들어서 
     //유니티에서 해당 툴을 열수 있게함
     [MenuItem("Tools/Object Tool")]//해당 버튼을 입력하면 실행
     static void Init()// 이함수가 호출됨으로써 EffectTool 클래스가 생성된다.
     {
-        effectData = ScriptableObject.CreateInstance<EffectData>();//스크립터블 오브젝트 생성
-        effectData.LoadData(); // 데이타 불러오기
+        objectData = ScriptableObject.CreateInstance<ObjectData>();//스크립터블 오브젝트 생성
+        objectData.LoadData(); // 데이타 불러오기
         //전체적인 툴 띄우기
         //EditorWindow의 GetWindow 함수를 사용하여 창을 가져온다.
         ObjectTool window = GetWindow<ObjectTool>(false, "Object Tool");
@@ -31,32 +31,32 @@ public class ObjectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
     // 위의  window.Show();로 툴을 만들었다면 OnGUI로 하나씩 체워준다.
     private void OnGUI()
     {
-        //effectData 가 아직 로딩이 되지 않아서 null 일경우 
-        if (effectData == null)
+        //objectData 가 아직 로딩이 되지 않아서 null 일경우 
+        if (objectData == null)
         {
             return;
         }
         EditorGUILayout.BeginVertical();// 수직 레이아웃을 시작한다.
         {
-            UnityObject source = effectSource;
-            effectSource = (GameObject)source;//게임오브젝트로 해서 가져오기
+            UnityObject source = objectSource;
+            objectSource = (GameObject)source;//게임오브젝트로 해서 가져오기
             //EditorHelper 에 만들어두었던 툴 상단파트를 적용하기
-            //매계변수 로 EffectData의 클래스형 변수와 선택값, 소스, 유아니 길이 를 보낸다.
-            EditorHelper.ToolTopLayer(effectData, ref selection, ref source, this.uiWidth200);
+            //매계변수 로 ObjectData의 클래스형 변수와 선택값, 소스, 유아니 길이 를 보낸다.
+            EditorHelper.ToolTopLayer(objectData, ref selection, ref source, this.uiWidth200);
             EditorGUILayout.BeginHorizontal();// 수평 레이아웃
             {
                 //중간, 데이터 목록 레이아웃 가져오기
                 //매계변수 SP1 백터값, 클래스형변수, 선택값, 소스, 유아이 길이
-                EditorHelper.ToolListLayer(ref listScroll, effectData, ref selection,
+                EditorHelper.ToolListLayer(ref listScroll, objectData, ref selection,
                     ref source, this.uiWidth300);
-                effectSource = (GameObject)source;
+                objectSource = (GameObject)source;
                 //설정 부분
                 EditorGUILayout.BeginVertical();//수직
                 {
                     //설정을 위한 스크롤 뷰를 만들면서 백터값을 적용한다.
                     selectScroll = EditorGUILayout.BeginScrollView(this.selectScroll);
                     {
-                        if (effectData.GetDataCount() > 0)
+                        if (objectData.GetDataCount() > 0)
                         {// 데이터가 있을경우
                             EditorGUILayout.BeginVertical();//수직 레이아웃
                             {
@@ -71,51 +71,51 @@ public class ObjectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
                                 // 해당 택스트필드에 세로운 정보를 입력하면 OnGUI 함수기떄문에
                                 // 새로운 값이 해당 배열에 들어간다.
                                 //(택스트 필드의 제목에 쓸 이름 텍스트, 이팩트데이타의 이름 , 넓이)
-                                effectData.dataNames[selection] = EditorGUILayout.TextField(
-                                    "이름.", effectData.dataNames[selection],
+                                objectData.dataNames[selection] = EditorGUILayout.TextField(
+                                    "이름.", objectData.dataNames[selection],
                                     GUILayout.Width(uiWidth300 * 1.5f));
 
                                 //이 팩트 타입을 위한 파트로 EnumPopup을 써 선택하면
                                 //enum 값들을 선택할 수 잇는 팝업창이 뜬다.
                                 //,해당 팝업창에서 enum 값을 선택하면 
-                                //effectData.effectClips[selection].effectType 에 값이 들어간다.
-                                effectData.effectClips[selection].effectType =
-                                    (EffectType)EditorGUILayout.EnumPopup("오브젝트 타입.",
-                                    effectData.effectClips[selection].effectType,
+                                //objectData.objectClips[selection].objectType 에 값이 들어간다.
+                                objectData.objectClips[selection].objectType =
+                                    (ObjectType)EditorGUILayout.EnumPopup("오브젝트 타입.",
+                                    objectData.objectClips[selection].objectType,
                                     GUILayout.Width(uiWidth300));
 
                                 // 한칸 띄운다.
                                 EditorGUILayout.Separator();
-                                //이팩트 소스가 아직 로드되지 않았고, 이팩트 데이타 클래스에서 해당 이팩트
-                                //클립의 이펙트 이름이 있을경우 로드한다.
-                                if (effectSource == null && effectData.effectClips[selection].effectName !=
+                                //오브젝트 소스가 아직 로드되지 않았고, 오브젝트 데이타 클래스에서 해당 오브젝트
+                                //클립의 오브젝트 이름이 있을경우 로드한다.
+                                if (objectSource == null && objectData.objectClips[selection].objectName !=
                                     string.Empty)
                                 {
-                                    effectData.effectClips[selection].PreLoad();//해당 이팩트 클립을 PreLoad() 한다.
-                                    //PreLoad를 통해 이팩트 클립에 이팩트 프리팹을 로드가되고
-                                    //이팩트 소스에 위를 통해 이팩트 경로를 활용하여 게임오브젝트를 얻어와
+                                    objectData.objectClips[selection].PreLoad();//해당 오브젝트 클립을 PreLoad() 한다.
+                                    //PreLoad를 통해 오브젝트 클립에 오브젝트 프리팹을 로드가되고
+                                    //오브젝트 소스에 위를 통해 오브젝트 경로를 활용하여 게임오브젝트를 얻어와
                                     //넣어준다.
-                                    effectSource = Resources.Load(
-                                        effectData.effectClips[selection].effectPath +
-                                        effectData.effectClips[selection].effectName) as GameObject;
+                                    objectSource = Resources.Load(
+                                        objectData.objectClips[selection].objectPath +
+                                        objectData.objectClips[selection].objectName) as GameObject;
                                 }
-                                // 위의 동작을 완료하면 이펙트 소스에 오브젝트가 체워줘서 보여줄 수 있게된다.
-                                effectSource = (GameObject)EditorGUILayout.ObjectField("오브젝트",
-                                    this.effectSource, typeof(GameObject), false, GUILayout.Width(uiWidth300 * 1.5f));
-                                if (effectSource != null)
+                                // 위의 동작을 완료하면 오브젝트 소스에 오브젝트가 체워줘서 보여줄 수 있게된다.
+                                objectSource = (GameObject)EditorGUILayout.ObjectField("오브젝트",
+                                    this.objectSource, typeof(GameObject), false, GUILayout.Width(uiWidth300 * 1.5f));
+                                if (objectSource != null)
                                 {
-                                    //새롭게 이펙트를 넣을경우 이펙트를 경로를 변화시킨다.
-                                    effectData.effectClips[selection].effectPath =
-                                        EditorHelper.GetPath(this.effectSource);
-                                    effectData.effectClips[selection].effectName = effectSource.name;
+                                    //새롭게 오브젝트를 넣을경우 오브젝트 경로를 변화시킨다.
+                                    objectData.objectClips[selection].objectPath =
+                                        EditorHelper.GetPath(this.objectSource);
+                                    objectData.objectClips[selection].objectName = objectSource.name;
                                     //Debug.Log(effectData.effectClips[selection].effectName);
                                 }
                                 else
                                 {
-                                    //이팩트 소스가 없는경우 경로와 이름에 빈값을 넣는다.
-                                    effectData.effectClips[selection].effectPath = string.Empty;
-                                    effectData.effectClips[selection].effectName = string.Empty;
-                                    effectSource = null;
+                                    //오브젝트 소스가 없는경우 경로와 이름에 빈값을 넣는다.
+                                    objectData.objectClips[selection].objectPath = string.Empty;
+                                    objectData.objectClips[selection].objectName = string.Empty;
+                                    objectSource = null;
                                 }
 
                                 // 한칸 띄우기
@@ -145,23 +145,23 @@ public class ObjectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
 
             if (GUILayout.Button("Reload"))//데이터 로드
             {
-                effectData = CreateInstance<EffectData>();// 다시 생성하여
-                effectData.LoadData();// 다시 불러오기
+                objectData = CreateInstance<ObjectData>();// 다시 생성하여
+                objectData.LoadData();// 다시 불러오기
                 selection = 0;// 선택값 초기화
-                this.effectSource = null;//이팩트 소스 초기화
+                this.objectSource = null;//오브젝트 소스 초기화
             }
             if (GUILayout.Button("Save"))//데이터 저장
             {
-                if(CreateEnumStucture())// 이팩트가 추가되어 이펙트 리스트에 내용을 추가한다.
+                if(CreateEnumStucture())// 오브젝트가 추가되어 오브젝트 리스트에 내용을 추가한다.
                 {
-                    ObjectTool.effectData.SaveData();
+                    ObjectTool.objectData.SaveData();
                     AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
                 }
             }
         }
         EditorGUILayout.EndHorizontal();// 수직
     }
-    //enum 생성하기 EffectList 라는 스크립트에 접근하여 EffectList 라는 enum 에 내용을 추가한다.
+    //enum 생성하기 ObjectList 라는 스크립트에 접근하여 ObjectList 라는 enum 에 내용을 추가한다.
     public bool CreateEnumStucture()
     {
         if (ImpossibleDataName())// 저장할 이름이 사용불가능할 경우
@@ -173,12 +173,12 @@ public class ObjectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
         {
             string enumName = "EffectList";
             StringBuilder builder = new StringBuilder();// 스트링빌더 변수 생성
-            for (int i = 0; i < effectData.dataNames.Length; i++)
+            for (int i = 0; i < objectData.dataNames.Length; i++)
             {
-                if (effectData.dataNames[i] != string.Empty)
+                if (objectData.dataNames[i] != string.Empty)
                 {
                     //해당 변수에 라인을 추가하는 형식으로 추가한 enum 과 원래 enum을 넣어준다.
-                    builder.AppendLine("     " + effectData.dataNames[i] + " = " + i + ",");
+                    builder.AppendLine("     " + objectData.dataNames[i] + " = " + i + ",");
                 }
             }
             EditorHelper.CreateEnumList(enumName, builder);//그리고 값들을 보내어  완료시킨다.
@@ -187,7 +187,7 @@ public class ObjectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
     }
     public bool ImpossibleDataName()
     {
-        string dataName= effectData.dataNames[effectData.dataNames.Length - 1];
+        string dataName= objectData.dataNames[objectData.dataNames.Length - 1];
         if (NamingRules.IsFirstTextisNum(dataName))
             return true;
         if (NamingRules.IsNamingBlank(dataName))

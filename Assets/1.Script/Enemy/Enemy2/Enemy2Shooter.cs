@@ -139,7 +139,7 @@ public class Enemy2Shooter : MonoBehaviour
             }
             else
             {
-                EffectToolManager.Instance.GetEffect((int)EffectList.commonHit, hit.point, hit.normal);
+                EffectToolManager.Instance.GetEffect((int)ObjectList.commonHit, hit.point, hit.normal);
             }
             hitPosition = hit.point;
 

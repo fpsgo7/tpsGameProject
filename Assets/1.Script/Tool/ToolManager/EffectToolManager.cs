@@ -23,7 +23,7 @@ public class EffectToolManager : MonoBehaviour
     private Transform[] effectPacks = null;// 이펙트 들을 담는 팩
     private List<Queue<GameObject>> queueList= new List<Queue<GameObject>>();// 큐 들을 담고 있는 리스트
     private string[] effectDataNames;// 게임상 존재하는 데이타 이름들
-    private EffectClip[] effectClips;// 게임상 존제하는 이펙트 클립들
+    private ObjectClip[] effectClips;// 게임상 존제하는 이펙트 클립들
     private static WaitForSeconds wfs = new WaitForSeconds(2f);// 삭제 시간
     private const string wordS = "s";
 
@@ -37,8 +37,8 @@ public class EffectToolManager : MonoBehaviour
         // 모든 이펙트 클립과 이름들을 미리 가져온다.
         Queue<GameObject> poolingQueue;
         effectDataNames = new string[DataToolManager.EffectData().dataNames.Length];
-        effectClips = new EffectClip[DataToolManager.EffectData().effectClips.Length];
-        for (int i = 0; i < DataToolManager.EffectData().effectClips.Length; i++)
+        effectClips = new ObjectClip[DataToolManager.EffectData().objectClips.Length];
+        for (int i = 0; i < DataToolManager.EffectData().objectClips.Length; i++)
         {
             effectDataNames[i] = DataToolManager.EffectData().dataNames[i];
             effectClips[i] = DataToolManager.EffectData().GetClip(i);
@@ -59,7 +59,7 @@ public class EffectToolManager : MonoBehaviour
         }
     }
     // 오브젝트 생성
-    private GameObject CreateEffect(EffectClip effectClip , Transform transform)
+    private GameObject CreateEffect(ObjectClip effectClip , Transform transform)
     {
         GameObject effectInstance = effectClip.Instantiate(transform.position);
         effectInstance.transform.SetParent(transform);

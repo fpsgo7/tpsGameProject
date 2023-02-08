@@ -2,11 +2,11 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public enum EffectList
+public enum ObjectList
 {
 	None = -1,
-	     explosion1 = 0,
-     commonHit1 = 1,
-     flashHit1 = 2,
+	     explosion = 0,
+     commonHit = 1,
+     flashHit = 2,
 
 }
