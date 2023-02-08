@@ -6,7 +6,7 @@ using UnityObject = UnityEngine.Object;
 /// <summary>
 /// 이펙트 클립을 수정하고 읽고 한다.
 /// </summary>
-public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 창을 만들수 있게된다.
+public class ObjectTool : EditorWindow//EditorWindow를 상속받아 에디터 창을 만들수 있게된다.
 {
     //UI 그리는대 필요한 변수들
     public int uiWidth300 = 300;// 
@@ -18,14 +18,14 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
     private static EffectData effectData;// 클래스형 변수 
     //MenuItem이라는 경로를 만들어서 
     //유니티에서 해당 툴을 열수 있게함
-    [MenuItem("Tools/Effect Tool")]//해당 버튼을 입력하면 실행
+    [MenuItem("Tools/Object Tool")]//해당 버튼을 입력하면 실행
     static void Init()// 이함수가 호출됨으로써 EffectTool 클래스가 생성된다.
     {
         effectData = ScriptableObject.CreateInstance<EffectData>();//스크립터블 오브젝트 생성
         effectData.LoadData(); // 데이타 불러오기
         //전체적인 툴 띄우기
         //EditorWindow의 GetWindow 함수를 사용하여 창을 가져온다.
-        EffectTool window = GetWindow<EffectTool>(false, "Effect Tool");
+        ObjectTool window = GetWindow<ObjectTool>(false, "Object Tool");
         window.Show();// 이후 show로 해당 클래스가 생성된다 즉 툴만생성된다.
     }
     // 위의  window.Show();로 툴을 만들었다면 OnGUI로 하나씩 체워준다.
@@ -65,6 +65,7 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
                                 //이후 길이 지정한다.
                                 EditorGUILayout.LabelField("ID", selection.ToString(),
                                     GUILayout.Width(uiWidth300));
+
                                 // 이팩트 이름들은 이름들에 선택번째 값 에 
                                 // effectData.names[selection] = 을 넣음으로써
                                 // 해당 택스트필드에 세로운 정보를 입력하면 OnGUI 함수기떄문에
@@ -73,14 +74,16 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
                                 effectData.dataNames[selection] = EditorGUILayout.TextField(
                                     "이름.", effectData.dataNames[selection],
                                     GUILayout.Width(uiWidth300 * 1.5f));
+
                                 //이 팩트 타입을 위한 파트로 EnumPopup을 써 선택하면
                                 //enum 값들을 선택할 수 잇는 팝업창이 뜬다.
                                 //,해당 팝업창에서 enum 값을 선택하면 
                                 //effectData.effectClips[selection].effectType 에 값이 들어간다.
                                 effectData.effectClips[selection].effectType =
-                                    (EffectType)EditorGUILayout.EnumPopup("이팩트 타입.",
+                                    (EffectType)EditorGUILayout.EnumPopup("오브젝트 타입.",
                                     effectData.effectClips[selection].effectType,
                                     GUILayout.Width(uiWidth300));
+
                                 // 한칸 띄운다.
                                 EditorGUILayout.Separator();
                                 //이팩트 소스가 아직 로드되지 않았고, 이팩트 데이타 클래스에서 해당 이팩트
@@ -97,7 +100,7 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
                                         effectData.effectClips[selection].effectName) as GameObject;
                                 }
                                 // 위의 동작을 완료하면 이펙트 소스에 오브젝트가 체워줘서 보여줄 수 있게된다.
-                                effectSource = (GameObject)EditorGUILayout.ObjectField("이팩트",
+                                effectSource = (GameObject)EditorGUILayout.ObjectField("오브젝트",
                                     this.effectSource, typeof(GameObject), false, GUILayout.Width(uiWidth300 * 1.5f));
                                 if (effectSource != null)
                                 {
@@ -114,7 +117,15 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
                                     effectData.effectClips[selection].effectName = string.Empty;
                                     effectSource = null;
                                 }
-                                EditorGUILayout.Separator();// 한칸 띄우기
+
+                                // 한칸 띄우기
+                                EditorGUILayout.Separator();
+                                // 오브젝트 풀링에 필요한 오브젝트 수 미리지정하기위한 필드
+                                int testnum=0;
+                                EditorGUILayout.IntField("필요오브젝트 수",
+                                        testnum, GUILayout.Width(uiWidth300 * 1.5f));
+                                EditorGUILayout.IntField("풀링 시간",
+                                      testnum, GUILayout.Width(uiWidth300 * 1.5f));
                             }
                             EditorGUILayout.EndVertical();
                         }
@@ -143,7 +154,7 @@ public class EffectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
             {
                 if(CreateEnumStucture())// 이팩트가 추가되어 이펙트 리스트에 내용을 추가한다.
                 {
-                    EffectTool.effectData.SaveData();
+                    ObjectTool.effectData.SaveData();
                     AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
                 }
             }
