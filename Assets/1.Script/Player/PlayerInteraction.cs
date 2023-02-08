@@ -70,7 +70,7 @@ public class PlayerInteraction : MonoBehaviour
         transform.GetComponent<BoxCollider>().isTrigger = true;
         transform.GetChild(0).gameObject.SetActive(false);
         transform.GetChild(1).gameObject.SetActive(true);
-        EffectManager.Instance.ExplosionEffect(transform);
+        EffectToolManager.Instance.GetEffect((int)EffectList.explosion, this.transform.position, this.transform.position);
         Destroy(transform.gameObject,5f);
     }
 }

@@ -38,9 +38,8 @@ public class Enemy2Health : LivingEntity
         {
             enemy2AI.targetEntity = damageMessage.damagerLivingEntity;
         }
-
-        EffectManager.Instance.PlayHitEffect(damageMessage.hitPoint, damageMessage.hitNormal, transform, EffectManager.EffectType.Flesh);
-
+        EffectToolManager.Instance.GetEffect((int)EffectList.flashHit, damageMessage.hitPoint, damageMessage.hitNormal);
+        
         return true;
     }
 

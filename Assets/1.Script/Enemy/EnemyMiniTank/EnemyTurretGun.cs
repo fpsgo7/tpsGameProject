@@ -110,7 +110,7 @@ public class EnemyTurretGun : MonoBehaviour
             }
             else
             {
-                EffectManager.Instance.PlayHitEffect(hit.point, hit.normal, hit.transform);
+                EffectToolManager.Instance.GetEffect((int)EffectList.commonHit, hit.point, hit.normal);
             }
             hitPosition = hit.point;
 

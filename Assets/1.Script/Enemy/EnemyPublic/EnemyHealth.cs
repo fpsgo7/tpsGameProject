@@ -52,7 +52,7 @@ public class EnemyHealth : LivingEntity
             enemyAI.targetEntity = damageMessage.damagerLivingEntity.GetComponent<LivingEntity>();
         }
 
-        EffectManager.Instance.PlayHitEffect(damageMessage.hitPoint, damageMessage.hitNormal, transform, EffectManager.EffectType.Flesh);
+        EffectToolManager.Instance.GetEffect((int)EffectList.flashHit, damageMessage.hitPoint, damageMessage.hitNormal);
         enemyAI.audioPlayer.PlayOneShot(hitClip);
 
         return true;

@@ -6,6 +6,7 @@ public enum EffectList
 {
 	None = -1,
 	     explosion = 0,
-     az = 1,
+     commonHit = 1,
+     flashHit = 2,
 
 }

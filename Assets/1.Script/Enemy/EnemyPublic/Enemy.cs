@@ -254,8 +254,7 @@ public class Enemy : LivingEntity
         {
             targetEntity = damageMessage.damagerLivingEntity.GetComponent<LivingEntity>();
         }
-
-        EffectManager.Instance.PlayHitEffect(damageMessage.hitPoint, damageMessage.hitNormal, transform, EffectManager.EffectType.Flesh);
+        EffectToolManager.Instance.GetEffect((int)EffectList.flashHit, damageMessage.hitPoint, damageMessage.hitNormal);
         audioPlayer.PlayOneShot(hitClip);
 
         return true;

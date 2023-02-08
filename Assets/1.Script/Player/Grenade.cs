@@ -31,7 +31,7 @@ public class Grenade : MonoBehaviour
             Vector3.up, 0f,
             LayerMask.GetMask("Enemy"));
         ExplosionAttack();
-        EffectManager.Instance.ExplosionEffect(this.transform);
+        EffectToolManager.Instance.GetEffect((int)EffectList.explosion, this.transform.position, this.transform.position);
         GrenadeObjectPooling.ReturnObject(this);
     }
     private void ExplosionAttack()

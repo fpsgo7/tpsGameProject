@@ -153,7 +153,7 @@ public class EnemyMiniTankAI : MonoBehaviour
             Vector3.up, 0f,
             LayerMask.GetMask("Player"));
         ExplosionAttack();
-        EffectManager.Instance.ExplosionEffect(this.transform);
+        EffectToolManager.Instance.GetEffect((int)EffectList.explosion, this.transform.position, this.transform.position);
         this.gameObject.SetActive(false);
     }
 
