@@ -19,10 +19,11 @@ public class EffectToolManager : MonoBehaviour
         }
     }
 
-    private Transform effectRoot = null;// 이펙트 경로
+    private Transform effectRoot = null;// 이펙트 리스트담는 팩 오브젝트의 중심위치
     private Transform[] effectPacks = null;// 이펙트 들을 담는 팩
-    private GameObject[] poolingObjects;// 풀링할 대상
-    private Queue<GameObject> poolingQueue = new Queue<GameObject>();// 오브젝트 큐
+    private List<Queue<GameObject>> queueList= new List<Queue<GameObject>>();// 큐 들을 담고 있는 리스트
+    private string[] effectDataNames;// 게임상 존재하는 데이타 이름들
+    private EffectClip[] effectClips;// 게임상 존제하는 이펙트 클립들
     private static WaitForSeconds wfs = new WaitForSeconds(2f);// 삭제 시간
     private const string wordS = "s";
 
@@ -34,33 +35,63 @@ public class EffectToolManager : MonoBehaviour
             effectRoot.SetParent(transform);//해당 스크립트를 가진 오브젝트의 자식으로 생성된다.
         }
         // 모든 이펙트 클립과 이름들을 미리 가져온다.
-        string[] effectDataNames = new string[DataToolManager.EffectData().dataNames.Length];
-        EffectClip[] clip = new EffectClip[DataToolManager.EffectData().effectClips.Length];
+        Queue<GameObject> poolingQueue;
+        effectDataNames = new string[DataToolManager.EffectData().dataNames.Length];
+        effectClips = new EffectClip[DataToolManager.EffectData().effectClips.Length];
         for (int i = 0; i < DataToolManager.EffectData().effectClips.Length; i++)
         {
             effectDataNames[i] = DataToolManager.EffectData().dataNames[i];
-            clip[i] = DataToolManager.EffectData().GetClip(i);
+            effectClips[i] = DataToolManager.EffectData().GetClip(i);
             //Debug.Log(effectDataNames[i]+"의 클립"+clip[i].effectName);
         }
         // 생성할 오브젝트들을 보관하기 위한 오브젝트를 effectRoot 아래로 만든다.
         effectPacks = new Transform[effectDataNames.Length];
         for(int i = 0; i< effectDataNames.Length; i++)
         {
+            poolingQueue = new Queue<GameObject>();// 오브젝트 큐
             effectPacks[i] = new GameObject(effectDataNames[i]+ wordS).transform;
             effectPacks[i].SetParent(effectRoot.transform);
+            for(int j =0; j < 20; j++)
+            {
+                poolingQueue.Enqueue(CreateEffect(effectClips[i], effectPacks[i]));
+            }
+            queueList.Add(poolingQueue);
         }
-        // 오브젝트 풀링 을 활용하기 위해 오브젝트들을 미리생성한다.
-
     }
-    //원하는 이펙트를 원하는 대상에 생성한다.
-    public GameObject EffectUse(int index, Vector3 position)
+    // 오브젝트 생성
+    private GameObject CreateEffect(EffectClip effectClip , Transform transform)
     {
-        // 스킓터형 변수를 생성후 해당 포지션에 생성하며
-        // 오븢게트에 넣는다. 
-        // 이후 대상을 액티브 트루로 하여 이펙트를 보여준다.
-        EffectClip clip = DataToolManager.EffectData().GetClip(index);
-        GameObject effectInstance = clip.Instantiate(position);
-        effectInstance.SetActive(true);
+        GameObject effectInstance = effectClip.Instantiate(transform.position);
+        effectInstance.transform.SetParent(transform);
+        effectInstance.SetActive(false);
         return effectInstance;
+    }
+    //오브젝트를 풀링하기
+    public void GetEffect(int index, Vector3 pos, Vector3 normal)
+    {
+        if (queueList[index].Count > 0)
+        {
+            GameObject effect = queueList[index].Dequeue();
+            //Debug.Log(particle.name);
+            effect.transform.position = pos;
+            effect.transform.rotation = Quaternion.LookRotation(normal);
+            effect.SetActive(true);// 활성화하여 보여줌
+            StartCoroutine(ReturnObject(index, effect));
+        }
+        else
+        {
+            GameObject newEffect = CreateEffect(effectClips[index],transform);
+            newEffect.transform.position = pos;
+            newEffect.transform.rotation = Quaternion.LookRotation(normal);
+            newEffect.SetActive(true);// 활성화하여 보여줌
+            StartCoroutine(ReturnObject(index, newEffect));
+        }
+    }
+    public IEnumerator ReturnObject(int index, GameObject effect)
+    {
+        yield return wfs;
+        effect.gameObject.SetActive(false);
+        effect.transform.SetParent(effectPacks[index]);
+        queueList[index].Enqueue(effect);//다시 큐에 넣음
     }
 }

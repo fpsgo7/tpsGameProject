@@ -33,9 +33,8 @@ public class EffectClip
         }
     }
     /// <summary>
-    /// 원하는 위치에 내가 원하는 이펙트를 인스턴스 한다.
-    /// 이펙트 툴 메니저에서 불려저 생성된다 
-    /// 생성이아닌 오브젝트 풀링방식으로 설정하기
+    /// 오브젝트 풀링을 위해 게임 시작할때 미리 생성을 위해사용되며
+    /// effctRoot 밑의 effectPack 에 생성된다.
     /// </summary>
     public GameObject Instantiate(Vector3 Pos)
     {
