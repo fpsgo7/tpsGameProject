@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// 이펙트 메니져로 해당 스크립트를 가진 오브젝트 밑에 
-/// 이펙트들이 달라 붙게된다.
+/// 오브젝트 메니져로 해당 스크립트를 가진 오브젝트 밑에 
+/// 오브젝트 들이 달라 붙게된다.
 /// </summary>
-
 public class EffectToolManager : MonoBehaviour
 {
     private static EffectToolManager instance;
@@ -24,7 +23,7 @@ public class EffectToolManager : MonoBehaviour
     private List<Queue<GameObject>> queueList= new List<Queue<GameObject>>();// 큐 들을 담고 있는 리스트
     private string[] effectDataNames;// 게임상 존재하는 데이타 이름들
     private ObjectClip[] effectClips;// 게임상 존제하는 이펙트 클립들
-    private static WaitForSeconds wfs = new WaitForSeconds(2f);// 삭제 시간
+    private static WaitForSeconds[] wfs;// 삭제 시간 배열
     private const string wordS = "s";
 
     void Start()
@@ -38,11 +37,12 @@ public class EffectToolManager : MonoBehaviour
         Queue<GameObject> poolingQueue;
         effectDataNames = new string[DataToolManager.EffectData().dataNames.Length];
         effectClips = new ObjectClip[DataToolManager.EffectData().objectClips.Length];
+        wfs = new WaitForSeconds[DataToolManager.EffectData().dataNames.Length];
         for (int i = 0; i < DataToolManager.EffectData().objectClips.Length; i++)
         {
             effectDataNames[i] = DataToolManager.EffectData().dataNames[i];
             effectClips[i] = DataToolManager.EffectData().GetClip(i);
-            //Debug.Log(effectDataNames[i]+"의 클립"+clip[i].effectName);
+            wfs[i] = new WaitForSeconds(effectClips[i].objectTime);
         }
         // 생성할 오브젝트들을 보관하기 위한 오브젝트를 effectRoot 아래로 만든다.
         effectPacks = new Transform[effectDataNames.Length];
@@ -51,7 +51,7 @@ public class EffectToolManager : MonoBehaviour
             poolingQueue = new Queue<GameObject>();// 오브젝트 큐
             effectPacks[i] = new GameObject(effectDataNames[i]+ wordS).transform;
             effectPacks[i].SetParent(effectRoot.transform);
-            for(int j =0; j < 20; j++)
+            for(int j =0; j < effectClips[i].objectnecessary; j++)
             {
                 poolingQueue.Enqueue(CreateEffect(effectClips[i], effectPacks[i]));
             }
@@ -89,7 +89,7 @@ public class EffectToolManager : MonoBehaviour
     }
     public IEnumerator ReturnObject(int index, GameObject effect)
     {
-        yield return wfs;
+        yield return wfs[index];
         effect.gameObject.SetActive(false);
         effect.transform.SetParent(effectPacks[index]);
         queueList[index].Enqueue(effect);//다시 큐에 넣음

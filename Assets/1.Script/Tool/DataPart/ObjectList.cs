@@ -8,5 +8,6 @@ public enum ObjectList
 	     explosion = 0,
      commonHit = 1,
      flashHit = 2,
+     grenade = 3,
 
 }
