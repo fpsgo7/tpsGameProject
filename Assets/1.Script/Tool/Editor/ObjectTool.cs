@@ -121,11 +121,10 @@ public class ObjectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
                                 // 한칸 띄우기
                                 EditorGUILayout.Separator();
                                 // 오브젝트 풀링에 필요한 오브젝트 수 미리지정하기위한 필드
-                                int testnum=0;
-                                EditorGUILayout.IntField("필요오브젝트 수",
-                                        testnum, GUILayout.Width(uiWidth300 * 1.5f));
-                                EditorGUILayout.IntField("풀링 시간",
-                                      testnum, GUILayout.Width(uiWidth300 * 1.5f));
+                                objectData.objectClips[selection].objectnecessary = EditorGUILayout.IntField("필요오브젝트 수",
+                                        objectData.objectClips[selection].objectnecessary, GUILayout.Width(uiWidth300 * 1.5f));
+                                objectData.objectClips[selection].objectTime = EditorGUILayout.IntField("풀링 시간",
+                                      objectData.objectClips[selection].objectTime, GUILayout.Width(uiWidth300 * 1.5f));
                             }
                             EditorGUILayout.EndVertical();
                         }
@@ -171,7 +170,7 @@ public class ObjectTool : EditorWindow//EditorWindow를 상속받아 에디터 �
         }
         else
         {
-            string enumName = "EffectList";
+            string enumName = "ObjectList";
             StringBuilder builder = new StringBuilder();// 스트링빌더 변수 생성
             for (int i = 0; i < objectData.dataNames.Length; i++)
             {

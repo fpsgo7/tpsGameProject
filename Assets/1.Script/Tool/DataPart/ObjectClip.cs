@@ -16,6 +16,8 @@ public class ObjectClip
     public string objectName = string.Empty;// 오브젝트 이름
     public string objectPath = string.Empty;// 오브젝트 경로
     public string objectFullPath = string.Empty;// 오브젝트 경로 + 오브젝트 이름
+    public int objectnecessary = 0;// 필요 오브젝트
+    public int objectTime = 0;// 오브젝트 풀링에서 활성화 시간
     // 생성자
     public ObjectClip() { }
     // 사전 로드 기능

@@ -77,6 +77,12 @@ public class ObjectData : BaseData//BaseData를 상속받아 스크립터블 오
                         case "objectPath":
                             this.objectClips[currentID].objectPath = reader.ReadString();
                             break;
+                        case "objectnecessary":
+                            this.objectClips[currentID].objectnecessary = int.Parse(reader.ReadString());
+                            break;
+                        case "objectTime":
+                            this.objectClips[currentID].objectTime = int.Parse(reader.ReadString());
+                            break;
                     }
                 }
             }
@@ -105,6 +111,8 @@ public class ObjectData : BaseData//BaseData를 상속받아 스크립터블 오
                 xml.WriteElementString("objectType", clip.objectType.ToString());
                 xml.WriteElementString("objectPath", clip.objectPath);
                 xml.WriteElementString("objectName", clip.objectName);
+                xml.WriteElementString("objectnecessary", clip.objectnecessary.ToString());
+                xml.WriteElementString("objectTime", clip.objectTime.ToString());
                 xml.WriteEndElement();//CLIP element 종료
             }
             xml.WriteEndElement();//OBJECT element 종료
