@@ -5,6 +5,7 @@
 public class HealthPack : MonoBehaviour,IItem
 {
     private PlayerHealth playerHealth;
+    private WaitForSeconds wfs = new WaitForSeconds(0f);
 
     private void Awake()
     {
@@ -19,8 +20,8 @@ public class HealthPack : MonoBehaviour,IItem
             {
                 playerHealth.GetHealthKit();
             }
-
-            StartCoroutine(HealthPackPooling.ReturnObject(this.gameObject));
+            StartCoroutine(EffectToolManager.Instance.ReturnObjectByOrder
+                           ((int)ObjectList.healthPack, this.gameObject, wfs));
         }
         //else if (other.CompareTag("otherPlayer"))
         //{

@@ -5,6 +5,7 @@
 public class AmmoPack : MonoBehaviour,IItem
 {
     private PlayerShooter playerShooter;
+    private WaitForSeconds wfs = new WaitForSeconds(0f);
     public int ammo = 30;
 
     private void Awake()
@@ -20,13 +21,8 @@ public class AmmoPack : MonoBehaviour,IItem
             {
                 playerShooter.gun.ammoRemain += ammo;
             }
-
-            StartCoroutine(AmmoPackPooling.ReturnObject(this.gameObject));
+            StartCoroutine(EffectToolManager.Instance.ReturnObjectByOrder
+                ((int)ObjectList.ammoPack, this.gameObject, wfs));
         }
-        //else if (other.CompareTag("otherPlayer"))
-        //{
-        //    //다른 플레이어와 충돌 했을경우 
-        //    StartCoroutine(AmmoPackPooling.ReturnObject(this.gameObject));
-        //}
     }
 }

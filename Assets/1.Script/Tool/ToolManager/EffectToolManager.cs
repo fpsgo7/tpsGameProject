@@ -67,7 +67,7 @@ public class EffectToolManager : MonoBehaviour
         return effectInstance;
     }
     //오브젝트를 풀링하기
-    public void GetEffect(int index, Vector3 pos, Vector3 normal)
+    public GameObject GetEffect(int index, Vector3 pos, Vector3 normal)
     {
         if (queueList[index].Count > 0)
         {
@@ -77,6 +77,7 @@ public class EffectToolManager : MonoBehaviour
             effect.transform.rotation = Quaternion.LookRotation(normal);
             effect.SetActive(true);// 활성화하여 보여줌
             StartCoroutine(ReturnObject(index, effect));
+            return effect;
         }
         else
         {
@@ -85,13 +86,26 @@ public class EffectToolManager : MonoBehaviour
             newEffect.transform.rotation = Quaternion.LookRotation(normal);
             newEffect.SetActive(true);// 활성화하여 보여줌
             StartCoroutine(ReturnObject(index, newEffect));
+            return newEffect;
         }
     }
     public IEnumerator ReturnObject(int index, GameObject effect)
     {
         yield return wfs[index];
+        if (effect.activeSelf == true)
+        {
+            effect.gameObject.SetActive(false);
+            effect.transform.SetParent(effectPacks[index]);
+            queueList[index].Enqueue(effect);//다시 큐에 넣음
+        }
+    }
+    public IEnumerator ReturnObjectByOrder(int index, GameObject effect, WaitForSeconds orderWfs)
+    {
+        yield return orderWfs;
+        Debug.Log("돌아갑니다.");
         effect.gameObject.SetActive(false);
         effect.transform.SetParent(effectPacks[index]);
         queueList[index].Enqueue(effect);//다시 큐에 넣음
+
     }
 }

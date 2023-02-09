@@ -7,7 +7,7 @@ using UnityEngine;
 public class GrenadePack : MonoBehaviour,IItem
 {
     private FireGrenade fireGrenade;
-
+    private WaitForSeconds wfs = new WaitForSeconds(0f);
     private void Awake()
     {
         fireGrenade = GameObject.FindWithTag("Player").GetComponent<FireGrenade>();
@@ -21,8 +21,8 @@ public class GrenadePack : MonoBehaviour,IItem
             {
                 fireGrenade.GetGrenade();
             }
-
-            StartCoroutine(GrenadePackPooling.ReturnObject(this.gameObject));
+            StartCoroutine(EffectToolManager.Instance.ReturnObjectByOrder
+                            ((int)ObjectList.grenadePack, this.gameObject, wfs));
         }
         //else if (other.CompareTag("otherPlayer"))
         //{
