@@ -37,7 +37,7 @@ public class PlayerShooter : MonoBehaviour
     public GameObject playerDgree;// 플레이어 각도 수정
     public Transform gunPivot;//총 위치를 위한 오브젝트
 
-    private float waitingTimeForReleasingAim = 2.5f;//총 조준후 다시 풀어지는 시간
+    //private float waitingTimeForReleasingAim = 2.5f;//총 조준후 다시 풀어지는 시간
     private float lastFireInputTime; //마지막 발사 시간
     //줌인 줌아웃 float 변수
     private const float zoomOutFieldOfView = 60f;

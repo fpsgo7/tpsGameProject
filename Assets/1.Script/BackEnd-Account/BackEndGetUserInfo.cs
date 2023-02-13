@@ -17,11 +17,11 @@ public class BackEndGetUserInfo : MonoBehaviour
             Debug.Log(BRO.GetReturnValue());
             try
             {
-                LobbyScript.Instance.name = BRO.GetReturnValuetoJSON()["row"]["nickname"].ToString();
+                LobbyScript.Instance.playerName = BRO.GetReturnValuetoJSON()["row"]["nickname"].ToString();
             }
             catch(Exception e){
-                Debug.Log("닉네임이 없습니다.");
-                LobbyScript.Instance.name = string.Empty;
+                Debug.Log("닉네임이 없습니다."+e.Message);
+                LobbyScript.Instance.playerName = string.Empty;
             }
             
         }

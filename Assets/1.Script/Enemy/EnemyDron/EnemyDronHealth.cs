@@ -9,9 +9,6 @@ public class EnemyDronHealth : LivingEntity
 {
     private EnemyDronAI enemyDronAI;
 
-    public AudioClip hitClip; // 피격시 재생할 소리
-    public AudioClip deathClip; // 사망시 재생할 소리
-
     //private Renderer skinRenderer; // 렌더러 컴포넌트
 
     public float enemyHealth;// 체력 확인용
@@ -53,7 +50,7 @@ public class EnemyDronHealth : LivingEntity
         {
             enemyDronAI.targetEntity = damager;
         }
-        enemyDronAI.audioPlayer.PlayOneShot(hitClip);
+        // 사운드 재생
 
         return true;
     }

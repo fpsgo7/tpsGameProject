@@ -46,7 +46,7 @@ public class LobbyScript : MonoBehaviour
     private const string welcomeName = " 님 환영합니다.";
     private const string setNickNameFaild = "Faild";
     private const string setNickNameSuccess = "Success";
-    public string name ="Guest";
+    public string playerName ="Guest";
     public string id;
     public int score;
     public int weaponNum;
@@ -83,7 +83,7 @@ public class LobbyScript : MonoBehaviour
             GameStartPanel.SetActive(true);
             JoinPanel.SetActive(false);
         }
-        titleText.GetComponent<Text>().text = name + welcomeName;
+        titleText.GetComponent<Text>().text = playerName + welcomeName;
     }
 
     public void OpenLoginPanel()
@@ -112,7 +112,7 @@ public class LobbyScript : MonoBehaviour
 
     public void SetTitleText()
     {
-        titleText.GetComponent<Text>().text = name + welcomeName;
+        titleText.GetComponent<Text>().text = playerName + welcomeName;
     }
     //온라인 접속
     public void Login()
@@ -139,19 +139,19 @@ public class LobbyScript : MonoBehaviour
         logoutButton.SetActive(false);
 
         id = string.Empty;
-        name = string.Empty;
+        playerName = string.Empty;
         score = 0;
         weaponNum = 0;
         equipmentNum = 0;
         xAxis = 200;
         yAxis = 2;
-        PlayerInfoManager.Instance.SetOnlineLoadPlayer(false, id, name, score, weaponNum,
+        PlayerInfoManager.Instance.SetOnlineLoadPlayer(false, id, playerName, score, weaponNum,
                 equipmentNum, xAxis, yAxis);
     }
 
     public void SetName()
     {
-        if(name == string.Empty)
+        if(playerName == string.Empty)
         {
             Debug.Log("이름이 없습니다.");
             if (backEndNickname.CreateName(nameInputField.text))

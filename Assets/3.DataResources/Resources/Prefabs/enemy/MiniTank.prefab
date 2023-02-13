@@ -319,8 +319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunHolder: {fileID: 932244594}
-  shotClip: {fileID: 8300000, guid: 242534c49eb0f41bcafc7cc8fb1d7c17, type: 3}
-  reloadClip: {fileID: 0}
+  enemyMiniTankHealth: {fileID: 932244596}
   muzzleFlashEffect: {fileID: 198234346866046340}
   shellEjectEffect: {fileID: 198000009961335712}
   fireTransform: {fileID: 1776019905}
@@ -769,8 +768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunHolder: {fileID: 932244594}
-  shotClip: {fileID: 8300000, guid: 242534c49eb0f41bcafc7cc8fb1d7c17, type: 3}
-  reloadClip: {fileID: 0}
+  enemyMiniTankHealth: {fileID: 932244596}
   muzzleFlashEffect: {fileID: 198234347454019585}
   shellEjectEffect: {fileID: 198000009195171119}
   fireTransform: {fileID: 582349467}
@@ -1795,9 +1793,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cfc9b4e027f23840b96bd591d9b5e3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 0
-  startingHealth: 100
+  maxHealth: 0
+  startingPlayerHealth: 0
   enemyHealthSlider: {fileID: 5497341507011821673}
+  livingEntity: {fileID: 0}
   hitClip: {fileID: 0}
   deathClip: {fileID: 0}
   enemyHealth: 0

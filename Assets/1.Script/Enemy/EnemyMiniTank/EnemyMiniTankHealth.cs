@@ -8,9 +8,6 @@ public class EnemyMiniTankHealth : LivingEntity
 {
     private EnemyMiniTankAI enemyAI;
 
-    public AudioClip hitClip; // 피격시 재생할 소리
-    public AudioClip deathClip; // 사망시 재생할 소리
-
     //private Renderer skinRenderer; // 렌더러 컴포넌트
 
     public float enemyHealth;// 체력 확인용
@@ -43,7 +40,6 @@ public class EnemyMiniTankHealth : LivingEntity
         //이펙트 추가?
 
         //사운드
-        //enemyAI.audioPlayer.PlayOneShot(hitClip);
 
         return true;
     }
@@ -56,8 +52,7 @@ public class EnemyMiniTankHealth : LivingEntity
         {
             enemyAI.targetEntity = damager;
         }
-        enemyAI.audioPlayer.PlayOneShot(hitClip);
-
+        // 사운드
         return true;
     }
     // 사망 처리

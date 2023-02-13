@@ -74,7 +74,7 @@ public class Enemy : LivingEntity
 
 #endif
 
-    private void Awake()
+    protected override void Awake()
     {
         //컴포넌트 연결
         agent = GetComponent<NavMeshAgent>();//네비게이션 연결

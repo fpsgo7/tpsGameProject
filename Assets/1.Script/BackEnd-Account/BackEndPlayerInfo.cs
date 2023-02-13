@@ -30,7 +30,7 @@ public static class BackEndPlayerInfo
         }
         //로비스크립트에서 정보를 활용하기위해 저장함
         LobbyScript.Instance.id = bro.FlattenRows()[0]["id"].ToString();
-        LobbyScript.Instance.name = bro.FlattenRows()[0]["name"].ToString();
+        LobbyScript.Instance.playerName = bro.FlattenRows()[0]["name"].ToString();
         LobbyScript.Instance.score = Convert.ToInt32(bro.FlattenRows()[0]["score"].ToString());
         LobbyScript.Instance.weaponNum = Convert.ToInt32(bro.FlattenRows()[0]["weaponNum"].ToString());
         LobbyScript.Instance.equipmentNum = Convert.ToInt32(bro.FlattenRows()[0]["equipmentNum"].ToString());
@@ -38,7 +38,7 @@ public static class BackEndPlayerInfo
         LobbyScript.Instance.yAxis = float.Parse(bro.FlattenRows()[0]["yAxis"].ToString());
         LobbyScript.Instance.SetTitleText();
         //플레이어 인포메니저는 파괴되지 않는 오브젝트에 값을 넣어줘 다음씬에서 사용할 수 있게한다
-        PlayerInfoManager.Instance.SetOnlineLoadPlayer(true,LobbyScript.Instance.id, LobbyScript.Instance.name,
+        PlayerInfoManager.Instance.SetOnlineLoadPlayer(true,LobbyScript.Instance.id, LobbyScript.Instance.playerName,
             LobbyScript.Instance.score, LobbyScript.Instance.weaponNum,
             LobbyScript.Instance.equipmentNum, LobbyScript.Instance.xAxis,
             LobbyScript.Instance.yAxis);
