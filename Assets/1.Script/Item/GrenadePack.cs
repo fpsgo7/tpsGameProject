@@ -21,7 +21,7 @@ public class GrenadePack : MonoBehaviour,IItem
             {
                 fireGrenade.GetGrenade();
             }
-            StartCoroutine(EffectToolManager.Instance.ReturnObjectByOrder
+            StartCoroutine(ObjectToolManager.Instance.ReturnObjectByOrder
                             ((int)ObjectList.grenadePack, this.gameObject, wfs));
         }
         //else if (other.CompareTag("otherPlayer"))

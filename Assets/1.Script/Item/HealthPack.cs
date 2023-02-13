@@ -20,7 +20,7 @@ public class HealthPack : MonoBehaviour,IItem
             {
                 playerHealth.GetHealthKit();
             }
-            StartCoroutine(EffectToolManager.Instance.ReturnObjectByOrder
+            StartCoroutine(ObjectToolManager.Instance.ReturnObjectByOrder
                            ((int)ObjectList.healthPack, this.gameObject, wfs));
         }
         //else if (other.CompareTag("otherPlayer"))

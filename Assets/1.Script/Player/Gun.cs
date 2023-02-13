@@ -181,7 +181,7 @@ public class Gun : MonoBehaviour
             }
             else
             {
-                EffectToolManager.Instance.GetEffect((int)ObjectList.commonHit, hit.point, hit.normal);
+                ObjectToolManager.Instance.GetObject((int)ObjectList.commonHit, hit.point, hit.normal);
             }
             hitPosition = hit.point;
 

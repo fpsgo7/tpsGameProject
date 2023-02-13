@@ -21,7 +21,7 @@ public class AmmoPack : MonoBehaviour,IItem
             {
                 playerShooter.gun.ammoRemain += ammo;
             }
-            StartCoroutine(EffectToolManager.Instance.ReturnObjectByOrder
+            StartCoroutine(ObjectToolManager.Instance.ReturnObjectByOrder
                 ((int)ObjectList.ammoPack, this.gameObject, wfs));
         }
     }

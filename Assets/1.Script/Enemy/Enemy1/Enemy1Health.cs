@@ -39,7 +39,7 @@ public class Enemy1Health : LivingEntity
             enemy1AI.targetEntity = damageMessage.damagerLivingEntity;
         }
 
-        EffectToolManager.Instance.GetEffect((int)ObjectList.flashHit, damageMessage.hitPoint, damageMessage.hitNormal);
+        ObjectToolManager.Instance.GetObject((int)ObjectList.flashHit, damageMessage.hitPoint, damageMessage.hitNormal);
         return true;
     }
     //폭파 데미지를 입을 경우 실행할 처리 부분

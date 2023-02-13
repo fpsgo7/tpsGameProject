@@ -13,10 +13,10 @@ public class ItemSpawn : MonoBehaviour
         int itemToCreate = Random.Range(0, 3);
         //아이템을 해당 스크립트 를 가진 대상이 죽으면 생성하게함
         if(itemToCreate == 0)
-            EffectToolManager.Instance.GetEffect((int)ObjectList.ammoPack, point, point);
+            ObjectToolManager.Instance.GetObject((int)ObjectList.ammoPack, point, point);
         if (itemToCreate == 1)
-            EffectToolManager.Instance.GetEffect((int)ObjectList.grenadePack, point, point);
+            ObjectToolManager.Instance.GetObject((int)ObjectList.grenadePack, point, point);
         if (itemToCreate == 2)
-            EffectToolManager.Instance.GetEffect((int)ObjectList.healthPack, point, point);
+            ObjectToolManager.Instance.GetObject((int)ObjectList.healthPack, point, point);
     }
 }

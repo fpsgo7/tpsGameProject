@@ -118,7 +118,7 @@ public class EnemyDronAI : MonoBehaviour
             Vector3.up, 0f,
             LayerMask.GetMask("Player"));
         ExplosionAttack();
-        EffectToolManager.Instance.GetEffect((int)ObjectList.explosion, this.transform.position, this.transform.position);
+        ObjectToolManager.Instance.GetObject((int)ObjectList.explosion, this.transform.position, this.transform.position);
         //Destroy(this.gameObject, 0.1f);
     }
     public void ExplosionAttack()

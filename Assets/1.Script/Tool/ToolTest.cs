@@ -9,7 +9,7 @@ public class ToolTest : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            EffectToolManager.Instance.GetEffect(1, transform.position, transform.position);
+            ObjectToolManager.Instance.GetObject(1, transform.position, transform.position);
             SoundToolManager.Instance.PlayOneShotSound((int)SoundList.playerhitsound, transform.position, 1f);
         }
     }
