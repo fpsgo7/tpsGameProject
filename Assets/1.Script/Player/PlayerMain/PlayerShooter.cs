@@ -50,13 +50,6 @@ public class PlayerShooter : MonoBehaviour
     private const float zoomInTopScreenY = 0.65f;
     private const float zoomInMidScreenY = 0.65f;
     private const float zoomInBotScreenY = 0.65f;
-    private float zoomFieldOfView = 0;
-    private float zoomScreenX = 0;
-    private float zoomTopScreenY = 0;
-    private float zoomMidScreenY = 0;
-    private float zoomBotScreenY = 0;
-    private float waitingTimeForZoom = 0.000001f;//줌인 속도
-    private float lastZoomTime; //줌 동작 한틱 기준
     //마우스 감도용 변수
     private float currentXAxis;
     private float currentYAxis;
@@ -80,12 +73,6 @@ public class PlayerShooter : MonoBehaviour
         {
             excludeTarget |= 1 << gameObject.layer;
         }
-        //줌관련 값을 초기화
-        zoomFieldOfView = zoomOutFieldOfView;
-        zoomScreenX = zoomOutScreenX;
-        zoomTopScreenY = zoomOutTopScreenY;
-        zoomMidScreenY = zoomOutMidScreenY;
-        zoomBotScreenY = zoomOutBotScreenY;
     }
 
     private void Start()
@@ -99,13 +86,13 @@ public class PlayerShooter : MonoBehaviour
         forrowCamCinemachineComposerGetRig1 = forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>();
         forrowCamCinemachineComposerGetRig2 = forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>();
         //카메라 값 초기화
-        forrowCam.m_Lens.FieldOfView = zoomFieldOfView;
-        forrowCamCinemachineComposerGetRig0.m_ScreenY = zoomTopScreenY;
-        forrowCamCinemachineComposerGetRig1.m_ScreenY = zoomMidScreenY;
-        forrowCamCinemachineComposerGetRig2.m_ScreenY = zoomBotScreenY;
-        forrowCamCinemachineComposerGetRig0.m_ScreenX = zoomScreenX;
-        forrowCamCinemachineComposerGetRig1.m_ScreenX = zoomScreenX;
-        forrowCamCinemachineComposerGetRig2.m_ScreenX = zoomScreenX;
+        forrowCam.m_Lens.FieldOfView = zoomOutFieldOfView;
+        forrowCamCinemachineComposerGetRig0.m_ScreenY = zoomOutTopScreenY;
+        forrowCamCinemachineComposerGetRig1.m_ScreenY = zoomOutMidScreenY;
+        forrowCamCinemachineComposerGetRig2.m_ScreenY = zoomOutBotScreenY;
+        forrowCamCinemachineComposerGetRig0.m_ScreenX = zoomOutScreenX;
+        forrowCamCinemachineComposerGetRig1.m_ScreenX = zoomOutScreenX;
+        forrowCamCinemachineComposerGetRig2.m_ScreenX = zoomOutScreenX;
     }
     
     private void OnEnable()
@@ -287,84 +274,63 @@ public class PlayerShooter : MonoBehaviour
     //int i = 0;
     private void ZoomIn()
     {
-        if (zoomFieldOfView > zoomInFieldOfView && Time.time >= lastZoomTime + waitingTimeForZoom)
+        forrowCam.m_Lens.FieldOfView = Mathf.Lerp(forrowCam.m_Lens.FieldOfView, zoomInFieldOfView,Time.deltaTime*10);
+        forrowCamCinemachineComposerGetRig0.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenY, zoomInTopScreenY, Time.deltaTime*10);
+        forrowCamCinemachineComposerGetRig1.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig1.m_ScreenY, zoomInMidScreenY, Time.deltaTime*10);
+        forrowCamCinemachineComposerGetRig2.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig2.m_ScreenY, zoomInBotScreenY, Time.deltaTime*10);
+        forrowCamCinemachineComposerGetRig0.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenX, zoomInScreenX, Time.deltaTime*10);
+        forrowCamCinemachineComposerGetRig1.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig1.m_ScreenX, zoomInScreenX, Time.deltaTime*10);
+        forrowCamCinemachineComposerGetRig2.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig2.m_ScreenX, zoomInScreenX, Time.deltaTime*10);
+        if(forrowCam.m_Lens.FieldOfView <= zoomInFieldOfView + 1f)
         {
-            //부드럽게 하기
-            forrowCam.m_Lens.FieldOfView = (zoomFieldOfView -= 2f);
-            forrowCamCinemachineComposerGetRig0.m_ScreenY = (zoomTopScreenY += 0.01f);
-            forrowCamCinemachineComposerGetRig1.m_ScreenY = (zoomMidScreenY += 0.01f);
-            forrowCamCinemachineComposerGetRig2.m_ScreenY = (zoomBotScreenY += 0.01f);
-            forrowCamCinemachineComposerGetRig0.m_ScreenX = (zoomScreenX -= 0.01f);
-            forrowCamCinemachineComposerGetRig1.m_ScreenX = (zoomScreenX);
-            forrowCamCinemachineComposerGetRig2.m_ScreenX = (zoomScreenX);
-            lastZoomTime = Time.time;
-            // i++;
-            // Debug.Log(i);
+            if (aimState == AimState.Idle)
+            {
+                SetAimStateFireReady();
+                UIAim.Instance.crosshair.UseCrosshair(true);
+            }
         }
-        if (zoomFieldOfView <= zoomInFieldOfView + 0.1f)
-            ZoomInEnd();
-    }
-    private void ZoomInEnd()
-    {
-        UIAim.Instance.crosshair.UseCrosshair(true);
-        forrowCam.m_Lens.FieldOfView = zoomInFieldOfView;
-        forrowCamCinemachineComposerGetRig0.m_ScreenY = zoomInTopScreenY;
-        forrowCamCinemachineComposerGetRig1.m_ScreenY = zoomInMidScreenY;
-        forrowCamCinemachineComposerGetRig2.m_ScreenY = zoomInBotScreenY;
-        forrowCamCinemachineComposerGetRig0.m_ScreenX = zoomInScreenX;
-        forrowCamCinemachineComposerGetRig1.m_ScreenX = zoomInScreenX;
-        forrowCamCinemachineComposerGetRig2.m_ScreenX = zoomInScreenX;
-        zoomFieldOfView = zoomInFieldOfView;
-        zoomTopScreenY = zoomInTopScreenY;
-        zoomMidScreenY = zoomInMidScreenY;
-        zoomBotScreenY = zoomInBotScreenY;
-        zoomScreenX = zoomInScreenX;
-       
-        //lateUpdateFollow.ZoomInFollow();
-        //gun.ZoomInFollow();
-        isZoomIn = true;
-        if (aimState == AimState.Idle)
+        if (forrowCam.m_Lens.FieldOfView <= zoomInFieldOfView+0.1f)
         {
-            SetAimStateFireReady();
+            Debug.Log("줌인실행을 멈춤니다.");
+            forrowCam.m_Lens.FieldOfView = zoomInFieldOfView;
+            forrowCamCinemachineComposerGetRig0.m_ScreenY = zoomInTopScreenY;
+            forrowCamCinemachineComposerGetRig1.m_ScreenY = zoomInMidScreenY;
+            forrowCamCinemachineComposerGetRig2.m_ScreenY = zoomInBotScreenY;
+            forrowCamCinemachineComposerGetRig0.m_ScreenX = zoomInScreenX;
+            forrowCamCinemachineComposerGetRig1.m_ScreenX = zoomInScreenX;
+            forrowCamCinemachineComposerGetRig2.m_ScreenX = zoomInScreenX;
+            isZoomIn = true;
         }
+           
     }
+
     //조준 끝
     private void ZoomOut()
     {
-        if (zoomFieldOfView <= zoomOutFieldOfView && Time.time >= lastZoomTime + waitingTimeForZoom)
+        forrowCam.m_Lens.FieldOfView = Mathf.Lerp(forrowCam.m_Lens.FieldOfView, zoomOutFieldOfView, Time.deltaTime * 10);
+        forrowCamCinemachineComposerGetRig0.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenY, zoomOutTopScreenY, Time.deltaTime * 10);
+        forrowCamCinemachineComposerGetRig1.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig1.m_ScreenY, zoomOutMidScreenY, Time.deltaTime * 10);
+        forrowCamCinemachineComposerGetRig2.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig2.m_ScreenY, zoomOutBotScreenY, Time.deltaTime * 10);
+        forrowCamCinemachineComposerGetRig0.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenX, zoomOutScreenX, Time.deltaTime * 10);
+        forrowCamCinemachineComposerGetRig1.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenX, zoomOutScreenX, Time.deltaTime * 10);
+        forrowCamCinemachineComposerGetRig2.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenX, zoomOutScreenX, Time.deltaTime * 10);
+
+        if (forrowCam.m_Lens.FieldOfView >= zoomOutFieldOfView - 1f)
         {
-            forrowCam.m_Lens.FieldOfView = (zoomFieldOfView += 2f);
-            forrowCamCinemachineComposerGetRig0.m_ScreenY = (zoomTopScreenY -= 0.01f);
-            forrowCamCinemachineComposerGetRig1.m_ScreenY = (zoomMidScreenY -= 0.01f);
-            forrowCamCinemachineComposerGetRig2.m_ScreenY = (zoomBotScreenY -= 0.01f);
-            forrowCamCinemachineComposerGetRig0.m_ScreenX = (zoomScreenX += 0.01f);
-            forrowCamCinemachineComposerGetRig1.m_ScreenX = (zoomScreenX);
-            forrowCamCinemachineComposerGetRig2.m_ScreenX = (zoomScreenX);
-            lastZoomTime = Time.time;
+            UIAim.Instance.crosshair.UseCrosshair(false);
         }
-        if (zoomFieldOfView >= zoomOutFieldOfView - 0.1f)
-            ZoomOutEnd();
-    }
-    private void ZoomOutEnd()
-    {
-        UIAim.Instance.crosshair.UseCrosshair(false);
-        Debug.Log("줌아웃");
-        forrowCam.m_Lens.FieldOfView = zoomOutFieldOfView;
-        forrowCamCinemachineComposerGetRig0.m_ScreenY = zoomOutTopScreenY;
-        forrowCamCinemachineComposerGetRig1.m_ScreenY = zoomOutMidScreenY;
-        forrowCamCinemachineComposerGetRig2.m_ScreenY = zoomOutBotScreenY;
-        forrowCamCinemachineComposerGetRig0.m_ScreenX = zoomOutScreenX;
-        forrowCamCinemachineComposerGetRig1.m_ScreenX = zoomOutScreenX;
-        forrowCamCinemachineComposerGetRig2.m_ScreenX = zoomOutScreenX;
-        zoomFieldOfView = zoomOutFieldOfView;
-        zoomTopScreenY = zoomOutTopScreenY;
-        zoomMidScreenY = zoomOutMidScreenY;
-        zoomBotScreenY = zoomOutBotScreenY;
-        zoomScreenX = zoomOutScreenX;
-        playerMovement.speed = playerMovement.walkSpeed;
-        //lateUpdateFollow.ZoomOutFollow();
-        //gun.ZoomOutFollow();
-        isZoomIn = false;
+        if (forrowCam.m_Lens.FieldOfView >= zoomOutFieldOfView - 0.1f)
+        {
+            forrowCam.m_Lens.FieldOfView = zoomOutFieldOfView;
+            forrowCamCinemachineComposerGetRig0.m_ScreenY = zoomOutTopScreenY;
+            forrowCamCinemachineComposerGetRig1.m_ScreenY = zoomOutMidScreenY;
+            forrowCamCinemachineComposerGetRig2.m_ScreenY = zoomOutBotScreenY;
+            forrowCamCinemachineComposerGetRig0.m_ScreenX = zoomOutScreenX;
+            forrowCamCinemachineComposerGetRig1.m_ScreenX = zoomOutScreenX;
+            forrowCamCinemachineComposerGetRig2.m_ScreenX = zoomOutScreenX;
+            playerMovement.speed = playerMovement.walkSpeed;
+            isZoomIn = false;
+        }
     }
 
     private void ScopeZoomIn()
