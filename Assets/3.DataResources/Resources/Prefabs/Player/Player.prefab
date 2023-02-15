@@ -809,7 +809,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1880197092004795425}
   - component: {fileID: 1880197092004795427}
-  - component: {fileID: 1880197092004795426}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -874,14 +873,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &1880197092004795426
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1880197092004795424}
-  m_Enabled: 1
 --- !u!1 &1880197092034832762
 GameObject:
   m_ObjectHideFlags: 0
@@ -2742,10 +2733,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   runSpeed: 0
+  fireWalkSpeed: 0
   walkSpeed: 0
   jumpSpeed: 0
   jumpStopSpeed: 0
   isJumpState: 0
+  isRunState: 0
 --- !u!114 &7097660014427960438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2780,8 +2773,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   playerHealth: {fileID: 0}
-  scopeCamera: {fileID: 1880197092004795424}
-  scopeImage: {fileID: 0}
   forrowCam: {fileID: 1880197091808697270}
   playerDgree: {fileID: 1880197092159571917}
   gunPivot: {fileID: 1880197091656860985}
@@ -2801,8 +2792,7 @@ MonoBehaviour:
   startingPlayerHealth: 0
   enemyHealthSlider: {fileID: 0}
   livingEntity: {fileID: 0}
-  deathClip: {fileID: 8300000, guid: 3e64a0b075b5d0147808f73bc3cc99be, type: 3}
-  hitClip: {fileID: 8300000, guid: f332592d40b20a64cbd5497c17ea843d, type: 3}
+  isRestoringHealth: 0
   isRestoreHealthProceeding: 0
   isInvincibility: 0
 --- !u!114 &7097660014427960457
@@ -2817,7 +2807,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46536d91935cc452a9f552695ffec782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemPickupClip: {fileID: 8300000, guid: 6839d4f6dd87caa4fa84ec8760e5977d, type: 3}
   lifeRemains: 1
 --- !u!114 &7097660014427960458
 MonoBehaviour:
@@ -3650,9 +3639,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0991a0e5a5212fd489014e1b4be75759, type: 3}
---- !u!4 &5153887257577175521 stripped
+--- !u!4 &1880197092313359996 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 3161995082842788864, guid: 0991a0e5a5212fd489014e1b4be75759,
+  m_CorrespondingSourceObject: {fileID: 8534371506013309853, guid: 0991a0e5a5212fd489014e1b4be75759,
     type: 3}
   m_PrefabInstance: {fileID: 7811459339397164513}
   m_PrefabAsset: {fileID: 0}
@@ -3668,9 +3657,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 319d2fe34a804e245819465c9505ea59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1880197092313359996 stripped
+--- !u!4 &5153887257577175521 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 8534371506013309853, guid: 0991a0e5a5212fd489014e1b4be75759,
+  m_CorrespondingSourceObject: {fileID: 3161995082842788864, guid: 0991a0e5a5212fd489014e1b4be75759,
     type: 3}
   m_PrefabInstance: {fileID: 7811459339397164513}
   m_PrefabAsset: {fileID: 0}

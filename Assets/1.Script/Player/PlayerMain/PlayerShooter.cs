@@ -24,32 +24,16 @@ public class PlayerShooter : MonoBehaviour
     [HideInInspector] public PlayerHealth playerHealth;//플레이어 헬스 스크립트와 연결
     private PlayerInput playerInput;//플레이어 입력 스크립트와 연결
     private PlayerMovement playerMovement;//플레이어 움직임 스크립트와 연결
+    private PlayerCamera playerCameara; // 플레이어 카메
     private Animator playerAnimator;//플레이어 에니메이션
-    private Camera playerCamera;//플레이어 카메러
-    //줌인카메라 케싱용 변수
-    private CinemachineComposer forrowCamCinemachineComposerGetRig0;
-    private CinemachineComposer forrowCamCinemachineComposerGetRig1;
-    private CinemachineComposer forrowCamCinemachineComposerGetRig2;
+    private Camera mainCamera;//플레이어 카메러
 
-    public GameObject scopeCamera;
-    public GameObject scopeImage;
     public CinemachineFreeLook forrowCam;// 줌인 카메라
     public GameObject playerDgree;// 플레이어 각도 수정
     public Transform gunPivot;//총 위치를 위한 오브젝트
 
     //private float waitingTimeForReleasingAim = 2.5f;//총 조준후 다시 풀어지는 시간
     private float lastFireInputTime; //마지막 발사 시간
-    //줌인 줌아웃 float 변수
-    private const float zoomOutFieldOfView = 60f;
-    private const float zoomOutScreenX = 0.45f;//0.4 전에 사용하던값
-    private const float zoomOutTopScreenY = 0.55f;//0.6
-    private const float zoomOutMidScreenY = 0.55f;
-    private const float zoomOutBotScreenY = 0.55f;
-    private const float zoomInFieldOfView = 40f;
-    private const float zoomInScreenX = 0.35f;
-    private const float zoomInTopScreenY = 0.65f;
-    private const float zoomInMidScreenY = 0.65f;
-    private const float zoomInBotScreenY = 0.65f;
     //마우스 감도용 변수
     private float currentXAxis;
     private float currentYAxis;
@@ -60,7 +44,7 @@ public class PlayerShooter : MonoBehaviour
     public readonly int hashFireReady = Animator.StringToHash("FireReady");
 
     private Vector3 aimPoint;//실제 조준대상 tps 기에 사용한다. 실제 조준점이 무조건 정중앙이 아니라서이다.
-    private bool isLinedUp => !(Mathf.Abs(playerCamera.transform.eulerAngles.y - transform.eulerAngles.y) > 1f);//플레이어가 바라보는 각도와 실제 조준 각도를 너무큰치 체크해준다.
+    private bool isLinedUp => !(Mathf.Abs(mainCamera.transform.eulerAngles.y - transform.eulerAngles.y) > 1f);//플레이어가 바라보는 각도와 실제 조준 각도를 너무큰치 체크해준다.
     //정면에 사격할수 있는지 적정거리가 되는지 체크하는 변수 (플레이어 케릭터 위치 + Vector3.up *
     //총의 발사 위치의 y축, 발사 포지션, 사격제외대상 레이어)
     //값에 따라 사격할수 없는 거리가되면 크로스 헤어를 비활성화 하고 스코프를 비활성화 시키기위한 조건값을 구해준다.
@@ -73,26 +57,12 @@ public class PlayerShooter : MonoBehaviour
         {
             excludeTarget |= 1 << gameObject.layer;
         }
-    }
-
-    private void Start()
-    {
-        playerCamera = Camera.main;
+        mainCamera = Camera.main;
         playerInput = GetComponent<PlayerInput>();
         playerAnimator = GetComponent<Animator>();
         playerMovement = GetComponent<PlayerMovement>();
         playerHealth = GetComponent<PlayerHealth>();
-        forrowCamCinemachineComposerGetRig0 = forrowCam.GetRig(0).GetCinemachineComponent<CinemachineComposer>();
-        forrowCamCinemachineComposerGetRig1 = forrowCam.GetRig(1).GetCinemachineComponent<CinemachineComposer>();
-        forrowCamCinemachineComposerGetRig2 = forrowCam.GetRig(2).GetCinemachineComponent<CinemachineComposer>();
-        //카메라 값 초기화
-        forrowCam.m_Lens.FieldOfView = zoomOutFieldOfView;
-        forrowCamCinemachineComposerGetRig0.m_ScreenY = zoomOutTopScreenY;
-        forrowCamCinemachineComposerGetRig1.m_ScreenY = zoomOutMidScreenY;
-        forrowCamCinemachineComposerGetRig2.m_ScreenY = zoomOutBotScreenY;
-        forrowCamCinemachineComposerGetRig0.m_ScreenX = zoomOutScreenX;
-        forrowCamCinemachineComposerGetRig1.m_ScreenX = zoomOutScreenX;
-        forrowCamCinemachineComposerGetRig2.m_ScreenX = zoomOutScreenX;
+        playerCameara = GetComponent<PlayerCamera>();
     }
     
     private void OnEnable()
@@ -122,22 +92,22 @@ public class PlayerShooter : MonoBehaviour
        
         if (playerInput.IsZoomIn == true && isZoomIn == false)
         {
-            ZoomIn();
+            playerCameara.ZoomIn();
         }
         else if (playerInput.IsZoomIn == false && isZoomIn == true && playerInput.IsScopeZoomIn == false)
         {
-            ZoomOut();
+            playerCameara.ZoomOut();
         }
 
-        if (playerInput.IsScopeZoomIn == true && scopeCamera.activeSelf == false
+        if (playerInput.IsScopeZoomIn == true && playerCameara.scopeCamera.activeSelf == false
            && isEnoughDistance == true && gun.guns == Gun.Guns.DMRGUN && isZoomIn == true &&playerInput.IsZoomIn ==true)
         {
-            ScopeZoomIn();
+            playerCameara.ScopeZoomIn();
         }
-        else if (playerInput.IsScopeZoomIn == false && scopeCamera.activeSelf == true
+        else if (playerInput.IsScopeZoomIn == false && playerCameara.scopeCamera.activeSelf == true
             || isEnoughDistance == false && gun.guns == Gun.Guns.DMRGUN)
         {   //스코프 줌인 입력 상태가 false 이고 스코프 카메라가 트루이거나 , 사격거리가 짧아 사격이 불가능할경우 실행
-            ScopeZoomOut(playerInput.IsZoomIn);
+            playerCameara.ScopeZoomOut(playerInput.IsZoomIn);
         }
 
     }
@@ -146,7 +116,7 @@ public class PlayerShooter : MonoBehaviour
     {
         UpdateAimTarget();// 총의 조준지점은 계혹 업데이트해준다.
 
-        float angle = playerCamera.transform.eulerAngles.x;//카메라가 보는 위아래 각도를 구함
+        float angle = mainCamera.transform.eulerAngles.x;//카메라가 보는 위아래 각도를 구함
         if (angle > 270f) angle -= 360f;
         angle = angle / -180f + 0.5f;
         playerAnimator.SetFloat(hashAngle, angle);// 에니메이터에 각도값을 보내어 총을 위아레로 움직이게함
@@ -157,20 +127,7 @@ public class PlayerShooter : MonoBehaviour
 
         UpdateUI();
     }
-    public void SetAimStateIdle()
-    {
-        aimState = AimState.Idle;
-        playerMovement.speed = playerMovement.walkSpeed;
-        playerAnimator.SetLayerWeight(1, 0.3f);
-        playerAnimator.SetBool(hashFireReady, false);
-    }
-    public void SetAimStateFireReady()
-    {
-        aimState = AimState.FireReady;
-        playerMovement.speed = playerMovement.fireWalkSpeed;
-        playerAnimator.SetLayerWeight(1, 1);
-        playerAnimator.SetBool(hashFireReady, true);
-    }
+
     public void ChooseGun(int weaponIndex, float damage)
     {
         EquipGun(allGuns[weaponIndex], damage);
@@ -231,7 +188,7 @@ public class PlayerShooter : MonoBehaviour
     {
         RaycastHit hit;
         //ViewPortToRay 지정한 지점에서 레이저를 발사한다.
-        Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
         if (Physics.Raycast(ray, out hit, gun.fireDistance, ~excludeTarget))
         {
@@ -244,7 +201,7 @@ public class PlayerShooter : MonoBehaviour
         }
         else
         {
-            aimPoint = playerCamera.transform.position + playerCamera.transform.forward * gun.fireDistance;
+            aimPoint = mainCamera.transform.position + mainCamera.transform.forward * gun.fireDistance;
         }
     }
 
@@ -270,81 +227,26 @@ public class PlayerShooter : MonoBehaviour
         playerAnimator.SetIKRotation(AvatarIKGoal.LeftHand, gun.leftHandMount.rotation);
        
     }
-    //조준 시작
-    //int i = 0;
-    private void ZoomIn()
+    // 조준 관련
+    public void SetAimStateIdle()
     {
-        forrowCam.m_Lens.FieldOfView = Mathf.Lerp(forrowCam.m_Lens.FieldOfView, zoomInFieldOfView,Time.deltaTime*10);
-        forrowCamCinemachineComposerGetRig0.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenY, zoomInTopScreenY, Time.deltaTime*10);
-        forrowCamCinemachineComposerGetRig1.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig1.m_ScreenY, zoomInMidScreenY, Time.deltaTime*10);
-        forrowCamCinemachineComposerGetRig2.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig2.m_ScreenY, zoomInBotScreenY, Time.deltaTime*10);
-        forrowCamCinemachineComposerGetRig0.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenX, zoomInScreenX, Time.deltaTime*10);
-        forrowCamCinemachineComposerGetRig1.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig1.m_ScreenX, zoomInScreenX, Time.deltaTime*10);
-        forrowCamCinemachineComposerGetRig2.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig2.m_ScreenX, zoomInScreenX, Time.deltaTime*10);
-        if(forrowCam.m_Lens.FieldOfView <= zoomInFieldOfView + 1f)
-        {
-            if (aimState == AimState.Idle)
-            {
-                SetAimStateFireReady();
-                UIAim.Instance.crosshair.UseCrosshair(true);
-            }
-        }
-        if (forrowCam.m_Lens.FieldOfView <= zoomInFieldOfView+0.1f)
-        {
-            Debug.Log("줌인실행을 멈춤니다.");
-            forrowCam.m_Lens.FieldOfView = zoomInFieldOfView;
-            forrowCamCinemachineComposerGetRig0.m_ScreenY = zoomInTopScreenY;
-            forrowCamCinemachineComposerGetRig1.m_ScreenY = zoomInMidScreenY;
-            forrowCamCinemachineComposerGetRig2.m_ScreenY = zoomInBotScreenY;
-            forrowCamCinemachineComposerGetRig0.m_ScreenX = zoomInScreenX;
-            forrowCamCinemachineComposerGetRig1.m_ScreenX = zoomInScreenX;
-            forrowCamCinemachineComposerGetRig2.m_ScreenX = zoomInScreenX;
-            isZoomIn = true;
-        }
-           
-    }
-
-    //조준 끝
-    private void ZoomOut()
-    {
-        forrowCam.m_Lens.FieldOfView = Mathf.Lerp(forrowCam.m_Lens.FieldOfView, zoomOutFieldOfView, Time.deltaTime * 10);
-        forrowCamCinemachineComposerGetRig0.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenY, zoomOutTopScreenY, Time.deltaTime * 10);
-        forrowCamCinemachineComposerGetRig1.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig1.m_ScreenY, zoomOutMidScreenY, Time.deltaTime * 10);
-        forrowCamCinemachineComposerGetRig2.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig2.m_ScreenY, zoomOutBotScreenY, Time.deltaTime * 10);
-        forrowCamCinemachineComposerGetRig0.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenX, zoomOutScreenX, Time.deltaTime * 10);
-        forrowCamCinemachineComposerGetRig1.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenX, zoomOutScreenX, Time.deltaTime * 10);
-        forrowCamCinemachineComposerGetRig2.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenX, zoomOutScreenX, Time.deltaTime * 10);
-
-        if (forrowCam.m_Lens.FieldOfView >= zoomOutFieldOfView - 1f)
-        {
-            UIAim.Instance.crosshair.UseCrosshair(false);
-        }
-        if (forrowCam.m_Lens.FieldOfView >= zoomOutFieldOfView - 0.1f)
-        {
-            forrowCam.m_Lens.FieldOfView = zoomOutFieldOfView;
-            forrowCamCinemachineComposerGetRig0.m_ScreenY = zoomOutTopScreenY;
-            forrowCamCinemachineComposerGetRig1.m_ScreenY = zoomOutMidScreenY;
-            forrowCamCinemachineComposerGetRig2.m_ScreenY = zoomOutBotScreenY;
-            forrowCamCinemachineComposerGetRig0.m_ScreenX = zoomOutScreenX;
-            forrowCamCinemachineComposerGetRig1.m_ScreenX = zoomOutScreenX;
-            forrowCamCinemachineComposerGetRig2.m_ScreenX = zoomOutScreenX;
-            playerMovement.speed = playerMovement.walkSpeed;
-            isZoomIn = false;
-        }
-    }
-
-    private void ScopeZoomIn()
-    {
-        scopeCamera.SetActive(true);
-        scopeImage.SetActive(true);
+        aimState = AimState.Idle;
+        playerMovement.speed = playerMovement.walkSpeed;
+        playerAnimator.SetLayerWeight(1, 0.3f);
+        playerAnimator.SetBool(hashFireReady, false);
         UIAim.Instance.crosshair.UseCrosshair(false);
     }
-
-    private void ScopeZoomOut(bool isCrosshair)
+    public void SetAimStateFireReady()
     {
-        scopeCamera.SetActive(false);
-        scopeImage.SetActive(false);
-        UIAim.Instance.crosshair.UseCrosshair(isCrosshair);
+        aimState = AimState.FireReady;
+        playerMovement.speed = playerMovement.fireWalkSpeed;
+        playerAnimator.SetLayerWeight(1, 1);
+        playerAnimator.SetBool(hashFireReady, true);
+        UIAim.Instance.crosshair.UseCrosshair(true);
+    }
+    public void SetisZoomIn(bool isZoomIn)
+    {
+        this.isZoomIn = isZoomIn;
     }
     //마우스 감도 조절하기 
     public void XAxisChange(float x )//설정 마우스 감도 조절용

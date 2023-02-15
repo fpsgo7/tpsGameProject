@@ -9,5 +9,9 @@ public enum SoundList
      gunshot = 1,
      gunReload = 2,
      enemyDieSound = 3,
+     FootStep1 = 4,
+     FootStep2 = 5,
+     FootStep3 = 6,
+     FootStep4 = 7,
 
 }

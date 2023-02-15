@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInput playerInput;
     private PlayerShooter playerShooter;
     private PlayerHealth playerHealth;
+    private PlayerCamera playerCamera;
     private Animator animator;
     //카메라를 기준으로 움직이기에 필요한 카메라 변수
     private Camera followCam;
@@ -48,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         playerShooter = GetComponent<PlayerShooter>();
         playerHealth = GetComponent<PlayerHealth>();
+        playerCamera = GetComponent<PlayerCamera>();
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
 
@@ -115,6 +117,7 @@ public class PlayerMovement : MonoBehaviour
         isRunState = true;
         speed = runSpeed;
         animator.SetBool(hashRun, true);
+        playerCamera.SetCameraFov(PlayerCamera.FovValues.RUN, 2);
     }
 
     public void RunEnd()
@@ -122,6 +125,7 @@ public class PlayerMovement : MonoBehaviour
         isRunState = false;
         speed = walkSpeed;
         animator.SetBool(hashRun, false);
+        playerCamera.SetCameraFov(PlayerCamera.FovValues.ZOOMOUT, 2);
     }
     //점프하기
     public void Jump()
