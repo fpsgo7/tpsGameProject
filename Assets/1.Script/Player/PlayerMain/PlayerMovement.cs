@@ -114,34 +114,43 @@ public class PlayerMovement : MonoBehaviour
     }
     public void RunStart()
     {
-        isRunState = true;
-        speed = runSpeed;
-        animator.SetBool(hashRun, true);
-        playerCamera.SetCameraFov(PlayerCamera.FovValues.RUN, 2);
+        if (!playerInput.IsZoomIn)
+        {
+            isRunState = true;
+            speed = runSpeed;
+            animator.SetBool(hashRun, true);
+            playerCamera.SetCameraFov(PlayerCamera.FovValues.RUN, 2);
+        }
     }
 
     public void RunEnd()
     {
-        isRunState = false;
-        speed = walkSpeed;
-        animator.SetBool(hashRun, false);
-        playerCamera.SetCameraFov(PlayerCamera.FovValues.ZOOMOUT, 2);
+        if(isRunState == true)
+        {
+            isRunState = false;
+            speed = walkSpeed;
+            animator.SetBool(hashRun, false);
+            playerCamera.SetCameraFov(PlayerCamera.FovValues.ZOOMOUT, 2);
+        }
     }
     //점프하기
     public void Jump()
     {
-        if(Time.time >= lastJumpTime + waitingForJump)
+        if (!playerInput.IsZoomIn)
         {
-            lastJumpTime = Time.time;
-            animator.SetTrigger(hashJump);
-        }
+            isJumpState = true;
+            if (Time.time >= lastJumpTime + waitingForJump)
+            {
+                lastJumpTime = Time.time;
+                animator.SetTrigger(hashJump);
+            }
+        }  
     }
     // 밑의 점프 시작 끝 호출은 애니메이션에서 호출함
     public void JumpStart()
     {
         //Debug.Log("점프시작");
         playerHealth.isInvincibility = true;
-        isJumpState = true;
         speed = jumpStopSpeed;
     }
     public void JumpMoveStart()

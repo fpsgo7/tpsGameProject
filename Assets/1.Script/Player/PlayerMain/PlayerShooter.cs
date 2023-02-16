@@ -120,7 +120,7 @@ public class PlayerShooter : MonoBehaviour
         if (angle > 270f) angle -= 360f;
         angle = angle / -180f + 0.5f;
         playerAnimator.SetFloat(hashAngle, angle);// 에니메이터에 각도값을 보내어 총을 위아레로 움직이게함
-        if (!playerInput.IsFire && !playerInput.IsZoomIn && aimState == AimState.FireReady) 
+        if (!playerCameara.scopeCamera.activeSelf == true && !playerInput.IsFire && !playerInput.IsZoomIn && aimState == AimState.FireReady) 
         {
             SetAimStateIdle();
         }
