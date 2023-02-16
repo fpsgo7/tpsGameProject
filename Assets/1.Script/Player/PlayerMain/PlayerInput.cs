@@ -68,7 +68,11 @@ public class PlayerInput : MonoBehaviour
         {
             moveInput = Vector2.up;
             if (Input.GetKeyDown(KeySetting.keys[KeyAction.JUMP]))
+            {
                 playerMovement.Jump();
+               
+            }
+                
             if (Input.GetKeyUp(KeySetting.keys[KeyAction.RUN]))
                 playerMovement.RunEnd();
             return;
@@ -87,5 +91,19 @@ public class PlayerInput : MonoBehaviour
             playerShooter.Reload();
         if (Input.GetKeyDown(KeySetting.keys[KeyAction.RUN]))
             playerMovement.RunStart();
+    }
+
+    public bool RunKeyActionCheck()
+    {
+        if (!Input.GetKey(KeySetting.keys[KeyAction.RUN]))
+        {
+            playerMovement.RunEnd();
+            return true;
+        }
+        else
+        {
+            return false;
+        }   
+        
     }
 }

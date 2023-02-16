@@ -136,6 +136,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetTrigger(hashJump);
         }
     }
+    // 밑의 점프 시작 끝 호출은 애니메이션에서 호출함
     public void JumpStart()
     {
         //Debug.Log("점프시작");
@@ -157,7 +158,14 @@ public class PlayerMovement : MonoBehaviour
         playerHealth.isInvincibility = false;
         isJumpState = false;
         animator.applyRootMotion = false;
-        speed = walkSpeed;
+        if (playerInput.RunKeyActionCheck())
+        {
+            speed = walkSpeed;
+        }
+        else
+        {
+            speed = runSpeed;
+        }
     }
 
     //사용자 의 입력을 받아 에니메이션을 업데이트함
