@@ -7,6 +7,7 @@ using UnityEngine;
 public class PlayerFootStep : MonoBehaviour
 {
     private PlayerMovement playerMovement;
+    private PlayerShooter playerShooter;
     private Animator myAnimator;// 나의 애니메이터
     private Transform leftFoot, rightFoot;// 발위치
     private float dist;//거리값
@@ -26,6 +27,7 @@ public class PlayerFootStep : MonoBehaviour
     {
         // 캐싱하며 값 연결하기
         playerMovement = GetComponent<PlayerMovement>();
+        playerShooter = GetComponent<PlayerShooter>();
         myAnimator = GetComponent<Animator>();
         leftFoot = myAnimator.GetBoneTransform(HumanBodyBones.LeftFoot);// 왼발 뼈
         rightFoot = myAnimator.GetBoneTransform(HumanBodyBones.RightFoot);// 오른발뼈 
@@ -37,7 +39,6 @@ public class PlayerFootStep : MonoBehaviour
     // 발자국 소리 제생
     private void PlayFootStep()
     {
-        Debug.Log("발자국 소리 재생");
         if (oldDist < maxDist)// 마지막 거리가 최대거리보다 작은 경우  return
         {// 아직 발이 땅바닥에 닿지 않음
             return;
@@ -51,6 +52,8 @@ public class PlayerFootStep : MonoBehaviour
 
     private void Update()
     {
+        if (playerShooter.aimState == PlayerShooter.AimState.FireReady)
+            return;
         grounded = !playerMovement.isJumpState;
         float factor = 0.15f;// 임의 값
         if (grounded )//만약 땅에 붙어 있고 움직이고 있다면

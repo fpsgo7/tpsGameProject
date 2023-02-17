@@ -67,20 +67,16 @@ public class PlayerCamera : MonoBehaviour
     {
         if (playerShooter.aimState == PlayerShooter.AimState.Idle)
         {
-            // 줌인이 완료되면 공격이 가능하게한다.
             playerShooter.SetAimStateFireReady();
         }
         SetCameraFov(FovValues.ZOOMIN ,10);
-        forrowCamCinemachineComposerGetRig0.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenY, zoomInTopScreenY, Time.deltaTime * 10);
-        forrowCamCinemachineComposerGetRig1.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig1.m_ScreenY, zoomInMidScreenY, Time.deltaTime * 10);
-        forrowCamCinemachineComposerGetRig2.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig2.m_ScreenY, zoomInBotScreenY, Time.deltaTime * 10);
-        forrowCamCinemachineComposerGetRig0.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenX, zoomInScreenX, Time.deltaTime * 10);
-        forrowCamCinemachineComposerGetRig1.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig1.m_ScreenX, zoomInScreenX, Time.deltaTime * 10);
-        forrowCamCinemachineComposerGetRig2.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig2.m_ScreenX, zoomInScreenX, Time.deltaTime * 10);
-        if (forrowCam.m_Lens.FieldOfView <= zoomInFieldOfView + 1f)
-        {
-           
-        }
+        forrowCamCinemachineComposerGetRig0.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenY, zoomInTopScreenY, Time.deltaTime * 5);
+        forrowCamCinemachineComposerGetRig1.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig1.m_ScreenY, zoomInMidScreenY, Time.deltaTime * 5);
+        forrowCamCinemachineComposerGetRig2.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig2.m_ScreenY, zoomInBotScreenY, Time.deltaTime * 5);
+        forrowCamCinemachineComposerGetRig0.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenX, zoomInScreenX, Time.deltaTime * 5);
+        forrowCamCinemachineComposerGetRig1.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig1.m_ScreenX, zoomInScreenX, Time.deltaTime * 5);
+        forrowCamCinemachineComposerGetRig2.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig2.m_ScreenX, zoomInScreenX, Time.deltaTime * 5);
+
         if (forrowCam.m_Lens.FieldOfView <= zoomInFieldOfView + 0.1f)
         {
             forrowCam.m_Lens.FieldOfView = zoomInFieldOfView;
@@ -91,12 +87,14 @@ public class PlayerCamera : MonoBehaviour
             forrowCamCinemachineComposerGetRig1.m_ScreenX = zoomInScreenX;
             forrowCamCinemachineComposerGetRig2.m_ScreenX = zoomInScreenX;
             playerShooter.SetisZoomIn(true);
+          
         }
 
     }
     //조준 끝
     public void ZoomOut()
     {
+        playerShooter.SetisZoomIn(false);
         SetCameraFov(FovValues.ZOOMOUT,10);
         forrowCamCinemachineComposerGetRig0.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenY, zoomOutTopScreenY, Time.deltaTime * 10);
         forrowCamCinemachineComposerGetRig1.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig1.m_ScreenY, zoomOutMidScreenY, Time.deltaTime * 10);
@@ -114,7 +112,6 @@ public class PlayerCamera : MonoBehaviour
             forrowCamCinemachineComposerGetRig0.m_ScreenX = zoomOutScreenX;
             forrowCamCinemachineComposerGetRig1.m_ScreenX = zoomOutScreenX;
             forrowCamCinemachineComposerGetRig2.m_ScreenX = zoomOutScreenX;
-            playerShooter.SetisZoomIn(false);
         }
     }
     // 조준경 조준

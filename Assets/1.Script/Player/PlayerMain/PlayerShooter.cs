@@ -83,24 +83,27 @@ public class PlayerShooter : MonoBehaviour
 
     private void FixedUpdate()
     {
+
         if (playerInput.IsFire)
         {
             lastFireInputTime = Time.time;
             Shoot();
         }
 
-       
+
         if (playerInput.IsZoomIn == true && isZoomIn == false)
         {
             playerCameara.ZoomIn();
         }
-        else if (playerInput.IsZoomIn == false && isZoomIn == true && playerInput.IsScopeZoomIn == false)
+        else if (playerInput.IsZoomIn == false
+            && playerCameara.forrowCam.m_Lens.FieldOfView < 60
+            && playerInput.IsScopeZoomIn == false)
         {
             playerCameara.ZoomOut();
         }
 
         if (playerInput.IsScopeZoomIn == true && playerCameara.scopeCamera.activeSelf == false
-           && isEnoughDistance == true && gun.guns == Gun.Guns.DMRGUN && isZoomIn == true &&playerInput.IsZoomIn ==true)
+           && isEnoughDistance == true && gun.guns == Gun.Guns.DMRGUN && isZoomIn == true && playerInput.IsZoomIn == true)
         {
             playerCameara.ScopeZoomIn();
         }
@@ -114,6 +117,8 @@ public class PlayerShooter : MonoBehaviour
 
     private void Update()
     {
+       
+
         UpdateAimTarget();// 총의 조준지점은 계혹 업데이트해준다.
 
         float angle = mainCamera.transform.eulerAngles.x;//카메라가 보는 위아래 각도를 구함
@@ -231,18 +236,18 @@ public class PlayerShooter : MonoBehaviour
     public void SetAimStateIdle()
     {
         aimState = AimState.Idle;
-        playerMovement.speed = playerMovement.walkSpeed;
         playerAnimator.SetLayerWeight(1, 0.3f);
         playerAnimator.SetBool(hashFireReady, false);
         UIAim.Instance.crosshair.UseCrosshair(false);
+        playerMovement.speed = playerMovement.walkSpeed;
     }
     public void SetAimStateFireReady()
     {
         aimState = AimState.FireReady;
-        playerMovement.speed = playerMovement.fireWalkSpeed;
         playerAnimator.SetLayerWeight(1, 1);
         playerAnimator.SetBool(hashFireReady, true);
         UIAim.Instance.crosshair.UseCrosshair(true);
+        playerMovement.speed = playerMovement.fireWalkSpeed;
     }
     public void SetisZoomIn(bool isZoomIn)
     {

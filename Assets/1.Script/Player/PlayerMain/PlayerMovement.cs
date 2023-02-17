@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     public readonly int hashVerticalMove = Animator.StringToHash("Vertical Move");
     public readonly int hashHorizontalMove = Animator.StringToHash("Horizontal Move");
     //플레이어 값
-    [HideInInspector] public float speed;//속도
+    public float speed;//속도
     [HideInInspector] public float runSpeed;//뛰기 속도
     [HideInInspector] public float fireWalkSpeed;// 사격 걷기 속도
     [HideInInspector] public float walkSpeed;// 일반속도
