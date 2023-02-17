@@ -52,7 +52,7 @@ public class PlayerFootStep : MonoBehaviour
 
     private void Update()
     {
-        if (playerShooter.aimState == PlayerShooter.AimState.FireReady)
+        if (playerMovement.currentSpeed <= 3.0f) 
             return;
         grounded = !playerMovement.isJumpState;
         float factor = 0.15f;// 임의 값

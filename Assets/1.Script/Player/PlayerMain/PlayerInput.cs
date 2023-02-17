@@ -66,14 +66,20 @@ public class PlayerInput : MonoBehaviour
         //뛰기가 눌러지는 경우
         if (playerMovement.isRunState == true)
         {
-            moveInput = Vector2.up;
+            Debug.Log(Input.GetAxis(moveVerticalAxisName));
+            moveInput = new Vector2(Input.GetAxis(moveHorizontalAxisName), Input.GetAxis(moveVerticalAxisName));
+
             if (Input.GetKeyDown(KeySetting.keys[KeyAction.JUMP]))
             {
                 playerMovement.Jump();
                
             }
-                
-            if (Input.GetKeyUp(KeySetting.keys[KeyAction.RUN]))
+            if(Input.GetAxis(moveVerticalAxisName) > 0.9 && playerMovement.isRunSpeed == false)
+            {
+                playerMovement.RunSpeedGet();
+            }    
+            if (Input.GetKeyUp(KeySetting.keys[KeyAction.RUN])
+                || Input.GetAxis(moveVerticalAxisName) <0.5 && playerMovement.isRunSpeed == true )
                 playerMovement.RunEnd();
             return;
         }

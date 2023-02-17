@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     private float lastJumpTime; //마지막 점프시간
     [HideInInspector] public bool isJumpState = false;// 점프 상태
     [HideInInspector] public bool isRunState = false;// 뛰기 상태
+    [HideInInspector] public bool isRunSpeed = false; // 뛰기 속도 도달
     //지면상의 현제 속도를 표현한다. 람다식 활용
     public float currentSpeed =>
         new Vector2(characterController.velocity.x, characterController.velocity.z).magnitude;//x축 과 z 축의 값을 백터 형식으로 구한다.
@@ -122,7 +123,13 @@ public class PlayerMovement : MonoBehaviour
             playerCamera.SetCameraFov(PlayerCamera.FovValues.RUN, 2);
         }
     }
-
+    public void RunSpeedGet()
+    {
+        if(isRunSpeed == false)
+        {
+            isRunSpeed = true;
+        }
+    }
     public void RunEnd()
     {
         if(isRunState == true)
