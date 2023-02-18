@@ -31,7 +31,9 @@ public class Grenade : MonoBehaviour
             Vector3.up, 0f,
             LayerMask.GetMask("Enemy"));
         ExplosionAttack();
+        
         ObjectToolManager.Instance.GetObject((int)ObjectList.explosion, this.transform.position, this.transform.position);
+        SoundToolManager.Instance.PlayOneShotSound((int)SoundList.explosion, transform.position, 0.7f);
         GrenadeObjectPooling.ReturnObject(this);
     }
     private void ExplosionAttack()

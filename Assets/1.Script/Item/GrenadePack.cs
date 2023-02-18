@@ -15,6 +15,8 @@ public class GrenadePack : MonoBehaviour,IItem
 
     private void OnTriggerEnter(Collider other)
     {
+        SoundToolManager.Instance.PlayOneShotSound
+                   ((int)SoundList.pickUp, transform.position, 0.6f);
         if (other.CompareTag("Player"))
         {
             if (fireGrenade != null)

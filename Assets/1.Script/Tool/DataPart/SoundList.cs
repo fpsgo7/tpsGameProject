@@ -13,5 +13,7 @@ public enum SoundList
      FootStep2 = 5,
      FootStep3 = 6,
      FootStep4 = 7,
+     pickUp = 8,
+     explosion = 9,
 
 }

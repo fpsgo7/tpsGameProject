@@ -154,6 +154,7 @@ public class EnemyMiniTankAI : MonoBehaviour
             LayerMask.GetMask("Player"));
         ExplosionAttack();
         ObjectToolManager.Instance.GetObject((int)ObjectList.explosion, this.transform.position, this.transform.position);
+        SoundToolManager.Instance.PlayOneShotSound((int)SoundList.explosion, transform.position, 0.7f);
         this.gameObject.SetActive(false);
     }
 

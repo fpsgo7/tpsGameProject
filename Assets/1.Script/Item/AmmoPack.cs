@@ -17,6 +17,8 @@ public class AmmoPack : MonoBehaviour,IItem
     {
         if (other.CompareTag("Player"))
         {
+            SoundToolManager.Instance.PlayOneShotSound
+                ((int)SoundList.pickUp, transform.position, 0.6f);
             if (playerShooter != null && playerShooter.gun != null)
             {
                 playerShooter.gun.ammoRemain += ammo;

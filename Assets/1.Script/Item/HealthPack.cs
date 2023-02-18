@@ -16,6 +16,8 @@ public class HealthPack : MonoBehaviour,IItem
     {
         if (other.CompareTag("Player"))
         {
+            SoundToolManager.Instance.PlayOneShotSound
+                ((int)SoundList.pickUp, transform.position, 0.6f);
             if (playerHealth != null)
             {
                 playerHealth.GetHealthKit();
