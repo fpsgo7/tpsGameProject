@@ -13,6 +13,7 @@ public class PlayerCamera : MonoBehaviour
     private CinemachineComposer forrowCamCinemachineComposerGetRig1;
     private CinemachineComposer forrowCamCinemachineComposerGetRig2;
     private float setFov;
+    private float setScreenX;
     private int fovChangeSpeed;
     //줌인 줌아웃 float 변수
     public const float zoomOutFieldOfView = 60f;
@@ -21,7 +22,8 @@ public class PlayerCamera : MonoBehaviour
     private const float zoomOutMidScreenY = 0.55f;
     private const float zoomOutBotScreenY = 0.55f;
     private const float zoomInFieldOfView = 40f;
-    private const float zoomInScreenX = 0.35f;
+    private const float zoomInToRightScreenX = 0.30f;
+    private const float zoomInToLeftScreenX = 0.60f;
     private const float zoomInTopScreenY = 0.65f;
     private const float zoomInMidScreenY = 0.65f;
     private const float zoomInBotScreenY = 0.65f;
@@ -36,7 +38,12 @@ public class PlayerCamera : MonoBehaviour
         ZOOMIN,
         RUN
     }
-
+    public enum ScreenXValues
+    {
+        ZOOMOUT,
+        ZOOMINRIGHT,
+        ZOOMINLEFT,
+    }
     private void Awake()
     {
         playerShooter = GetComponent<PlayerShooter>();
@@ -54,11 +61,16 @@ public class PlayerCamera : MonoBehaviour
         forrowCamCinemachineComposerGetRig2.m_ScreenX = zoomOutScreenX;
         // fov값 초기화
         setFov = zoomOutFieldOfView;
+        setScreenX = zoomOutScreenX;
     }
 
     private void Update()
     {
         forrowCam.m_Lens.FieldOfView = Mathf.Lerp(forrowCam.m_Lens.FieldOfView, setFov , Time.deltaTime * fovChangeSpeed);
+        forrowCamCinemachineComposerGetRig0.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenX, setScreenX, Time.deltaTime * 10);
+        forrowCamCinemachineComposerGetRig1.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig1.m_ScreenX, setScreenX, Time.deltaTime * 10);
+        forrowCamCinemachineComposerGetRig2.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig2.m_ScreenX, setScreenX, Time.deltaTime * 10);
+        Debug.Log(setScreenX);
     }
 
     //조준 시작
@@ -70,22 +82,19 @@ public class PlayerCamera : MonoBehaviour
             playerShooter.SetAimStateFireReady();
         }
         SetCameraFov(FovValues.ZOOMIN ,10);
-        forrowCamCinemachineComposerGetRig0.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenY, zoomInTopScreenY, Time.deltaTime * 5);
-        forrowCamCinemachineComposerGetRig1.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig1.m_ScreenY, zoomInMidScreenY, Time.deltaTime * 5);
-        forrowCamCinemachineComposerGetRig2.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig2.m_ScreenY, zoomInBotScreenY, Time.deltaTime * 5);
-        forrowCamCinemachineComposerGetRig0.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenX, zoomInScreenX, Time.deltaTime * 5);
-        forrowCamCinemachineComposerGetRig1.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig1.m_ScreenX, zoomInScreenX, Time.deltaTime * 5);
-        forrowCamCinemachineComposerGetRig2.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig2.m_ScreenX, zoomInScreenX, Time.deltaTime * 5);
-
+        SetScreenX(ScreenXValues.ZOOMINRIGHT);
+        forrowCamCinemachineComposerGetRig0.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenY, zoomInTopScreenY, Time.deltaTime * 10);
+        forrowCamCinemachineComposerGetRig1.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig1.m_ScreenY, zoomInMidScreenY, Time.deltaTime * 10);
+        forrowCamCinemachineComposerGetRig2.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig2.m_ScreenY, zoomInBotScreenY, Time.deltaTime * 10);
         if (forrowCam.m_Lens.FieldOfView <= zoomInFieldOfView + 0.1f)
         {
             forrowCam.m_Lens.FieldOfView = zoomInFieldOfView;
             forrowCamCinemachineComposerGetRig0.m_ScreenY = zoomInTopScreenY;
             forrowCamCinemachineComposerGetRig1.m_ScreenY = zoomInMidScreenY;
             forrowCamCinemachineComposerGetRig2.m_ScreenY = zoomInBotScreenY;
-            forrowCamCinemachineComposerGetRig0.m_ScreenX = zoomInScreenX;
-            forrowCamCinemachineComposerGetRig1.m_ScreenX = zoomInScreenX;
-            forrowCamCinemachineComposerGetRig2.m_ScreenX = zoomInScreenX;
+            forrowCamCinemachineComposerGetRig0.m_ScreenX = zoomInToRightScreenX;
+            forrowCamCinemachineComposerGetRig1.m_ScreenX = zoomInToRightScreenX;
+            forrowCamCinemachineComposerGetRig2.m_ScreenX = zoomInToRightScreenX;
             playerShooter.SetisZoomIn(true);
           
         }
@@ -96,13 +105,10 @@ public class PlayerCamera : MonoBehaviour
     {
         playerShooter.SetisZoomIn(false);
         SetCameraFov(FovValues.ZOOMOUT,10);
+        SetScreenX(ScreenXValues.ZOOMOUT);
         forrowCamCinemachineComposerGetRig0.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenY, zoomOutTopScreenY, Time.deltaTime * 10);
         forrowCamCinemachineComposerGetRig1.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig1.m_ScreenY, zoomOutMidScreenY, Time.deltaTime * 10);
         forrowCamCinemachineComposerGetRig2.m_ScreenY = Mathf.Lerp(forrowCamCinemachineComposerGetRig2.m_ScreenY, zoomOutBotScreenY, Time.deltaTime * 10);
-        forrowCamCinemachineComposerGetRig0.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenX, zoomOutScreenX, Time.deltaTime * 10);
-        forrowCamCinemachineComposerGetRig1.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenX, zoomOutScreenX, Time.deltaTime * 10);
-        forrowCamCinemachineComposerGetRig2.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenX, zoomOutScreenX, Time.deltaTime * 10);
-
         if (forrowCam.m_Lens.FieldOfView >= zoomOutFieldOfView - 0.1f)
         {
             forrowCam.m_Lens.FieldOfView = zoomOutFieldOfView;
@@ -138,5 +144,30 @@ public class PlayerCamera : MonoBehaviour
         if (fovValues == FovValues.RUN)
             setFov = runFieldOfView;
         this.fovChangeSpeed = fovChangeSpeed;
+    }
+    //ScreenX 설정
+    public void SetScreenX(ScreenXValues screenXValues)
+    {
+        if (screenXValues == ScreenXValues.ZOOMOUT)
+            setScreenX = zoomOutScreenX;
+        if (screenXValues == ScreenXValues.ZOOMINRIGHT)
+            setScreenX = zoomInToRightScreenX;
+        if (screenXValues == ScreenXValues.ZOOMINLEFT)
+            setScreenX = zoomInToLeftScreenX;
+    }
+    // ScreenX 좌우 교체
+    public void SetScreenXLR()
+    {
+       
+        if(setScreenX == zoomInToRightScreenX)
+        {
+            Debug.Log("왼쪽으로");
+            setScreenX = zoomInToLeftScreenX;
+        }
+        else
+        {
+            Debug.Log("오른쪽으로");
+            setScreenX = zoomInToRightScreenX;
+        }
     }
 }

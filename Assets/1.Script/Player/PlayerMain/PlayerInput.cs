@@ -20,6 +20,7 @@ public class PlayerInput : MonoBehaviour
     private PlayerMovement playerMovement;
     private PlayerShooter playerShooter;
     private PlayerInteraction playerInteraction;
+    private PlayerCamera playerCamera;
     private FireGrenade fireGrenade;
     private void Awake()
     {
@@ -27,6 +28,7 @@ public class PlayerInput : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         playerInteraction = GetComponent<PlayerInteraction>();
         playerShooter = GetComponent<PlayerShooter>();
+        playerCamera = GetComponent<PlayerCamera>();
         fireGrenade = GetComponent<FireGrenade>();
     }
 
@@ -66,7 +68,6 @@ public class PlayerInput : MonoBehaviour
         //뛰기가 눌러지는 경우
         if (playerMovement.isRunState == true)
         {
-            Debug.Log(Input.GetAxis(moveVerticalAxisName));
             moveInput = new Vector2(Input.GetAxis(moveHorizontalAxisName), Input.GetAxis(moveVerticalAxisName));
 
             if (Input.GetKeyDown(KeySetting.keys[KeyAction.JUMP]))
@@ -96,7 +97,13 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKeyDown(KeySetting.keys[KeyAction.RELOAD]))
             playerShooter.Reload();
         if (Input.GetKeyDown(KeySetting.keys[KeyAction.RUN]))
-            playerMovement.RunStart();
+        {
+            if( IsZoomIn == false)
+                playerMovement.RunStart();
+            if (IsZoomIn == true)
+                playerCamera.SetScreenXLR();
+        }
+            
     }
 
     public bool RunKeyActionCheck()
