@@ -70,7 +70,6 @@ public class PlayerCamera : MonoBehaviour
         forrowCamCinemachineComposerGetRig0.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig0.m_ScreenX, setScreenX, Time.deltaTime * 10);
         forrowCamCinemachineComposerGetRig1.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig1.m_ScreenX, setScreenX, Time.deltaTime * 10);
         forrowCamCinemachineComposerGetRig2.m_ScreenX = Mathf.Lerp(forrowCamCinemachineComposerGetRig2.m_ScreenX, setScreenX, Time.deltaTime * 10);
-        Debug.Log(setScreenX);
     }
 
     //조준 시작

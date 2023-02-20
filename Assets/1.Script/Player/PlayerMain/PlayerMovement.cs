@@ -44,7 +44,9 @@ public class PlayerMovement : MonoBehaviour
     //지면상의 현제 속도를 표현한다. 람다식 활용
     public float currentSpeed =>
         new Vector2(characterController.velocity.x, characterController.velocity.z).magnitude;//x축 과 z 축의 값을 백터 형식으로 구한다.
-    
+    // 플레이어 오브젝트 접근하기
+    public Transform playerTransform;
+
     private void Start()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -81,8 +83,12 @@ public class PlayerMovement : MonoBehaviour
     public void Move(Vector2 moveInput)
     {
         float targetSpeed = speed * moveInput.magnitude;//속도 결정
+
         Vector3 moveDiection 
             = Vector3.Normalize(transform.forward * moveInput.y + transform.right * moveInput.x);//방향 결정
+        if (isRunState == true)
+            moveDiection = Vector3.Normalize(transform.forward * moveInput.y);//방향 결정
+
         currentVelocityY += Time.deltaTime * Physics.gravity.y;// 중력 역할을함  Physics.gravity.y 에는 중력값으로 -9.8이 들어가 있다.
 
         //지연시간
@@ -94,10 +100,10 @@ public class PlayerMovement : MonoBehaviour
             = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, smoothTime);
 
         //압뒤 좌우 속도 구한후 위아레 속도를 합한다.
-        Vector3 velocity 
+        Vector3 velocity
             = moveDiection * targetSpeed + Vector3.up * currentVelocityY;
-
-        characterController.Move(velocity*Time.deltaTime);//실제로 움직이게한다.
+        //실제로 움직이게한다.
+        characterController.Move(velocity*Time.deltaTime);
 
         if (characterController.isGrounded)//발이 땅에 닿아있으면 중력값을 초기화 시켜 내려가는 힘을 없앤다.
             currentVelocityY = 0f;
@@ -106,13 +112,25 @@ public class PlayerMovement : MonoBehaviour
 
     public void Rotate()
     {
-        float targetRotation = followCam.transform.eulerAngles.y;//카메라의 y 축 각도 가져옴
-        //Mathf.SmoothDampAngle 로 부드럽게 각도를 바꾸게함
-        targetRotation = Mathf.SmoothDampAngle(transform.eulerAngles.y,targetRotation,ref turnSmoothVelocity, turnSmoothTime);//(현제값, 목표값, 속도, 시간)
-
-        transform.eulerAngles = Vector3.up * targetRotation;// y 축에대해서만 값을 설정함
-
+        Vector3 forward = followCam.transform.TransformDirection(Vector3.forward);
+        forward.y = 0.0f;//앞방향의 y 축은 0으로 함
+        forward = forward.normalized;//단일백터화시킴
+        Vector3 right = new Vector3(forward.z, 0.0f, -forward.x);// right는 좌우값을 위해 사용한다.
+        Vector3 targetDirection = Vector3.zero;
+        if (isRunState == true)
+            targetDirection = forward * (playerInput.moveInput.y * 0.5f) + right * (playerInput.moveInput.x * 0.5f);
+        else
+            targetDirection = forward;
+        Quaternion targetRotation = Quaternion.LookRotation(targetDirection);// 목표각도를 목표 위치벡터값을 통해 구한다.
+        characterController.transform.rotation = Quaternion.Slerp(characterController.transform.rotation,
+            targetRotation, turnSmoothTime);//움직여야할 목표위치와 부드러운 정
+        // 전에 쓰던 방식
+        //float targetRotation = followCam.transform.eulerAngles.y;//카메라의 y 축 각도 가져옴
+        ////Mathf.SmoothDampAngle 로 부드럽게 각도를 바꾸게함
+        //targetRotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);//(현제값, 목표값, 속도, 시간)
+        //transform.eulerAngles = Vector3.up * targetRotation;// y 축에대해서만 값을 설정함
     }
+
     public void RunStart()
     {
         if (!playerInput.IsZoomIn)

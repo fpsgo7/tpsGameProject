@@ -71,6 +71,7 @@ public class PlayerInteraction : MonoBehaviour
         transform.GetChild(0).gameObject.SetActive(false);
         transform.GetChild(1).gameObject.SetActive(true);
         ObjectToolManager.Instance.GetObject((int)ObjectList.explosion, this.transform.position, this.transform.position);
+        SoundToolManager.Instance.PlayOneShotSound((int)SoundList.explosion, this.transform.position, 1f);
         Destroy(transform.gameObject,5f);
     }
 }
