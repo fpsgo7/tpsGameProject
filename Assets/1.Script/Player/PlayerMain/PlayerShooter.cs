@@ -120,11 +120,12 @@ public class PlayerShooter : MonoBehaviour
        
 
         UpdateAimTarget();// 총의 조준지점은 계혹 업데이트해준다.
+        // 총위아레 조준
+        //float angle = mainCamera.transform.eulerAngles.x;//카메라가 보는 위아래 각도를 구함
+        //if (angle > 270f) angle -= 360f;
+        //angle = angle / -180f + 0.5f;
+        //playerAnimator.SetFloat(hashAngle, angle);// 에니메이터에 각도값을 보내어 총을 위아레로 움직이게함
 
-        float angle = mainCamera.transform.eulerAngles.x;//카메라가 보는 위아래 각도를 구함
-        if (angle > 270f) angle -= 360f;
-        angle = angle / -180f + 0.5f;
-        playerAnimator.SetFloat(hashAngle, angle);// 에니메이터에 각도값을 보내어 총을 위아레로 움직이게함
         if (!playerCameara.scopeCamera.activeSelf == true && !playerInput.IsFire && !playerInput.IsZoomIn && aimState == AimState.FireReady) 
         {
             SetAimStateIdle();
@@ -222,6 +223,14 @@ public class PlayerShooter : MonoBehaviour
     //총을 쥐는 것을 다룸
     private void OnAnimatorIK(int layerIndex)
     {
+        if (aimState == AimState.FireReady)
+        {
+            Quaternion t = Quaternion.Euler(mainCamera.transform.eulerAngles.x, 0, 0);
+            playerAnimator.SetBoneLocalRotation(HumanBodyBones.Spine,
+              t);
+        }
+       
+
         if (gun == null || gun.state == Gun.State.Reloading)
             return;
 
