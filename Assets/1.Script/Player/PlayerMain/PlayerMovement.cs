@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerShooter playerShooter;
     private PlayerHealth playerHealth;
     private PlayerCamera playerCamera;
-    private Animator animator;
+    private Animator playerAnimator;
     //카메라를 기준으로 움직이기에 필요한 카메라 변수
     private Camera followCam;
     //애니메이션 최적화를 위한 해쉬값
@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
         playerShooter = GetComponent<PlayerShooter>();
         playerHealth = GetComponent<PlayerHealth>();
         playerCamera = GetComponent<PlayerCamera>();
-        animator = GetComponent<Animator>();
+        playerAnimator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
 
         followCam = Camera.main;
@@ -136,9 +136,11 @@ public class PlayerMovement : MonoBehaviour
         if (!playerInput.IsZoomIn)
         {
             isRunState = true;
+            playerAnimator.SetLayerWeight(1, 0.8f);
             speed = runSpeed;
-            animator.SetBool(hashRun, true);
+            playerAnimator.SetBool(hashRun, true);
             playerCamera.SetCameraFov(PlayerCamera.FovValues.RUN, 2);
+
         }
     }
     public void RunSpeedGet()
@@ -153,8 +155,10 @@ public class PlayerMovement : MonoBehaviour
         if(isRunState == true)
         {
             isRunState = false;
+            playerShooter.SetSpineDegree();
+            playerAnimator.SetLayerWeight(1, 0.3f);
             speed = walkSpeed;
-            animator.SetBool(hashRun, false);
+            playerAnimator.SetBool(hashRun, false);
             playerCamera.SetCameraFov(PlayerCamera.FovValues.ZOOMOUT, 2);
         }
     }
@@ -167,7 +171,7 @@ public class PlayerMovement : MonoBehaviour
             if (Time.time >= lastJumpTime + waitingForJump)
             {
                 lastJumpTime = Time.time;
-                animator.SetTrigger(hashJump);
+                playerAnimator.SetTrigger(hashJump);
             }
         }  
     }
@@ -191,7 +195,7 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log("점프끝");
         playerHealth.isInvincibility = false;
         isJumpState = false;
-        animator.applyRootMotion = false;
+        playerAnimator.applyRootMotion = false;
         if (playerInput.RunKeyActionCheck())
         {
             speed = walkSpeed;
@@ -209,13 +213,13 @@ public class PlayerMovement : MonoBehaviour
         float animationSpeedPercent = currentSpeed / speed;
         if(playerInput.IsZoomIn == true)
         {
-            animator.SetFloat(hashVerticalMove, moveInput.y * animationSpeedPercent/2, 0.05f, Time.deltaTime);
-            animator.SetFloat(hashHorizontalMove, moveInput.x * animationSpeedPercent/2, 0.05f, Time.deltaTime);
+            playerAnimator.SetFloat(hashVerticalMove, moveInput.y * animationSpeedPercent/2, 0.05f, Time.deltaTime);
+            playerAnimator.SetFloat(hashHorizontalMove, moveInput.x * animationSpeedPercent/2, 0.05f, Time.deltaTime);
         }
         else
         {
-            animator.SetFloat(hashVerticalMove, moveInput.y * animationSpeedPercent, 0.05f, Time.deltaTime);
-            animator.SetFloat(hashHorizontalMove, moveInput.x * animationSpeedPercent, 0.05f, Time.deltaTime);
+            playerAnimator.SetFloat(hashVerticalMove, moveInput.y * animationSpeedPercent, 0.05f, Time.deltaTime);
+            playerAnimator.SetFloat(hashHorizontalMove, moveInput.x * animationSpeedPercent, 0.05f, Time.deltaTime);
         }
         
     }

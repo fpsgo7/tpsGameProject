@@ -50,6 +50,9 @@ public class PlayerShooter : MonoBehaviour
     //값에 따라 사격할수 없는 거리가되면 크로스 헤어를 비활성화 하고 스코프를 비활성화 시키기위한 조건값을 구해준다.
     private bool isEnoughDistance => !Physics.Linecast(transform.position + Vector3.up * gun.fireTransform.position.y, gun.fireTransform.position, ~excludeTarget);
     private bool isZoomIn=false;
+    // 몸체 관련 각도 변수
+    private float targetSpineXDgree = 0;
+    private float SpineXDgree = 0;
     void Awake()
     {
         //플레이어가 자기자신을 쏘는 상황을 방지하기위하여 자기자신의 레이어를 추가한다.
@@ -220,6 +223,7 @@ public class PlayerShooter : MonoBehaviour
         UIAim.Instance.ActiveCrosshair(isEnoughDistance);//크로스 해어 활성화
         UIAim.Instance.SetCrossHairPosition(aimPoint);//총알이 맞게되는 지점을 보내줘 조준점 이동하게함
     }
+
     //총을 쥐는 것을 다룸
     private void OnAnimatorIK(int layerIndex)
     {
@@ -229,7 +233,14 @@ public class PlayerShooter : MonoBehaviour
             playerAnimator.SetBoneLocalRotation(HumanBodyBones.Spine,
               t);
         }
-       
+        if(playerMovement.isRunState == true)
+        {
+            Debug.Log(SpineXDgree);
+            SpineXDgree = Mathf.Lerp(SpineXDgree, 20, Time.deltaTime);
+            Quaternion t = Quaternion.Euler(SpineXDgree, 0, 0);
+            playerAnimator.SetBoneLocalRotation(HumanBodyBones.Spine,
+              t);
+        }
 
         if (gun == null || gun.state == Gun.State.Reloading)
             return;
@@ -240,6 +251,11 @@ public class PlayerShooter : MonoBehaviour
         playerAnimator.SetIKPosition(AvatarIKGoal.LeftHand, gun.leftHandMount.position);
         playerAnimator.SetIKRotation(AvatarIKGoal.LeftHand, gun.leftHandMount.rotation);
        
+    }
+    //spinex 값 조절하기
+    public void SetSpineDegree()
+    {
+        SpineXDgree = 0;
     }
     // 조준 관련
     public void SetAimStateIdle()

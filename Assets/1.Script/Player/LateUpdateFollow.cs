@@ -5,7 +5,6 @@
 public class LateUpdateFollow : MonoBehaviour
 {
     public Transform targetToFollow;//따라갈 대상
-    public Transform targetToFollowZoom;// 줌상태에 따라갈 대상
     public Transform target;
     private void Start()
     {
@@ -15,17 +14,14 @@ public class LateUpdateFollow : MonoBehaviour
         if (this.gameObject.name == "RifleGun(Clone)")
         {
             targetToFollow = GameObject.Find("RightHandAttach_byRifle").transform;
-            targetToFollowZoom = GameObject.Find("RightHandAttach_forWalk_byRifle").transform;
         }
         if (this.gameObject.name == "DmrGun(Clone)")
         {
             targetToFollow = GameObject.Find("RightHandAttach_byDmr").transform;
-            targetToFollowZoom = GameObject.Find("RightHandAttach_forWalk_byDmr").transform;
         }
         if (this.gameObject.name == "ShotGun(Clone)")
         {
             targetToFollow = GameObject.Find("RightHandAttach_byShotGun").transform;
-            targetToFollowZoom = GameObject.Find("RightHandAttach_forWalk_ShotGun").transform;
         }
         target = targetToFollow;
        
@@ -34,13 +30,5 @@ public class LateUpdateFollow : MonoBehaviour
     {
             transform.position = target.position;
             transform.rotation = target.rotation;
-    }
-    public void ZoomInFollow()
-    {
-        target = targetToFollowZoom;
-    }
-    public void ZoomOutFollow()
-    {
-        target = targetToFollow;
     }
 }
