@@ -143,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
 
         }
     }
-    public void RunSpeedGet()
+    public void IsRunSpeed()
     {
         if(isRunSpeed == false)
         {

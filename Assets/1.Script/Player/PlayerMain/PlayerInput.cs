@@ -70,18 +70,21 @@ public class PlayerInput : MonoBehaviour
         {
             moveInput = new Vector2(Input.GetAxis(moveHorizontalAxisName), Input.GetAxis(moveVerticalAxisName));
 
-            if (Input.GetKeyDown(KeySetting.keys[KeyAction.JUMP]))
+            if (Input.GetKeyDown(KeySetting.keys[KeyAction.JUMP]))// 점프 수행
             {
                 playerMovement.Jump();
                
             }
             if(Input.GetAxis(moveVerticalAxisName) > 0.9 && playerMovement.isRunSpeed == false)
             {
-                playerMovement.RunSpeedGet();
+                playerMovement.IsRunSpeed();// 뛰기 속도를 true 상태로 만듬
             }    
+            // 뛰기 키를 때거나 앞으로 가는 키가 때지면 뛰기를 종료함
             if (Input.GetKeyUp(KeySetting.keys[KeyAction.RUN])
-                || Input.GetAxis(moveVerticalAxisName) <0.5 && playerMovement.isRunSpeed == true )
+                || Input.GetAxis(moveVerticalAxisName) <0.5 && playerMovement.isRunSpeed == true 
+                || Input.GetKey(KeySetting.keys[KeyAction.ZOOMIN]))
                 playerMovement.RunEnd();
+
             return;
         }
         //moveInput 에 입력된 값을 할당한다. new Vector2(수직방향입력,수평방향입력)
