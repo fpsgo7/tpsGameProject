@@ -51,8 +51,14 @@ public class PlayerShooter : MonoBehaviour
     private bool isEnoughDistance => !Physics.Linecast(transform.position + Vector3.up * gun.fireTransform.position.y, gun.fireTransform.position, ~excludeTarget);
     private bool isZoomIn=false;
     // 몸체 관련 각도 변수
-    private float targetSpineXDgree = 0;
     private float SpineXDgree = 0;
+    public float RUpperArmX = 53.4f;
+    public float RUpperArmY = 19.1f;
+    public float RUpperArmZ = 73.2f;
+    public float RLowerArmX = 40.1f;
+    public float RLowerArmY = 10.3f;
+    public float RLowerArmZ = 82.72f;
+   
     void Awake()
     {
         //플레이어가 자기자신을 쏘는 상황을 방지하기위하여 자기자신의 레이어를 추가한다.
@@ -123,7 +129,7 @@ public class PlayerShooter : MonoBehaviour
        
 
         UpdateAimTarget();// 총의 조준지점은 계혹 업데이트해준다.
-        // 총위아레 조준
+        // 애니메이터 값을 이용한총위아레 조준
         //float angle = mainCamera.transform.eulerAngles.x;//카메라가 보는 위아래 각도를 구함
         //if (angle > 270f) angle -= 360f;
         //angle = angle / -180f + 0.5f;
@@ -229,13 +235,25 @@ public class PlayerShooter : MonoBehaviour
     {
         if (aimState == AimState.FireReady)
         {
-            Quaternion t = Quaternion.Euler(mainCamera.transform.eulerAngles.x, 0, 0);
+            // 카메라 각도에 맞추어 조준하게하기
+            Quaternion t = Quaternion.Euler(mainCamera.transform.eulerAngles.x+10, 10, 0);
             playerAnimator.SetBoneLocalRotation(HumanBodyBones.Spine,
               t);
+            //플레이어의 위몸체 각도를 오른쪽으로 약간 돌리기
+            Quaternion x = Quaternion.Euler(0, 5, 0);
+            playerAnimator.SetBoneLocalRotation(HumanBodyBones.UpperChest,
+              x);
+            // 오른 팔의 뼈대를 원하는 대로 이동시키기
+            Quaternion RightUpperArmQ = Quaternion.Euler(RUpperArmX, RUpperArmY, RUpperArmZ);
+            Quaternion RightLowerArmQ = Quaternion.Euler(RLowerArmX, RLowerArmY, RLowerArmZ);
+            playerAnimator.SetBoneLocalRotation(HumanBodyBones.RightUpperArm,
+             RightUpperArmQ);
+            playerAnimator.SetBoneLocalRotation(HumanBodyBones.RightLowerArm,
+             RightLowerArmQ);
         }
         if(playerMovement.isRunState == true)
         {
-            Debug.Log(SpineXDgree);
+            // 뛰는 동안은 Spine 파트의 각도를 바꾸어 전력질주 하는 것처럼 보이게하기
             SpineXDgree = Mathf.Lerp(SpineXDgree, 20, Time.deltaTime);
             Quaternion t = Quaternion.Euler(SpineXDgree, 0, 0);
             playerAnimator.SetBoneLocalRotation(HumanBodyBones.Spine,
