@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// 발자국 소리를 출력
 /// </summary>
-public class PlayerFootStep : MonoBehaviour
+public class PlayerFootStepSound : MonoBehaviour
 {
     private PlayerMovement playerMovement;
     private PlayerShooter playerShooter;

@@ -25,8 +25,6 @@ public class LobbyScript : MonoBehaviour
     [HideInInspector] public BackEndGetUserInfo backEndGetUserInfo;
     [HideInInspector] public BackEndNickname backEndNickname;
     private KeySettingInfoManager keySettingInfoManager;
-    //public Dropdown dropdown;
-    //public static int chooseWeapon;
     public GameObject titleText;
     public GameObject GameStartPanel;
     public GameObject LoginPanel;
@@ -46,13 +44,7 @@ public class LobbyScript : MonoBehaviour
     private const string welcomeName = " 님 환영합니다.";
     private const string setNickNameFaild = "Faild";
     private const string setNickNameSuccess = "Success";
-    public string playerName ="Guest";
-    public string id;
-    public int score;
-    public int weaponNum;
-    public int equipmentNum;
-    public float xAxis;
-    public float yAxis;
+    public string playerName = "Guest";
 
     
     private void Start()
@@ -63,11 +55,9 @@ public class LobbyScript : MonoBehaviour
         inventoryManager = GameObject.Find("InfoManager").GetComponent<InventoryManager>();
         keySettingInfoManager = GameObject.Find("InfoManager").GetComponent<KeySettingInfoManager>();
     }
+    //버튼에서 호출됨
     public void GameStart()
     {
-        //chooseWeapon = dropdown.value;
-        //Debug.Log("게임이 시작됩니다."+chooseWeapon);
-        //SceneManager.LoadScene("TestCenter");
         SceneManager.LoadScene("MainGame");
     }
 
@@ -83,7 +73,7 @@ public class LobbyScript : MonoBehaviour
             GameStartPanel.SetActive(true);
             JoinPanel.SetActive(false);
         }
-        titleText.GetComponent<Text>().text = playerName + welcomeName;
+        SetTitleText(playerName);
     }
 
     public void OpenLoginPanel()
@@ -98,7 +88,7 @@ public class LobbyScript : MonoBehaviour
             JoinPanel.SetActive(false);
             LoginPanel.SetActive(true);
         }
-        titleText.GetComponent<Text>().text = titleName;
+        SetTitleText();
     }
 
     public void OpenJoinPanel()
@@ -110,9 +100,12 @@ public class LobbyScript : MonoBehaviour
         }
     }
 
-    public void SetTitleText()
+    public void SetTitleText(string playerName = "")
     {
-        titleText.GetComponent<Text>().text = playerName + welcomeName;
+        if(playerName.Equals(""))
+            titleText.GetComponent<Text>().text = titleName;
+        else
+            titleText.GetComponent<Text>().text = playerName + welcomeName;
     }
     //온라인 접속
     public void Login()
@@ -122,31 +115,25 @@ public class LobbyScript : MonoBehaviour
     //오프라인 접속
     public void OfflineLogin()
     {
-        PlayerInfoManager.Instance.SetOfflineLoadPlayer();
+        PlayerInfoManager.Instance.SetOfflineLoadPlayerInfo();
         inventoryManager.Load();
         keySettingInfoManager.KeySettingLoad();
         OpenGameStartPanel();
     }
+    //회원가입
     public void Sign()
     {
         backEndAuthentication.Sign(SignIdInput.text, SignPwInput.text);
     }
-
+    //로그인 이후 사용가능
     public void LogOut()
     {
         BackEndAuthentication.LogOut();
         GoLoginPanelButton.SetActive(true);
         logoutButton.SetActive(false);
 
-        id = string.Empty;
-        playerName = string.Empty;
-        score = 0;
-        weaponNum = 0;
-        equipmentNum = 0;
-        xAxis = 200;
-        yAxis = 2;
-        PlayerInfoManager.Instance.SetOnlineLoadPlayer(false, id, playerName, score, weaponNum,
-                equipmentNum, xAxis, yAxis);
+        playerName = "Guest";
+        PlayerInfoManager.Instance.ResetPlayerInfo();
     }
 
     public void SetName()
@@ -158,7 +145,7 @@ public class LobbyScript : MonoBehaviour
             {
                 SetNickNameResultText.text = setNickNameSuccess;
                 
-                BackEndPlayerInfo.SetNickName(id, nameInputField.text);
+                BackEndPlayerInfo.SetNickName(PlayerInfoManager.Instance.playerInfo.id, nameInputField.text);
             }
             else
             {
@@ -170,7 +157,7 @@ public class LobbyScript : MonoBehaviour
             if (backEndNickname.UpdateName(nameInputField.text))
             {
                 SetNickNameResultText.text = setNickNameSuccess;
-                BackEndPlayerInfo.SetNickName(id, nameInputField.text);
+                BackEndPlayerInfo.SetNickName(PlayerInfoManager.Instance.playerInfo.id, nameInputField.text);
             }
             else
             {
