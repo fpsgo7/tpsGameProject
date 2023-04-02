@@ -14,10 +14,9 @@ public static class BackEndPlayerInfo
     public static void GetPlayerInfo(string id)
     {
         Where where = new Where();
-        BackendReturnObject bro = Backend.GameData.Get("PlayerInfo", where, 10);
 
         where.Equal("id",id);
-        
+        BackendReturnObject bro = Backend.GameData.Get("PlayerInfo", where, 10);
         if (bro.IsSuccess() == false)
         {
             // 요청 실패 처리
@@ -29,7 +28,8 @@ public static class BackEndPlayerInfo
             Debug.Log("성공"+bro);
             //로그인 하면 플레이어 정보를 다루는 매니저에 플레이어 정보 입력
             //플레이어 인포메니저는 파괴되지 않는 오브젝트에 값을 넣어줘 다음씬에서 사용할 수 있게한다
-            PlayerInfoManager.Instance.SetOnlineLoadPlayerInfo(true, bro.FlattenRows()[0]["id"].ToString(),
+            PlayerInfoManager.Instance.SetOnlineLoadPlayerInfo(true, 
+                bro.FlattenRows()[0]["id"].ToString(),
                 bro.FlattenRows()[0]["name"].ToString(),
                 Convert.ToInt32(bro.FlattenRows()[0]["score"].ToString()),
                 Convert.ToInt32(bro.FlattenRows()[0]["weaponNum"].ToString()),

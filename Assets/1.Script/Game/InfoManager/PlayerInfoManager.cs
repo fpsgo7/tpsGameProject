@@ -23,7 +23,6 @@ public class PlayerInfoManager : MonoBehaviour
             return instance;
         }
     }
-
     public PlayerInfo playerInfo = new PlayerInfo(string.Empty,string.Empty,0,0,0,0,0);// 플렝이ㅓ개체 생성
     private string filePath;
     public bool isOnlineStatus;

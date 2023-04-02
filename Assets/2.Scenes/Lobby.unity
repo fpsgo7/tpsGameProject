@@ -4074,20 +4074,14 @@ MonoBehaviour:
   LoginPanel: {fileID: 1311757449}
   JoinPanel: {fileID: 939870190}
   logoutButton: {fileID: 2093774352}
-  GoLoginPanelButton: {fileID: 1724042998}
+  offlineOutButton: {fileID: 1724042998}
   SetNickNameResultText: {fileID: 139759273}
   nameInputField: {fileID: 260109626}
   LoginIdInput: {fileID: 1633984750}
   LoginPwInput: {fileID: 1659971093}
   SignIdInput: {fileID: 887017363}
   SignPwInput: {fileID: 13053699}
-  name: Guest
-  id: 
-  score: 0
-  weaponNum: 0
-  equipmentNum: 0
-  xAxis: 0
-  yAxis: 0
+  playerName: Guest
 --- !u!114 &1574782608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4629,7 +4623,7 @@ GameObject:
   - component: {fileID: 1724043001}
   - component: {fileID: 1724043000}
   m_Layer: 5
-  m_Name: GoLoginPanel-Button
+  m_Name: OfflineOut-Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5040,7 +5034,6 @@ MonoBehaviour:
     RELOAD: 0
     RESTOREHEALTH: 0
     SCOPEZOOMIN: 0
-    CANCEL: 0
     INVENTORY: 0
     INTERACTION: 0
     RUN: 0

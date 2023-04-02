@@ -60,7 +60,6 @@ public class BackEndAuthentication : MonoBehaviour
         switch (message)
         {
             case "Success":
-                Debug.Log("로그인 완료 ");
                 BackEndPlayerInfo.GetPlayerInfo(id);
                 inventoryManager.Load();
                 keySettingInfoManager.KeySettingLoad();
