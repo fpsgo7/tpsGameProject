@@ -30,7 +30,7 @@ public class LobbyScript : MonoBehaviour
     public GameObject LoginPanel;
     public GameObject JoinPanel;
     public GameObject logoutButton;
-    public GameObject GoLoginPanelButton;
+    public GameObject offlineOutButton;
     public Text SetNickNameResultText;
     //닉네임 입력 필드
     public InputField nameInputField;
@@ -61,43 +61,36 @@ public class LobbyScript : MonoBehaviour
         SceneManager.LoadScene("MainGame");
     }
 
-    public void OpenGameStartPanel()
+    public void OpenGameStartPanel(bool isGuest)
     {
-        if (LoginPanel.activeSelf == true)
+        GameStartPanel.SetActive(true);
+        LoginPanel.SetActive(false);
+        JoinPanel.SetActive(false);
+        if (isGuest)
         {
-            GameStartPanel.SetActive(true);
-            LoginPanel.SetActive(false);
+            offlineOutButton.SetActive(true);
+            logoutButton.SetActive(false);
         }
-        if (JoinPanel.activeSelf == true)
+        else
         {
-            GameStartPanel.SetActive(true);
-            JoinPanel.SetActive(false);
+            offlineOutButton.SetActive(false);
+            logoutButton.SetActive(true);
         }
         SetTitleText(playerName);
     }
 
     public void OpenLoginPanel()
     {
-        if (GameStartPanel.activeSelf == true)
-        {
-            GameStartPanel.SetActive(false);
-            LoginPanel.SetActive(true);
-        }
-        if(JoinPanel.activeSelf == true)
-        {
-            JoinPanel.SetActive(false);
-            LoginPanel.SetActive(true);
-        }
+        LoginPanel.SetActive(true);
+        GameStartPanel.SetActive(false);
+        JoinPanel.SetActive(false);
         SetTitleText();
     }
 
     public void OpenJoinPanel()
     {
-        if(LoginPanel.activeSelf == true)
-        {
-            LoginPanel.SetActive(false);
-            JoinPanel.SetActive(true);
-        }
+        LoginPanel.SetActive(false);
+        JoinPanel.SetActive(true);
     }
 
     public void SetTitleText(string playerName = "")
@@ -118,7 +111,7 @@ public class LobbyScript : MonoBehaviour
         PlayerInfoManager.Instance.SetOfflineLoadPlayerInfo();
         inventoryManager.Load();
         keySettingInfoManager.KeySettingLoad();
-        OpenGameStartPanel();
+        OpenGameStartPanel(true);
     }
     //회원가입
     public void Sign()
@@ -129,7 +122,7 @@ public class LobbyScript : MonoBehaviour
     public void LogOut()
     {
         BackEndAuthentication.LogOut();
-        GoLoginPanelButton.SetActive(true);
+        offlineOutButton.SetActive(true);
         logoutButton.SetActive(false);
 
         playerName = "Guest";

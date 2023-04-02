@@ -36,11 +36,8 @@ public class BackEndAuthentication : MonoBehaviour
             case "Success":
                 Debug.Log("회원가입 성공");
                 BackEndPlayerInfo.InsertPlayerInfoData(id);
-                Login(id , pw);
-                LobbyScript.Instance.backEndGetUserInfo.GetUserInfo();
-                LobbyScript.Instance.OpenGameStartPanel();
                 BackEndKeySetting.InsertPlayerKeySetting(id);
-                keySettingInfoManager.KeySettingLoad();
+                Login(id , pw);
                 break;
             default:
                 Debug.Log("중복된 아이디입니다.");
@@ -67,9 +64,7 @@ public class BackEndAuthentication : MonoBehaviour
                 BackEndPlayerInfo.GetPlayerInfo(id);
                 inventoryManager.Load();
                 keySettingInfoManager.KeySettingLoad();
-                LobbyScript.Instance.OpenGameStartPanel();
-                LobbyScript.Instance.logoutButton.SetActive(true);
-                LobbyScript.Instance.GoLoginPanelButton.SetActive(false);
+                LobbyScript.Instance.OpenGameStartPanel(false);
                 LobbyScript.Instance.SetTitleText(PlayerInfoManager.Instance.playerInfo.name);
                 break;
             default:
