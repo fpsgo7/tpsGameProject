@@ -10,3 +10,6 @@
 ## 게임 영상 링크
 
 
+## 오류와 주의점
+뒤끝에서  clientappID 같은 값을 변경할경우 fail to load backend.dat 이란 오류가 발생한다 (이전에 사용하던 backend.dat 파일의 값은 그대로기 때문)
+그래서 새롭게 해당 파일을 생성하기위해 유니티 PlayerSetting 에서 회사명을 변경후 실행해주면 새로 파일을만들어준다.
