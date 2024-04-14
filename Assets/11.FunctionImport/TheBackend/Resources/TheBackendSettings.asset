@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 660911240, guid: f624596d5fe1bd5459a5da424a8abc1b, type: 3}
   m_Name: TheBackendSettings
   m_EditorClassIdentifier: 
-  clientAppID: cfebe2b0-5fb7-11ed-b853-792fe3784dea4091
-  signatureKey: cfec09c0-5fb7-11ed-b853-792fe3784dea4091
+  clientAppID: 
+  signatureKey: 
   functionAuthKey: 
   packageName: com.DefaultCompany.tpsGameProject
   isAllPlatform: 1
