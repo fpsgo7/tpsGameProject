@@ -40,7 +40,7 @@ public class BackEndAuthentication : MonoBehaviour
                 Login(id , pw);
                 break;
             default:
-                Debug.Log("중복된 아이디입니다.");
+                Debug.Log(message);
                 break;
 
         }
@@ -67,7 +67,7 @@ public class BackEndAuthentication : MonoBehaviour
                 LobbyScript.Instance.SetTitleText(PlayerInfoManager.Instance.playerInfo.name);
                 break;
             default:
-                Debug.Log("아이디 또는 비번이 틀렸습니다.");
+                Debug.Log(message);
                 break;
 
         }
