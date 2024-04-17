@@ -22,6 +22,7 @@ public class UIPlayerInfo : MonoBehaviour
     }
 
     //각 오브젝트들을 유니티 인스팩터 상에서 연결하기위하여 SerializeField 사용
+    [SerializeField] private GameObject uiPlayerInfoPanel;
     [SerializeField] private GameObject restoreHealthSliderObject;
     [SerializeField] private Slider healthSlider;
     [SerializeField] private Slider restoreHealthSlider;
@@ -77,5 +78,10 @@ public class UIPlayerInfo : MonoBehaviour
     public void SetGrenadeText(int grenade)
     {
         grenadeText.text = grenade.ToString();
+    }
+    // 게임플레이어 패널 활성화 비활성화
+    public void SetPlayerInfoPanel(bool isActive)
+    {
+        uiPlayerInfoPanel.SetActive(isActive);
     }
 }

@@ -29,6 +29,7 @@ public class UIMenu : MonoBehaviour
     [SerializeField] private GameObject EquipmentChangeButton;
     [SerializeField] private PlayerShooter playerShooter;
     [SerializeField] private PlayerSubCamera playerSubCamera;
+    [SerializeField] private UIPlayerInfo uIPlayerInfo;
     [HideInInspector] public bool isMenuUI = false;
 
     //메뉴 오픈
@@ -42,6 +43,7 @@ public class UIMenu : MonoBehaviour
             MenuUI.SetActive(true);
             Cursor.visible = true;
             playerShooter.AxisActiveMenuChange();
+            uIPlayerInfo.SetPlayerInfoPanel(false);
             //Debug.Log("메뉴 오픈");
         }
         else if (isMenuUI == true && MenuUI.activeSelf == true)
@@ -56,6 +58,7 @@ public class UIMenu : MonoBehaviour
             PlayerInfoManager.Instance.SetAxis(UIAim.Instance.xAxis, UIAim.Instance.yAxis);
             playerShooter.AxisMenuInactiveChange();
             Cursor.lockState = CursorLockMode.Locked;
+            uIPlayerInfo.SetPlayerInfoPanel(true);
         }
 
     }
@@ -71,6 +74,7 @@ public class UIMenu : MonoBehaviour
             InventoryUI.SetActive(true);
             playerShooter.AxisActiveMenuChange();
             Debug.Log("인벤토리 오픈 오픈");
+            uIPlayerInfo.SetPlayerInfoPanel(false);
         }
         else if (isMenuUI == true && InventoryUI.activeSelf == true)
         {
@@ -80,6 +84,7 @@ public class UIMenu : MonoBehaviour
             Cursor.visible = false;
             playerShooter.AxisMenuInactiveChange();
             Cursor.lockState = CursorLockMode.Locked;
+            uIPlayerInfo.SetPlayerInfoPanel(true);
         }
     }
     //키보드 변경창 오픈
